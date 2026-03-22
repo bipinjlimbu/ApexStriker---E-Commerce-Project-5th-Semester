@@ -127,7 +127,7 @@ def login_view(request):
                     request.session.set_expiry(1209600)
                 else:
                     request.session.set_expiry(0) 
-                messages.success(request, "Login successful!")
+                messages.success(request, f"Login successful!Welcome back, {user.first_name}!")
                 return redirect('/')
             else:
                 messages.error(request, "Invalid username or password.")
