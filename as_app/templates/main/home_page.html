@@ -1,0 +1,137 @@
+<html>
+<head>
+    <title>Home | ApexStriker Marketplace</title>
+    {% load static %}
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+</head>
+
+<body class="bg-slate-50">
+    {% include 'components/_navbar.html' %}
+
+    <section class="relative bg-slate-900 py-20 overflow-hidden">
+        <div class="absolute top-0 right-0 w-1/3 h-full bg-blue-600 skew-x-12 translate-x-20 opacity-20"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="max-w-2xl">
+                <span class="inline-block bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full mb-4 uppercase tracking-widest">
+                    Season 2026 Arrivals
+                </span>
+                <h1 class="text-5xl md:text-7xl font-black text-white leading-tight mb-6">
+                    ELEVATE YOUR <span class="text-blue-500">GAME.</span>
+                </h1>
+                <p class="text-slate-400 text-lg mb-8 leading-relaxed">
+                    Premium football boots, jerseys, and professional gear from verified vendors across the country. Built for the elite, designed for the striker.
+                </p>
+                <div class="flex items-center gap-4">
+                    <a href="#shop" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-4 rounded-xl transition-all flex items-center gap-2">
+                        Shop Now <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    </a>
+                    <a href="/register/" class="bg-white/10 hover:bg-white/20 text-white font-bold px-8 py-4 rounded-xl border border-white/20 transition-all">
+                        Become a Vendor
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="max-w-7xl mx-auto px-4 -mt-10 relative z-20">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="bg-white p-6 rounded-2xl shadow-lg border border-slate-200 flex items-center gap-4 hover:border-blue-500 transition-colors cursor-pointer group">
+                <div class="p-3 bg-blue-50 rounded-xl text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                    <i data-lucide="zap" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <h3 class="font-bold text-slate-900 leading-none">Boots</h3>
+                    <p class="text-xs text-slate-500 mt-1">Firm Ground / Turf</p>
+                </div>
+            </div>
+            </div>
+    </div>
+
+    <main id="shop" class="max-w-7xl mx-auto px-4 py-16">
+        <div class="flex justify-between items-end mb-10">
+            <div>
+                <h2 class="text-3xl font-black text-slate-900 uppercase">Featured Gear</h2>
+                <div class="h-1.5 w-20 bg-blue-600 mt-2 rounded-full"></div>
+            </div>
+            <a href="#" class="text-blue-600 font-bold flex items-center gap-1 hover:underline">
+                View All Products <i data-lucide="chevron-right" class="w-4 h-4"></i>
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden group hover:shadow-2xl hover:-translate-y-1 transition-all">
+                <div class="relative h-64 bg-slate-100 flex items-center justify-center p-8">
+                    <i data-lucide="package" class="w-16 h-16 text-slate-300"></i>
+                    <span class="absolute top-4 left-4 bg-orange-500 text-white text-[10px] font-black px-2 py-1 rounded-md uppercase">Hot</span>
+                </div>
+                <div class="p-5">
+                    <p class="text-[10px] text-blue-600 font-bold uppercase tracking-widest mb-1">Adidas</p>
+                    <h3 class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors mb-2">Predator Elite FG - Blue/White</h3>
+                    <div class="flex items-center justify-between mt-4">
+                        <span class="text-xl font-black text-slate-900">Rs. 18,500</span>
+                        <button class="bg-slate-900 text-white p-2.5 rounded-xl hover:bg-blue-600 transition-colors">
+                            <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden group hover:shadow-2xl hover:-translate-y-1 transition-all">
+                <div class="relative h-64 bg-slate-100 flex items-center justify-center p-8">
+                    <i data-lucide="package" class="w-16 h-16 text-slate-300"></i>
+                </div>
+                <div class="p-5">
+                    <p class="text-[10px] text-blue-600 font-bold uppercase tracking-widest mb-1">Nike</p>
+                    <h3 class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors mb-2">Mercurial Superfly 9</h3>
+                    <div class="flex items-center justify-between mt-4">
+                        <span class="text-xl font-black text-slate-900">Rs. 22,000</span>
+                        <button class="bg-slate-900 text-white p-2.5 rounded-xl hover:bg-blue-600 transition-colors">
+                            <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden group hover:shadow-2xl hover:-translate-y-1 transition-all">
+                <div class="relative h-64 bg-slate-100 flex items-center justify-center p-8">
+                    <i data-lucide="shirt" class="w-16 h-16 text-slate-300"></i>
+                </div>
+                <div class="p-5">
+                    <p class="text-[10px] text-blue-600 font-bold uppercase tracking-widest mb-1">Puma</p>
+                    <h3 class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors mb-2">Man City Home Jersey 25/26</h3>
+                    <div class="flex items-center justify-between mt-4">
+                        <span class="text-xl font-black text-slate-900">Rs. 4,500</span>
+                        <button class="bg-slate-900 text-white p-2.5 rounded-xl hover:bg-blue-600 transition-colors">
+                            <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden group hover:shadow-2xl hover:-translate-y-1 transition-all">
+                <div class="relative h-64 bg-slate-100 flex items-center justify-center p-8">
+                    <i data-lucide="package" class="w-16 h-16 text-slate-300"></i>
+                </div>
+                <div class="p-5">
+                    <p class="text-[10px] text-blue-600 font-bold uppercase tracking-widest mb-1">Nike</p>
+                    <h3 class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors mb-2">Nike Phantom Luna II</h3>
+                    <div class="flex items-center justify-between mt-4">
+                        <span class="text-xl font-black text-slate-900">Rs. 19,800</span>
+                        <button class="bg-slate-900 text-white p-2.5 rounded-xl hover:bg-blue-600 transition-colors">
+                            <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    {% include 'components/_footer.html' %}
+
+    <script src="{% static 'js/lucide.min.js' %}"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
