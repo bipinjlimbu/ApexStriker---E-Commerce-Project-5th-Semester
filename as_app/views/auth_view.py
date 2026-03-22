@@ -105,3 +105,6 @@ def register_view(request):
         return render(request, 'auth/register_page.html', {'errors': errors,'data': request.POST})
 
     return render(request, 'auth/register_page.html')
+
+def login_view(request):
+    return render(request, 'auth/login_page.html')
