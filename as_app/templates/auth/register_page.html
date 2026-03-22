@@ -5,59 +5,63 @@
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
 </head>
 
-<body class="bg-slate-50 flex items-center justify-center min-h-screen">
-    <div class="bg-white p-8 rounded-2xl shadow-xl border border-slate-200 w-full max-w-md">
-        <div class="text-center mb-8">
-            <h1 class="text-3xl font-black text-blue-600">ApexStriker</h1>
-            <p class="text-slate-500">Join the elite football marketplace</p>
-        </div>
-
-        <form action="" method="POST" enctype="multipart/form-data" class="space-y-4">
-            {% csrf_token %}
-
-            <div>
-                <label class="block text-sm font-semibold text-slate-700 mb-1">Join as a</label>
-                <select name="role" id="id_role" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
-                    <option value="member">Member (Buyer)</option>
-                    <option value="vendor">Vendor (Seller)</option>
-                </select>
+<body class="bg-slate-50">
+    {% include 'components/_navbar.html' %}
+    
+    <div class="flex items-center justify-center min-h-[calc(100vh-64px)] p-4">
+        
+        <div class="bg-white p-8 rounded-2xl shadow-xl border border-slate-200 w-full max-w-md">
+            <div class="text-center mb-8">
+                <h1 class="text-3xl font-black text-blue-600">ApexStriker</h1>
+                <p class="text-slate-500">Join the elite football marketplace</p>
             </div>
 
-            <div class="grid grid-cols-2 gap-4">
-                <input type="text" name="first_name" placeholder="First Name" class="w-full p-2.5 border border-slate-300 rounded-lg">
-                <input type="text" name="last_name" placeholder="Last Name" class="w-full p-2.5 border border-slate-300 rounded-lg">
-            </div>
+            <form action="" method="POST" enctype="multipart/form-data" class="space-y-4">
+                {% csrf_token %}
 
-            <input type="email" name="email" placeholder="Email Address" class="w-full p-2.5 border border-slate-300 rounded-lg">
-            
-            <input type="password" name="password" placeholder="Password" class="w-full p-2.5 border border-slate-300 rounded-lg">
-
-            <div id="vendor_fields" class="hidden space-y-4 border-t border-slate-100 pt-4">
-                <h3 class="font-bold text-slate-800">Shop Details</h3>
-                <input type="text" name="shop_name" placeholder="Shop Name" class="w-full p-2.5 border border-slate-300 rounded-lg">
-                
                 <div>
-                    <label class="block text-xs text-slate-500 mb-1">Upload ID Proof (Citizenship/License)</label>
-                    <input type="file" name="id_proof" class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">Join as a</label>
+                    <select name="role" id="id_role" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                        <option value="member">Member (Buyer)</option>
+                        <option value="vendor">Vendor (Seller)</option>
+                    </select>
                 </div>
-            </div>
 
-            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-2">
-                <i data-lucide="user-plus" class="w-5 h-5"></i>
-                Create Account
-            </button>
-        </form>
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="text" name="first_name" placeholder="First Name" class="w-full p-2.5 border border-slate-300 rounded-lg">
+                    <input type="text" name="last_name" placeholder="Last Name" class="w-full p-2.5 border border-slate-300 rounded-lg">
+                </div>
 
-        <p class="mt-6 text-center text-sm text-slate-600">
-            Already have an account? <a href="#" class="text-blue-600 font-bold hover:underline">Login</a>
-        </p>
+                <input type="email" name="email" placeholder="Email Address" class="w-full p-2.5 border border-slate-300 rounded-lg">
+                
+                <input type="password" name="password" placeholder="Password" class="w-full p-2.5 border border-slate-300 rounded-lg">
+
+                <div id="vendor_fields" class="hidden space-y-4 border-t border-slate-100 pt-4">
+                    <h3 class="font-bold text-slate-800">Shop Details</h3>
+                    <input type="text" name="shop_name" placeholder="Shop Name" class="w-full p-2.5 border border-slate-300 rounded-lg">
+                    
+                    <div>
+                        <label class="block text-xs text-slate-500 mb-1">Upload ID Proof (Citizenship/License)</label>
+                        <input type="file" name="id_proof" class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-2">
+                    <i data-lucide="user-plus" class="w-5 h-5"></i>
+                    Create Account
+                </button>
+            </form>
+
+            <p class="mt-6 text-center text-sm text-slate-600">
+                Already have an account? <a href="#" class="text-blue-600 font-bold hover:underline">Login</a>
+            </p>
+        </div>
     </div>
 
     <script src="{% static 'js/lucide.min.js' %}"></script>
     <script>
         lucide.createIcons();
 
-        // Logic to show/hide Vendor fields based on role
         const roleSelect = document.getElementById('id_role');
         const vendorFields = document.getElementById('vendor_fields');
 
