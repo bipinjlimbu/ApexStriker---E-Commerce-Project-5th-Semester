@@ -7,13 +7,16 @@
 
 <body>
     {% include 'components/_navbar.html' %}
-    
+
     <h1 class="text-red-500" > Hello Home </h1>
     <p class="text-blue-600" >Hello k xa </p>
     <button class="btn btn-primary">
         <i data-lucide="home"></i>
         Home
     </button>
+
+    {% include 'components/_footer.html' %}
+    
     <script src="{% static 'js/lucide.min.js' %}"></script>
     <script>
         lucide.createIcons();
