@@ -108,6 +108,7 @@
                     </div>
                     {% endif %}
 
+                    {% if profile.role != 'admin' %}
                     <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
                         <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 italic">Email Verification Status</h3>
                         <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 flex items-center justify-between">
@@ -127,6 +128,7 @@
                             </div>
                         </div>
                     </div>
+                    {% endif %}
 
                     <div class="space-y-3">
                         <a href="/logout/" class="w-full flex items-center justify-center gap-3 p-4 rounded-2xl bg-white border border-slate-200 text-slate-700 font-black text-[10px] uppercase tracking-widest hover:bg-slate-50 transition shadow-sm">
@@ -260,8 +262,8 @@
                                     <p class="text-slate-700 font-bold italic">{{ profile.email }}</p>
                                 </div>
                                 <div>
-                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">Last Platform Login</label>
-                                    <p class="text-slate-700 font-bold italic uppercase">{{ profile.user.last_login|date:"H:i, d M" }}</p>
+                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">Phone</label>
+                                    <p class="text-slate-700 font-bold italic uppercase">{{ profile.phone }}</p>
                                 </div>
                             </div>
                         </div>
