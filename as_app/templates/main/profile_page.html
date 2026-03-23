@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Profile | ApexStriker</title>
+    <title>Profile | ApexStriker</title>
     {% load static %}
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
 </head>
@@ -14,130 +14,199 @@
     <main class="flex-grow py-12 px-4">
         <div class="max-w-4xl mx-auto">
             
-            <div class="bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 overflow-hidden mb-8">
-                <div class="h-32 bg-gradient-to-r from-blue-600 to-indigo-700"></div>
+            <div class="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden mb-8">
+                <div class="h-32 bg-gradient-to-r from-blue-700 to-indigo-900"></div>
                 <div class="px-8 pb-8">
                     <div class="relative flex justify-between items-end -mt-12 mb-6">
-                        <div class="relative group">
-                            <img src="https://ui-avatars.com/api/?name=Samyog+Devkota&background=0D8ABC&color=fff&size=128" 
-                                 alt="Profile" 
+                        <div class="relative">
+                            <img src="https://ui-avatars.com/api/?name=Samyog+Devkota&background=2563eb&color=fff&size=128" 
                                  class="w-32 h-32 rounded-3xl border-4 border-white object-cover shadow-lg">
-                            <button class="absolute bottom-2 right-2 bg-blue-600 text-white p-2 rounded-xl shadow-lg hover:scale-110 transition">
-                                <i data-lucide="camera" class="w-4 h-4"></i>
-                            </button>
                         </div>
-                        <div class="flex gap-3">
-                            <button class="bg-slate-100 text-slate-700 font-bold px-6 py-3 rounded-2xl hover:bg-slate-200 transition flex items-center gap-2">
-                                <i data-lucide="settings" class="w-4 h-4"></i> Edit Profile
-                            </button>
+                        <div class="flex flex-wrap gap-3">
+                            <a href="#" class="bg-white text-slate-700 font-black px-6 py-3 rounded-2xl border border-slate-200 hover:bg-slate-50 transition flex items-center gap-2 uppercase text-[10px] tracking-widest shadow-sm">
+                                <i data-lucide="edit-3" class="w-4 h-4 text-blue-600"></i> Edit Profile
+                            </a>
+                            <a href="#" class="bg-blue-600 text-white font-black px-6 py-3 rounded-2xl hover:bg-blue-700 transition flex items-center gap-2 uppercase text-[10px] tracking-widest shadow-lg shadow-blue-200">
+                                <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Access Dashboard
+                            </a>
                         </div>
                     </div>
 
-                    <div>
-                        <h1 class="text-3xl font-black text-slate-900 tracking-tight italic uppercase">Samyog <span class="text-blue-600">Devkota</span></h1>
-                        <div class="flex flex-wrap items-center gap-4 mt-2">
-                            <span class="bg-blue-50 text-blue-700 text-xs font-black px-3 py-1 rounded-full uppercase tracking-widest border border-blue-100">
-                                Vendor
-                            </span>
-                            <span class="flex items-center gap-1.5 text-slate-500 text-sm font-medium">
-                                <i data-lucide="map-pin" class="w-4 h-4 text-slate-400"></i> Kathmandu, Nepal
-                            </span>
-                            <span class="flex items-center gap-1.5 text-slate-500 text-sm font-medium">
-                                <i data-lucide="calendar" class="w-4 h-4 text-slate-400"></i> Joined March 2026
-                            </span>
+                    <div class="flex items-center gap-3">
+                        <h1 class="text-3xl font-black text-slate-900 tracking-tight italic uppercase">
+                            Samyog <span class="text-blue-600">Devkota</span>
+                        </h1>
+                        <div class="flex items-center bg-blue-600 text-white px-3 py-1 rounded-full shadow-md shadow-blue-100">
+                            <i data-lucide="check-circle" class="w-4 h-4 fill-white text-blue-600"></i>
+                            <span class="text-[9px] font-black ml-1.5 uppercase tracking-wider">Trusted</span>
                         </div>
+                    </div>
+
+                    <div class="mt-4 flex items-center gap-4">
+                        <span class="bg-slate-900 text-white text-[10px] font-black px-4 py-1.5 rounded-xl uppercase tracking-widest italic">
+                            Vendor
+                        </span>
+                        <p class="text-slate-500 text-sm font-bold italic">Member since March 2026</p>
                     </div>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="space-y-6">
-                    <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
-                        <h3 class="text-sm font-black text-slate-400 uppercase tracking-widest mb-4">Account Status</h3>
-                        <div class="space-y-4">
-                            <div class="flex items-center justify-between">
-                                <span class="text-slate-600 font-medium">Verification</span>
-                                <span class="flex items-center gap-1 text-green-600 font-bold text-sm">
-                                    <i data-lucide="badge-check" class="w-4 h-4"></i> Verified
-                                </span>
+                    
+                    <div class="bg-slate-900 p-6 rounded-3xl shadow-xl text-white border-b-4 border-blue-600">
+                        <h3 class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-6 italic border-b border-slate-800 pb-2">Business Metrics</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <p class="text-2xl font-black italic text-blue-400">156</p>
+                                <p class="text-[9px] uppercase font-bold text-slate-400">Live Products</p>
                             </div>
-                            <div class="flex items-center justify-between">
-                                <span class="text-slate-600 font-medium">Trust Score</span>
-                                <span class="text-blue-600 font-black">98%</span>
+                            <div>
+                                <p class="text-2xl font-black italic text-blue-400">892</p>
+                                <p class="text-[9px] uppercase font-bold text-slate-400">Total Sales</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="bg-blue-600 p-6 rounded-3xl shadow-xl shadow-blue-200 text-white">
-                        <h3 class="font-bold mb-2 flex items-center gap-2">
-                            <i data-lucide="zap" class="w-4 h-4"></i> Quick Stats
-                        </h3>
-                        <p class="text-blue-100 text-sm mb-4">Your activity in Nagarsewa this month.</p>
+                    <div class="bg-indigo-900 p-6 rounded-3xl shadow-xl text-white border-b-4 border-indigo-400">
+                        <h3 class="text-[10px] font-black text-indigo-300 uppercase tracking-widest mb-6 italic border-b border-indigo-800 pb-2">Shopping Stats</h3>
                         <div class="grid grid-cols-2 gap-4">
                             <div>
-                                <p class="text-2xl font-black">12</p>
-                                <p class="text-[10px] uppercase font-bold text-blue-200">Events</p>
+                                <p class="text-2xl font-black italic text-indigo-200">24</p>
+                                <p class="text-[9px] uppercase font-bold text-indigo-400">Total Orders</p>
                             </div>
                             <div>
-                                <p class="text-2xl font-black">04</p>
-                                <p class="text-[10px] uppercase font-bold text-blue-200">Meetings</p>
+                                <p class="text-2xl font-black italic text-indigo-200">12</p>
+                                <p class="text-[9px] uppercase font-bold text-indigo-400">In Wishlist</p>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
+                        <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 italic">Email Verification Status</h3>
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 flex items-center justify-between">
+                            <span class="text-xs font-black text-slate-900 uppercase italic">Verified</span>
+                            <div class="relative flex h-3 w-3">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <a href="/logout/" class="w-full flex items-center justify-center gap-3 p-4 rounded-2xl bg-white border border-slate-200 text-slate-700 font-black text-[10px] uppercase tracking-widest hover:bg-slate-50 transition shadow-sm">
+                            <i data-lucide="log-out" class="w-4 h-4 text-slate-400"></i> Logout Account
+                        </a>
+                        <button class="w-full flex items-center justify-center gap-3 p-4 rounded-2xl bg-red-50 border border-red-100 text-red-600 font-black text-[10px] uppercase tracking-widest hover:bg-red-100 transition">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i> Delete Identity
+                        </button>
                     </div>
                 </div>
 
-                <div class="md:col-span-2 space-y-6">
+                <div class="md:col-span-2 space-y-8">
+
                     <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
-                        <h3 class="text-xl font-black text-slate-900 mb-6 flex items-center gap-3 italic uppercase">
-                            <i data-lucide="info" class="w-5 h-5 text-blue-600"></i> Detailed Information
-                        </h3>
+                        <div class="flex items-center justify-between mb-8">
+                            <h3 class="text-xl font-black text-slate-900 flex items-center gap-3 italic uppercase">
+                                <i data-lucide="store" class="w-5 h-5 text-blue-600"></i> Vendor Identity
+                            </h3>
+                            <span class="text-[9px] font-black bg-blue-50 text-blue-600 px-3 py-1 rounded-full uppercase tracking-tighter">Business Info</span>
+                        </div>
                         
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                            <div class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-10">
+                            <div class="space-y-6">
                                 <div>
-                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Email Address</label>
-                                    <p class="text-slate-700 font-bold">samyog.dev@example.com</p>
+                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">Registered Shop Name</label>
+                                    <p class="text-slate-700 font-bold italic text-lg uppercase">Apex Sports Hub</p>
                                 </div>
                                 <div>
-                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Phone Number</label>
-                                    <p class="text-slate-700 font-bold">+977 98XXXXXXXX</p>
+                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1 text-blue-600">PAN Number</label>
+                                    <p class="text-slate-700 font-bold italic tracking-widest uppercase">609874532</p>
                                 </div>
                             </div>
-
-                            <div class="space-y-4">
+                            <div class="space-y-6">
                                 <div>
-                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Shop Name</label>
-                                    <p class="text-slate-700 font-bold">Apex Sports Gear</p>
+                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">Official Contact</label>
+                                    <p class="text-slate-700 font-bold italic">+977 9841XXXXXX</p>
                                 </div>
                                 <div>
-                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">PAN Number</label>
-                                    <p class="text-slate-700 font-bold">609874532</p>
+                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">Email Address</label>
+                                    <p class="text-slate-700 font-bold italic">samyog.vendor@apexstriker.com</p>
                                 </div>
                             </div>
                         </div>
 
-                        <hr class="my-8 border-slate-100">
+                        <hr class="my-10 border-slate-100">
 
                         <div>
-                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-2">Shop Address</label>
-                            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 flex items-start gap-3">
-                                <i data-lucide="navigation" class="w-5 h-5 text-blue-500 mt-0.5"></i>
-                                <p class="text-slate-600 font-medium text-sm leading-relaxed">
-                                    New Baneshwor, Ward No. 10,<br>
-                                    Kathmandu Metropolitan City, Nepal
+                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-3">Warehouse / Store Location</label>
+                            <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100 flex items-center gap-4">
+                                <div class="bg-blue-600 p-2 rounded-xl shadow-lg shadow-blue-100">
+                                    <i data-lucide="map-pin" class="w-5 h-5 text-white"></i>
+                                </div>
+                                <p class="text-slate-600 font-bold text-sm italic leading-relaxed">
+                                    Mid-Baneshwor, Ward No. 10, Kathmandu, Nepal
                                 </p>
                             </div>
                         </div>
                     </div>
+
+                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
+                        <div class="flex items-center justify-between mb-8">
+                            <h3 class="text-xl font-black text-slate-900 flex items-center gap-3 italic uppercase">
+                                <i data-lucide="user" class="w-5 h-5 text-indigo-600"></i> Shopper Profile
+                            </h3>
+                            <span class="text-[9px] font-black bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full uppercase tracking-tighter">Personal Info</span>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-10">
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">Email Address</label>
+                                    <p class="text-slate-700 font-bold italic">samyog.vendor@apexstriker.com</p>
+                                </div>
+                                <div>
+                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">Preferred Position</label>
+                                    <p class="text-slate-700 font-bold italic uppercase">Attacker</p>
+                                </div>
+                            </div>
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">Personal Contact</label>
+                                    <p class="text-slate-700 font-bold italic">+977 980XXXXXXX</p>
+                                </div>
+                                <div>
+                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1 text-slate-400">Registered City</label>
+                                    <p class="text-slate-700 font-bold italic uppercase">Lalitpur</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="my-10 border-slate-100">
+
+                        <div>
+                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-3">Primary Shipping Address</label>
+                            <div class="bg-indigo-50 p-5 rounded-2xl border border-indigo-100 flex items-center gap-4">
+                                <div class="bg-indigo-600 p-2 rounded-xl shadow-lg shadow-indigo-100">
+                                    <i data-lucide="truck" class="w-5 h-5 text-white"></i>
+                                </div>
+                                <p class="text-indigo-900 font-bold text-sm italic leading-relaxed">
+                                    House #45, Near Patan Durbar Square, Lalitpur, Nepal
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-
         </div>
     </main>
 
     {% include 'components/_footer.html' %}
 
     <script src="{% static 'js/lucide.min.js' %}"></script>
-    <script>lucide.createIcons();</script>
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>
