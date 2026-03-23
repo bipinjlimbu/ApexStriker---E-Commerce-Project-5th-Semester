@@ -1,1 +1,175 @@
-<h1> Edit Profile </h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Identity | ApexStriker</title>
+    {% load static %}
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+</head>
+
+<body class="bg-slate-50 flex flex-col min-h-screen">
+    {% include 'components/_navbar.html' %}
+
+    <main class="flex-grow py-12 px-4">
+        <div class="max-w-4xl mx-auto">
+            
+            <form method="POST" enctype="multipart/form-data" class="space-y-8">
+                {% csrf_token %}
+
+                <div class="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden">
+                    <div class="h-24 bg-gradient-to-r from-blue-700 to-indigo-900"></div>
+                    <div class="px-8 pb-8 flex flex-col md:flex-row items-end gap-6 -mt-10">
+                        <div class="relative group">
+                            <div class="w-32 h-32 rounded-3xl border-4 border-white bg-slate-100 shadow-lg overflow-hidden">
+                                {% if user.profile_picture %}
+                                    <img id="image-preview" src="{{ user.profile_picture.url }}" class="w-full h-full object-cover">
+                                {% else %}
+                                    <div id="image-placeholder" class="w-full h-full flex items-center justify-center bg-slate-200">
+                                        <i data-lucide="user" class="w-12 h-12 text-slate-400"></i>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <label for="profile_picture" class="absolute -bottom-2 -right-2 bg-blue-600 text-white p-2.5 rounded-2xl shadow-lg cursor-pointer hover:bg-blue-700 transition border-4 border-white">
+                                <i data-lucide="camera" class="w-5 h-5"></i>
+                                <input type="file" id="profile_picture" name="profile_picture" class="hidden" accept="image/*" onchange="previewImage(event)">
+                            </label>
+                        </div>
+                        <div class="mb-2">
+                            <h1 class="text-2xl font-black text-slate-900 italic uppercase">Modify <span class="text-blue-600">Identity</span></h1>
+                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] italic">Role: {{ user.role }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="md:col-span-2 space-y-8">
+                        <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
+                            <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-8 italic border-b pb-2">User Credentials</h3>
+                            
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <div class="space-y-1">
+                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">First Name</label>
+                                    <input type="text" name="first_name" value="{{ user.first_name }}" class="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-sm font-bold text-slate-700 focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition italic uppercase">
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">Last Name</label>
+                                    <input type="text" name="last_name" value="{{ user.last_name }}" class="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-sm font-bold text-slate-700 focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition italic uppercase">
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">Phone Number</label>
+                                    <input type="text" name="phone" value="{{ user.phone }}" class="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-sm font-bold text-slate-700 focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition italic">
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="text-[10px] font-black text-slate-300 uppercase tracking-widest ml-2 italic">Username (Locked)</label>
+                                    <input type="text" value="{{ user.username }}" readonly class="w-full bg-slate-100 border border-slate-100 rounded-2xl px-5 py-4 text-sm font-bold text-slate-400 cursor-not-allowed italic">
+                                </div>
+                            </div>
+                        </div>
+
+                        {% if user.role == 'vendor' %}
+                        <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
+                            <h3 class="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-8 italic border-b border-blue-50 pb-2">Vendor Repository</h3>
+                            <div class="grid grid-cols-1 gap-6">
+                                <div class="space-y-1">
+                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">Shop Name</label>
+                                    <input type="text" name="shop_name" value="{{ user.vendor_profile.shop_name }}" class="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-sm font-bold text-slate-700 focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition italic uppercase">
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="space-y-1">
+                                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">City</label>
+                                        <input type="text" name="city" value="{{ user.vendor_profile.city }}" class="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-sm font-bold text-slate-700 focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition italic uppercase">
+                                    </div>
+                                    <div class="space-y-1">
+                                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">PAN Number</label>
+                                        <input type="text" name="pan_number" value="{{ user.vendor_profile.pan_number }}" class="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-sm font-bold text-slate-700 focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition italic uppercase">
+                                    </div>
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">Shop Address</label>
+                                    <textarea name="shop_address" rows="3" class="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-sm font-bold text-slate-700 focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition italic">{{ user.vendor_profile.shop_address }}</textarea>
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">Bank Account Number</label>
+                                    <input type="text" name="bank_account_number" value="{{ user.vendor_profile.bank_account_number }}" class="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-sm font-bold text-slate-700 focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition italic">
+                                </div>
+                            </div>
+                        </div>
+
+                        {% elif user.role == 'customer' %}
+                        <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
+                            <h3 class="text-[10px] font-black text-indigo-600 uppercase tracking-widest mb-8 italic border-b border-indigo-50 pb-2">Customer Preferences</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <div class="space-y-1">
+                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">Preferred Position</label>
+                                    <select name="position" class="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-sm font-black text-slate-700 focus:ring-4 focus:ring-indigo-50 outline-none appearance-none italic uppercase">
+                                        <option value="attacker" {% if user.customer_profile.position == 'attacker' %}selected{% endif %}>Attacker</option>
+                                        <option value="midfielder" {% if user.customer_profile.position == 'midfielder' %}selected{% endif %}>Midfielder</option>
+                                        <option value="defender" {% if user.customer_profile.position == 'defender' %}selected{% endif %}>Defender</option>
+                                        <option value="goalkeeper" {% if user.customer_profile.position == 'goalkeeper' %}selected{% endif %}>Goalkeeper</option>
+                                    </select>
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">City</label>
+                                    <input type="text" name="city" value="{{ user.customer_profile.city }}" class="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-sm font-bold text-slate-700 focus:ring-4 focus:ring-indigo-50 outline-none transition italic uppercase">
+                                </div>
+                                <div class="md:col-span-2 space-y-1">
+                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">Shipping Address</label>
+                                    <textarea name="shipping_address" rows="3" class="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-sm font-bold text-slate-700 focus:ring-4 focus:ring-indigo-50 outline-none transition italic">{{ user.customer_profile.shipping_address }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="bg-slate-900 p-8 rounded-3xl shadow-xl text-white">
+                            <h3 class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-6 italic border-b border-slate-800 pb-2">Finalize</h3>
+                            <p class="text-[11px] text-slate-400 mb-6 italic uppercase font-bold leading-relaxed">Ensure all data is accurate. Changes are synced across the entire platform.</p>
+                            
+                            <button type="submit" class="w-full bg-blue-600 text-white font-black py-4 rounded-2xl hover:bg-blue-700 transition flex items-center justify-center gap-2 uppercase text-[10px] tracking-widest shadow-lg shadow-blue-900/20">
+                                <i data-lucide="save" class="w-4 h-4"></i> Sync Identity
+                            </button>
+                            <a href="/profile/" class="w-full mt-4 flex items-center justify-center py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-white transition">
+                                Discard Changes
+                            </a>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm text-center">
+                            <i data-lucide="shield-check" class="w-8 h-8 text-green-500 mx-auto mb-3"></i>
+                            <p class="text-[9px] font-black text-slate-400 uppercase tracking-tighter">Security Verified Connection</p>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </main>
+
+    {% include 'components/_footer.html' %}
+
+    <script src="{% static 'js/lucide.min.js' %}"></script>
+    <script>
+        lucide.createIcons();
+        function previewImage(event) {
+            const input = event.target;
+            const preview = document.getElementById('image-preview');
+            const placeholder = document.getElementById('image-placeholder');
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    if (preview) preview.src = e.target.result;
+                    else {
+                        const img = document.createElement('img');
+                        img.id = 'image-preview';
+                        img.src = e.target.result;
+                        img.className = 'w-full h-full object-cover';
+                        placeholder.replaceWith(img);
+                    }
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+</body>
+</html>
