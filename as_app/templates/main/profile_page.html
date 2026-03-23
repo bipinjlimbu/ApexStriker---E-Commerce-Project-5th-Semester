@@ -28,6 +28,7 @@
                             </div>
                             {% endif %}
                         </div>
+                        {% if user.id == profile.id %}
                         <div class="flex flex-wrap gap-3">
                             <a href="#" class="bg-white text-slate-700 font-black px-6 py-3 rounded-2xl border border-slate-200 hover:bg-slate-50 transition flex items-center gap-2 uppercase text-[10px] tracking-widest shadow-sm">
                                 <i data-lucide="edit-3" class="w-4 h-4 text-blue-600"></i> Edit Profile
@@ -36,6 +37,7 @@
                                 <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Access Dashboard
                             </a>
                         </div>
+                        {% endif %}
                     </div>
 
                     <div class="flex items-center gap-3">
@@ -130,6 +132,7 @@
                     </div>
                     {% endif %}
 
+                    {% if user.id == profile.id %}
                     <div class="space-y-3">
                         <a href="/logout/" class="w-full flex items-center justify-center gap-3 p-4 rounded-2xl bg-white border border-slate-200 text-slate-700 font-black text-[10px] uppercase tracking-widest hover:bg-slate-50 transition shadow-sm">
                             <i data-lucide="log-out" class="w-4 h-4 text-slate-400"></i> Logout Account
@@ -138,6 +141,16 @@
                             <i data-lucide="trash-2" class="w-4 h-4"></i> Delete Identity
                         </button>
                     </div>
+                    {% else %}
+                    <div class="space-y-3">
+                        <a href="/contact/" class="w-full flex items-center justify-center gap-3 p-4 rounded-2xl bg-white border border-slate-200 text-slate-700 font-black text-[10px] uppercase tracking-widest hover:bg-slate-50 transition shadow-sm">
+                            <i data-lucide="mail" class="w-4 h-4 text-slate-400"></i> Contact User
+                        </a>
+                        <button class="w-full flex items-center justify-center gap-3 p-4 rounded-2xl bg-red-50 border border-red-100 text-red-600 font-black text-[10px] uppercase tracking-widest hover:bg-red-100 transition">
+                            <i data-lucide="alert-triangle" class="w-4 h-4"></i> Report Profile
+                        </button>
+                    </div>
+                    {% endif %}
                 </div>
 
                 <div class="md:col-span-2 space-y-8">
