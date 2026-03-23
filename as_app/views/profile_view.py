@@ -9,4 +9,5 @@ def profile_view(request, user_id):
 
 @login_required
 def edit_profile_view(request, user_id):
-    return render(request, 'main/edit_profile_page.html')
+    profile = User.objects.get(id=user_id)
+    return render(request, 'main/edit_profile_page.html', {'profile': profile})
