@@ -136,3 +136,8 @@ def login_view(request):
         return render(request, 'auth/login_page.html', {'errors': errors,'data': request.POST})
             
     return render(request, 'auth/login_page.html')
+
+def logout_view(request):
+    logout(request)
+    messages.success(request, "You have been logged out.")
+    return redirect('/')
