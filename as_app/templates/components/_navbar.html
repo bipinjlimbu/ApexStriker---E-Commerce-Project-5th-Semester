@@ -33,7 +33,7 @@
 
                 {% if user.is_authenticated %}
                     <div class="w-9 h-9 bg-blue-100 rounded-full flex items-center justify-center text-blue-700 border border-blue-200">
-                        <a href="/profile/" class="w-full h-full rounded-full overflow-hidden flex items-center justify-center">
+                        <a href="/profile/{{ user.id }}" class="w-full h-full rounded-full overflow-hidden flex items-center justify-center">
                         {% if user.profile_picture %}
                             <img src="{{ user.profile_picture.url }}" alt="Profile Picture" class="w-full h-full object-cover rounded-full">
                         {% else %}
