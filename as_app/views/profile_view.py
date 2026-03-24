@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from ..models import User, Vendor, Customer
+from ..models import User, Vendor
 
 @login_required
 def profile_view(request, user_id):
@@ -12,7 +12,7 @@ def profile_view(request, user_id):
 def edit_profile_view(request, user_id):
     if request.user.id != user_id:
         messages.error(request, "You are not authorized to edit this profile.")
-        return render(request, 'main/profile_page.html', {'profile': request.user})
+        return redirect(f'/profile/{user_id}/')
     
     user = User.objects.get(id=user_id)
     
@@ -66,36 +66,36 @@ def edit_profile_view(request, user_id):
             if not bank_account_number:
                 errors['bank_account_number'] = "Bank account number is required for vendors."
                               
-        if not errors:
-            user.username = username
-            user.first_name = first_name
-            user.last_name = last_name
-            user.email = email
-            user.phone = phone
-            if profile_picture:
-                user.profile_picture = profile_picture
-            user.save()
-            
-            if user.role == User.Role.CUSTOMER:
-                user.customer_profile.shipping_address = shipping_address
-                user.customer_profile.city = city_customer
-                user.customer_profile.position = position
-                user.customer_profile.save()
-                
-            elif user.role == User.Role.VENDOR:
-                user.vendor_profile.shop_name = shop_name
-                user.vendor_profile.shop_address = shop_address
-                user.vendor_profile.city = city_vendor
-                user.vendor_profile.pan_number = pan_number
-                if user.vendor_profile.bank_account_number != bank_account_number:
-                    user.vendor_profile.bank_account_number = bank_account_number
-                    user.vendor_profile.status = Vendor.Status.PENDING
-                    messages.warning(request, "Changes to bank account number require re-verification. Your vendor status has been set to pending until verification is complete.")
-                user.vendor_profile.save()
-                
-            messages.success(request, "Profile updated successfully.")
-            return redirect(f'/profile/{user.id}/')
+        if errors:
+            return render(request, 'main/edit_profile_page.html', { 'user': user, 'data': request.POST, 'errors': errors })
         
-        return render(request, 'main/edit_profile_page.html', { 'user': user, 'data': request.POST, 'errors': errors })
-
-    return render(request, 'main/edit_profile_page.html',{'user': user})
+        user.username = username
+        user.first_name = first_name
+        user.last_name = last_name
+        user.email = email
+        user.phone = phone
+        if profile_picture:
+            user.profile_picture = profile_picture
+        user.save()
+        
+        if user.role == User.Role.CUSTOMER:
+            user.customer_profile.shipping_address = shipping_address
+            user.customer_profile.city = city_customer
+            user.customer_profile.position = position
+            user.customer_profile.save()
+            
+        elif user.role == User.Role.VENDOR:
+            user.vendor_profile.shop_name = shop_name
+            user.vendor_profile.shop_address = shop_address
+            user.vendor_profile.city = city_vendor
+            user.vendor_profile.pan_number = pan_number
+            if user.vendor_profile.bank_account_number != bank_account_number:
+                user.vendor_profile.bank_account_number = bank_account_number
+                user.vendor_profile.status = Vendor.Status.PENDING
+                messages.warning(request, "Changes to bank account number require re-verification. Your vendor status has been set to pending until verification is complete.")
+            user.vendor_profile.save()
+            
+        messages.success(request, "Profile updated successfully.")
+        return redirect(f'/profile/{user.id}/')
+        
+    return render(request, 'main/edit_profile_page.html',{"user": user})
