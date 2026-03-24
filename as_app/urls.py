@@ -1,7 +1,7 @@
 from django.urls import path
 from .views.auth_view import register_view, login_view, logout_view
 from .views.main_view import home_view, verify_email_view
-from .views.profile_view import profile_view, edit_profile_view
+from .views.profile_view import profile_view, edit_profile_view, resend_verification_email
 
 urlpatterns = [
     path('', home_view, name='home_page'),
@@ -11,4 +11,5 @@ urlpatterns = [
     path('logout/', logout_view, name='logout_page'),
     path('profile/<int:user_id>/', profile_view, name='profile_page'),
     path('profile/edit/<int:user_id>/', edit_profile_view, name='edit_profile_page'),
+    path('profile/resend_verification/<int:user_id>/', resend_verification_email, name='resend_verification_email'),
 ]
