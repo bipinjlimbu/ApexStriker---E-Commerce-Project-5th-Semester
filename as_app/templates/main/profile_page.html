@@ -112,7 +112,6 @@
                     </div>
                     {% endif %}
 
-                    {% if profile.role != 'admin' %}
                     <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
                         <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 italic">Email Verification Status</h3>
                         
@@ -140,7 +139,6 @@
                             </div>
                         </div>
                     </div>
-                    {% endif %}
 
                     {% if user.id == profile.id %}
                     <div class="space-y-3">
