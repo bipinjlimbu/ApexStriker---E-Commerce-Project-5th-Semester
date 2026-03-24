@@ -10,6 +10,7 @@ class User(AbstractUser):
     phone = models.CharField(max_length=20, blank=True)
     role = models.CharField(max_length=20, choices=Role.choices, default=Role.CUSTOMER)
     profile_picture = models.ImageField(upload_to='images/user/', blank=True, null=True)
+    auth_token = models.CharField(max_length=255, blank=True, null=True)
     is_verified = models.BooleanField(default=False)
     
     def save(self, *args, **kwargs):
