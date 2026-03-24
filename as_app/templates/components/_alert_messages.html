@@ -1,5 +1,7 @@
-{% for message in messages %}
-    <script>
-        alert("{{message}}");
-    </script>
-{% endfor %}
+{% if messages %}
+     <script>
+         {% for message in messages %}
+             alert("{{ message }}");
+         {% endfor %}
+     </script>
+ {% endif %}
