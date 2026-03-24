@@ -82,14 +82,14 @@ def edit_profile_view(request, user_id):
         
         if user.role == User.Role.CUSTOMER:
             customer.shipping_address = shipping_address
-            customer.city = city_customer
+            customer.city_customer = city_customer
             customer.position = position
             customer.save()
             
         elif user.role == User.Role.VENDOR:
             vendor.shop_name = shop_name
             vendor.shop_address = shop_address
-            vendor.city = city_vendor
+            vendor.city_vendor = city_vendor
             vendor.pan_number = pan_number
             if vendor.bank_account_number != bank_account_number:
                 vendor.bank_account_number = bank_account_number
