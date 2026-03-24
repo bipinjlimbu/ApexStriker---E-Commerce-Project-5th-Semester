@@ -15,6 +15,8 @@ def edit_profile_view(request, user_id):
         return redirect(f'/profile/{user_id}/')
     
     user = User.objects.get(id=user_id)
+    vendor = user.vendor_profile if user.role == User.Role.VENDOR else None
+    customer = user.customer_profile if user.role == User.Role.CUSTOMER else None
     
     errors = {}
     if request.method == 'POST':
@@ -79,21 +81,21 @@ def edit_profile_view(request, user_id):
         user.save()
         
         if user.role == User.Role.CUSTOMER:
-            user.customer_profile.shipping_address = shipping_address
-            user.customer_profile.city = city_customer
-            user.customer_profile.position = position
-            user.customer_profile.save()
+            customer.shipping_address = shipping_address
+            customer.city = city_customer
+            customer.position = position
+            customer.save()
             
         elif user.role == User.Role.VENDOR:
-            user.vendor_profile.shop_name = shop_name
-            user.vendor_profile.shop_address = shop_address
-            user.vendor_profile.city = city_vendor
-            user.vendor_profile.pan_number = pan_number
-            if user.vendor_profile.bank_account_number != bank_account_number:
-                user.vendor_profile.bank_account_number = bank_account_number
-                user.vendor_profile.status = Vendor.Status.PENDING
+            vendor.shop_name = shop_name
+            vendor.shop_address = shop_address
+            vendor.city = city_vendor
+            vendor.pan_number = pan_number
+            if vendor.bank_account_number != bank_account_number:
+                vendor.bank_account_number = bank_account_number
+                vendor.status = Vendor.Status.PENDING
                 messages.warning(request, "Changes to bank account number require re-verification. Your vendor status has been set to pending until verification is complete.")
-            user.vendor_profile.save()
+            vendor.save()
             
         messages.success(request, "Profile updated successfully.")
         return redirect(f'/profile/{user.id}/')
