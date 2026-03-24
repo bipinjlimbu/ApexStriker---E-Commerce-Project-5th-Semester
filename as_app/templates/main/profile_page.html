@@ -115,19 +115,27 @@
                     {% if profile.role != 'admin' %}
                     <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
                         <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 italic">Email Verification Status</h3>
+                        
                         <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 flex items-center justify-between">
-                            {% if profile.is_verified %}
-                            <span class="text-xs font-black text-slate-900 uppercase italic">Verified</span>
-                            {% else %}
-                            <span class="text-xs font-black text-slate-900 uppercase italic">Not Verified</span>
-                            {% endif %}
+                            <div class="flex flex-col gap-1">
+                                {% if profile.is_verified %}
+                                    <span class="text-xs font-black text-slate-900 uppercase italic">Verified</span>
+                                {% else %}
+                                    <span class="text-xs font-black text-slate-900 uppercase italic">Not Verified</span>
+                                    <a href="/profile/resend_verification/{{ profile.id }}/" 
+                                    class="text-[9px] font-bold text-blue-600 uppercase tracking-tighter hover:text-blue-800 transition-colors w-max italic">
+                                    Click to Resend Link →
+                                    </a>
+                                {% endif %}
+                            </div>
+
                             <div class="relative flex h-3 w-3">
                                 {% if profile.is_verified %}
-                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                                <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
                                 {% else %}
-                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                                <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
                                 {% endif %}
                             </div>
                         </div>
