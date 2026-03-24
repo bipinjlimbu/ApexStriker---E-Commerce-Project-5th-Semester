@@ -96,8 +96,8 @@
                                 <div class="grid grid-cols-2 gap-4">
                                     <div class="space-y-1">
                                         <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">City</label>
-                                        <input type="text" name="city_vendor" {% if data %} value="{{ data.city_vendor }}" {% else %} value="{{ user.vendor_profile.city_vendor }}" {% endif %} class="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-sm font-bold text-slate-700 focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition italic">
-                                        <p class="text-[9px] text-red-500 mt-1 italic">{{ errors.city_vendor }}</p>
+                                        <input type="text" name="city" {% if data %} value="{{ data.city }}" {% else %} value="{{ user.vendor_profile.city }}" {% endif %} class="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-sm font-bold text-slate-700 focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition italic">
+                                        <p class="text-[9px] text-red-500 mt-1 italic">{{ errors.city }}</p>
                                     </div>
                                     <div class="space-y-1">
                                         <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">PAN Number</label>
@@ -133,8 +133,8 @@
                                 </div>
                                 <div class="space-y-1">
                                     <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">City</label>
-                                    <input type="text" name="city_customer" {% if data %} value="{{ data.city_customer }}" {% else %} value="{{ user.customer_profile.city_customer }}" {% endif %} class="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-sm font-bold text-slate-700 focus:ring-4 focus:ring-indigo-50 outline-none transition italic ">
-                                    <p class="text-[9px] text-red-500 mt-1 italic">{{ errors.city_customer }}</p>
+                                    <input type="text" name="city" {% if data %} value="{{ data.city }}" {% else %} value="{{ user.customer_profile.city }}" {% endif %} class="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-sm font-bold text-slate-700 focus:ring-4 focus:ring-indigo-50 outline-none transition italic ">
+                                    <p class="text-[9px] text-red-500 mt-1 italic">{{ errors.city }}</p>
                                 </div>
                                 <div class="md:col-span-2 space-y-1">
                                     <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">Shipping Address</label>
