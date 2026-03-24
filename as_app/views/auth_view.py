@@ -73,6 +73,12 @@ def register_view(request):
                 
         if not errors:
             try:
+                def send_email_async(subject, message, recipient):
+                    try:
+                        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [recipient], fail_silently=False)
+                    except Exception as e:
+                        print(f"Error sending email: {e}")
+
                 with transaction.atomic():
                     user = User.objects.create_user(
                         username=username,
@@ -104,30 +110,14 @@ def register_view(request):
                             status=Vendor.Status.PENDING
                         )
                         
-                    verify_url = f"http://127.0.0.1:8000/verify/{auth_token}/"
-                    subject = "Welcome to ApexStriker - Verify Your Identity"
-                    message = f"Hi {username},\n\nWelcome! Please click the link below to verify your email and activate your account:\n\n{verify_url}\n\nIf you didn't create this account, please ignore this email.\n\nBest regards,\nApexStriker Team"
+                verify_url = f"http://127.0.0.1:8000/verify/{auth_token}/"
+                subject = "Welcome to ApexStriker - Verify Your Identity"
+                message = f"Hi {username},\n\nPlease click the link below to verify your email:\n\n{verify_url} \n\nThank you for joining ApexStriker!"
+                
+                threading.Thread(target=send_email_async, args=(subject, message, email)).start()
                     
-                    def send_email_async(subject, message, recipient):
-                        try:
-                            send_mail(
-                                subject,
-                                message,
-                                settings.EMAIL_HOST_USER,
-                                [recipient],
-                                fail_silently=False,
-                            )
-                        except Exception as e:
-                            print(f"Email failed to send: {e}")
-
-                    email_thread = threading.Thread(
-                        target=send_email_async, 
-                        args=(subject, message, email)
-                    )
-                    email_thread.start()
-                        
-                    messages.success(request, "Registration successful! Please check your email to verify your account.")
-                    return redirect('/login/')
+                messages.success(request, "Registration successful! Please check your email to verify your account.")
+                return redirect('/login/')
             except Exception as e:
                 print("Error during registration:", e)
                 messages.error(request, "An error occurred during registration. Please try again.")
