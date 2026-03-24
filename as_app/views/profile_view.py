@@ -26,12 +26,11 @@ def edit_profile_view(request, user_id):
         email = request.POST.get('email')
         phone = request.POST.get('phone')
         shipping_address = request.POST.get('shipping_address')
-        city_customer = request.POST.get('city_customer')
+        city = request.POST.get('city')
         position = request.POST.get('position')
         shop_name = request.POST.get('shop_name')
         shop_address = request.POST.get('shop_address')
         pan_number = request.POST.get('pan_number')
-        city_vendor = request.POST.get('city_vendor')
         bank_account_number = request.POST.get('bank_account_number')
         profile_picture = request.FILES.get('profile_picture')
         
@@ -53,8 +52,8 @@ def edit_profile_view(request, user_id):
         if user.role == User.Role.CUSTOMER:
             if not shipping_address:
                 errors['shipping_address'] = "Shipping address is required for customers."
-            if not city_customer:
-                errors['city_customer'] = "City is required for customers."
+            if not city:
+                errors['city'] = "City is required for customers."
         
         if user.role == User.Role.VENDOR:
             if not shop_name:
@@ -63,8 +62,8 @@ def edit_profile_view(request, user_id):
                 errors['shop_address'] = "Shop address is required for vendors."
             if not pan_number:
                 errors['pan_number'] = "PAN number is required for vendors."
-            if not city_vendor:
-                errors['city_vendor'] = "City is required for vendors."
+            if not city:
+                errors['city'] = "City is required for vendors."
             if not bank_account_number:
                 errors['bank_account_number'] = "Bank account number is required for vendors."
                               
@@ -82,14 +81,14 @@ def edit_profile_view(request, user_id):
         
         if user.role == User.Role.CUSTOMER:
             customer.shipping_address = shipping_address
-            customer.city_customer = city_customer
+            customer.city = city
             customer.position = position
             customer.save()
             
         elif user.role == User.Role.VENDOR:
             vendor.shop_name = shop_name
             vendor.shop_address = shop_address
-            vendor.city_vendor = city_vendor
+            vendor.city = city
             vendor.pan_number = pan_number
             if vendor.bank_account_number != bank_account_number:
                 vendor.bank_account_number = bank_account_number
