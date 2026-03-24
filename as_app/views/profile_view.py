@@ -35,6 +35,7 @@ def resend_verification_email(request, user_id):
     
     threading.Thread(target=send_email_async, args=(subject, message, user.email)).start()
     
+    messages.success(request, "A new verification email has been sent. Please check your inbox.")
     return redirect(f'/profile/{user_id}/')
 
 @login_required
