@@ -645,6 +645,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-top: 1.5rem;
 }
 
+.mt-8 {
+  margin-top: 2rem;
+}
+
 .block {
   display: block;
 }
@@ -729,6 +733,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: 16rem;
 }
 
+.h-10 {
+  height: 2.5rem;
+}
+
 .min-h-screen {
   min-height: 100vh;
 }
@@ -784,6 +792,18 @@ Ensure the default browser behavior of the `hidden` attribute.
 .w-max {
   width: -moz-max-content;
   width: max-content;
+}
+
+.w-24 {
+  width: 6rem;
+}
+
+.w-10 {
+  width: 2.5rem;
+}
+
+.w-1 {
+  width: 0.25rem;
 }
 
 .max-w-md {
@@ -1016,6 +1036,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-radius: 0.375rem;
 }
 
+.rounded-\[2\.5rem\] {
+  border-radius: 2.5rem;
+}
+
 .border {
   border-width: 1px;
 }
@@ -1142,6 +1166,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-color: rgb(255 228 230 / var(--tw-border-opacity));
 }
 
+.border-slate-50 {
+  --tw-border-opacity: 1;
+  border-color: rgb(248 250 252 / var(--tw-border-opacity));
+}
+
 .bg-slate-50 {
   --tw-bg-opacity: 1;
   background-color: rgb(248 250 252 / var(--tw-bg-opacity));
@@ -1264,6 +1293,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(225 29 72 / var(--tw-bg-opacity));
 }
 
+.bg-slate-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(203 213 225 / var(--tw-bg-opacity));
+}
+
 .bg-gradient-to-r {
   background-image: linear-gradient(to right, var(--tw-gradient-stops));
 }
@@ -1273,8 +1307,17 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(29 78 216 / 0));
 }
 
+.from-slate-800 {
+  --tw-gradient-from: #1e293b;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(30 41 59 / 0));
+}
+
 .to-indigo-900 {
   --tw-gradient-to: #312e81;
+}
+
+.to-slate-900 {
+  --tw-gradient-to: #0f172a;
 }
 
 .fill-current {
@@ -1462,6 +1505,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .pb-2 {
   padding-bottom: 0.5rem;
+}
+
+.pb-10 {
+  padding-bottom: 2.5rem;
 }
 
 .text-center {
@@ -1767,6 +1814,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-shadow: var(--tw-shadow-colored);
 }
 
+.shadow-slate-200\/60 {
+  --tw-shadow-color: rgb(226 232 240 / 0.6);
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
 .outline-none {
   outline: 2px solid transparent;
   outline-offset: 2px;
@@ -1870,6 +1922,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .hover\:bg-red-100:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(254 226 226 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-slate-800:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(30 41 59 / var(--tw-bg-opacity));
 }
 
 .hover\:text-blue-600:hover {

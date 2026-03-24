@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Identity Verification | ApexStriker</title>
+    {% load static %}
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+</head>
+
+<body class="bg-slate-50 flex flex-col min-h-screen">
+    {% include 'components/_navbar.html' %}
+
+    <main class="flex-grow flex items-center justify-center py-12 px-4">
+        <div class="max-w-md w-full">
+            
+            <div class="bg-white rounded-[2.5rem] shadow-xl border border-slate-100 overflow-hidden shadow-slate-200/60">
+                
+                <div class="h-24 bg-gradient-to-r {% if status == 'success' %}from-blue-700 to-indigo-900{% else %}from-slate-800 to-slate-900{% endif %}"></div>
+                
+                <div class="px-8 pb-10 text-center">
+                    <div class="relative flex justify-center -mt-12 mb-6">
+                        <div class="relative flex h-24 w-24">
+                            {% if status == 'success' %}
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-3xl bg-green-400 opacity-20"></span>
+                                <div class="relative rounded-3xl border-4 border-white bg-green-50 w-24 h-24 flex items-center justify-center shadow-lg">
+                                    <i data-lucide="shield-check" class="w-10 h-10 text-green-500"></i>
+                                </div>
+                            {% else %}
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-3xl bg-red-400 opacity-20"></span>
+                                <div class="relative rounded-3xl border-4 border-white bg-red-50 w-24 h-24 flex items-center justify-center shadow-lg">
+                                    <i data-lucide="shield-alert" class="w-10 h-10 text-red-500"></i>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 italic">
+                        Security Terminal
+                    </h3>
+                    
+                    <h1 class="text-2xl font-black text-slate-900 tracking-tight italic uppercase mb-4">
+                        {% if status == 'success' %}
+                            Verification <span class="text-blue-600">Complete</span>
+                        {% else %}
+                            Access <span class="text-red-500">Denied</span>
+                        {% endif %}
+                    </h1>
+
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100 mb-8">
+                        <p class="text-slate-600 text-sm font-bold italic leading-relaxed">
+                        {% for message in messages %}
+                            {{ message }}
+                        {% endfor %}
+                        </p>
+                    </div>
+
+                    <div class="space-y-3">
+                        {% if status == 'success' %}
+                            <a href="/profile/{{ user.id }}/" 
+                               class="w-full bg-blue-600 text-white font-black px-6 py-4 rounded-2xl hover:bg-blue-700 transition flex items-center justify-center gap-2 uppercase text-[10px] tracking-widest shadow-lg shadow-blue-200 italic">
+                                <i data-lucide="log-in" class="w-4 h-4"></i> Go to Profile
+                            </a>
+                        {% else %}
+                            <a href="/profile/resend_verification/{{ user.id }}/" 
+                               class="w-full bg-slate-900 text-white font-black px-6 py-4 rounded-2xl hover:bg-slate-800 transition flex items-center justify-center gap-2 uppercase text-[10px] tracking-widest shadow-lg italic">
+                                <i data-lucide="refresh-cw" class="w-4 h-4"></i> Request New Link
+                            </a>
+                            <a href="/register/" 
+                               class="w-full bg-white text-slate-500 font-black px-6 py-4 rounded-2xl border border-slate-200 hover:bg-slate-50 transition flex items-center justify-center gap-2 uppercase text-[10px] tracking-widest italic">
+                                Back to Registration
+                            </a>
+                        {% endif %}
+                    </div>
+
+                    <div class="mt-8 pt-6 border-t border-slate-50 flex justify-center items-center gap-2">
+                        <div class="h-1 w-1 rounded-full bg-slate-300"></div>
+                        <p class="text-[9px] font-black text-slate-300 uppercase tracking-widest italic">
+                            ApexStriker Identity System
+                        </p>
+                        <div class="h-1 w-1 rounded-full bg-slate-300"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    {% include 'components/_footer.html' %}
+
+    <script src="{% static 'js/lucide.min.js' %}"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

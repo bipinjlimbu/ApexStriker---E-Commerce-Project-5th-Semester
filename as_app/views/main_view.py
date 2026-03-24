@@ -18,4 +18,4 @@ def verify_email_view(request, token):
     except User.DoesNotExist:
         messages.error(request, "Invalid verification token.")
     
-    return render(request, 'main/verification_result.html')
+    return render(request, 'main/verification_result_page.html', {'status': 'success' if user.is_verified else 'error', 'user': user})
