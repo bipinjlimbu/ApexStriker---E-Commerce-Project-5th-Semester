@@ -1,12 +1,41 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.core.mail import send_mail
+from django.conf import settings
 from ..models import User, Vendor
+import uuid
+import threading
 
 @login_required
 def profile_view(request, user_id):
     profile = User.objects.get(id=user_id)
     return render(request, 'main/profile_page.html', {'profile': profile})
+
+@login_required
+def resend_verification_email(request, user_id):
+    user = User.objects.get(id=user_id)
+    if user.is_verified:
+        messages.info(request, "Your email is already verified.")
+        return redirect(f'/profile/{user_id}/')
+    
+    def send_email_async(subject, message, recipient):
+        try:
+            send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [recipient], fail_silently=False)
+        except Exception as e:
+            print(f"Error sending email: {e}")
+    
+    auth_token = str(uuid.uuid4())
+    user.auth_token = auth_token
+    user.save()
+    
+    verify_url = f"http://127.0.0.1:8000/verify/{auth_token}/"
+    subject = "ApexStriker - Verify Your Email"
+    message = f"Hi {user.username},\n\nPlease click the link below to verify your email:\n\n{verify_url} \n\nThank you for being a part of ApexStriker!"
+    
+    threading.Thread(target=send_email_async, args=(subject, message, user.email)).start()
+    
+    return redirect(f'/profile/{user_id}/')
 
 @login_required
 def edit_profile_view(request, user_id):
@@ -100,3 +129,4 @@ def edit_profile_view(request, user_id):
         return redirect(f'/profile/{user.id}/')
         
     return render(request, 'main/edit_profile_page.html',{"user": user})
+
