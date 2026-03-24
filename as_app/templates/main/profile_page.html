@@ -139,9 +139,11 @@
                         <a href="/logout/" class="w-full flex items-center justify-center gap-3 p-4 rounded-2xl bg-white border border-slate-200 text-slate-700 font-black text-[10px] uppercase tracking-widest hover:bg-slate-50 transition shadow-sm">
                             <i data-lucide="log-out" class="w-4 h-4 text-slate-400"></i> Logout Account
                         </a>
+                        {% if not user.is_superuser %}
                         <button class="w-full flex items-center justify-center gap-3 p-4 rounded-2xl bg-red-50 border border-red-100 text-red-600 font-black text-[10px] uppercase tracking-widest hover:bg-red-100 transition">
                             <i data-lucide="trash-2" class="w-4 h-4"></i> Delete Identity
                         </button>
+                        {% endif %}
                     </div>
                     {% else %}
                     <div class="space-y-3">
