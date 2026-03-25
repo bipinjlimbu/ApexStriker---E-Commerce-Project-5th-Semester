@@ -114,6 +114,10 @@ def register_view(request):
                             id_proof=id_proof,
                             status=Vendor.Status.PENDING
                         )
+                        subject = "Pending Vendor Registration - ApexStriker"
+                        message = f"Hi {first_name},\n\nThank you for registering as a vendor on ApexStriker. Your account is currently under review. We will notify you once it has been approved."
+                            
+                        threading.Thread(target=send_verification_email, args=(subject, message, email)).start()
                         
                 verify_url = f"http://127.0.0.1:8000/verify/{auth_token}/"
                 subject = "Welcome to the ApexStriker - Verify Your Email"
