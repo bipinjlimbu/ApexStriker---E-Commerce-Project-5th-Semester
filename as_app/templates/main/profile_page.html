@@ -51,6 +51,16 @@
                             <i data-lucide="check-circle" class="w-4 h-4 fill-white text-blue-600"></i>
                             <span class="text-[9px] font-black ml-1.5 uppercase tracking-wider">Trusted</span>
                         </div>
+                        {% elif profile.role == 'vendor' and profile.vendor_profile.status != 'approved' %}
+                        <div class="flex items-center bg-yellow-500 text-white px-3 py-1 rounded-full shadow-md shadow-yellow-100">
+                            <i data-lucide="alert-triangle" class="w-4 h-4 fill-white text-yellow-500"></i>
+                            <span class="text-[9px] font-black ml-1.5 uppercase tracking-wider">{{ profile.vendor_profile.status|title }} Approval</span>
+                        </div>
+                        {% elif profile.role == 'customer' and profile.is_verified %}
+                        <div class="flex items-center bg-green-500 text-white px-3 py-1 rounded-full shadow-md shadow-green-100">
+                            <i data-lucide="check-circle" class="w-4 h-4 fill-white text-green-500"></i>
+                            <span class="text-[9px] font-black ml-1.5 uppercase tracking-wider">Verified</span>
+                        </div>
                         {% endif %}
                     </div>
 
