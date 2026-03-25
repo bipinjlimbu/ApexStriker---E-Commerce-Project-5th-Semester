@@ -99,14 +99,14 @@
                     </div>
                     <div class="space-y-1">
                         <label class="text-sm font-bold text-slate-700 flex items-center gap-2"><i data-lucide="lock" class="w-4 h-4"></i> Password</label>
-                        <input type="password" name="password" class="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition {% if errors.password %}input-error{% endif %}">
+                        <input type="password" name="password" value="{{ data.password|default:'' }}" class="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition {% if errors.password %}input-error{% endif %}">
                         {% if errors.password %}
                             <p class="text-xs text-red-500 mt-1">{{ errors.password }}</p>
                         {% endif %}
                     </div>
                     <div class="space-y-1">
                         <label class="text-sm font-bold text-slate-700 flex items-center gap-2"><i data-lucide="shield-check" class="w-4 h-4"></i> Confirm Password</label>
-                        <input type="password" name="confirm_password" class="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition {% if errors.confirm_password %}input-error{% endif %}">
+                        <input type="password" name="confirm_password" value="{{ data.confirm_password|default:'' }}" class="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition {% if errors.confirm_password %}input-error{% endif %}">
                         {% if errors.confirm_password %}
                             <p class="text-xs text-red-500 mt-1">{{ errors.confirm_password }}</p>
                         {% endif %}
