@@ -70,15 +70,9 @@ def register_view(request):
                 errors['bank_account_number'] = "Bank account number is required for vendors."
             if not id_proof:
                 errors['id_proof'] = "ID proof is required for vendors."
-                
+                    
         if not errors:
             try:
-                def send_email_async(subject, message, recipient):
-                    try:
-                        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [recipient], fail_silently=False)
-                    except Exception as e:
-                        print(f"Error sending email: {e}")
-
                 with transaction.atomic():
                     user = User.objects.create_user(
                         username=username,
@@ -109,14 +103,8 @@ def register_view(request):
                             id_proof=id_proof,
                             status=Vendor.Status.PENDING
                         )
-                        
-                verify_url = f"http://127.0.0.1:8000/verify/{auth_token}/"
-                subject = "Welcome to ApexStriker - Verify Your Identity"
-                message = f"Hi {username},\n\nPlease click the link below to verify your email:\n\n{verify_url} \n\nThank you for joining ApexStriker!"
-                
-                threading.Thread(target=send_email_async, args=(subject, message, email)).start()
                     
-                messages.success(request, "Registration successful! Please check your email to verify your account.")
+                messages.success(request, "Registration successful! Please Log In")
                 return redirect('/login/')
             except Exception as e:
                 print("Error during registration:", e)
