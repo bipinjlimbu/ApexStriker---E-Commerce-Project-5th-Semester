@@ -25,12 +25,6 @@ def resend_verification_email(request, user_id):
         messages.info(request, "Your email is already verified.")
         return redirect(f'/profile/{user_id}/')
     
-    def send_email_async(subject, message, recipient):
-        try:
-            send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [recipient], fail_silently=False)
-        except Exception as e:
-            print(f"Error sending email: {e}")
-    
     auth_token = str(uuid.uuid4())
     user.auth_token = auth_token
     user.save()
