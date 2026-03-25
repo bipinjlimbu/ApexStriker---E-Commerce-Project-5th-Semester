@@ -7,6 +7,12 @@ from ..models import User, Vendor
 import uuid
 import threading
 
+def send_email_async(subject, message, recipient):
+        try:
+            send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [recipient], fail_silently=False)
+        except Exception as e:
+            print(f"Error sending email: {e}")
+            
 @login_required
 def profile_view(request, user_id):
     profile = User.objects.get(id=user_id)
@@ -103,7 +109,20 @@ def edit_profile_view(request, user_id):
         user.username = username
         user.first_name = first_name
         user.last_name = last_name
-        user.email = email
+        if user.email != email:
+            user.email = email
+            user.is_verified = False
+            auth_token = str(uuid.uuid4())
+            user.auth_token = auth_token
+            
+            verify_url = f"http://127.0.0.1:8000/verify/{auth_token}/"
+            subject = "Verify Your Email - ApexStriker"
+            message = f"Hi {username},\n\nPlease click below to verify your email address:\n{verify_url}"
+            
+            threading.Thread(target=send_email_async, args=(subject, message, email)).start()
+            
+            messages.warning(request, "Your email has been changed. Please verify your new email address to maintain access to your account.")
+
         user.phone = phone
         if profile_picture:
             user.profile_picture = profile_picture
@@ -138,12 +157,6 @@ def delete_profile_view(request, user_id):
         return redirect(f'/profile/{user_id}/')
     
     user = User.objects.get(id=user_id)
-    
-    def send_email_async(subject, message, recipient):
-        try:
-            send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [recipient], fail_silently=False)
-        except Exception as e:
-            print(f"Error sending email: {e}")
             
     subject = "ApexStriker - Profile Deleted"
     message = f"Hi {user.username},\n\nYour profile has been deleted.\n\nThank you!"
