@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.core.mail import send_mail
+from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.db import transaction
 from django.contrib.auth import authenticate, login, logout
@@ -15,6 +16,10 @@ def send_verification_email(subject, message, recipient):
         print(f"SMTP Error: {e}")
 
 def register_view(request):
+    if request.user.is_authenticated:
+        messages.info(request, "You are already logged in.")
+        return redirect('/')
+    
     errors = {}
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -131,6 +136,10 @@ def register_view(request):
     return render(request, 'auth/register_page.html')
 
 def login_view(request):
+    if request.user.is_authenticated:
+        messages.info(request, "You are already logged in.")
+        return redirect('/')
+    
     errors = {}
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -160,6 +169,7 @@ def login_view(request):
             
     return render(request, 'auth/login_page.html')
 
+@login_required
 def logout_view(request):
     logout(request)
     messages.success(request, "You have been logged out.")
