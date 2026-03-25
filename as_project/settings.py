@@ -140,3 +140,5 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'realbipinjacksonlimbu7@gmail.com'
 EMAIL_HOST_PASSWORD = 'hrgg iqno gckj utjo'
 DEFAULT_FROM_EMAIL = 'ApexStriker <realbipinjacksonlimbu7@gmail.com>'
+
+LOGIN_URL = '/login/'
