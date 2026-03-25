@@ -11,6 +11,8 @@
 <body class="bg-slate-50 flex flex-col min-h-screen">
     {% include 'components/_navbar.html' %}
 
+    {% include 'components/_alert_messages.html' %}
+
     <main class="flex-grow flex items-center justify-center py-12 px-4">
         <div class="max-w-md w-full">
             
@@ -48,11 +50,15 @@
                     </h1>
 
                     <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100 mb-8">
+                        {% if status == 'success' %}
                         <p class="text-slate-600 text-sm font-bold italic leading-relaxed">
-                        {% for message in messages %}
-                            {{ message }}
-                        {% endfor %}
+                            Your email has been successfully verified. You can now access your profile and explore the marketplace.
                         </p>
+                        {% else %}
+                        <p class="text-slate-600 text-sm font-bold italic leading-relaxed">
+                            The verification link is invalid or has expired. Please request a new verification email to complete the process.
+                        </p>
+                        {% endif %}
                     </div>
 
                     <div class="space-y-3">
