@@ -146,9 +146,9 @@
                             <i data-lucide="log-out" class="w-4 h-4 text-slate-400"></i> Logout Account
                         </a>
                         {% if not user.is_superuser %}
-                        <button class="w-full flex items-center justify-center gap-3 p-4 rounded-2xl bg-red-50 border border-red-100 text-red-600 font-black text-[10px] uppercase tracking-widest hover:bg-red-100 transition">
+                        <a href="/profile/delete/{{ profile.id }}/" class="w-full flex items-center justify-center gap-3 p-4 rounded-2xl bg-red-50 border border-red-100 text-red-600 font-black text-[10px] uppercase tracking-widest hover:bg-red-100 transition">
                             <i data-lucide="trash-2" class="w-4 h-4"></i> Delete Identity
-                        </button>
+                        </a>
                         {% endif %}
                     </div>
                     {% else %}
