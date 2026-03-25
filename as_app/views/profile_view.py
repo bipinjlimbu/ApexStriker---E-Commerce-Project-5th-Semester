@@ -131,3 +131,25 @@ def edit_profile_view(request, user_id):
         
     return render(request, 'main/edit_profile_page.html',{"user": user})
 
+@login_required
+def delete_profile_view(request, user_id):
+    if request.user.id != user_id:
+        messages.error(request, "You are not authorized to delete this profile.")
+        return redirect(f'/profile/{user_id}/')
+    
+    user = User.objects.get(id=user_id)
+    
+    def send_email_async(subject, message, recipient):
+        try:
+            send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [recipient], fail_silently=False)
+        except Exception as e:
+            print(f"Error sending email: {e}")
+            
+    subject = "ApexStriker - Profile Deleted"
+    message = f"Hi {user.username},\n\nYour profile has been deleted.\n\nThank you!"
+    
+    threading.Thread(target=send_email_async, args=(subject, message, user.email)).start()
+    
+    user.delete()
+    messages.success(request, "Profile deleted successfully.")
+    return redirect('/')
