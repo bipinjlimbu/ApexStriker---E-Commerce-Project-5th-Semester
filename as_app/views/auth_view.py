@@ -8,6 +8,12 @@ from ..models import User, Vendor, Customer
 import uuid 
 import threading
 
+def send_verification_email(subject, message, recipient):
+    try:
+        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [recipient], fail_silently=False)
+    except Exception as e:
+        print(f"SMTP Error: {e}")
+
 def register_view(request):
     errors = {}
     if request.method == 'POST':
@@ -103,9 +109,19 @@ def register_view(request):
                             id_proof=id_proof,
                             status=Vendor.Status.PENDING
                         )
+                        
+                verify_url = f"http://127.0.0.1:8000/verify/{auth_token}/"
+                subject = "Welcome to the ApexStriker - Verify Your Email"
+                message = f"Hi {username},\n\nWelcome to the ApexStriker. Click below to verify:\n{verify_url}"
+                
+                threading.Thread(
+                    target=send_verification_email, 
+                    args=(subject, message, email)
+                ).start()
                     
-                messages.success(request, "Registration successful! Please Log In")
+                messages.success(request, "Registration successful! Please check your email to verify your account.")
                 return redirect('/login/')
+            
             except Exception as e:
                 print("Error during registration:", e)
                 messages.error(request, "An error occurred during registration. Please try again.")
