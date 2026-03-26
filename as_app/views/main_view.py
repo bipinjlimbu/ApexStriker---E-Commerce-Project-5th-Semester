@@ -63,3 +63,6 @@ def password_reset_view(request):
         except User.DoesNotExist:
             messages.success(request, "If an account with that email exists, a password reset link has been sent.")
     return render(request, 'main/password_reset_page.html')
+
+def password_reset_confirm_view(request, token):
+    return render(request, 'main/password_reset_confirm_page.html', {'token': token})
