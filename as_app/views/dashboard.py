@@ -8,7 +8,29 @@ def admin_dashboard_view(request):
         messages.error(request, "You are not authorized to access the admin dashboard.")
         return redirect('/')
     
-    return render(request, 'dashboard/admin_dashboard.html')
+    section = request.GET.get('section', 'members-list')
+    
+    context = {
+        'section' : section,
+        'total_members': 110,
+        'total_vendors_request': 12,
+        'total_products_reviews': 350,
+    }
+    
+    if section == 'members-list':
+        context['members-list'] = None
+        
+    elif section == 'pending-vendors':
+        context['pending-vendors'] = None
+        
+    elif section == 'product-reviews':
+        context['product-reviews'] = None
+        
+    elif section == 'revenue-logs':
+        context['revenue-logs'] = None
+
+    
+    return render(request, 'dashboard/admin_dashboard.html', context)
 
 @login_required
 def vendor_dashboard_view(request):
