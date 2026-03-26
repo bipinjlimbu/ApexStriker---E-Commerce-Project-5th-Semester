@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from ..models import User
+from ..models import User, Vendor
 
 @login_required
 def admin_dashboard_view(request):
@@ -13,7 +13,7 @@ def admin_dashboard_view(request):
     
     context = {
         'section' : section,
-        'total_vendors_request': 12,
+        'total_pending_vendors': Vendor.objects.filter(status=Vendor.Status.PENDING).count(),
         'total_products_reviews': 350,
     }
     
@@ -21,7 +21,7 @@ def admin_dashboard_view(request):
         context['members'] = User.objects.all().order_by('-date_joined')
         
     elif section == 'pending-vendors':
-        context['pending-vendors'] = None
+        context['pending-vendors'] = Vendor.objects.filter(status=Vendor.Status.PENDING).order_by('-id')
         
     elif section == 'product-reviews':
         context['product-reviews'] = None
