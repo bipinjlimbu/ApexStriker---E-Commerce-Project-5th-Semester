@@ -235,12 +235,18 @@
                             </td>
                             <td class="px-10 py-6">
                                 <div class="flex gap-2">
-                                    <button class="flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded-xl font-black italic uppercase text-[10px] hover:bg-blue-600 transition-all">
-                                        <i data-lucide="check-circle" class="w-3.5 h-3.5 text-blue-400"></i> Approve
-                                    </button>
-                                    <button class="p-2 bg-slate-100 rounded-xl text-slate-400 hover:bg-red-50 hover:text-red-500 transition-all border border-slate-200">
-                                        <i data-lucide="x-circle" class="w-4 h-4"></i>
-                                    </button>
+                                    <form method="post" action="/approve_vendor/{{ vendor.id }}/">
+                                        {% csrf_token %}
+                                        <button type="submit" class="flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded-xl font-black italic uppercase text-[10px] hover:bg-blue-600 transition-all">
+                                            <i data-lucide="check-circle" class="w-3.5 h-3.5 text-blue-400"></i> Approve
+                                        </button>
+                                    </form>
+                                    <form method="post" action="/reject_vendor/{{ vendor.id }}/">
+                                        {% csrf_token %}
+                                        <button type="submit" class="p-2 bg-slate-100 rounded-xl text-slate-400 hover:bg-red-50 hover:text-red-500 transition-all border border-slate-200">
+                                            <i data-lucide="x-circle" class="w-4 h-4"></i>
+                                        </button>
+                                    </form>
                                 </div>
                             </td>
                         </tr>
