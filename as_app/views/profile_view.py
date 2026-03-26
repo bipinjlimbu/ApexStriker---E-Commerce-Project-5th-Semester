@@ -146,7 +146,7 @@ def edit_profile_view(request, user_id):
 
 @login_required
 def delete_profile_view(request, user_id):
-    if request.user.id != user_id:
+    if request.user.id != user_id or not request.user.is_superuser:
         messages.error(request, "You are not authorized to delete this profile.")
         return redirect(f'/profile/{user_id}/')
     
