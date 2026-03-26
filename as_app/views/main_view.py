@@ -32,3 +32,6 @@ def verify_email_view(request, token):
         'status': status, 
         'user': user
     })
+    
+def password_reset_view(request):
+    return render(request, 'main/password_reset_page.html')
