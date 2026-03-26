@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from ..models import User
 
 @login_required
 def admin_dashboard_view(request):
@@ -8,17 +9,16 @@ def admin_dashboard_view(request):
         messages.error(request, "You are not authorized to access the admin dashboard.")
         return redirect('/')
     
-    section = request.GET.get('section', 'members-list')
+    section = request.GET.get('section', 'member-list')
     
     context = {
         'section' : section,
-        'total_members': 110,
         'total_vendors_request': 12,
         'total_products_reviews': 350,
     }
     
-    if section == 'members-list':
-        context['members-list'] = None
+    if section == 'member-list':
+        context['members'] = User.objects.all().order_by('-date_joined')
         
     elif section == 'pending-vendors':
         context['pending-vendors'] = None

@@ -26,7 +26,7 @@
         <nav class="flex-grow p-6 space-y-2 overflow-y-auto">
             <div class="pb-6">
                 <h3 class="px-4 text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4 italic">Identity Control</h3>
-                <a href="?section=members-list" class="flex items-center gap-4 px-4 py-4 rounded-2xl {% if section == 'members-list' or not section %}bg-blue-600 text-white shadow-xl shadow-blue-600/20{% else %}text-slate-400 hover:bg-white/5 hover:text-white{% endif %} font-black italic uppercase text-xs tracking-widest transition-all">
+                <a href="?section=member-list" class="flex items-center gap-4 px-4 py-4 rounded-2xl {% if section == 'members-list' or not section %}bg-blue-600 text-white shadow-xl shadow-blue-600/20{% else %}text-slate-400 hover:bg-white/5 hover:text-white{% endif %} font-black italic uppercase text-xs tracking-widest transition-all">
                     <i data-lucide="users" class="w-4 h-4"></i>
                     Member Directory
                 </a>
@@ -69,7 +69,7 @@
 
     <main class="flex-grow flex flex-col h-screen overflow-y-auto">
 
-        {% if section == 'members-list' or not section %}
+        {% if section == 'member-list' or not section %}
         
         <div class="bg-slate-900 p-12 relative overflow-hidden">
             <div class="absolute top-0 right-0 w-1/4 h-full bg-blue-600 skew-x-12 translate-x-20 opacity-10"></div>
@@ -86,7 +86,7 @@
                     </div>
                     <div class="pr-4">
                         <p class="text-[9px] font-black text-slate-500 uppercase italic tracking-widest">Total Identities</p>
-                        <p class="text-2xl font-black text-white italic">2,481</p>
+                        <p class="text-2xl font-black text-white italic">{{ members.count }}</p>
                     </div>
                 </div>
             </div>
@@ -104,28 +104,44 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-50">
+                        {% for member in members %}
                         <tr class="hover:bg-slate-50 transition-colors group">
                             <td class="px-10 py-6">
                                 <div class="flex items-center gap-4">
-                                    <div class="h-12 w-12 bg-blue-600 rounded-2xl flex items-center justify-center text-white font-black italic shadow-lg shadow-blue-500/20">JD</div>
+                                    <div class="relative h-12 w-12 shrink-0">
+                                        {% if member.profile_picture %}
+                                            <img src="{{ member.profile_picture.url }}" 
+                                                class="h-full w-full object-cover rounded-2xl shadow-md border border-slate-100">
+                                        {% else %}
+                                            <div class="h-full w-full bg-slate-900 rounded-2xl flex items-center justify-center text-blue-500 font-black italic shadow-inner">
+                                                <i data-lucide="user" class="w-6 h-6"></i>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+
                                     <div>
-                                        <p class="font-black text-slate-900 italic uppercase">John_Doe_99</p>
-                                        <p class="text-xs text-slate-400 font-bold italic">john@gmail.com</p>
+                                        <p class="font-black text-slate-900 italic uppercase leading-none mb-1">{{ member.first_name }} {{ member.last_name }}</p>
+                                        <p class="text-[10px] text-blue-400 font-bold italic uppercase tracking-wider">@{{ member.username }}</p>
                                     </div>
                                 </div>
                             </td>
                             <td class="px-10 py-6">
-                                <span class="text-[10px] font-black text-slate-500 bg-slate-100 px-3 py-1.5 rounded-lg uppercase italic border border-slate-200">Standard Customer</span>
+                                <span class="text-[10px] font-black text-slate-500 bg-slate-100 px-3 py-1.5 rounded-lg uppercase italic border border-slate-200">{{ member.role }}</span>
                             </td>
                             <td class="px-10 py-6">
                                 <div class="flex items-center gap-2 text-slate-400">
+                                    {% if member.is_active %}
+                                    <div class="h-2 w-2 rounded-full bg-green-500"></div>
+                                    <p class="text-[11px] font-black italic uppercase">Online</p>
+                                    {% else %}
                                     <div class="h-2 w-2 rounded-full bg-slate-300"></div>
                                     <p class="text-[11px] font-black italic uppercase">Offline</p>
+                                    {% endif %}
                                 </div>
                             </td>
                             <td class="px-10 py-6">
                                 <div class="flex items-center gap-3">
-                                    <a href="" 
+                                    <a href="/profile/{{ member.id }}/" 
                                     class="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-xl font-black italic uppercase text-[10px] hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/20">
                                         <i data-lucide="eye" class="w-3.5 h-3.5"></i> View Profile
                                     </a>
@@ -136,6 +152,7 @@
                                 </div>
                             </td>
                         </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
