@@ -60,7 +60,7 @@ def approve_vendor_view(request, vendor_id):
     except Vendor.DoesNotExist:
         messages.error(request, "Vendor not found.")
     
-    return redirect('/dashboard/?section=pending-vendors')
+    return redirect('/dashboard/admin/?section=pending-vendors')
 
 @login_required
 def reject_vendor_view(request, vendor_id):
@@ -81,7 +81,7 @@ def reject_vendor_view(request, vendor_id):
     except Vendor.DoesNotExist:
         messages.error(request, "Vendor not found.")
     
-    return redirect('/dashboard/?section=pending-vendors')
+    return redirect('/dashboard/admin/?section=pending-vendors')
 
 @login_required
 def vendor_dashboard_view(request):
