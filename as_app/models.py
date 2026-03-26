@@ -36,6 +36,7 @@ class Vendor(models.Model):
     bank_account_number = models.CharField(max_length=50)
     status = models.CharField(max_length=20, choices=Status.choices, default=Status.PENDING)
     commission_rate = models.DecimalField(max_digits=5, decimal_places=2, default=10.00)
+    requested_on = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
         return f"{self.shop_name} ({self.user.username})"
