@@ -1,7 +1,17 @@
 from django.shortcuts import render
 from django.contrib import messages
+from django.core.mail import send_mail
+from django.conf import settings
 from ..models import User
+import threading
+import uuid
 
+def send_email_async(subject, message, recipient):
+        try:
+            send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [recipient], fail_silently=False)
+        except Exception as e:
+            print(f"Error sending email: {e}")
+            
 def home_view(request):
     return render(request, 'main/home_page.html')
 
@@ -14,7 +24,7 @@ def verify_email_view(request, token):
         
         if not user.is_verified:
             user.is_verified = True
-            user.auth_token = None  # The "Burn"
+            user.auth_token = None
             user.save()
             messages.success(request, "Email verification successful!")
         
@@ -34,4 +44,22 @@ def verify_email_view(request, token):
     })
     
 def password_reset_view(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        try:
+            user = User.objects.get(email=email)
+            
+            reset_token = str(uuid.uuid4())
+            user.auth_token = reset_token
+            user.save()
+            
+            reset_url = f"http://127.0.0.1:8000/password-reset/{reset_token}/"
+            
+            subject = "ApexStriker - Password Reset Request"
+            message = f"Hi {user.first_name},\n\nWe received a request to reset your password. Please click the link below to set a new password:\n\n{reset_url}\n\nIf you did not request a password reset, please ignore this email.\n\nThank you for being a part of ApexStriker!"
+            threading.Thread(target=send_email_async, args=(subject, message, user.email)).start()
+
+            messages.success(request, "If an account with that email exists, a password reset link has been sent.")
+        except User.DoesNotExist:
+            messages.success(request, "If an account with that email exists, a password reset link has been sent.")
     return render(request, 'main/password_reset_page.html')
