@@ -186,7 +186,7 @@
                     </div>
                     <div class="pr-4">
                         <p class="text-[9px] font-black text-slate-500 uppercase italic tracking-widest">Waiting Review</p>
-                        <p class="text-2xl font-black text-white italic">12 Applicants</p>
+                        <p class="text-2xl font-black text-white italic">{{ total_pending_vendors }} Applicants</p>
                     </div>
                 </div>
             </div>
@@ -199,27 +199,39 @@
                         <tr class="bg-slate-50 border-b border-slate-100">
                             <th class="px-10 py-6 text-[11px] font-black text-slate-400 uppercase italic tracking-widest">Shop Identity</th>
                             <th class="px-10 py-6 text-[11px] font-black text-slate-400 uppercase italic tracking-widest">Owner Email</th>
+                            <th class="px-10 py-6 text-[11px] font-black text-slate-400 uppercase italic tracking-widest">PAN Number</th>
+                            <th class="px-10 py-6 text-[11px] font-black text-slate-400 uppercase italic tracking-widest">ID</th>
                             <th class="px-10 py-6 text-[11px] font-black text-slate-400 uppercase italic tracking-widest">Request Date</th>
                             <th class="px-10 py-6 text-[11px] font-black text-slate-400 uppercase italic tracking-widest">Security Action</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-50">
-                        
+                        {% for vendor in vendors %}
                         <tr class="hover:bg-amber-50/30 transition-colors group">
                             <td class="px-10 py-6">
                                 <div class="flex items-center gap-4">
                                     <div class="h-12 w-12 bg-slate-900 rounded-2xl flex items-center justify-center text-amber-500 font-black italic shadow-inner border border-amber-500/20">VS</div>
                                     <div>
-                                        <p class="font-black text-slate-900 italic uppercase">Velvet_Sports_UK</p>
-                                        <p class="text-[10px] text-amber-600 font-bold italic uppercase">Premium Cleats</p>
+                                        <p class="font-black text-slate-900 italic uppercase">{{ vendor.shop_name }}</p>
+                                        <p class="text-[10px] text-amber-600 font-bold italic uppercase">@{{ vendor.user.username }}</p>
                                     </div>
                                 </div>
                             </td>
                             <td class="px-10 py-6">
-                                <p class="text-sm font-bold text-slate-600 italic">contact@velvetsports.com</p>
+                                <p class="text-sm font-bold text-slate-600 italic">{{ vendor.user.email }}</p>
                             </td>
                             <td class="px-10 py-6">
-                                <p class="text-xs font-black text-slate-400 italic uppercase">2 Hours Ago</p>
+                                <p class="text-sm font-bold text-slate-600 italic">{{ vendor.pan_number }}</p>
+                            </td>
+                            <td class="px-10 py-6">
+                                <a href="{{ vendor.id_proof.url }}" target="_blank" 
+                                class="flex items-center gap-1.5 text-blue-600 hover:text-blue-700 font-black italic uppercase text-[10px] tracking-widest transition-all hover:underline group/id">
+                                    <i data-lucide="link" class="w-3.5 h-3.5 opacity-70 group-hover/id:opacity-100"></i>
+                                    View ID
+                                </a>
+                            </td>
+                            <td class="px-10 py-6">
+                                <p class="text-xs font-black text-slate-400 italic uppercase">{{ vendor.requested_on|timesince}}</p>
                             </td>
                             <td class="px-10 py-6">
                                 <div class="flex gap-2">
@@ -232,34 +244,7 @@
                                 </div>
                             </td>
                         </tr>
-
-                        <tr class="hover:bg-amber-50/30 transition-colors group">
-                            <td class="px-10 py-6">
-                                <div class="flex items-center gap-4">
-                                    <div class="h-12 w-12 bg-slate-900 rounded-2xl flex items-center justify-center text-amber-500 font-black italic shadow-inner border border-amber-500/20">ZK</div>
-                                    <div>
-                                        <p class="font-black text-slate-900 italic uppercase">Z-Kicks_Store</p>
-                                        <p class="text-[10px] text-amber-600 font-bold italic uppercase">Local Vendor</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-10 py-6">
-                                <p class="text-sm font-bold text-slate-600 italic">z-kicks@gmail.com</p>
-                            </td>
-                            <td class="px-10 py-6">
-                                <p class="text-xs font-black text-slate-400 italic uppercase">Yesterday</p>
-                            </td>
-                            <td class="px-10 py-6">
-                                <div class="flex gap-2">
-                                    <button class="flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded-xl font-black italic uppercase text-[10px] hover:bg-blue-600 transition-all">
-                                        <i data-lucide="check-circle" class="w-3.5 h-3.5 text-blue-400"></i> Approve
-                                    </button>
-                                    <button class="p-2 bg-slate-100 rounded-xl text-slate-400 hover:bg-red-50 hover:text-red-500 transition-all border border-slate-200">
-                                        <i data-lucide="x-circle" class="w-4 h-4"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
+                        {% endfor %}
 
                     </tbody>
                 </table>
