@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
@@ -65,4 +65,24 @@ def password_reset_view(request):
     return render(request, 'main/password_reset_page.html')
 
 def password_reset_confirm_view(request, token):
-    return render(request, 'main/password_reset_confirm_page.html', {'token': token})
+    if request.method == 'POST':
+        password = request.POST.get('password')
+        confirm_password = request.POST.get('confirm_password')
+        
+        if password != confirm_password:
+            messages.error(request, "Passwords do not match.")
+            return render(request, 'main/password_reset_confirm_page.html')
+        
+        try:
+            user = User.objects.get(auth_token=token)
+            user.set_password(password)
+            user.auth_token = None
+            user.save()
+            
+            messages.success(request, "Your password has been reset successfully. You can now log in with your new password.")
+            return redirect('/login/')
+        except User.DoesNotExist:
+            messages.error(request, "Invalid or expired password reset token.")
+            return render(request, 'main/password_reset_confirm_page.html')
+        
+    return render(request, 'main/password_reset_confirm_page.html')
