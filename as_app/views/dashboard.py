@@ -21,7 +21,7 @@ def admin_dashboard_view(request):
         context['members'] = User.objects.all().order_by('-date_joined')
         
     elif section == 'pending-vendors':
-        context['pending-vendors'] = Vendor.objects.filter(status=Vendor.Status.PENDING).order_by('-id')
+        context['vendors'] = Vendor.objects.filter(status=Vendor.Status.PENDING).order_by('-id')
         
     elif section == 'product-reviews':
         context['product-reviews'] = None
