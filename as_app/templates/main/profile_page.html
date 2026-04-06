@@ -254,7 +254,7 @@
                                 </div>
                                 <div>
                                     <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">Preferred Position</label>
-                                    <p class="text-slate-700 font-bold italic uppercase">{{ profile.customer_profile.position }}</p>
+                                    <p class="text-slate-700 font-bold italic uppercase">{{ profile.customer_profile.position|default:"Not Specified" }}</p>
                                 </div>
                             </div>
                             <div class="space-y-6">
@@ -262,28 +262,25 @@
                                     <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">Personal Contact</label>
                                     <p class="text-slate-700 font-bold italic">{{ profile.phone }}</p>
                                 </div>
-                                <div>
-                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1 text-slate-400">Registered City</label>
-                                    <p class="text-slate-700 font-bold italic uppercase">{{ profile.customer_profile.city }}</p>
-                                </div>
                             </div>
                         </div>
 
                         <hr class="my-10 border-slate-100">
 
                         <div>
-                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-3">Primary Shipping Address</label>
+                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-3">Physical Address</label>
                             <div class="bg-indigo-50 p-5 rounded-2xl border border-indigo-100 flex items-center gap-4">
-                                <div class="bg-indigo-600 p-2 rounded-xl shadow-lg shadow-indigo-100">
-                                    <i data-lucide="truck" class="w-5 h-5 text-white"></i>
+                                <div class="bg-indigo-600 p-2.5 rounded-xl shadow-lg shadow-indigo-100">
+                                    <i data-lucide="map-pin" class="w-5 h-5 text-white"></i>
                                 </div>
-                                <p class="text-indigo-900 font-bold text-sm italic leading-relaxed">
-                                    {{ profile.customer_profile.shipping_address }}
-                                </p>
+                                <div class="flex-1">
+                                    <p class="text-indigo-900 font-bold text-sm italic leading-relaxed">
+                                        {{ profile.address }}
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
-
                     {% else %}
                     <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
                         <div class="flex items-center justify-between mb-8">
