@@ -10,7 +10,6 @@
         .hidden-fields { display: none; }
         #image-preview { transition: transform 0.3s ease; }
         .group:hover #image-preview { transform: scale(1.05); }
-        /* Error highlighting */
         .input-error { border-color: #ef4444 !important; }
     </style>
 </head>
@@ -72,128 +71,83 @@
                     <div class="space-y-1">
                         <label class="text-sm font-bold text-slate-700 flex items-center gap-2"><i data-lucide="at-sign" class="w-4 h-4"></i> Username</label>
                         <input type="text" name="username" value="{{ data.username|default:'' }}" class="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition {% if errors.username %}input-error{% endif %}">
-                        {% if errors.username %}
-                            <p class="text-xs text-red-500 mt-1">{{ errors.username }}</p>
-                        {% endif %}
+                        {% if errors.username %}<p class="text-xs text-red-500 mt-1">{{ errors.username }}</p>{% endif %}
                     </div>
                     <div class="space-y-1">
                         <label class="text-sm font-bold text-slate-700 flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i> Email</label>
                         <input type="email" name="email" value="{{ data.email|default:'' }}" class="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition {% if errors.email %}input-error{% endif %}">
-                        {% if errors.email %}
-                            <p class="text-xs text-red-500 mt-1">{{ errors.email }}</p>
-                        {% endif %}
+                        {% if errors.email %}<p class="text-xs text-red-500 mt-1">{{ errors.email }}</p>{% endif %}
                     </div>
                     <div class="space-y-1">
                         <label class="text-sm font-bold text-slate-700">First Name</label>
                         <input type="text" name="first_name" value="{{ data.first_name|default:'' }}" class="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition {% if errors.first_name %}input-error{% endif %}">
-                        {% if errors.first_name %}
-                            <p class="text-xs text-red-500 mt-1">{{ errors.first_name }}</p>
-                        {% endif %}
+                        {% if errors.first_name %}<p class="text-xs text-red-500 mt-1">{{ errors.first_name }}</p>{% endif %}
                     </div>
                     <div class="space-y-1">
                         <label class="text-sm font-bold text-slate-700">Last Name</label>
                         <input type="text" name="last_name" value="{{ data.last_name|default:'' }}" class="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition {% if errors.last_name %}input-error{% endif %}">
-                        {% if errors.last_name %}
-                            <p class="text-xs text-red-500 mt-1">{{ errors.last_name }}</p>
-                        {% endif %}
+                        {% if errors.last_name %}<p class="text-xs text-red-500 mt-1">{{ errors.last_name }}</p>{% endif %}
                     </div>
                     <div class="space-y-1">
                         <label class="text-sm font-bold text-slate-700 flex items-center gap-2"><i data-lucide="lock" class="w-4 h-4"></i> Password</label>
                         <input type="password" name="password" value="{{ data.password|default:'' }}" class="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition {% if errors.password %}input-error{% endif %}">
-                        {% if errors.password %}
-                            <p class="text-xs text-red-500 mt-1">{{ errors.password }}</p>
-                        {% endif %}
+                        {% if errors.password %}<p class="text-xs text-red-500 mt-1">{{ errors.password }}</p>{% endif %}
                     </div>
                     <div class="space-y-1">
                         <label class="text-sm font-bold text-slate-700 flex items-center gap-2"><i data-lucide="shield-check" class="w-4 h-4"></i> Confirm Password</label>
                         <input type="password" name="confirm_password" value="{{ data.confirm_password|default:'' }}" class="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition {% if errors.confirm_password %}input-error{% endif %}">
-                        {% if errors.confirm_password %}
-                            <p class="text-xs text-red-500 mt-1">{{ errors.confirm_password }}</p>
-                        {% endif %}
+                        {% if errors.confirm_password %}<p class="text-xs text-red-500 mt-1">{{ errors.confirm_password }}</p>{% endif %}
                     </div>
-                    <div class="md:col-span-2 space-y-1">
+                    <div class="space-y-1">
                         <label class="text-sm font-bold text-slate-700 flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4"></i> Phone</label>
-                        <input type="text" name="phone" value="{{ data.phone|default:'' }}" class="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition">
+                        <input type="text" name="phone" value="{{ data.phone|default:'' }}" class="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition {% if errors.phone %}input-error{% endif %}">
+                        {% if errors.phone %}<p class="text-xs text-red-500 mt-1">{{ errors.phone }}</p>{% endif %}
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-sm font-bold text-slate-700 flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4"></i> Address</label>
+                        <input type="text" name="address" value="{{ data.address|default:'' }}" class="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition {% if errors.address %}input-error{% endif %}">
+                        {% if errors.address %}<p class="text-xs text-red-500 mt-1">{{ errors.address }}</p>{% endif %}
                     </div>
                 </div>
 
-                <div id="customer-fields" class="space-y-4 pt-4 border-t border-slate-100">
+                <div id="customer-fields" class="pt-4 border-t border-slate-100">
                     <div class="space-y-1">
-                        <label class="text-sm font-bold text-slate-700 flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4"></i> Shipping Address</label>
-                        <input type="text" name="shipping_address" value="{{ data.shipping_address|default:'' }}" class="w-full p-3 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 {% if errors.shipping_address %}input-error{% endif %}">
-                        {% if errors.shipping_address %}
-                            <p class="text-xs text-red-500 mt-1">{{ errors.shipping_address }}</p>
-                        {% endif %}
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="space-y-1">
-                            <label class="text-sm font-bold text-slate-700 flex items-center gap-2"><i data-lucide="map" class="w-4 h-4"></i> City</label>
-                            <input type="text" name="city_customer" value="{{ data.city_customer|default:'' }}" class="w-full p-3 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 {% if errors.city_customer %}input-error{% endif %}">
-                            {% if errors.city_customer %}
-                                <p class="text-xs text-red-500 mt-1">{{ errors.city_customer }}</p>
-                            {% endif %}
-                        </div>
-                        <div class="space-y-1">
-                            <label class="text-sm font-bold text-slate-700 flex items-center gap-2"><i data-lucide="target" class="w-4 h-4"></i> Position</label>
-                            <select name="position" class="w-full p-3 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 appearance-none bg-white">
-                                <option value="" hidden>Optional</option>
-                                <option value="attacker" {% if data.position == "attacker" %}selected{% endif %}>Attacker</option>
-                                <option value="midfielder" {% if data.position == "midfielder" %}selected{% endif %}>Midfielder</option>
-                                <option value="defender" {% if data.position == "defender" %}selected{% endif %}>Defender</option>
-                                <option value="goalkeeper" {% if data.position == "goalkeeper" %}selected{% endif %}>Goalkeeper</option>
-                            </select>
-                        </div>
+                        <label class="text-sm font-bold text-slate-700 flex items-center gap-2"><i data-lucide="target" class="w-4 h-4"></i> Position</label>
+                        <select name="position" class="w-full p-3 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 appearance-none bg-white">
+                            <option value="" hidden>Optional</option>
+                            <option value="attacker" {% if data.position == 'attacker' %}selected{% endif %}>Attacker</option>
+                            <option value="midfielder" {% if data.position == 'midfielder' %}selected{% endif %}>Midfielder</option>
+                            <option value="defender" {% if data.position == 'defender' %}selected{% endif %}>Defender</option>
+                            <option value="goalkeeper" {% if data.position == 'goalkeeper' %}selected{% endif %}>Goalkeeper</option>
+                        </select>
                     </div>
                 </div>
 
                 <div id="vendor-fields" class="hidden-fields space-y-4 pt-4 border-t border-slate-100">
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div class="space-y-1">
                             <label class="text-sm font-bold text-slate-700 flex items-center gap-2"><i data-lucide="shopping-bag" class="w-4 h-4"></i> Shop Name</label>
-                            <input type="text" name="shop_name" value="{{ data.shop_name|default:'' }}" class="w-full p-3 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 {% if errors.shop_name %}input-error{% endif %}">
-                            {% if errors.shop_name %}
-                                <p class="text-xs text-red-500 mt-1">{{ errors.shop_name }}</p>
-                            {% endif %}
+                            <input type="text" name="shop_name" value="{{ data.shop_name|default:'' }}" class="w-full p-3 border border-slate-200 rounded-xl outline-none transition {% if errors.shop_name %}input-error{% endif %}">
+                            {% if errors.shop_name %}<p class="text-xs text-red-500 mt-1">{{ errors.shop_name }}</p>{% endif %}
                         </div>
                         <div class="space-y-1">
                             <label class="text-sm font-bold text-slate-700 flex items-center gap-2"><i data-lucide="file-text" class="w-4 h-4"></i> PAN Number</label>
-                            <input type="text" name="pan_number" value="{{ data.pan_number|default:'' }}" class="w-full p-3 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 {% if errors.pan_number %}input-error{% endif %}">
-                            {% if errors.pan_number %}
-                                <p class="text-xs text-red-500 mt-1">{{ errors.pan_number }}</p>
-                            {% endif %}
+                            <input type="text" name="pan_number" value="{{ data.pan_number|default:'' }}" class="w-full p-3 border border-slate-200 rounded-xl outline-none transition {% if errors.pan_number %}input-error{% endif %}">
+                            {% if errors.pan_number %}<p class="text-xs text-red-500 mt-1">{{ errors.pan_number }}</p>{% endif %}
                         </div>
-                    </div>
-                    <div class="space-y-1">
-                        <label class="text-sm font-bold text-slate-700 flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4"></i> Shop Address</label>
-                        <input type="text" name="shop_address" value="{{ data.shop_address|default:'' }}" class="w-full p-3 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 {% if errors.shop_address %}input-error{% endif %}">
-                        {% if errors.shop_address %}
-                            <p class="text-xs text-red-500 mt-1">{{ errors.shop_address }}</p>
-                        {% endif %}
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="space-y-1">
-                            <label class="text-sm font-bold text-slate-700 flex items-center gap-2"><i data-lucide="map" class="w-4 h-4"></i> Business City</label>
-                            <input type="text" name="city_vendor" value="{{ data.city_vendor|default:'' }}" class="w-full p-3 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 {% if errors.city_vendor %}input-error{% endif %}">
-                            {% if errors.city_vendor %}
-                                <p class="text-xs text-red-500 mt-1">{{ errors.city_vendor }}</p>
-                            {% endif %}
-                        </div>
-                        <div class="space-y-1">
+                        <div class="md:col-span-2 space-y-1">
                             <label class="text-sm font-bold text-slate-700 flex items-center gap-2"><i data-lucide="credit-card" class="w-4 h-4"></i> Bank Acc No.</label>
-                            <input type="text" name="bank_account_number" value="{{ data.bank_account_number|default:'' }}" class="w-full p-3 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 {% if errors.bank_account_number %}input-error{% endif %}">
-                            {% if errors.bank_account_number %}
-                                <p class="text-xs text-red-500 mt-1">{{ errors.bank_account_number }}</p>
-                            {% endif %}
+                            <input type="text" name="bank_account_number" value="{{ data.bank_account_number|default:'' }}" class="w-full p-3 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 transition {% if errors.bank_account_number %}input-error{% endif %}">
+                            {% if errors.bank_account_number %}<p class="text-xs text-red-500 mt-1">{{ errors.bank_account_number }}</p>{% endif %}
                         </div>
                     </div>
+                    
                     <div class="bg-blue-50 p-5 rounded-2xl border border-blue-100">
                         <label class="block text-xs font-black text-blue-700 uppercase mb-2 flex items-center gap-2">
                             <i data-lucide="shield-check" class="w-4 h-4"></i> ID Proof Document
                         </label>
-                        <input type="file" name="id_proof" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer">
-                        {% if errors.id_proof %}
-                            <p class="text-xs text-red-500 mt-1">{{ errors.id_proof }}</p>
-                        {% endif %}
+                        <input type="file" name="id_proof" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-blue-600 file:text-white cursor-pointer">
+                        {% if errors.id_proof %}<p class="text-xs text-red-500 mt-1">{{ errors.id_proof }}</p>{% endif %}
                     </div>
                 </div>
 
@@ -204,10 +158,7 @@
             </form>
 
             <div class="mt-10 text-center border-t border-slate-100 pt-6">
-                <p class="text-slate-500 font-medium">
-                    Already have an account?
-                    <a href="/login/" class="text-blue-600 font-bold hover:underline ml-1">Log in</a>
-                </p>
+                <p class="text-slate-500 font-medium">Already have an account? <a href="/login/" class="text-blue-600 font-bold hover:underline ml-1">Log in</a></p>
             </div>
         </div>
     </main>
@@ -217,11 +168,8 @@
     <script src="{% static 'js/lucide.min.js' %}"></script>
     <script>
         lucide.createIcons();
-        
-        // Ensure correct section is visible on load (especially after validation errors)
         window.addEventListener('DOMContentLoaded', () => {
-            const selectedRole = document.querySelector('input[name="role"]:checked').value;
-            toggleFields(selectedRole);
+            toggleFields(document.querySelector('input[name="role"]:checked').value);
         });
 
         function previewImage(input) {
@@ -229,14 +177,12 @@
             const preview = document.getElementById('image-preview');
             const placeholder = document.getElementById('upload-placeholder');
             const overlay = document.getElementById('change-overlay');
-
             if (file) {
                 const reader = new FileReader();
-                reader.onload = function(e) {
+                reader.onload = (e) => {
                     preview.src = e.target.result;
                     preview.classList.remove('hidden');
-                    overlay.classList.remove('hidden');
-                    overlay.classList.add('flex');
+                    overlay.classList.replace('hidden', 'flex');
                     placeholder.classList.add('hidden');
                 }
                 reader.readAsDataURL(file);
@@ -244,15 +190,8 @@
         }
 
         function toggleFields(role) {
-            const customerField = document.getElementById('customer-fields');
-            const vendorField = document.getElementById('vendor-fields');
-            if (role === 'customer') {
-                customerField.classList.remove('hidden-fields');
-                vendorField.classList.add('hidden-fields');
-            } else {
-                vendorField.classList.remove('hidden-fields');
-                customerField.classList.add('hidden-fields');
-            }
+            document.getElementById('customer-fields').classList.toggle('hidden-fields', role !== 'customer');
+            document.getElementById('vendor-fields').classList.toggle('hidden-fields', role !== 'vendor');
         }
     </script>
 </body>
