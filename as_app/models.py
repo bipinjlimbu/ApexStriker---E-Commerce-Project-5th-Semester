@@ -9,6 +9,7 @@ class User(AbstractUser):
         CUSTOMER = 'customer', 'Customer'
         
     phone = models.CharField(max_length=20, blank=True)
+    address = models.TextField(blank=True)
     role = models.CharField(max_length=20, choices=Role.choices, default=Role.CUSTOMER)
     profile_picture = models.ImageField(upload_to='images/user/', blank=True, null=True)
     auth_token = models.CharField(max_length=255, blank=True, null=True)
@@ -30,8 +31,6 @@ class Vendor(models.Model):
         
     user = models.OneToOneField(User, on_delete=models.CASCADE,related_name='vendor_profile')
     shop_name = models.CharField(max_length=255)
-    shop_address = models.CharField(max_length=255)
-    city = models.CharField(max_length=100)
     pan_number = models.CharField(max_length=50)
     id_proof = models.FileField(upload_to='images/id_proof/')
     bank_account_number = models.CharField(max_length=50)
@@ -50,8 +49,6 @@ class Customer(models.Model):
         GOALKEEPER = 'goalkeeper', 'Goalkeeper'
         
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='customer_profile')
-    shipping_address = models.CharField(max_length=255)
-    city = models.CharField(max_length=100)
     position = models.CharField(max_length=20,null=True,blank=True, choices=Position.choices)
     
     def __str__(self):
