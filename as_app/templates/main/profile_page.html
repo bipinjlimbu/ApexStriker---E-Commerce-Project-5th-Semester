@@ -281,6 +281,7 @@
                             </div>
                         </div>
                     </div>
+
                     {% else %}
                     <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
                         <div class="flex items-center justify-between mb-8">
@@ -315,23 +316,16 @@
 
                         <hr class="my-10 border-slate-100">
 
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-3">Primary Admin Residence</label>
                             <div class="bg-rose-50 p-5 rounded-2xl border border-rose-100 flex items-center gap-4">
-                                <div class="bg-rose-600 p-2 rounded-xl shadow-lg shadow-rose-100">
-                                    <i data-lucide="settings" class="w-5 h-5 text-white"></i>
+                                <div class="bg-rose-600 p-2.5 rounded-xl shadow-lg shadow-rose-100">
+                                    <i data-lucide="map-pin" class="w-5 h-5 text-white"></i>
                                 </div>
-                                <div>
-                                    <p class="text-rose-900 font-black text-[10px] uppercase tracking-widest">System Health</p>
-                                    <p class="text-rose-700 font-bold text-xs italic leading-relaxed">All Nodes Operational</p>
-                                </div>
-                            </div>
-                            <div class="bg-slate-900 p-5 rounded-2xl flex items-center gap-4">
-                                <div class="bg-white p-2 rounded-xl shadow-lg">
-                                    <i data-lucide="database" class="w-5 h-5 text-slate-900"></i>
-                                </div>
-                                <div>
-                                    <p class="text-slate-400 font-black text-[10px] uppercase tracking-widest">Database</p>
-                                    <p class="text-white font-bold text-xs italic leading-relaxed">Backups Secured</p>
+                                <div class="flex-1">
+                                    <p class="text-rose-900 font-bold text-sm italic leading-relaxed">
+                                        {{ profile.address }}
+                                    </p>
                                 </div>
                             </div>
                         </div>
