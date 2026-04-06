@@ -223,14 +223,16 @@
                         <hr class="my-10 border-slate-100">
 
                         <div>
-                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-3">Warehouse / Store Location</label>
+                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-3">Official Business Address</label>
                             <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100 flex items-center gap-4">
-                                <div class="bg-blue-600 p-2 rounded-xl shadow-lg shadow-blue-100">
+                                <div class="bg-blue-600 p-2.5 rounded-xl shadow-lg shadow-blue-100">
                                     <i data-lucide="map-pin" class="w-5 h-5 text-white"></i>
                                 </div>
-                                <p class="text-slate-600 font-bold text-sm italic leading-relaxed">
-                                    {{ profile.vendor_profile.shop_address }}
-                                </p>
+                                <div class="flex-1">
+                                    <p class="text-slate-700 font-bold text-sm italic leading-relaxed">
+                                        {{ profile.address }}
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
