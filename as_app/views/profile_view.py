@@ -55,11 +55,9 @@ def edit_profile_view(request, user_id):
         last_name = request.POST.get('last_name')
         email = request.POST.get('email')
         phone = request.POST.get('phone')
-        shipping_address = request.POST.get('shipping_address')
-        city = request.POST.get('city')
+        address = request.POST.get('address')
         position = request.POST.get('position')
         shop_name = request.POST.get('shop_name')
-        shop_address = request.POST.get('shop_address')
         pan_number = request.POST.get('pan_number')
         bank_account_number = request.POST.get('bank_account_number')
         profile_picture = request.FILES.get('profile_picture')
@@ -78,22 +76,12 @@ def edit_profile_view(request, user_id):
             errors['email'] = "Email is required."
         if User.objects.filter(email=email).exclude(id=user_id).exists():
             errors['email'] = "Email already exists."
-            
-        if user.role == User.Role.CUSTOMER:
-            if not shipping_address:
-                errors['shipping_address'] = "Shipping address is required for customers."
-            if not city:
-                errors['city'] = "City is required for customers."
         
         if user.role == User.Role.VENDOR:
             if not shop_name:
                 errors['shop_name'] = "Shop name is required for vendors."
-            if not shop_address:
-                errors['shop_address'] = "Shop address is required for vendors."
             if not pan_number:
                 errors['pan_number'] = "PAN number is required for vendors."
-            if not city:
-                errors['city'] = "City is required for vendors."
             if not bank_account_number:
                 errors['bank_account_number'] = "Bank account number is required for vendors."
                               
@@ -118,20 +106,17 @@ def edit_profile_view(request, user_id):
             messages.warning(request, "Your email has been changed. Please verify your new email address to maintain access to your account.")
 
         user.phone = phone
+        user.address = address
         if profile_picture:
             user.profile_picture = profile_picture
         user.save()
         
         if user.role == User.Role.CUSTOMER:
-            customer.shipping_address = shipping_address
-            customer.city = city
             customer.position = position
             customer.save()
             
         elif user.role == User.Role.VENDOR:
             vendor.shop_name = shop_name
-            vendor.shop_address = shop_address
-            vendor.city = city
             vendor.pan_number = pan_number
             if vendor.bank_account_number != bank_account_number:
                 vendor.bank_account_number = bank_account_number
