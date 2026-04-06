@@ -1,8 +1,5 @@
-<nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-3 h-16 items-center">
-            
-            <div class="flex items-center justify-start">
+<nav class="bg-white border-b border-slate-200 sticky top-0 z-50 py-4"> <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex h-16 items-center justify-between gap-8"> <div class="flex items-center justify-start flex-shrink-0">
                 <a href="/" class="flex items-center gap-2 group">
                     <div class="bg-blue-600 p-1.5 rounded-lg text-white group-hover:bg-blue-700 transition-colors">
                         <i data-lucide="zap" class="w-5 h-5 fill-current"></i>
@@ -13,26 +10,32 @@
                 </a>
             </div>
 
-            <div class="flex items-center justify-center h-full">
-                <div class="relative w-full max-w-md">
+            <div class="hidden md:flex items-center gap-8">
+                <a href="/" class="text-sm font-bold text-slate-900 hover:text-blue-600 transition-colors uppercase tracking-tight">Home</a>
+                <a href="/shop/" class="text-sm font-bold text-slate-900 hover:text-blue-600 transition-colors uppercase tracking-tight">Shop</a>
+                <a href="/categories/" class="text-sm font-bold text-slate-900 hover:text-blue-600 transition-colors uppercase tracking-tight">New Arrivals</a>
+                <a href="/brands/" class="text-sm font-bold text-slate-900 hover:text-blue-600 transition-colors uppercase tracking-tight">Brands</a>
+            </div>
+
+            <div class="flex items-center justify-end space-x-2">
+                
+                <div class="relative w-48 lg:w-64 hidden sm:block">
                     <form action="/search/" method="GET" class="relative w-full m-0">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
                             <i data-lucide="search" class="w-4 h-4"></i>
                         </div>
-                        <input type="text" name="q" placeholder="Search boots, jerseys, gear..." 
-                               class="block w-full pl-10 pr-3 py-2 border border-slate-300 rounded-xl bg-slate-50 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all leading-tight">
+                        <input type="text" name="q" placeholder="Search..." 
+                               class="block w-full pl-9 pr-3 py-2 border border-slate-200 rounded-xl bg-slate-50 text-xs font-medium focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all leading-tight">
                     </form>
                 </div>
-            </div>
 
-            <div class="flex items-center justify-end space-x-4">
                 <a href="/cart/" class="relative p-2 text-slate-600 hover:bg-slate-100 rounded-full transition-colors">
                     <i data-lucide="shopping-cart" class="w-6 h-6"></i>
                     <span class="absolute top-1 right-1 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow-sm">0</span>
                 </a>
 
                 {% if user.is_authenticated %}
-                    <div class="w-9 h-9 bg-blue-100 rounded-full flex items-center justify-center text-blue-700 border border-blue-200">
+                    <div class="w-9 h-9 bg-blue-100 rounded-full flex items-center justify-center text-blue-700 border border-blue-200 ml-2">
                         <a href="/profile/{{ user.id }}" class="w-full h-full rounded-full overflow-hidden flex items-center justify-center">
                         {% if user.profile_picture %}
                             <img src="{{ user.profile_picture.url }}" alt="Profile Picture" class="w-full h-full object-cover rounded-full">
@@ -42,8 +45,8 @@
                         </a>
                     </div>
                 {% else %}
-                    <div class="flex items-center space-x-3">
-                        <a href="/login/" class="text-sm font-semibold text-slate-600 hover:text-blue-600 px-2 transition-colors">Login</a>
+                    <div class="flex items-center space-x-3 ml-2">
+                        <a href="/login/" class="text-sm font-bold text-slate-900 hover:text-blue-600 px-2 transition-colors">Login</a>
                         <a href="/register/" class="bg-blue-600 text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-blue-700 transition-all shadow-md shadow-blue-100">
                             Register
                         </a>
