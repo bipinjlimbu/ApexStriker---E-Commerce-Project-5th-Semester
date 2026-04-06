@@ -30,13 +30,10 @@ def register_view(request):
         confirm_password = request.POST.get('confirm_password')
         role = request.POST.get('role')
         phone = request.POST.get('phone')
-        shipping_address = request.POST.get('shipping_address')
-        city_customer = request.POST.get('city_customer')
+        address = request.POST.get('address')
         position = request.POST.get('position')
         shop_name = request.POST.get('shop_name')
-        shop_address = request.POST.get('shop_address')
         pan_number = request.POST.get('pan_number')
-        city_vendor = request.POST.get('city_vendor')
         bank_account_number = request.POST.get('bank_account_number')
         id_proof = request.FILES.get('id_proof')
         profile_picture = request.FILES.get('profile_picture')
@@ -61,22 +58,12 @@ def register_view(request):
             errors['password'] = "Password is required."
         if password != confirm_password:
             errors['confirm_password'] = "Passwords do not match."
-            
-        if role == 'customer':
-            if not shipping_address:
-                errors['shipping_address'] = "Shipping address is required for customers."
-            if not city_customer:
-                errors['city_customer'] = "City is required for customers."
         
         if role == 'vendor':
             if not shop_name:
                 errors['shop_name'] = "Shop name is required for vendors."
-            if not shop_address:
-                errors['shop_address'] = "Shop address is required for vendors."
             if not pan_number:
                 errors['pan_number'] = "PAN number is required for vendors."
-            if not city_vendor:
-                errors['city_vendor'] = "City is required for vendors."
             if not bank_account_number:
                 errors['bank_account_number'] = "Bank account number is required for vendors."
             if not id_proof:
@@ -93,23 +80,20 @@ def register_view(request):
                         password=password,
                         role=role,
                         phone=phone,
+                        address=address,
                         profile_picture=profile_picture if profile_picture else None,
                         auth_token=auth_token
                     )
                     if role == 'customer':
                         Customer.objects.create(
                             user=user,
-                            shipping_address=shipping_address,
-                            city=city_customer,
                             position=position if position else None
                         )
                     elif role == 'vendor':
                         Vendor.objects.create(
                             user=user,
                             shop_name=shop_name,
-                            shop_address=shop_address,
                             pan_number=pan_number,
-                            city=city_vendor,
                             bank_account_number=bank_account_number,
                             id_proof=id_proof,
                             status=Vendor.Status.PENDING
