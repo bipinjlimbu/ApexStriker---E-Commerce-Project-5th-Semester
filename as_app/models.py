@@ -86,6 +86,7 @@ class Product(models.Model):
     vendor = models.ForeignKey('Vendor', on_delete=models.CASCADE, related_name='products')
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     brand = models.ForeignKey(Brand, on_delete=models.SET_NULL, null=True)
+    custom_brand = models.CharField(max_length=255, blank=True)
     name = models.CharField(max_length=255)
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
