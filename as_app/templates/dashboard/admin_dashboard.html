@@ -13,63 +13,68 @@
     {% include 'components/_alert_messages.html' %}
 
     <aside class="w-80 bg-slate-900 text-white flex flex-col shadow-2xl relative z-30">
-        <div class="p-8 border-b border-white/5">
-            <div class="flex items-center gap-3">
-                <div class="h-10 w-10 bg-blue-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/20">
-                    <i data-lucide="shield-check" class="w-6 h-6"></i>
-                </div>
-                <h1 class="text-2xl font-black italic tracking-tighter uppercase">
-                    Apex<span class="text-blue-500">Striker</span>
-                </h1>
+    <div class="p-8 border-b border-white/5">
+        <div class="flex items-center gap-3">
+            <div class="h-10 w-10 bg-blue-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/20">
+                <i data-lucide="shield-check" class="w-6 h-6"></i>
             </div>
-            <p class="text-[10px] text-slate-500 font-black uppercase tracking-[0.3em] mt-4 italic">Management Console</p>
+            <h1 class="text-2xl font-black italic tracking-tighter uppercase">
+                Apex<span class="text-blue-500">Striker</span>
+            </h1>
+        </div>
+        <p class="text-[10px] text-slate-500 font-black uppercase tracking-[0.3em] mt-4 italic">Management Console</p>
+    </div>
+
+    <nav class="flex-grow p-6 space-y-6 overflow-y-auto">
+        <div>
+            <a href="/brands/add/" class="flex items-center gap-4 px-4 py-4 rounded-2xl bg-blue-600 text-white font-black italic uppercase text-xs tracking-widest shadow-xl shadow-blue-600/30 hover:bg-blue-700 transition-all group active:scale-95">
+                <i data-lucide="award" class="w-5 h-5 group-hover:scale-110 transition-transform duration-300"></i>
+                Add New Brand
+            </a>
         </div>
 
-        <nav class="flex-grow p-6 space-y-2 overflow-y-auto">
-            <div class="pb-6">
-                <h3 class="px-4 text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4 italic">Identity Control</h3>
-                <a href="?section=member-list" class="flex items-center gap-4 px-4 py-4 rounded-2xl {% if section == 'members-list' or not section %}bg-blue-600 text-white shadow-xl shadow-blue-600/20{% else %}text-slate-400 hover:bg-white/5 hover:text-white{% endif %} font-black italic uppercase text-xs tracking-widest transition-all">
-                    <i data-lucide="users" class="w-4 h-4"></i>
-                    Member Directory
-                </a>
-                <a href="?section=pending-vendors" class="flex items-center gap-4 px-4 py-4 rounded-2xl {% if section == 'pending-vendors' %}bg-blue-600 text-white shadow-xl shadow-blue-600/20{% else %}text-slate-400 hover:bg-white/5 hover:text-white{% endif %} font-black italic uppercase text-xs tracking-widest transition-all mt-1 group">
-                    <i data-lucide="clock" class="w-4 h-4 group-hover:text-blue-500"></i>
-                    Vendor Pending
-                    {% if total_pending_vendors > 0 %}
-                        <span class="ml-auto bg-blue-600/20 text-blue-500 px-2 py-0.5 rounded-lg text-[10px]"> {{ total_pending_vendors }}</span>
-                    {% endif %}
-                </a>
-            </div>
-
-            <div>
-                <h3 class="px-4 text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4 italic">Marketplace Audit</h3>
-                <a href="?section=product-reviews" class="flex items-center gap-4 px-4 py-4 rounded-2xl {% if section == 'product-reviews' %}bg-blue-600 text-white shadow-xl shadow-blue-600/20{% else %}text-slate-400 hover:bg-white/5 hover:text-white{% endif %} font-black italic uppercase text-xs tracking-widest transition-all">
-                    <i data-lucide="package" class="w-4 h-4"></i>
-                    Product Reviews
-                </a>
-                <a href="?section=revenue-logs" class="flex items-center gap-4 px-4 py-4 rounded-2xl {% if section == 'revenue-logs' %}bg-blue-600 text-white shadow-xl shadow-blue-600/20{% else %}text-slate-400 hover:bg-white/5 hover:text-white{% endif %} font-black italic uppercase text-xs tracking-widest transition-all">
-                    <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
-                    Revenue Logs
-                </a>
-            </div>
-        </nav>
-
-        <div class="p-6 border-t border-white/5 bg-slate-950/50 space-y-3">
-    
-            <a href="/profile/{{ request.user.id }}/" 
-            class="flex items-center justify-center gap-3 w-full bg-blue-600 text-white px-6 py-4 rounded-2xl font-black italic uppercase text-[10px] tracking-widest hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/20 active:scale-95">
-                <i data-lucide="user" class="w-4 h-4"></i>
-                Admin Profile
+        <div class="space-y-2">
+            <h3 class="px-4 text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4 italic">Identity Control</h3>
+            <a href="?section=member-list" class="flex items-center gap-4 px-4 py-4 rounded-2xl {% if section == 'members-list' or not section %}bg-white/5 text-white shadow-lg{% else %}text-slate-400 hover:bg-white/5 hover:text-white{% endif %} font-black italic uppercase text-xs tracking-widest transition-all">
+                <i data-lucide="users" class="w-4 h-4"></i>
+                Member Directory
             </a>
-
-            <a href="/" target="_blank" 
-            class="flex items-center justify-center gap-3 w-full bg-white/5 border border-white/10 text-slate-400 px-6 py-4 rounded-2xl font-black italic uppercase text-[10px] tracking-widest hover:bg-white/10 hover:text-white transition-all active:scale-95">
-                <i data-lucide="external-link" class="w-4 h-4"></i>
-                Live Website
+            <a href="?section=pending-vendors" class="flex items-center gap-4 px-4 py-4 rounded-2xl {% if section == 'pending-vendors' %}bg-white/5 text-white shadow-lg{% else %}text-slate-400 hover:bg-white/5 hover:text-white{% endif %} font-black italic uppercase text-xs tracking-widest transition-all mt-1 group">
+                <i data-lucide="clock" class="w-4 h-4 group-hover:text-blue-500"></i>
+                Vendor Pending
+                {% if total_pending_vendors > 0 %}
+                    <span class="ml-auto bg-blue-600/20 text-blue-500 px-2 py-0.5 rounded-lg text-[10px]"> {{ total_pending_vendors }}</span>
+                {% endif %}
             </a>
-
         </div>
-    </aside>
+
+        <div class="space-y-2">
+            <h3 class="px-4 text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4 italic">Marketplace Audit</h3>
+            <a href="?section=product-reviews" class="flex items-center gap-4 px-4 py-4 rounded-2xl {% if section == 'product-reviews' %}bg-white/5 text-white shadow-lg{% else %}text-slate-400 hover:bg-white/5 hover:text-white{% endif %} font-black italic uppercase text-xs tracking-widest transition-all">
+                <i data-lucide="package" class="w-4 h-4"></i>
+                Product Reviews
+            </a>
+            <a href="?section=revenue-logs" class="flex items-center gap-4 px-4 py-4 rounded-2xl {% if section == 'revenue-logs' %}bg-white/5 text-white shadow-lg{% else %}text-slate-400 hover:bg-white/5 hover:text-white{% endif %} font-black italic uppercase text-xs tracking-widest transition-all">
+                <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
+                Revenue Logs
+            </a>
+        </div>
+    </nav>
+
+    <div class="p-6 border-t border-white/5 bg-slate-950/50 space-y-3">
+        <a href="/profile/{{ request.user.id }}/" 
+        class="flex items-center justify-center gap-3 w-full bg-blue-600 text-white px-6 py-4 rounded-2xl font-black italic uppercase text-[10px] tracking-widest hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/20 active:scale-95">
+            <i data-lucide="user" class="w-4 h-4"></i>
+            Admin Profile
+        </a>
+
+        <a href="/" target="_blank" 
+        class="flex items-center justify-center gap-3 w-full bg-white/5 border border-white/10 text-slate-400 px-6 py-4 rounded-2xl font-black italic uppercase text-[10px] tracking-widest hover:bg-white/10 hover:text-white transition-all active:scale-95">
+            <i data-lucide="external-link" class="w-4 h-4"></i>
+            Live Website
+        </a>
+    </div>
+</aside>
 
     <main class="flex-grow flex flex-col h-screen overflow-y-auto">
 
