@@ -23,18 +23,21 @@
             <p class="text-[10px] text-slate-500 font-black uppercase tracking-[0.3em] mt-4 italic">Vendor Command Center</p>
         </div>
 
-        <nav class="flex-grow p-6 space-y-2 overflow-y-auto">
-            <div class="pb-6">
-                <h3 class="px-4 text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4 italic">Store Management</h3>
-                <a href="#" class="flex items-center gap-4 px-4 py-4 rounded-2xl bg-blue-600 text-white font-black italic uppercase text-xs tracking-widest shadow-xl shadow-blue-600/20 transition-all">
-                    <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
-                    Sales Overview
-                </a>
-                <a href="#" class="flex items-center gap-4 px-4 py-4 rounded-2xl hover:bg-white/5 text-slate-400 hover:text-white font-black italic uppercase text-xs tracking-widest transition-all mt-1">
-                    <i data-lucide="package-plus" class="w-4 h-4"></i>
+        <nav class="flex-grow p-6 space-y-6 overflow-y-auto">
+            <div>
+                <a href="/add-product/" class="flex items-center gap-4 px-4 py-4 rounded-2xl bg-blue-600 text-white font-black italic uppercase text-xs tracking-widest shadow-xl shadow-blue-600/30 hover:bg-blue-700 transition-all group active:scale-95">
+                    <i data-lucide="plus-square" class="w-5 h-5 group-hover:rotate-90 transition-transform duration-300"></i>
                     Add New Gear
                 </a>
-                <a href="#" class="flex items-center gap-4 px-4 py-4 rounded-2xl hover:bg-white/5 text-slate-400 hover:text-white font-black italic uppercase text-xs tracking-widest transition-all mt-1">
+            </div>
+
+            <div class="space-y-1">
+                <h3 class="px-4 text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4 italic">Store Management</h3>
+                <a href="#" class="flex items-center gap-4 px-4 py-4 rounded-2xl bg-white/5 text-white font-black italic uppercase text-xs tracking-widest transition-all">
+                    <i data-lucide="layout-dashboard" class="w-4 h-4 text-blue-500"></i>
+                    Sales Overview
+                </a>
+                <a href="#" class="flex items-center gap-4 px-4 py-4 rounded-2xl hover:bg-white/5 text-slate-400 hover:text-white font-black italic uppercase text-xs tracking-widest transition-all">
                     <i data-lucide="package" class="w-4 h-4"></i>
                     My Inventory
                 </a>
@@ -130,31 +133,15 @@
                                 <span class="text-[10px] font-black text-green-600 bg-green-50 px-3 py-1.5 rounded-lg uppercase italic border border-green-100">Live</span>
                             </td>
                         </tr>
-                        <tr class="hover:bg-slate-50 transition-colors">
-                            <td class="px-10 py-6">
-                                <div class="flex items-center gap-4">
-                                    <div class="h-14 w-14 bg-slate-100 rounded-2xl flex items-center justify-center border border-slate-200 overflow-hidden">
-                                        <i data-lucide="shirt" class="w-6 h-6 text-slate-300"></i>
-                                    </div>
-                                    <div>
-                                        <p class="font-black text-slate-900 italic uppercase">Man City Home 25/26</p>
-                                        <p class="text-[10px] text-blue-600 font-bold italic">Jersey / Puma</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-10 py-6 font-black text-slate-700 italic uppercase">Out of Stock</td>
-                            <td class="px-10 py-6 font-black text-slate-900 italic">Rs. 4,500</td>
-                            <td class="px-10 py-6">
-                                <span class="text-[10px] font-black text-red-500 bg-red-50 px-3 py-1.5 rounded-lg uppercase italic border border-red-100">Draft</span>
-                            </td>
-                        </tr>
-                    </tbody>
+                        </tbody>
                 </table>
             </div>
         </div>
     </main>
 
     <script src="{% static 'js/lucide.min.js' %}"></script>
-    <script>lucide.createIcons();</script>
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>
