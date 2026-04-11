@@ -2,6 +2,7 @@ from django.urls import path
 from .views.auth_view import register_view, login_view, logout_view
 from .views.main_view import home_view, brands_view, verify_email_view, password_reset_view, password_reset_confirm_view
 from .views.profile_view import profile_view, edit_profile_view, resend_verification_email, delete_profile_view
+from .views.brand_view import add_brand_view
 from .views.product_view import add_product_view
 from .views.dashboard import admin_dashboard_view, approve_vendor_view, reject_vendor_view, vendor_dashboard_view, customer_dashboard_view
 
@@ -23,5 +24,6 @@ urlpatterns = [
     path('reject_vendor/<int:vendor_id>/', reject_vendor_view, name='reject_vendor'),
     path('dashboard/vendor/', vendor_dashboard_view, name='vendor_dashboard'),
     path('dashboard/customer/', customer_dashboard_view, name='customer_dashboard'),
+    path('brands/add/', add_brand_view, name='add_brand'),
     path('products/add/', add_product_view, name='add_product'),
 ]
