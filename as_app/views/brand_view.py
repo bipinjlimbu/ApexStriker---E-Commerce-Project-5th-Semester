@@ -20,7 +20,7 @@ def brands_view(request):
             
 @login_required
 def add_brand_view(request):
-    if not request.user.is_superuser:
+    if request.user.role != 'customer':
         messages.error(request, "You are not authorized to add a brand.")
         return redirect('home')
     
@@ -48,13 +48,24 @@ def add_brand_view(request):
         if not errors:
             brand = Brand.objects.create(name=name, logo=logo, description=description)
             
-            subject = "New Brand Added - ApexStriker"
-            message = f"Hi {request.user.username},\n\nThe brand '{brand.name}' has been successfully added to ApexStriker.\n\nThank you for contributing to our platform!"
+            if request.user.role == 'admin':
+                brand.is_active = True
+            
+                subject = "New Brand Added - ApexStriker"
+                message = f"Hi {request.user.username},\n\nThe brand '{brand.name}' has been successfully added to ApexStriker.\n\nThank you for contributing to our platform!"
+                email_thread = threading.Thread(target=send_email_async, args=(subject, message, request.user.email))
+                email_thread.start()
+
+                messages.success(request, f"Brand '{brand.name}' has been added successfully.")
+                return redirect('/dashboard/admin/')
+            
+            subject = "Brand Submission Received - ApexStriker"
+            message = f"Hi {request.user.username},\n\nThank you for submitting the brand '{brand.name}' to ApexStriker. Your submission is currently under review by our team. We will notify you once it has been approved and added to our platform.\n\nThank you for contributing to our community!"
             email_thread = threading.Thread(target=send_email_async, args=(subject, message, request.user.email))
             email_thread.start()
-
-            messages.success(request, f"Brand '{brand.name}' has been added successfully.")
-            return redirect('/dashboard/admin/')
+            
+            messages.success(request, f"Brand '{brand.name}' has been submitted successfully and is pending approval.")
+            return redirect('/brands/')
         
         return render(request, 'main/add_brand_page.html', {'errors': errors, 'data': request.POST})
     
