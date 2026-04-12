@@ -87,6 +87,27 @@ def reject_vendor_view(request, vendor_id):
     return redirect('/dashboard/admin/?section=pending-vendors')
 
 @login_required
+def approve_brand_view(request, brand_id):
+    if request.user.role != 'admin':
+        messages.error(request, "You are not authorized to perform this action.")
+        return redirect('/')
+    
+    try:
+        brand = Brand.objects.get(id=brand_id)
+        brand.is_active = True
+        brand.save()
+        
+        subject = "ApexStriker - Brand Approved"
+        message = f"Hi {request.user.first_name},\n\nThe brand '{brand.name}' has been approved and is now live on ApexStriker. Thank you for contributing to our platform!"
+        threading.Thread(target=send_email_async, args=(subject, message, request.user.email)).start()
+        
+        messages.success(request, f"Brand '{brand.name}' has been approved successfully.")
+    except Brand.DoesNotExist:
+        messages.error(request, "Brand not found.")
+    
+    return redirect('/dashboard/admin/?section=brand-management')
+
+@login_required
 def vendor_dashboard_view(request):
     if request.user.role != 'vendor':
         messages.error(request, "You are not authorized to access the vendor dashboard.")
