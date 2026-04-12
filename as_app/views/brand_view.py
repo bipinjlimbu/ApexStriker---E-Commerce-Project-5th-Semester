@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.mail import send_mail
-from django.core.files.images import get_image_dimensions
 from django.conf import settings
 from ..models import Brand
 import threading
@@ -20,9 +19,9 @@ def brands_view(request):
             
 @login_required
 def add_brand_view(request):
-    if request.user.role != 'customer':
+    if request.user.role == 'customer':
         messages.error(request, "You are not authorized to add a brand.")
-        return redirect('home')
+        return redirect('/brands/')
     
     errors = {}
     if request.method == 'POST':
@@ -37,10 +36,6 @@ def add_brand_view(request):
             
         if not logo:
             errors['logo'] = "Brand logo is required."
-        if logo:
-            width, height = get_image_dimensions(logo)
-            if width != height:
-                errors['logo'] = "Logo must be in 1:1 aspect ratio (square)."
             
         if not description:
             errors['description'] = "Brand description is required."
@@ -57,7 +52,7 @@ def add_brand_view(request):
                 email_thread.start()
 
                 messages.success(request, f"Brand '{brand.name}' has been added successfully.")
-                return redirect('/dashboard/admin/')
+                return redirect('/dashboard/admin/?section=brand-management')
             
             subject = "Brand Submission Received - ApexStriker"
             message = f"Hi {request.user.username},\n\nThank you for submitting the brand '{brand.name}' to ApexStriker. Your submission is currently under review by our team. We will notify you once it has been approved and added to our platform.\n\nThank you for contributing to our community!"
