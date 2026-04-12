@@ -313,6 +313,8 @@
                     <tbody class="divide-y divide-slate-50">
                         
                         {% for brand in brands %}
+
+                        {% if brand.is_active %}
                         <tr class="hover:bg-slate-50 transition-colors group">
                             <td class="px-10 py-6">
                                 <div class="flex items-center gap-4">
@@ -346,22 +348,22 @@
                                 </div>
                             </td>
                         </tr>
-                        {% endfor %}
 
-                        {% comment %} <tr class="hover:bg-slate-50 transition-colors group bg-amber-50/20">
+                        {% elif not brand.is_active %}
+                        <tr class="hover:bg-slate-50 transition-colors group bg-amber-50/20">
                             <td class="px-10 py-6">
                                 <div class="flex items-center gap-4">
                                     <div class="h-16 w-16 bg-white rounded-2xl border border-amber-100 p-2 flex items-center justify-center shrink-0 shadow-sm">
-                                        <i data-lucide="award" class="text-amber-500 w-6 h-6"></i>
+                                        <img src="{{ brand.logo.url }}" class="max-h-full max-w-full object-contain filter grayscale opacity-70">
                                     </div>
                                     <div>
-                                        <p class="font-black text-slate-900 italic uppercase leading-none mb-1 text-lg tracking-tighter">Elite Pro Gear</p>
+                                        <p class="font-black text-slate-900 italic uppercase leading-none mb-1 text-lg tracking-tighter">{{ brand.name }}</p>
                                         <p class="text-[10px] text-amber-600 font-bold italic uppercase tracking-wider">Vendor Submission</p>
                                     </div>
                                 </div>
                             </td>
                             <td class="px-10 py-6 max-w-xs">
-                                <p class="text-xs text-slate-500 font-medium italic line-clamp-2">Specializing in premium grip socks and customized athletic gear.</p>
+                                <p class="text-xs text-slate-500 font-medium italic line-clamp-2">{{ brand.description }}</p>
                             </td>
                             <td class="px-10 py-6">
                                 <div class="flex items-center justify-center gap-2">
@@ -378,7 +380,10 @@
                                     </button>
                                 </div>
                             </td>
-                        </tr> {% endcomment %}
+                        </tr>
+                        {% endif %}
+
+                        {% endfor %}
 
                     </tbody>
                 </table>
