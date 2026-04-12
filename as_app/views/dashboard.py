@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import messages
-from ..models import User, Vendor
+from ..models import User, Vendor, Brand
 import threading
     
 def send_email_async(subject, message, recipient):
@@ -31,6 +31,9 @@ def admin_dashboard_view(request):
         
     elif section == 'pending-vendors':
         context['vendors'] = Vendor.objects.filter(status=Vendor.Status.PENDING).order_by('-requested_on')
+        
+    elif section == 'brand-management':
+        context['brands'] = Brand.objects.all()
         
     elif section == 'product-reviews':
         context['product-reviews'] = None
