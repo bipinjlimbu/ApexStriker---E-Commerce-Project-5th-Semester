@@ -342,9 +342,9 @@
                                     <a href="#" class="p-3 bg-slate-50 rounded-xl text-slate-400 hover:bg-slate-900 hover:text-white transition-all border border-slate-200 hover:border-slate-900 active:scale-90" title="Edit Brand">
                                         <i data-lucide="edit-3" class="w-4 h-4"></i>
                                     </a>
-                                    <button class="p-3 bg-slate-50 rounded-xl text-slate-400 hover:bg-red-600 hover:text-white transition-all border border-slate-200 hover:border-red-600 active:scale-90" title="Delete Brand">
+                                    <a href="/delete_brand/{{ brand.id }}/" class="p-3 bg-slate-50 rounded-xl text-slate-400 hover:bg-red-600 hover:text-white transition-all border border-slate-200 hover:border-red-600 active:scale-90" title="Delete Brand">
                                         <i data-lucide="trash-2" class="w-4 h-4"></i>
-                                    </button>
+                                    </a>
                                 </div>
                             </td>
                         </tr>
@@ -372,12 +372,12 @@
                             </td>
                             <td class="px-10 py-6 text-right">
                                 <div class="flex items-center justify-end gap-2">
-                                    <button class="bg-blue-600 text-white px-5 py-2.5 rounded-xl font-black italic uppercase text-[10px] hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/20 active:scale-95 flex items-center gap-2">
+                                    <a href="/approve_brand/{{ brand.id }}/" class="bg-blue-600 text-white px-5 py-2.5 rounded-xl font-black italic uppercase text-[10px] hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/20 active:scale-95 flex items-center gap-2">
                                         <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Authorize
-                                    </button>
-                                    <button class="p-3 bg-white rounded-xl text-slate-400 hover:bg-red-600 hover:text-white transition-all border border-slate-200 active:scale-90">
+                                    </a>
+                                    <a href="/delete_brand/{{ brand.id }}/" class="p-3 bg-white rounded-xl text-slate-400 hover:bg-red-600 hover:text-white transition-all border border-slate-200 active:scale-90" title="Delete Brand">
                                         <i data-lucide="trash-2" class="w-4 h-4"></i>
-                                    </button>
+                                    </a>
                                 </div>
                             </td>
                         </tr>
