@@ -13,6 +13,11 @@ def send_email_async(subject, message, recipient):
         except Exception as e:
             print(f"Error sending email: {e}")
             
+
+def brands_view(request):
+    brands = Brand.objects.all()
+    return render(request, 'main/brands_page.html', {'brands': brands})
+            
 @login_required
 def add_brand_view(request):
     if not request.user.is_superuser:

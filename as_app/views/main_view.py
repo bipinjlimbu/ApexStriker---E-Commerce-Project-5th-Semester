@@ -15,9 +15,6 @@ def send_email_async(subject, message, recipient):
 def home_view(request):
     return render(request, 'main/home_page.html')
 
-def brands_view(request):
-    return render(request, 'main/brands_page.html')
-
 def verify_email_view(request, token):
     user = None
     status = 'error'
