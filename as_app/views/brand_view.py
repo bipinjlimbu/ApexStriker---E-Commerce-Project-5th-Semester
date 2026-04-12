@@ -45,6 +45,7 @@ def add_brand_view(request):
             
             if request.user.role == 'admin':
                 brand.is_active = True
+                brand.save()
             
                 subject = "New Brand Added - ApexStriker"
                 message = f"Hi {request.user.username},\n\nThe brand '{brand.name}' has been successfully added to ApexStriker.\n\nThank you for contributing to our platform!"
