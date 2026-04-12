@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.mail import send_mail
+from django.core.files.images import get_image_dimensions
 from django.conf import settings
 from ..models import Brand
 import threading
@@ -31,6 +32,10 @@ def add_brand_view(request):
             
         if not logo:
             errors['logo'] = "Brand logo is required."
+        if logo:
+            width, height = get_image_dimensions(logo)
+            if width != height:
+                errors['logo'] = "Logo must be in 1:1 aspect ratio (square)."
             
         if not description:
             errors['description'] = "Brand description is required."
@@ -44,7 +49,7 @@ def add_brand_view(request):
             email_thread.start()
 
             messages.success(request, f"Brand '{brand.name}' has been added successfully.")
-            return redirect('/brands/')
+            return redirect('/dashboard/admin/')
         
         return render(request, 'main/add_brand_page.html', {'errors': errors, 'data': request.POST})
     
