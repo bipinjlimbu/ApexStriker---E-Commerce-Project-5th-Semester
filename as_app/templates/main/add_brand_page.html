@@ -8,13 +8,36 @@
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
     <style>
         input:focus, textarea:focus { border-color: #2563eb !important; background-color: white !important; }
-        .logo-preview-container {
-            width: 120px; height: 120px; border-radius: 2rem;
-            border: 2px dashed #e2e8f0; display: flex;
-            align-items: center; justify-content: center;
+        
+        /* Clickable Preview Styling */
+        .logo-upload-wrapper {
+            width: 140px; height: 140px; 
+            border-radius: 2.5rem;
+            border: 2px dashed #e2e8f0;
+            display: flex; align-items: center; justify-content: center;
             overflow: hidden; background: #f8fafc;
+            cursor: pointer; transition: all 0.3s ease;
+            position: relative;
         }
-        #logo-img-preview { width: 100%; height: 100%; object-cover: contain; display: none; }
+        .logo-upload-wrapper:hover {
+            border-color: #2563eb;
+            background: #eff6ff;
+            transform: scale(1.02);
+        }
+        .logo-upload-wrapper:active { transform: scale(0.98); }
+        
+        #logo-img-preview { 
+            width: 100%; height: 100%; 
+            object-fit: contain; display: none; 
+            padding: 10px;
+        }
+        
+        .upload-hint {
+            position: absolute; bottom: 12px;
+            font-size: 8px; font-weight: 900;
+            color: #2563eb; text-transform: uppercase;
+            letter-spacing: 0.1em; opacity: 0.6;
+        }
     </style>
 </head>
 
@@ -27,22 +50,21 @@
             <div class="text-center mb-10">
                 <div class="inline-block bg-blue-600 text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-[0.2em] italic mb-4">Authority Console</div>
                 <h2 class="text-3xl font-black text-slate-900 tracking-tighter uppercase italic">Register <span class="text-blue-600">New Brand</span></h2>
-                <p class="text-slate-500 text-xs font-bold mt-2 uppercase tracking-wider">Expand the ApexStriker Ecosystem</p>
+                <p class="text-slate-500 text-xs font-bold mt-2 uppercase tracking-wider italic">Expand the ApexStriker Ecosystem</p>
             </div>
 
             <form method="POST" enctype="multipart/form-data" class="space-y-6">
                 {% csrf_token %}
 
-                <div class="flex flex-col items-center gap-4 mb-8">
-                    <div class="logo-preview-container" id="preview-box">
-                        <i data-lucide="image" id="placeholder-icon" class="w-8 h-8 text-slate-300"></i>
+                <div class="flex flex-col items-center gap-3 mb-8">
+                    <label for="brand-logo-input" class="logo-upload-wrapper" id="preview-box">
+                        <div id="placeholder-content" class="flex flex-col items-center gap-1">
+                            <i data-lucide="upload-cloud" class="w-8 h-8 text-blue-500"></i>
+                            <span class="upload-hint">Brand Logo</span>
+                        </div>
                         <img id="logo-img-preview" src="#" alt="Logo Preview">
-                    </div>
-                    
-                    <label class="cursor-pointer bg-slate-100 hover:bg-slate-200 text-slate-600 px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all italic border border-slate-200">
-                        Upload Brand Logo
-                        <input type="file" name="logo" accept="image/*" class="hidden" onchange="previewLogo(this)" required>
                     </label>
+                    <input type="file" id="brand-logo-input" name="logo" accept="image/*" class="hidden" onchange="previewLogo(this)" required>
                 </div>
 
                 <div class="space-y-5">
@@ -81,7 +103,7 @@
 
         function previewLogo(input) {
             const preview = document.getElementById('logo-img-preview');
-            const placeholder = document.getElementById('placeholder-icon');
+            const placeholder = document.getElementById('placeholder-content');
             const box = document.getElementById('preview-box');
 
             if (input.files && input.files[0]) {
