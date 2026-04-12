@@ -312,20 +312,20 @@
                     </thead>
                     <tbody class="divide-y divide-slate-50">
                         
+                        {% for brand in brands %}
                         <tr class="hover:bg-slate-50 transition-colors group">
                             <td class="px-10 py-6">
                                 <div class="flex items-center gap-4">
                                     <div class="h-16 w-16 bg-white rounded-2xl border border-slate-100 p-2 flex items-center justify-center shrink-0 shadow-sm group-hover:border-blue-200 transition-all">
-                                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg" class="max-h-full max-w-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-500">
+                                        <img src="{{ brand.logo.url }}" class="max-h-full max-w-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-500">
                                     </div>
                                     <div>
-                                        <p class="font-black text-slate-900 italic uppercase leading-none mb-1 text-lg tracking-tighter">Nike</p>
-                                        <p class="text-[10px] text-blue-500 font-bold italic uppercase tracking-wider">Official Partner</p>
+                                        <p class="font-black text-slate-900 italic uppercase leading-none mb-1 text-lg tracking-tighter">{{ brand.name }}</p>
                                     </div>
                                 </div>
                             </td>
                             <td class="px-10 py-6 max-w-xs">
-                                <p class="text-xs text-slate-500 font-medium italic line-clamp-2">Global leader in athletic footwear, apparel, and equipment.</p>
+                                <p class="text-xs text-slate-500 font-medium italic line-clamp-2">{{ brand.description }}</p>
                             </td>
                             <td class="px-10 py-6">
                                 <div class="flex items-center justify-center gap-2">
@@ -346,8 +346,9 @@
                                 </div>
                             </td>
                         </tr>
+                        {% endfor %}
 
-                        <tr class="hover:bg-slate-50 transition-colors group bg-amber-50/20">
+                        {% comment %} <tr class="hover:bg-slate-50 transition-colors group bg-amber-50/20">
                             <td class="px-10 py-6">
                                 <div class="flex items-center gap-4">
                                     <div class="h-16 w-16 bg-white rounded-2xl border border-amber-100 p-2 flex items-center justify-center shrink-0 shadow-sm">
@@ -377,7 +378,7 @@
                                     </button>
                                 </div>
                             </td>
-                        </tr>
+                        </tr> {% endcomment %}
 
                     </tbody>
                 </table>
