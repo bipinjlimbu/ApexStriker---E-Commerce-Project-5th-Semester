@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
-from ..models import User
+from ..models import User, Product
 import threading
 import uuid
 
@@ -13,7 +13,11 @@ def send_email_async(subject, message, recipient):
             print(f"Error sending email: {e}")
             
 def home_view(request):
-    return render(request, 'main/home_page.html')
+    context = {}
+    
+    context['products'] = Product.objects.all().order_by('-created_at')[:5]
+    
+    return render(request, 'main/home_page.html', context)
 
 def verify_email_view(request, token):
     user = None
