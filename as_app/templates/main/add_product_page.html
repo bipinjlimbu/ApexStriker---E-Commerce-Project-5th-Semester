@@ -77,19 +77,11 @@
                         <label class="text-[11px] font-black text-slate-500 uppercase tracking-widest ml-2 italic flex items-center gap-2"><i data-lucide="award" class="w-3 h-3 text-blue-500"></i> Brand</label>
                         <select id="brandSelect" name="brand" onchange="checkBrand(this)" required class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none transition italic appearance-none cursor-pointer">
                             <option value="" hidden>Select Brand</option>
-                            <option value="nike">Nike</option>
-                            <option value="adidas">Adidas</option>
-                            <option value="puma">Puma</option>
-                            <option value="nb">New Balance (NB)</option>
-                            <option value="mizuno">Mizuno</option>
-                            <option value="g-form">G-Form</option>
-                            <option value="reusch">Reusch</option>
-                            <option value="other">Other (Specify Below)</option>
+                            {% for brand in brands %}
+                                <option value="{{ brand.id }}">{{ brand.name }}</option>
+                            {% endfor %}
                         </select>
-                    </div>
-
-                    <div id="otherBrandField" class="hidden-field md:col-span-2 space-y-1">
-                        <input type="text" name="other_brand_name" placeholder="Enter your brand name" class="w-full p-4 bg-blue-50 border border-blue-200 rounded-2xl font-bold text-slate-900 outline-none transition italic">
+                        <p class="text-[9px] text-slate-400 font-bold uppercase italic mt-1">Can't find your brand? <a href="/brands/add/" class="text-blue-500 hover:underline">Request it here</a>.</p>
                     </div>
 
                     <div class="space-y-1 md:col-span-2">
@@ -119,11 +111,6 @@
     <script>
         lucide.createIcons();
         let virtualImageQueue = [];
-
-        function checkBrand(select) {
-            const otherField = document.getElementById('otherBrandField');
-            otherField.style.display = (select.value === 'other') ? 'block' : 'none';
-        }
 
         function handleQueueSelection(input) {
             Array.from(input.files).forEach(file => {
