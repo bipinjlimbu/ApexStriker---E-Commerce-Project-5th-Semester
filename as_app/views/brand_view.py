@@ -74,6 +74,13 @@ def edit_brand_view(request, brand_id):
         return redirect('/brands/')
     
     errors = {}
+    
+    brand = Brand.objects.filter(id=brand_id).first()
+    
+    if not brand:
+        messages.error(request, "Brand not found.")
+        return redirect('/dashboard/admin/?section=brand-management')
+    
     if request.method == 'POST':
         name = request.POST.get('name')
         logo = request.FILES.get('logo')
@@ -104,4 +111,7 @@ def edit_brand_view(request, brand_id):
 
             messages.success(request, f"Brand '{brand.name}' has been updated successfully.")
             return redirect('/dashboard/admin/?section=brand-management')
-    return render(request, 'main/edit_brand_page.html')
+        
+        return render(request, 'main/edit_brand_page.html', {'errors': errors, 'data': request.POST, 'brand': brand})
+    
+    return render(request, 'main/edit_brand_page.html', {'brand': brand})
