@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.text import slugify
+from django.utils import timezone
+from datetime import timedelta
 
 class User(AbstractUser):
     class Role(models.TextChoices):
@@ -95,6 +97,10 @@ class Product(models.Model):
     stock = models.PositiveIntegerField(default=0)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def is_new(self):
+        return self.created_at >= timezone.now() - timedelta(days=7)
 
     def __str__(self):
         return self.name
