@@ -115,3 +115,26 @@ def edit_brand_view(request, brand_id):
         return render(request, 'main/edit_brand_page.html', {'errors': errors, 'data': request.POST, 'brand': brand})
     
     return render(request, 'main/edit_brand_page.html', {'brand': brand})
+
+@login_required
+def delete_brand_view(request, brand_id):
+    if request.user.role != 'admin':
+        messages.error(request, "You are not authorized to delete a brand.")
+        return redirect('/brands/')
+    
+    brand = Brand.objects.filter(id=brand_id).first()
+    
+    if not brand:
+        messages.error(request, "Brand not found.")
+        return redirect('/dashboard/admin/?section=brand-management')
+    
+    brand_name = brand.name
+    brand.delete()
+    
+    subject = "Brand Deleted - ApexStriker"
+    message = f"Hi {request.user.username},\n\nThe brand '{brand_name}' has been successfully deleted from ApexStriker.\n\nThank you for managing our platform!"
+    email_thread = threading.Thread(target=send_email_async, args=(subject, message, request.user.email))
+    email_thread.start()
+
+    messages.success(request, f"Brand '{brand_name}' has been deleted successfully.")
+    return redirect('/dashboard/admin/?section=brand-management')
