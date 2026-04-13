@@ -17,7 +17,7 @@ def home_view(request):
     
     context['products'] = Product.objects.all().order_by('-created_at')[:5]
     
-    context['brands'] = Brand.objects.filter(is_active=True).order_by('-created_at')[:4]
+    context['brands'] = Brand.objects.filter(is_active=True).order_by('created_at')[:4]
     
     return render(request, 'main/home_page.html', context)
 
