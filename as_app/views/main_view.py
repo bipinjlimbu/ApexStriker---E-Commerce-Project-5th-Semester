@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
-from ..models import User, Product
+from ..models import User, Product, Brand
 import threading
 import uuid
 
@@ -16,6 +16,8 @@ def home_view(request):
     context = {}
     
     context['products'] = Product.objects.all().order_by('-created_at')[:5]
+    
+    context['brands'] = Brand.objects.filter(is_active=True).order_by('-created_at')[:4]
     
     return render(request, 'main/home_page.html', context)
 
