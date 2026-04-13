@@ -69,4 +69,39 @@ def add_brand_view(request):
 
 @login_required
 def edit_brand_view(request, brand_id):
+    if request.user.role != 'admin':
+        messages.error(request, "You are not authorized to edit a brand.")
+        return redirect('/brands/')
+    
+    errors = {}
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        logo = request.FILES.get('logo')
+        description = request.POST.get('description')
+        
+        if not name:
+            errors['name'] = "Brand name is required."
+        elif Brand.objects.filter(name=name).exclude(id=brand_id).exists():
+            errors['name'] = "A brand with this name already exists."
+            
+        if not logo:
+            errors['logo'] = "Brand logo is required."
+            
+        if not description:
+            errors['description'] = "Brand description is required."
+            
+        if not errors:
+            brand = Brand.objects.get(id=brand_id)
+            brand.name = name
+            brand.logo = logo
+            brand.description = description
+            brand.save()
+            
+            subject = "Brand Updated - ApexStriker"
+            message = f"Hi {request.user.username},\n\nThe brand '{brand.name}' has been successfully updated on ApexStriker.\n\nThank you for keeping our platform up-to-date!"
+            email_thread = threading.Thread(target=send_email_async, args=(subject, message, request.user.email))
+            email_thread.start()
+
+            messages.success(request, f"Brand '{brand.name}' has been updated successfully.")
+            return redirect('/dashboard/admin/?section=brand-management')
     return render(request, 'main/edit_brand_page.html')
