@@ -68,9 +68,6 @@
                     </label>
                     <input type="file" id="brand-logo-input" name="logo" accept="image/*" class="hidden" onchange="previewLogo(this)">
                     <p class="text-[9px] text-slate-400 font-bold uppercase italic">Click logo to upload new</p>
-                    {% if errors.logo %}
-                        <p class="text-red-500 text-xs italic mt-1">{{ errors.logo }}</p>
-                    {% endif %}
                 </div>
 
                 <div class="space-y-5">
@@ -78,7 +75,7 @@
                         <label class="text-[11px] font-black text-slate-500 uppercase tracking-widest ml-2 italic flex items-center gap-2">
                             <i data-lucide="award" class="w-3 h-3 text-blue-500"></i> Brand Identity (Name)
                         </label>
-                        <input type="text" name="name" placeholder="Enter brand name" value="{{ brand.name }}" 
+                        <input type="text" name="name" placeholder="Enter brand name" value="{{ data.name | default:brand.name }}" 
                                class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none transition italic">
                         {% if errors.name %}
                             <p class="text-red-500 text-xs italic mt-1">{{ errors.name }}</p>
@@ -90,7 +87,7 @@
                             <i data-lucide="align-left" class="w-3 h-3 text-blue-500"></i> Brand Legacy (Description)
                         </label>
                         <textarea name="description" rows="4" placeholder="Update brand description"
-                                  class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none transition italic">{{ brand.description }}</textarea>
+                                  class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none transition italic">{{ data.description | default:brand.description }}</textarea>
                         {% if errors.description %}
                             <p class="text-red-500 text-xs italic mt-1">{{ errors.description }}</p>
                         {% endif %}
