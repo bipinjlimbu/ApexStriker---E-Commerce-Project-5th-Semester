@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketplace | ApexStriker</title>
+    {% load static %}
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+</head>
+
+<body class="bg-slate-50 min-h-screen flex flex-col">
+    {% include 'components/_navbar.html' %}
+
+    <section class="relative bg-slate-900 py-24 overflow-hidden">
+        <div class="absolute top-0 right-0 w-1/3 h-full bg-blue-600 skew-x-12 translate-x-20 opacity-10"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="max-w-3xl">
+                <span class="inline-block bg-blue-600 text-white text-[10px] font-black px-3 py-1 rounded-full mb-4 uppercase tracking-[0.3em] italic">
+                    Elite Equipment
+                </span>
+                <h1 class="text-5xl md:text-7xl font-black text-white leading-tight mb-4 uppercase italic">
+                    PRO <span class="text-blue-500">MARKET.</span>
+                </h1>
+                <p class="text-slate-400 text-lg leading-relaxed italic font-medium">
+                    The terminal for high-performance gear. Filter by category or brand to find your next advantage on the pitch.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <main class="max-w-7xl mx-auto px-4 py-16 flex-grow">
+        <div class="flex flex-col lg:flex-row gap-12">
+            
+            <aside class="w-full lg:w-72 shrink-0 space-y-10">
+                
+                <div>
+                    <h3 class="text-sm font-black text-slate-900 uppercase italic tracking-widest mb-6 flex items-center gap-2">
+                        <i data-lucide="layers" class="w-4 h-4 text-blue-600"></i> Categories
+                    </h3>
+                    <div class="space-y-2">
+                        <label class="group flex items-center justify-between p-4 rounded-2xl bg-white border border-slate-200 hover:border-blue-500 transition-all cursor-pointer">
+                            <span class="text-sm font-bold text-slate-600 group-hover:text-blue-600 italic uppercase">Football Boots</span>
+                            <input type="checkbox" class="rounded border-slate-300 text-blue-600 focus:ring-blue-500">
+                        </label>
+                        <label class="group flex items-center justify-between p-4 rounded-2xl bg-white border border-slate-200 hover:border-blue-500 transition-all cursor-pointer">
+                            <span class="text-sm font-bold text-slate-600 group-hover:text-blue-600 italic uppercase">Match Jerseys</span>
+                            <input type="checkbox" class="rounded border-slate-300 text-blue-600 focus:ring-blue-500">
+                        </label>
+                        <label class="group flex items-center justify-between p-4 rounded-2xl bg-white border border-slate-200 hover:border-blue-500 transition-all cursor-pointer">
+                            <span class="text-sm font-bold text-slate-600 group-hover:text-blue-600 italic uppercase">Training Gear</span>
+                            <input type="checkbox" class="rounded border-slate-300 text-blue-600 focus:ring-blue-500">
+                        </label>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-sm font-black text-slate-900 uppercase italic tracking-widest mb-6 flex items-center gap-2">
+                        <i data-lucide="award" class="w-4 h-4 text-blue-600"></i> Brands
+                    </h3>
+                    <div class="grid grid-cols-2 gap-2">
+                        <label class="flex flex-col items-center justify-center p-4 rounded-2xl bg-white border border-slate-200 hover:border-blue-500 transition-all cursor-pointer group">
+                            <input type="checkbox" class="sr-only peer">
+                            <span class="text-[10px] font-black text-slate-400 peer-checked:text-blue-600 group-hover:text-slate-900 transition-colors italic uppercase">Nike</span>
+                        </label>
+                        <label class="flex flex-col items-center justify-center p-4 rounded-2xl bg-white border border-slate-200 hover:border-blue-500 transition-all cursor-pointer group">
+                            <input type="checkbox" class="sr-only peer">
+                            <span class="text-[10px] font-black text-slate-400 peer-checked:text-blue-600 group-hover:text-slate-900 transition-colors italic uppercase">Adidas</span>
+                        </label>
+                        <label class="flex flex-col items-center justify-center p-4 rounded-2xl bg-white border border-slate-200 hover:border-blue-500 transition-all cursor-pointer group">
+                            <input type="checkbox" class="sr-only peer">
+                            <span class="text-[10px] font-black text-slate-400 peer-checked:text-blue-600 group-hover:text-slate-900 transition-colors italic uppercase">Puma</span>
+                        </label>
+                        <label class="flex flex-col items-center justify-center p-4 rounded-2xl bg-white border border-slate-200 hover:border-blue-500 transition-all cursor-pointer group">
+                            <input type="checkbox" class="sr-only peer">
+                            <span class="text-[10px] font-black text-slate-400 peer-checked:text-blue-600 group-hover:text-slate-900 transition-colors italic uppercase">Reebok</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="p-8 bg-slate-900 rounded-[2.5rem] text-white relative overflow-hidden">
+                    <div class="relative z-10">
+                        <h4 class="font-black italic uppercase text-lg mb-2">Price Range</h4>
+                        <input type="range" class="w-full h-1 bg-blue-600 rounded-lg appearance-none cursor-pointer accent-white">
+                        <div class="flex justify-between mt-4 text-[10px] font-black text-slate-400 italic uppercase">
+                            <span>Min</span>
+                            <span>Max</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <div class="flex-grow">
+                <div class="flex flex-col sm:flex-row justify-between items-center mb-10 gap-4">
+                    <h2 class="text-2xl font-black text-slate-900 uppercase italic tracking-tighter">Available <span class="text-blue-600">Gear</span></h2>
+                    <div class="flex items-center gap-4">
+                        <span class="text-[10px] font-black text-slate-400 uppercase italic">Sort by:</span>
+                        <select class="bg-transparent border-none text-xs font-black uppercase italic text-slate-900 focus:ring-0 cursor-pointer">
+                            <option>Latest Arrival</option>
+                            <option>Price: Low-High</option>
+                            <option>Price: High-Low</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                    <div class="group bg-white rounded-[2.5rem] border border-slate-200 overflow-hidden hover:shadow-2xl transition-all duration-500">
+                        <div class="relative h-64 bg-slate-100 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            <span class="absolute top-4 left-4 bg-orange-500 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase italic tracking-widest z-10 shadow-lg">New Arrival</span>
+                        </div>
+                        <div class="p-8">
+                            <p class="text-[10px] text-blue-600 font-black uppercase tracking-[0.2em] mb-1 italic">Nike Performance</p>
+                            <h3 class="font-bold text-lg text-slate-900 group-hover:text-blue-600 transition-colors mb-4 uppercase italic">Mercurial Zoom Air</h3>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xl font-black text-slate-900">Rs. 18,500</span>
+                                <button class="bg-slate-900 text-white p-3 rounded-2xl hover:bg-blue-600 transition-colors shadow-xl shadow-slate-900/10">
+                                    <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="group bg-white rounded-[2.5rem] border border-slate-200 overflow-hidden hover:shadow-2xl transition-all duration-500">
+                        <div class="relative h-64 bg-slate-100 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1614632537423-1e6c2e7a0aab" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        </div>
+                        <div class="p-8">
+                            <p class="text-[10px] text-blue-600 font-black uppercase tracking-[0.2em] mb-1 italic">Adidas Originals</p>
+                            <h3 class="font-bold text-lg text-slate-900 group-hover:text-blue-600 transition-colors mb-4 uppercase italic">Predator Accuracy</h3>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xl font-black text-slate-900">Rs. 22,000</span>
+                                <button class="bg-slate-900 text-white p-3 rounded-2xl hover:bg-blue-600 transition-colors shadow-xl shadow-slate-900/10">
+                                    <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="group bg-white rounded-[2.5rem] border border-slate-200 overflow-hidden hover:shadow-2xl transition-all duration-500">
+                        <div class="relative h-64 bg-slate-100 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1575361204480-aadea25e6e68" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        </div>
+                        <div class="p-8">
+                            <p class="text-[10px] text-blue-600 font-black uppercase tracking-[0.2em] mb-1 italic">Puma Elite</p>
+                            <h3 class="font-bold text-lg text-slate-900 group-hover:text-blue-600 transition-colors mb-4 uppercase italic">Future Ultimate</h3>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xl font-black text-slate-900">Rs. 15,900</span>
+                                <button class="bg-slate-900 text-white p-3 rounded-2xl hover:bg-blue-600 transition-colors shadow-xl shadow-slate-900/10">
+                                    <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    {% include 'components/_footer.html' %}
+
+    <script src="{% static 'js/lucide.min.js' %}"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
