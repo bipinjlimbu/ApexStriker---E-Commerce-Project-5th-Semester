@@ -11,4 +11,53 @@ def add_product_view(request):
     
     brand = Brand.objects.all()
     
+    errors = {}
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        description = request.POST.get('description')
+        price = request.POST.get('price')
+        stock = request.POST.get('stock')
+        brand_id = request.POST.get('brand')
+        images = request.FILES.getlist('images')
+        
+        if not name:
+            errors['name'] = "Product name is required."
+            
+        if not description:
+            errors['description'] = "Product description is required."
+            
+        if not price or float(price) <= 0:
+            errors['price'] = "Price must be a positive number."
+            
+        if not stock or int(stock) < 0:
+            errors['stock'] = "Stock must be a non-negative integer."
+            
+        if not brand_id:
+            errors['brand'] = "Brand selection is required."
+            
+        if len(images) == 0:
+            errors['images'] = "At least one image is required."
+        if len(images) > 5:
+            errors['images'] = "You can upload a maximum of 5 images."
+
+        if errors:
+            return render(request, 'main/add_product_page.html', { 'brands': brand, 'data': request.POST, 'errors': errors })
+        
+        brand_instance = Brand.objects.get(id=brand_id)
+        
+        product = Product.objects.create(
+            name=name,
+            description=description,
+            price=price,
+            stock=stock,
+            brand=brand_instance,
+            vendor=request.user.vendor_profile
+        )
+        
+        for image in images:
+            product.images.create(image=image)
+        
+        messages.success(request, f"Product '{product.name}' has been added successfully.")
+        return redirect('/dashboard/vendor/')
+    
     return render(request, 'main/add_product_page.html', {'brands': brand})
