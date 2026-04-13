@@ -69,68 +69,49 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden group hover:shadow-2xl hover:-translate-y-1 transition-all">
-                <div class="relative h-64 bg-slate-100 flex items-center justify-center p-8">
-                    <i data-lucide="package" class="w-16 h-16 text-slate-300"></i>
-                    <span class="absolute top-4 left-4 bg-orange-500 text-white text-[10px] font-black px-2 py-1 rounded-md uppercase">Hot</span>
-                </div>
-                <div class="p-5">
-                    <p class="text-[10px] text-blue-600 font-bold uppercase tracking-widest mb-1">Adidas</p>
-                    <h3 class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors mb-2">Predator Elite FG - Blue/White</h3>
-                    <div class="flex items-center justify-between mt-4">
-                        <span class="text-xl font-black text-slate-900">Rs. 18,500</span>
-                        <button class="bg-slate-900 text-white p-2.5 rounded-xl hover:bg-blue-600 transition-colors">
-                            <i data-lucide="shopping-cart" class="w-5 h-5"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
 
-            <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden group hover:shadow-2xl hover:-translate-y-1 transition-all">
-                <div class="relative h-64 bg-slate-100 flex items-center justify-center p-8">
-                    <i data-lucide="package" class="w-16 h-16 text-slate-300"></i>
-                </div>
-                <div class="p-5">
-                    <p class="text-[10px] text-blue-600 font-bold uppercase tracking-widest mb-1">Nike</p>
-                    <h3 class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors mb-2">Mercurial Superfly 9</h3>
-                    <div class="flex items-center justify-between mt-4">
-                        <span class="text-xl font-black text-slate-900">Rs. 22,000</span>
-                        <button class="bg-slate-900 text-white p-2.5 rounded-xl hover:bg-blue-600 transition-colors">
-                            <i data-lucide="shopping-cart" class="w-5 h-5"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
+                {% for product in products %}
+                    <div class="relative h-64 bg-slate-100 overflow-hidden">
+                        
+                        {% with product.images.all.first as primary_image %}
+                            {% if primary_image %}
+                                <img src="{{ primary_image.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            {% else %}
+                                <div class="flex items-center justify-center h-full">
+                                    <i data-lucide="package" class="w-16 h-16 text-slate-300"></i>
+                                </div>
+                            {% endif %}
+                        {% endwith %}
 
-            <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden group hover:shadow-2xl hover:-translate-y-1 transition-all">
-                <div class="relative h-64 bg-slate-100 flex items-center justify-center p-8">
-                    <i data-lucide="shirt" class="w-16 h-16 text-slate-300"></i>
-                </div>
-                <div class="p-5">
-                    <p class="text-[10px] text-blue-600 font-bold uppercase tracking-widest mb-1">Puma</p>
-                    <h3 class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors mb-2">Man City Home Jersey 25/26</h3>
-                    <div class="flex items-center justify-between mt-4">
-                        <span class="text-xl font-black text-slate-900">Rs. 4,500</span>
-                        <button class="bg-slate-900 text-white p-2.5 rounded-xl hover:bg-blue-600 transition-colors">
-                            <i data-lucide="shopping-cart" class="w-5 h-5"></i>
-                        </button>
+                        {% if since %}
+                            <span class="absolute top-4 left-4 bg-orange-500 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase italic tracking-widest shadow-lg z-10">
+                                New Arrival
+                            </span>
+                        {% endif %}
+                    </div>
+
+                    <div class="p-6">
+                        <p class="text-[10px] text-blue-600 font-black uppercase tracking-[0.2em] mb-1 italic">
+                            {{ product.brand.name }}
+                        </p>
+                        <h3 class="font-bold text-lg text-slate-900 group-hover:text-blue-600 transition-colors mb-1 truncate uppercase italic">
+                            {{ product.name }}
+                        </h3>
+                        
+                        <div class="flex items-center justify-between mt-4">
+                            <div>
+                                <span class="text-xs text-slate-400 block font-bold uppercase italic">Price</span>
+                                <span class="text-xl font-black text-slate-900">Rs. {{ product.price | floatformat:0 }}</span>
+                            </div>
+                            <button class="bg-slate-900 text-white p-3 rounded-2xl hover:bg-blue-600 hover:scale-110 transition-all shadow-xl shadow-slate-900/10">
+                                <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            
-            <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden group hover:shadow-2xl hover:-translate-y-1 transition-all">
-                <div class="relative h-64 bg-slate-100 flex items-center justify-center p-8">
-                    <i data-lucide="package" class="w-16 h-16 text-slate-300"></i>
-                </div>
-                <div class="p-5">
-                    <p class="text-[10px] text-blue-600 font-bold uppercase tracking-widest mb-1">Nike</p>
-                    <h3 class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors mb-2">Nike Phantom Luna II</h3>
-                    <div class="flex items-center justify-between mt-4">
-                        <span class="text-xl font-black text-slate-900">Rs. 19,800</span>
-                        <button class="bg-slate-900 text-white p-2.5 rounded-xl hover:bg-blue-600 transition-colors">
-                            <i data-lucide="shopping-cart" class="w-5 h-5"></i>
-                        </button>
-                    </div>
-                </div>
+                {% empty %}
+                    <p class="text-slate-500">No products available.</p>
+                {% endfor %}
             </div>
         </div>
     </main>
