@@ -86,13 +86,13 @@ def edit_brand_view(request, brand_id):
         logo = request.FILES.get('logo')
         description = request.POST.get('description')
         
+        if not logo:
+            logo = brand.logo
+            
         if not name:
             errors['name'] = "Brand name is required."
         elif Brand.objects.filter(name=name).exclude(id=brand_id).exists():
             errors['name'] = "A brand with this name already exists."
-            
-        if not logo:
-            errors['logo'] = "Brand logo is required."
             
         if not description:
             errors['description'] = "Brand description is required."
