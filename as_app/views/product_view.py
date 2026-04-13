@@ -65,3 +65,6 @@ def add_product_view(request):
         return redirect('/dashboard/vendor/')
     
     return render(request, 'main/add_product_page.html', {'brands': brand})
+
+def marketplace_view(request):
+    return render(request, 'main/marketplace_page.html')
