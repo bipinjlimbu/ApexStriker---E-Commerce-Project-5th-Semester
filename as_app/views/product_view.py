@@ -17,6 +17,7 @@ def add_product_view(request):
         description = request.POST.get('description')
         price = request.POST.get('price')
         stock = request.POST.get('stock')
+        category = request.POST.get('category')
         brand_id = request.POST.get('brand')
         images = request.FILES.getlist('images')
         
@@ -31,6 +32,9 @@ def add_product_view(request):
             
         if not stock or int(stock) < 0:
             errors['stock'] = "Stock must be a non-negative integer."
+            
+        if not category:
+            errors['category'] = "Category selection is required."
             
         if not brand_id:
             errors['brand'] = "Brand selection is required."
