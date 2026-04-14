@@ -15,7 +15,7 @@ def send_email_async(subject, message, recipient):
 def home_view(request):
     context = {}
     
-    context['products'] = Product.objects.all().order_by('-created_at')[:5]
+    context['products'] = Product.objects.all().order_by('-created_at')[:4]
     
     context['brands'] = Brand.objects.filter(is_active=True).order_by('created_at')[:4]
     
