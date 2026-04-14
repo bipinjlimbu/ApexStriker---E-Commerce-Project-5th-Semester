@@ -103,6 +103,9 @@ class ProductImage(models.Model):
     image = models.ImageField(upload_to='images/products/')
     is_primary = models.BooleanField(default=False)
     
+    def get_primary(self):
+        return self.product.images.filter(is_primary=True).first()
+    
 class Wishlist(models.Model):
     customer = models.ForeignKey('Customer', on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
