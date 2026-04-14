@@ -114,6 +114,7 @@ class Product(models.Model):
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
     image = models.ImageField(upload_to='images/products/')
+    is_primary = models.BooleanField(default=False)
     
 class Wishlist(models.Model):
     customer = models.ForeignKey('Customer', on_delete=models.CASCADE)
