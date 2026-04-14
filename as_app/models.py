@@ -87,14 +87,20 @@ class Brand(models.Model):
         return self.name
 
 class Product(models.Model):
+    class Position(models.TextChoices):
+        ATTACKER = 'attacker', 'Attacker'
+        MIDFIELDER = 'midfielder', 'Midfielder'
+        DEFENDER = 'defender', 'Defender'
+        GOALKEEPER = 'goalkeeper', 'Goalkeeper'
+        
     vendor = models.ForeignKey('Vendor', on_delete=models.CASCADE, related_name='products')
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     brand = models.ForeignKey(Brand, on_delete=models.SET_NULL, null=True)
-    custom_brand = models.CharField(max_length=255, blank=True)
     name = models.CharField(max_length=255)
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     stock = models.PositiveIntegerField(default=0)
+    position = models.CharField(max_length=20, choices=Position.choices, null=True, blank=True)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
