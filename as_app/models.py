@@ -94,6 +94,9 @@ class Product(models.Model):
     @property
     def is_new(self):
         return self.created_at >= timezone.now() - timedelta(days=7)
+    
+    def get_primary(self):
+        return self.images.filter(is_primary=True).first()
 
     def __str__(self):
         return self.name
@@ -102,9 +105,6 @@ class ProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
     image = models.ImageField(upload_to='images/products/')
     is_primary = models.BooleanField(default=False)
-    
-    def get_primary(self):
-        return self.product.images.filter(is_primary=True).first()
     
 class Wishlist(models.Model):
     customer = models.ForeignKey('Customer', on_delete=models.CASCADE)
