@@ -21,6 +21,7 @@ def add_product_view(request):
         brand_id = request.POST.get('brand')
         images = request.FILES.getlist('images')
         position = request.POST.get('position')
+        primary_image = request.POST.get('primary_image_name')
         
         if not name:
             errors['name'] = "Product name is required."
@@ -61,7 +62,12 @@ def add_product_view(request):
         )
         
         for image in images:
-            product.images.create(image=image)
+            is_primary = (image.name == primary_image)
+            
+            if is_primary:
+                product.images.create(image=image, is_primary=True)
+            else:
+                product.images.create(image=image)
         
         messages.success(request, f"Product '{product.name}' has been added successfully.")
         return redirect('/dashboard/vendor/')
