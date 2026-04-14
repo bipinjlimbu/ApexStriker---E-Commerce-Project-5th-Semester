@@ -103,7 +103,19 @@
                         {% endif %}
                     </div>
 
-                    <div class="space-y-1 md:col-span-2">
+                    <div class="space-y-1">
+                        <label class="text-[11px] font-black text-slate-500 uppercase tracking-widest ml-2 italic flex items-center gap-2"><i data-lucide="crosshair" class="w-3 h-3 text-blue-500"></i> Position (Optional)</label>
+                        <select name="position" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none transition italic appearance-none cursor-pointer">
+                            <option value="">N/A (General Gear)</option>
+                            <option value="attacker" {% if data.position == "attacker" %}selected{% endif %}>Attacker</option>
+                            <option value="midfielder" {% if data.position == "midfielder" %}selected{% endif %}>Midfielder</option>
+                            <option value="defender" {% if data.position == "defender" %}selected{% endif %}>Defender</option>
+                            <option value="goalkeeper" {% if data.position == "goalkeeper" %}selected{% endif %}>Goalkeeper</option>
+                        </select>
+                        <p class="text-[9px] text-slate-400 font-bold uppercase italic">Select if the product is position-specific</p>
+                    </div>
+
+                    <div class="space-y-1">
                         <label class="text-[11px] font-black text-slate-500 uppercase tracking-widest ml-2 italic flex items-center gap-2"><i data-lucide="box" class="w-3 h-3 text-blue-500"></i> Stock Available</label>
                         <input type="number" name="stock" placeholder="Enter stock quantity" value="{{ data.stock|default:'' }}" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none transition italic">
                         {% if errors.stock %}
@@ -139,14 +151,13 @@
 
         function handleQueueSelection(input) {
             Array.from(input.files).forEach(file => {
-                // Prevent duplicate files based on name/size
                 const exists = virtualImageQueue.some(f => f.name === file.name && f.size === file.size);
                 if (!exists) {
                     virtualImageQueue.push(file);
                     addQueueItemToGallery(file);
                 }
             });
-            input.value = ''; // Reset selection input
+            input.value = ''; 
         }
 
         function addQueueItemToGallery(file) {
@@ -164,7 +175,7 @@
                         </div>
                     </div>`;
                 div.setAttribute('data-id', uniqueId);
-                div.fileRef = file; // Store reference to the file object
+                div.fileRef = file; 
                 grid.appendChild(div);
                 lucide.createIcons();
             }
@@ -177,7 +188,6 @@
             card.remove();
         }
 
-        // CRITICAL FIX: Transfer virtual queue to the 'images' input before submit
         function syncQueueToInput(event) {
             const realInput = document.getElementById('real-images-input');
             const dataTransfer = new DataTransfer();
@@ -187,9 +197,6 @@
             });
 
             realInput.files = dataTransfer.files;
-            
-            // The form will now proceed with a normal POST request,
-            // and Django's request.FILES.getlist('images') will see the files.
         }
     </script>
 </body>
