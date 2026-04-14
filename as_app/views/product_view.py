@@ -69,4 +69,9 @@ def add_product_view(request):
     return render(request, 'main/add_product_page.html', {'brands': brand})
 
 def marketplace_view(request):
-    return render(request, 'main/marketplace_page.html')
+    context = {}
+    
+    context['products'] = Product.objects.all().order_by('-created_at')
+    
+    context['brands'] = Brand.objects.filter(is_active=True).order_by('created_at')
+    return render(request, 'main/marketplace_page.html', context)
