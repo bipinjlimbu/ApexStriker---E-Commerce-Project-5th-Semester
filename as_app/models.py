@@ -56,26 +56,6 @@ class Customer(models.Model):
     def __str__(self):
         return f"{self.user.username} ({self.position})"
     
-class Category(models.Model):
-    class CategoryType(models.TextChoices):
-        KITS = 'kits', 'Jersey & Kits'
-        BOOTS = 'boots', 'Football Boots'
-        ACCESSORIES = 'accessories', 'Accessories (Socks, Guards)'
-        EQUIPMENT = 'equipment', 'Training Equipment (Balls, Cones)'
-        SUPPLEMENTS = 'supplements', 'Health & Supplements'
-
-    name = models.CharField(max_length=50, choices=CategoryType.choices, unique=True)
-    slug = models.SlugField(unique=True, blank=True)
-    icon_name = models.CharField(max_length=50, help_text="Example: 'shirt', 'zapato'")
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.get_name_display())
-        super().save(*args, **kwargs)
-
-    def __str__(self):
-        return self.get_name_display()
-    
 class Brand(models.Model):
     name = models.CharField(max_length=255, unique=True)
     logo = models.ImageField(upload_to='images/brands/')
@@ -93,10 +73,17 @@ class Product(models.Model):
         DEFENDER = 'defender', 'Defender'
         GOALKEEPER = 'goalkeeper', 'Goalkeeper'
         
+    class Category(models.TextChoices):
+        KITS = 'kits', 'Jersey & Kits'
+        BOOTS = 'boots', 'Football Boots'
+        ACCESSORIES = 'accessories', 'Accessories (Socks, Guards)'
+        EQUIPMENT = 'equipment', 'Training Equipment (Balls, Cones)'
+        SUPPLEMENTS = 'supplements', 'Health & Supplements'
+        
     vendor = models.ForeignKey('Vendor', on_delete=models.CASCADE, related_name='products')
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     brand = models.ForeignKey(Brand, on_delete=models.SET_NULL, null=True)
     name = models.CharField(max_length=255)
+    category = models.CharField(max_length=20, choices=Category.choices)
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     stock = models.PositiveIntegerField(default=0)
