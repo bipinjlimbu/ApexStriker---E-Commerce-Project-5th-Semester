@@ -11,11 +11,22 @@
         .image-card:hover { transform: translateY(-5px); }
         input:focus, select:focus, textarea:focus { border-color: #2563eb !important; background-color: white !important; }
         .removal-overlay {
-            position: absolute; inset: 0; background: rgba(239, 68, 68, 0.75);
+            position: absolute; inset: 0; background: rgba(239, 68, 68, 0.8);
             backdrop-filter: blur(2px); opacity: 0; display: flex;
             align-items: center; justify-content: center; transition: 0.3s; cursor: pointer;
+            z-index: 20;
         }
         .removal-overlay:hover { opacity: 1; }
+        
+        /* Primary Selection UI */
+        .primary-badge {
+            position: absolute; top: 8px; right: 8px; z-index: 30;
+            background: white; border-radius: 99px; padding: 4px;
+            cursor: pointer; border: 2px solid transparent; transition: 0.3s;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .image-card.is-primary { border: 4px solid #2563eb; }
+        .image-card.is-primary .primary-badge { background: #2563eb; color: white; border-color: #2563eb; }
     </style>
 </head>
 
@@ -32,6 +43,8 @@
 
             <form id="productForm" method="POST" enctype="multipart/form-data" class="space-y-6" onsubmit="syncQueueToInput(event)">
                 {% csrf_token %}
+
+                <input type="hidden" name="primary_image_name" id="primary-image-name-input">
 
                 <div class="space-y-4">
                     <label class="block text-sm font-bold text-slate-700 flex items-center gap-2 italic">
@@ -148,6 +161,7 @@
     <script>
         lucide.createIcons();
         let virtualImageQueue = [];
+        let primaryImageId = null;
 
         function handleQueueSelection(input) {
             Array.from(input.files).forEach(file => {
@@ -164,32 +178,61 @@
             const grid = document.getElementById('image-gallery-grid');
             const reader = new FileReader();
             reader.onload = (e) => {
-                const uniqueId = Date.now() + Math.random();
+                const uniqueId = 'img-' + Date.now() + Math.random().toString(36).substr(2, 9);
                 const div = document.createElement('div');
                 div.className = "image-card relative aspect-square rounded-2xl overflow-hidden border border-slate-200 shadow-lg group";
+                div.setAttribute('data-id', uniqueId);
+                div.fileRef = file; 
+
+                // Automatic primary for the first upload
+                if (virtualImageQueue.length === 1) {
+                    primaryImageId = uniqueId;
+                    div.classList.add('is-primary');
+                }
+
                 div.innerHTML = `
                     <img src="${e.target.result}" class="w-full h-full object-cover">
+                    <div class="primary-badge shadow-md" onclick="setPrimary('${uniqueId}')" title="Set as Primary">
+                        <i data-lucide="star" class="w-4 h-4"></i>
+                    </div>
                     <div class="removal-overlay" onclick="removeImage('${uniqueId}', this)">
                         <div class="bg-white p-2 rounded-full border border-red-500 shadow-lg">
                             <i data-lucide="trash-2" class="text-red-600 w-5 h-5"></i>
                         </div>
                     </div>`;
-                div.setAttribute('data-id', uniqueId);
-                div.fileRef = file; 
+                
                 grid.appendChild(div);
                 lucide.createIcons();
             }
             reader.readAsDataURL(file);
         }
 
+        function setPrimary(id) {
+            primaryImageId = id;
+            document.querySelectorAll('.image-card').forEach(card => {
+                card.classList.remove('is-primary');
+                if (card.getAttribute('data-id') === id) {
+                    card.classList.add('is-primary');
+                }
+            });
+        }
+
         function removeImage(id, el) {
             const card = el.closest('[data-id]');
             virtualImageQueue = virtualImageQueue.filter(f => f !== card.fileRef);
             card.remove();
+
+            if (primaryImageId === id && virtualImageQueue.length > 0) {
+                const firstRemaining = document.querySelector('.image-card');
+                if (firstRemaining) setPrimary(firstRemaining.getAttribute('data-id'));
+            } else if (virtualImageQueue.length === 0) {
+                primaryImageId = null;
+            }
         }
 
         function syncQueueToInput(event) {
             const realInput = document.getElementById('real-images-input');
+            const primaryHiddenInput = document.getElementById('primary-image-name-input');
             const dataTransfer = new DataTransfer();
 
             virtualImageQueue.forEach(file => {
@@ -197,6 +240,11 @@
             });
 
             realInput.files = dataTransfer.files;
+
+            const primaryCard = document.querySelector(`.image-card[data-id="${primaryImageId}"]`);
+            if (primaryCard && primaryCard.fileRef) {
+                primaryHiddenInput.value = primaryCard.fileRef.name;
+            }
         }
     </script>
 </body>
