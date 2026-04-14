@@ -59,11 +59,11 @@
     <section id="shop" class="max-w-7xl mx-auto px-4 py-16">
         <div class="flex justify-between items-end mb-10">
             <div>
-                <h2 class="text-3xl font-black text-slate-900 uppercase">Featured Gear</h2>
+                <h2 class="text-3xl font-black text-slate-900 uppercase">New Arrivals</h2>
                 <div class="h-1.5 w-20 bg-blue-600 mt-2 rounded-full"></div>
             </div>
-            <a href="#" class="text-blue-600 font-bold flex items-center gap-1 hover:underline">
-                View All Products <i data-lucide="chevron-right" class="w-4 h-4"></i>
+            <a href="/marketplace/?sort=new" class="text-blue-600 font-bold flex items-center gap-1 hover:underline">
+                View All New Products <i data-lucide="chevron-right" class="w-4 h-4"></i>
             </a>
         </div>
 
@@ -85,7 +85,7 @@
 
                         {% if product.is_new %}
                             <span class="absolute top-4 left-4 bg-orange-500 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase italic tracking-widest shadow-lg z-10">
-                                New Arrival
+                                New
                             </span>
                         {% endif %}
                     </div>
