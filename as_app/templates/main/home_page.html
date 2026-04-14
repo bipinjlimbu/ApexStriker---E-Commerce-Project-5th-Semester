@@ -54,9 +54,8 @@
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden group hover:shadow-2xl hover:-translate-y-1 transition-all">
-
-                {% for product in products %}
+            {% for product in products %}
+                <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden group hover:shadow-2xl hover:-translate-y-1 transition-all">
                     <div class="relative h-64 bg-slate-100 overflow-hidden">
                         
                         {% if product.get_primary %}
@@ -93,12 +92,15 @@
                         </div>
                     </div>
                 </div>
-                {% empty %}
-                    <div class="col-span-full text-center py-10">
-                        <p class="text-slate-500">No new products available.</p>
+            {% empty %}
+                <div class="col-span-full py-20 flex flex-col items-center justify-center bg-white rounded-[3rem] border-2 border-dashed border-slate-200">
+                    <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mb-6 shadow-inner">
+                        <i data-lucide="search-x" class="w-10 h-10 text-slate-300"></i>
                     </div>
-                {% endfor %}
-            </div>
+                    <h3 class="text-2xl font-black text-slate-900 uppercase italic tracking-tighter">No Gear Detected</h3>
+                    <p class="text-slate-500 italic font-medium mt-2">The armory is currently being restocked. Check back soon.</p>
+                </div>
+            {% endfor %}
         </div>
     </section>
 
@@ -131,8 +133,12 @@
                         </div>
                     </div>
                 {% empty %}
-                    <div class="col-span-full text-center py-10">
-                        <p class="text-slate-500">No brands available at the moment.</p>
+                    <div class="col-span-full py-20 flex flex-col items-center justify-center bg-slate-50 rounded-[3rem] border-2 border-dashed border-slate-300">
+                        <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center mb-6 shadow-sm">
+                            <i data-lucide="shield-off" class="w-10 h-10 text-slate-300"></i>
+                        </div>
+                        <h3 class="text-2xl font-black text-slate-900 uppercase italic tracking-tighter">No Brands Active</h3>
+                        <p class="text-slate-500 italic font-medium mt-2">Verified partners are currently offline. Deploying updates.</p>
                     </div>
                 {% endfor %}
             </div>
