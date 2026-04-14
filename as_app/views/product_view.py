@@ -20,6 +20,7 @@ def add_product_view(request):
         category = request.POST.get('category')
         brand_id = request.POST.get('brand')
         images = request.FILES.getlist('images')
+        position = request.POST.get('position')
         
         if not name:
             errors['name'] = "Product name is required."
@@ -55,7 +56,8 @@ def add_product_view(request):
             price=price,
             stock=stock,
             brand=brand_instance,
-            vendor=request.user.vendor_profile
+            vendor=request.user.vendor_profile,
+            position=position
         )
         
         for image in images:
