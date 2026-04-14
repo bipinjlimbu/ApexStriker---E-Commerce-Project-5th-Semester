@@ -54,9 +54,11 @@
                     </div>
                     <select class="w-full p-4 pt-2 text-sm font-bold text-slate-900 italic uppercase bg-transparent border-none focus:ring-0 cursor-pointer">
                         <option>All Categories</option>
-                        <option>Football Boots</option>
-                        <option>Match Jerseys</option>
-                        <option>Training Gear</option>
+                        <option value="kits">Jersey & Kits</option>
+                        <option value="boots">Football Boots</option>
+                        <option value="accessories">Accessories (Socks, Guards)</option>
+                        <option value="equipment">Training Equipment (Balls, Cones)</option>
+                        <option value="supplements">Health & Supplements</option>
                     </select>
                 </div>
 
@@ -67,9 +69,9 @@
                     </div>
                     <select class="w-full p-4 pt-2 text-sm font-bold text-slate-900 italic uppercase bg-transparent border-none focus:ring-0 cursor-pointer">
                         <option>All Brands</option>
-                        <option>Nike</option>
-                        <option>Adidas</option>
-                        <option>Puma</option>
+                        {% for brand in brands %}
+                        <option value="{{ brand.id }}">{{ brand.name }}</option>
+                        {% endfor %}
                     </select>
                 </div>
 
