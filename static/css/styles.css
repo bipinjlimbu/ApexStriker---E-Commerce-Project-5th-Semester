@@ -698,6 +698,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-left: 0.375rem;
 }
 
+.mt-auto {
+  margin-top: auto;
+}
+
 .block {
   display: block;
 }
