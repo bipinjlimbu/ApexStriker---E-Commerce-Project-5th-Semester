@@ -96,7 +96,9 @@
                     </div>
                 </div>
                 {% empty %}
-                    <p class="text-slate-500">No products available.</p>
+                    <div class="col-span-full text-center py-10">
+                        <p class="text-slate-500">No new products available.</p>
+                    </div>
                 {% endfor %}
             </div>
         </div>
@@ -131,7 +133,9 @@
                         </div>
                     </div>
                 {% empty %}
-                    <p class="text-slate-500">No brands available.</p>
+                    <div class="col-span-full text-center py-10">
+                        <p class="text-slate-500">No brands available at the moment.</p>
+                    </div>
                 {% endfor %}
             </div>
         </div>
