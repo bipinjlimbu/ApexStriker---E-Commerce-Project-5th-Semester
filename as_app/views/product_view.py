@@ -77,7 +77,28 @@ def add_product_view(request):
 def marketplace_view(request):
     context = {}
     
+    category = request.GET.get('category')
+    brand_id = request.GET.get('brand')
+    price_range = request.GET.get('price')
+    
     context['products'] = Product.objects.all().order_by('-created_at')
     
     context['brands'] = Brand.objects.filter(is_active=True).order_by('created_at')
+    
+    if category and category != 'all':
+        context['products'] = context['products'].filter(category=category)
+        
+    if brand_id and brand_id != 'all':
+        context['products'] = context['products'].filter(brand_id=brand_id)
+        
+    if price_range and price_range != 'all':
+        if price_range == 'under_5000':
+            context['products'] = context['products'].filter(price__lt=5000)
+        elif price_range == '5000_15000':
+            context['products'] = context['products'].filter(price__gte=5000, price__lte=15000)
+        elif price_range == '15000_30000':
+            context['products'] = context['products'].filter(price__gte=15000, price__lte=30000)
+        elif price_range == 'over_30000':
+            context['products'] = context['products'].filter(price__gt=30000)
+            
     return render(request, 'main/marketplace_page.html', context)
