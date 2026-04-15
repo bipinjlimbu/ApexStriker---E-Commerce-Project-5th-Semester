@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.utils.text import slugify
 from django.utils import timezone
 from datetime import timedelta
 
@@ -94,11 +93,6 @@ class Product(models.Model):
     @property
     def is_new(self):
         return self.created_at >= timezone.now() - timedelta(days=7)
-    
-    @property
-    def is_recommended(self):
-        position = self.user.customer_profile.position if hasattr(self.user, 'customer_profile') else None
-        return position and self.position == position
     
     def get_primary(self):
         return self.images.filter(is_primary=True).first()
