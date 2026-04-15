@@ -3,70 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brands Directory | ApexStriker</title>
+    <title>Brand Hub | ApexStriker</title>
     {% load static %}
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
 </head>
 
 <body class="bg-slate-50 min-h-screen flex flex-col">
     {% include 'components/_navbar.html' %}
-
     {% include 'components/_alert_messages.html' %}
 
-    <section class="relative bg-slate-900 py-24 overflow-hidden">
-        <div class="absolute bottom-0 left-0 w-1/3 h-full bg-blue-600 -skew-x-12 -translate-x-20 opacity-10"></div>
+    <main class="max-w-7xl mx-auto px-4 py-16 flex-grow w-full">
         
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-8">
-                <div class="max-w-2xl">
-                    <span class="inline-block bg-blue-600 text-white text-[10px] font-black px-3 py-1 rounded-full mb-4 uppercase tracking-[0.3em] italic">
-                        Marketplace Catalog
-                    </span>
-                    <h1 class="text-5xl md:text-7xl font-black text-white leading-tight mb-4 uppercase italic">
-                        AVAILABLE <span class="text-blue-500">BRANDS.</span>
-                    </h1>
-                    <p class="text-slate-400 text-lg leading-relaxed italic font-medium">
-                        Browse through our collection of sports brands. Find gear and apparel from various sellers across the marketplace.
-                    </p>
-                </div>
-                
-                {% if user.is_authenticated and user.role != 'customer' %}
-                <div class="shrink-0">
-                    <a href="/brands/add/" class="group relative inline-flex items-center gap-4 bg-white text-slate-900 font-black px-8 py-5 rounded-2xl transition-all uppercase italic tracking-widest hover:bg-blue-600 hover:text-white shadow-2xl shadow-white/5 active:scale-95">
-                        <i data-lucide="plus-circle" class="w-5 h-5 group-hover:rotate-90 transition-transform"></i>
-                        Add New Brand
-                    </a>
-                </div>
-                {% endif %}
-            </div>
-        </div>
-    </section>
-
-    <main class="max-w-7xl mx-auto px-4 py-20 flex-grow">
-        
-        <div class="flex justify-between items-end mb-12 border-b border-slate-200 pb-6">
+        <div class="flex flex-row justify-between items-center mb-12 border-b border-slate-200 pb-8">
             <div>
-                <h2 class="text-3xl font-black text-slate-900 uppercase italic tracking-tighter">Marketplace <span class="text-blue-600">Labels</span></h2>
-                <p class="text-xs text-slate-500 uppercase tracking-widest mt-1 font-bold">Find products by your favorite brand name</p>
+                <h2 class="text-3xl font-black text-slate-900 uppercase italic tracking-tighter">
+                    BRAND <span class="text-blue-600">HUB</span>
+                </h2>
+                <p class="text-[10px] text-slate-500 uppercase tracking-widest mt-1 font-bold italic">
+                    Discover gear by your favorite labels and manufacturers
+                </p>
             </div>
+
+            {% if user.is_authenticated and user.role != 'customer' %}
+            <div class="shrink-0">
+                <a href="/brands/add/" class="group relative inline-flex items-center gap-3 bg-slate-900 text-white font-black px-6 py-3.5 rounded-2xl transition-all uppercase italic tracking-widest text-[11px] hover:bg-blue-600 shadow-xl shadow-slate-900/10 active:scale-95">
+                    <i data-lucide="plus-circle" class="w-4 h-4 group-hover:rotate-90 transition-transform"></i>
+                    Add Brand
+                </a>
+            </div>
+            {% endif %}
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {% for brand in brands %}
-            <div class="group relative bg-white rounded-[2.5rem] border border-slate-200 overflow-hidden hover:border-blue-500 hover:shadow-2xl transition-all duration-500">
+            <div class="group relative bg-white rounded-[2.5rem] border border-slate-200 overflow-hidden hover:border-blue-500 hover:shadow-2xl transition-all duration-500 flex flex-col">
     
                 {% if user.is_authenticated and user.role == 'admin' %}
                 <div class="absolute top-6 right-6 flex gap-2 z-20 opacity-0 translate-y-[-10px] group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                    <a href="/brands/edit/{{ brand.id }}/" class="p-2.5 bg-slate-900/5 backdrop-blur-md border border-slate-200 rounded-xl text-slate-600 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all shadow-sm" title="Edit Brand">
+                    <a href="/brands/edit/{{ brand.id }}/" class="p-2.5 bg-slate-900/5 backdrop-blur-md border border-slate-200 rounded-xl text-slate-600 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all shadow-sm" title="Edit">
                         <i data-lucide="edit-3" class="w-4 h-4"></i>
                     </a>
-                    <a href="/brands/delete/{{ brand.id }}/" class="p-2.5 bg-slate-900/5 backdrop-blur-md border border-slate-200 rounded-xl text-slate-600 hover:bg-red-600 hover:text-white hover:border-red-600 transition-all shadow-sm" title="Delete Brand">
+                    <a href="/brands/delete/{{ brand.id }}/" class="p-2.5 bg-slate-900/5 backdrop-blur-md border border-slate-200 rounded-xl text-slate-600 hover:bg-red-600 hover:text-white hover:border-red-600 transition-all shadow-sm" title="Delete">
                         <i data-lucide="trash-2" class="w-4 h-4"></i>
                     </a>
                 </div>
                 {% endif %}
 
-                <div class="p-10 flex flex-col items-center text-center">
+                <div class="p-10 flex flex-col items-center text-center flex-grow">
                     <div class="h-24 w-24 bg-slate-50 rounded-3xl p-4 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
                         <img src="{{ brand.logo.url }}" class="max-h-full max-w-full object-contain filter grayscale group-hover:grayscale-0 transition-all" alt="{{ brand.name }}">
                     </div>
@@ -76,18 +59,20 @@
                         {{ brand.description|truncatechars:100 }}
                     </p>
 
-                    <a href="/marketplace/?brand={{ brand.id }}" class="inline-flex items-center gap-2 text-[11px] font-black text-blue-600 uppercase tracking-[0.2em] border-b-2 border-transparent hover:border-blue-600 transition-all">
-                        Browse Products <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                    </a>
+                    <div class="mt-auto">
+                        <a href="/marketplace/?brand={{ brand.id }}" class="inline-flex items-center gap-2 text-[11px] font-black text-blue-600 uppercase tracking-[0.2em] border-b-2 border-transparent hover:border-blue-600 transition-all">
+                            Explore Gear <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
 
             {% empty %}
-            <div class="col-span-full py-20 text-center">
-                <div class="inline-flex items-center justify-center h-20 w-20 bg-slate-100 rounded-full mb-4 text-slate-300">
+            <div class="col-span-full py-20 text-center bg-white rounded-[3rem] border-2 border-dashed border-slate-200">
+                <div class="inline-flex items-center justify-center h-20 w-20 bg-slate-50 rounded-full mb-4 text-slate-300">
                     <i data-lucide="search-x" class="w-10 h-10"></i>
                 </div>
-                <p class="text-slate-500 text-lg italic font-medium">No brands available at the moment.</p>
+                <p class="text-slate-500 text-lg italic font-medium">No brands currently listed.</p>
             </div>
             {% endfor %}
         </div>
@@ -97,31 +82,27 @@
             
             <div class="relative z-10">
                 {% if user.is_authenticated and user.role != 'customer' %}
-                    <h2 class="text-4xl font-black text-white uppercase italic mb-6 tracking-tighter">Selling something <span class="text-blue-500">New?</span></h2>
+                    <h2 class="text-4xl font-black text-white uppercase italic mb-6 tracking-tighter">NEW <span class="text-blue-500">COLLECTION?</span></h2>
                     <p class="text-slate-400 max-w-xl mx-auto mb-10 text-lg font-medium italic">
-                        If you have products from a brand that isn't listed here, you can submit it to our directory.
+                        Missing a label? Submit new brands to the ApexStriker directory to expand your shop's reach.
                     </p>
-                    <div class="flex flex-col sm:flex-row justify-center gap-4">
-                        <a href="/brands/add/" class="bg-blue-600 hover:bg-blue-700 text-white font-black px-12 py-5 rounded-2xl transition-all uppercase italic tracking-[0.2em] shadow-xl shadow-blue-600/20 active:scale-95">
-                            Add a Brand
-                        </a>
-                    </div>
+                    <a href="/brands/add/" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-black px-12 py-5 rounded-2xl transition-all uppercase italic tracking-[0.2em] shadow-xl shadow-blue-600/20 active:scale-95">
+                        Add Brand
+                    </a>
 
                 {% elif user.is_authenticated and user.role == 'customer' %}
                     <h2 class="text-4xl font-black text-white uppercase italic mb-6 tracking-tighter">Ready to <span class="text-blue-500">Shop?</span></h2>
                     <p class="text-slate-400 max-w-xl mx-auto mb-10 text-lg font-medium italic">
-                        Explore the latest gear and apparel from these brands in our active marketplace.
+                        Find the perfect fit from these top-tier labels in the marketplace.
                     </p>
-                    <div class="flex flex-col sm:flex-row justify-center gap-4">
-                        <a href="/marketplace/" class="bg-white text-slate-900 font-black px-12 py-5 rounded-2xl transition-all uppercase italic tracking-[0.2em] hover:bg-blue-600 hover:text-white active:scale-95">
-                            Go to Marketplace
-                        </a>
-                    </div> 
+                    <a href="/marketplace/" class="inline-block bg-white text-slate-900 font-black px-12 py-5 rounded-2xl transition-all uppercase italic tracking-[0.2em] hover:bg-blue-600 hover:text-white active:scale-95">
+                        Go to Marketplace
+                    </a> 
 
                 {% else %}
                     <h2 class="text-4xl font-black text-white uppercase italic mb-6 tracking-tighter">ApexStriker <span class="text-blue-500">Network</span></h2>
                     <p class="text-slate-400 max-w-xl mx-auto mb-10 text-lg font-medium italic">
-                        Join the ecosystem to start selling your gear or explore more tailored features.
+                        Join the striker ecosystem to start selling or exploring professional gear.
                     </p>
                     <div class="flex flex-col sm:flex-row justify-center gap-4">
                         <a href="/register/" class="bg-blue-600 hover:bg-blue-700 text-white font-black px-12 py-5 rounded-2xl transition-all uppercase italic tracking-[0.2em] shadow-xl shadow-blue-600/20 active:scale-95">

@@ -694,6 +694,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-top: 1.5rem;
 }
 
+.mb-5 {
+  margin-bottom: 1.25rem;
+}
+
+.mt-20 {
+  margin-top: 5rem;
+}
+
 .block {
   display: block;
 }
@@ -816,6 +824,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .h-64 {
   height: 16rem;
+}
+
+.h-80 {
+  height: 20rem;
 }
 
 .max-h-full {
@@ -962,6 +974,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .max-w-4xl {
   max-width: 56rem;
+}
+
+.max-w-lg {
+  max-width: 32rem;
 }
 
 .flex-1 {
@@ -2038,6 +2054,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-4xl {
   font-size: 2.25rem;
   line-height: 2.5rem;
+}
+
+.text-base {
+  font-size: 1rem;
+  line-height: 1.5rem;
 }
 
 .font-black {
