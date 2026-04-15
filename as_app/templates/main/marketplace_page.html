@@ -41,10 +41,9 @@
         </div>
     </section>
 
-    <main class="max-w-7xl mx-auto px-4 py-16 flex-grow">
-        <div class="flex flex-col lg:flex-row gap-12">
+    <main class="max-w-7xl mx-auto px-4 py-16 flex-grow w-full">
+        <form method="get" class="flex flex-col lg:flex-row gap-12 w-full">
             
-            <form method="get">
             <aside class="w-full lg:w-72 shrink-0 space-y-6">
                 <div class="group bg-white border border-slate-200 rounded-2xl overflow-hidden hover:border-blue-500 transition-all">
                     <div class="px-4 pt-4 flex items-center gap-2">
@@ -83,7 +82,7 @@
                     <select name="brand" onchange="this.form.submit()" class="w-full p-4 pt-2 text-sm font-bold text-slate-900 italic uppercase bg-transparent border-none focus:ring-0 cursor-pointer">
                         <option value="all" {% if request.GET.brand == 'all' %}selected{% endif %}>All Brands</option>
                         {% for brand in brands %}
-                        <option value="{{ brand.id }}" {% if request.GET.brand == brand.id %}selected{% endif %}>{{ brand.name }}</option>
+                        <option value="{{ brand.id }}" {% if request.GET.brand == brand.id|stringformat:"s" %}selected{% endif %}>{{ brand.name }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -102,11 +101,10 @@
                     </select>
                 </div>
 
-                <button class="w-full py-4 rounded-2xl border border-dashed border-slate-300 text-slate-400 font-black text-[10px] uppercase italic tracking-widest hover:border-blue-600 hover:text-blue-600 transition-all">
+                <a href="/marketplace/" class="block text-center w-full py-4 rounded-2xl border border-dashed border-slate-300 text-slate-400 font-black text-[10px] uppercase italic tracking-widest hover:border-blue-600 hover:text-blue-600 transition-all">
                     Reset Catalog
-                </button>
+                </a>
             </aside>
-            </form>
 
             <div class="flex-grow">
                 <div class="flex flex-col sm:flex-row justify-between items-center mb-10 gap-4 border-b border-slate-200 pb-6">
@@ -118,10 +116,8 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
                     {% for product in products %}
-                    <div class="group bg-white rounded-[2.5rem] border border-slate-200 overflow-hidden hover:border-blue-500 hover:shadow-2xl transition-all duration-500 flex flex-col">
-                        
+                    <div class="group bg-white rounded-[2.5rem] border border-slate-200 overflow-hidden hover:border-blue-500 hover:shadow-2xl transition-all duration-500 flex flex-col h-full">
                         <div class="relative h-64 bg-slate-100 overflow-hidden">
-
                             {% if product.get_primary %}
                                 <img src="{{ product.get_primary.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                             {% else %}
@@ -137,7 +133,7 @@
                             {% endif %}
                         </div>
 
-                        <div class="p-8 flex-grow">
+                        <div class="p-8 flex-grow flex flex-col">
                             <p class="text-[10px] text-blue-600 font-black uppercase tracking-[0.2em] mb-1 italic">
                                 {{ product.brand.name }}
                             </p>
@@ -150,21 +146,25 @@
                                     <span class="text-[10px] text-slate-400 block font-black uppercase italic tracking-widest">Price</span>
                                     <span class="text-xl font-black text-slate-900 italic">Rs. {{ product.price|floatformat:0 }}</span>
                                 </div>
-                                <button class="bg-slate-900 text-white p-3 rounded-2xl hover:bg-blue-600 hover:scale-110 transition-all shadow-xl shadow-slate-900/10">
+                                <button type="button" class="bg-slate-900 text-white p-3 rounded-2xl hover:bg-blue-600 hover:scale-110 transition-all shadow-xl shadow-slate-900/10">
                                     <i data-lucide="shopping-cart" class="w-5 h-5"></i>
                                 </button>
                             </div>
                         </div>
                     </div>
                     {% empty %}
-                    <div class="col-span-full py-20 text-center">
-                        <i data-lucide="search-x" class="w-12 h-12 text-slate-300 mx-auto mb-4"></i>
-                        <p class="text-slate-500 font-bold uppercase italic tracking-widest">No gear found in terminal.</p>
+                    <div class="col-span-full py-20 flex flex-col items-center justify-center bg-white rounded-[3rem] border-2 border-dashed border-slate-200 min-h-[400px]">
+                        <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mb-6 shadow-inner">
+                            <i data-lucide="search-x" class="w-10 h-10 text-slate-300"></i>
+                        </div>
+                        <h3 class="text-2xl font-black text-slate-900 uppercase italic tracking-tighter">Terminal Empty</h3>
+                        <p class="text-slate-500 italic font-medium mt-2">No gear matches your current filters.</p>
+                        <a href="/marketplace/" class="mt-6 text-blue-600 font-black uppercase italic text-[10px] tracking-widest border-b-2 border-blue-600 pb-1">Reset All Filters</a>
                     </div>
                     {% endfor %}
                 </div>
             </div>
-        </div>
+        </form>
     </main>
 
     {% include 'components/_footer.html' %}
