@@ -80,6 +80,7 @@ def marketplace_view(request):
     category = request.GET.get('category')
     brand_id = request.GET.get('brand')
     price_range = request.GET.get('price')
+    sort = request.GET.get('sort')
     
     context['products'] = Product.objects.all().order_by('-created_at')
     
@@ -100,5 +101,17 @@ def marketplace_view(request):
             context['products'] = context['products'].filter(price__gte=15000, price__lte=30000)
         elif price_range == 'over_30000':
             context['products'] = context['products'].filter(price__gt=30000)
+            
+    if sort:
+        if sort == 'recommended':
+            context['products'] = context['products'].order_by('-created_at')
+        elif sort == 'top_rated':
+            context['products'] = context['products'].order_by('-average_rating')
+        elif sort == 'latest':
+            context['products'] = context['products'].order_by('-created_at')
+        elif sort == 'price_low_high':
+            context['products'] = context['products'].order_by('price')
+        elif sort == 'price_high_low':
+            context['products'] = context['products'].order_by('-price')
             
     return render(request, 'main/marketplace_page.html', context)
