@@ -161,12 +161,20 @@
                 <div class="group bg-white rounded-[2.5rem] border border-slate-200 overflow-hidden hover:border-blue-500 hover:shadow-2xl transition-all duration-500 flex flex-col h-full">
                     <div class="relative h-64 bg-slate-100 overflow-hidden">
                         {% if product.get_primary %}
-                            <img src="{{ product.get_primary.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+                            <img src="{{ product.get_primary.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        {% else %}
+                            <div class="flex items-center justify-center h-full">
+                                <i data-lucide="package" class="w-12 h-12 text-slate-300"></i>
+                            </div>
                         {% endif %}
-                        <div class="absolute top-4 right-4 bg-blue-600 text-white p-2 rounded-full shadow-lg">
-                            <i data-lucide="star" class="w-3 h-3 fill-current"></i>
-                        </div>
+
+                        {% if product.is_new %}
+                            <span class="absolute top-4 left-4 bg-orange-500 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase italic tracking-widest shadow-lg z-10">
+                                New
+                            </span>
+                        {% endif %}
                     </div>
+
                     <div class="p-8 flex-grow flex flex-col">
                         <p class="text-[10px] text-blue-600 font-black uppercase tracking-[0.2em] mb-1 italic">
                             {{ product.brand.name }}
@@ -174,12 +182,16 @@
                         <h3 class="font-bold text-lg text-slate-900 group-hover:text-blue-600 transition-colors mb-4 uppercase italic tracking-tighter truncate">
                             {{ product.name }}
                         </h3>
+                        
                         <div class="mb-6">
+                            <span class="text-[10px] text-slate-400 block font-black uppercase italic tracking-widest">Price</span>
                             <span class="text-xl font-black text-slate-900 italic">Rs. {{ product.price | floatformat:0 }}</span>
                         </div>
+
                         <div class="mt-auto">
-                            <a href="/products/{{ product.id }}/" class="w-full text-center bg-slate-900 text-white font-black py-4 rounded-2xl transition-all uppercase italic tracking-widest text-[11px] hover:bg-blue-600 shadow-xl shadow-slate-900/10">
-                                View Gear
+                            <a href="/products/{{ product.id }}/" class="w-full inline-flex items-center justify-center gap-3 bg-slate-900 text-white font-black py-4 rounded-2xl transition-all uppercase italic tracking-widest text-[11px] hover:bg-blue-600 shadow-xl shadow-slate-900/10">
+                                <span>View Details</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </a>
                         </div>
                     </div>
