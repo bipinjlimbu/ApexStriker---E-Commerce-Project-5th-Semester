@@ -44,19 +44,20 @@
     <main class="max-w-7xl mx-auto px-4 py-16 flex-grow">
         <div class="flex flex-col lg:flex-row gap-12">
             
+            <form method="get">
             <aside class="w-full lg:w-72 shrink-0 space-y-6">
                 <div class="group bg-white border border-slate-200 rounded-2xl overflow-hidden hover:border-blue-500 transition-all">
                     <div class="px-4 pt-4 flex items-center gap-2">
                         <i data-lucide="layers" class="w-3.5 h-3.5 text-blue-600"></i>
                         <span class="text-[9px] font-black text-slate-400 uppercase italic tracking-widest">Select Category</span>
                     </div>
-                    <select class="w-full p-4 pt-2 text-sm font-bold text-slate-900 italic uppercase bg-transparent border-none focus:ring-0 cursor-pointer">
-                        <option>All Categories</option>
-                        <option value="kits">Jersey & Kits</option>
-                        <option value="boots">Football Boots</option>
-                        <option value="accessories">Accessories</option>
-                        <option value="equipment">Training Equipment</option>
-                        <option value="supplements">Health & Supplements</option>
+                    <select onchange="this.form.submit()" class="w-full p-4 pt-2 text-sm font-bold text-slate-900 italic uppercase bg-transparent border-none focus:ring-0 cursor-pointer">
+                        <option value="all" {% if request.GET.category == 'all' %}selected{% endif %}>All Categories</option>
+                        <option value="kits" {% if request.GET.category == 'kits' %}selected{% endif %}>Jersey & Kits</option>
+                        <option value="boots" {% if request.GET.category == 'boots' %}selected{% endif %}>Football Boots</option>
+                        <option value="accessories" {% if request.GET.category == 'accessories' %}selected{% endif %}>Accessories</option>
+                        <option value="equipment" {% if request.GET.category == 'equipment' %}selected{% endif %}>Training Equipment</option>
+                        <option value="supplements" {% if request.GET.category == 'supplements' %}selected{% endif %}>Health & Supplements</option>
                     </select>
                 </div>
 
@@ -65,10 +66,10 @@
                         <i data-lucide="award" class="w-3.5 h-3.5 text-blue-600"></i>
                         <span class="text-[9px] font-black text-slate-400 uppercase italic tracking-widest">Select Brand</span>
                     </div>
-                    <select class="w-full p-4 pt-2 text-sm font-bold text-slate-900 italic uppercase bg-transparent border-none focus:ring-0 cursor-pointer">
-                        <option>All Brands</option>
+                    <select onchange="this.form.submit()" class="w-full p-4 pt-2 text-sm font-bold text-slate-900 italic uppercase bg-transparent border-none focus:ring-0 cursor-pointer">
+                        <option value="all" {% if request.GET.brand == 'all' %}selected{% endif %}>All Brands</option>
                         {% for brand in brands %}
-                        <option value="{{ brand.id }}">{{ brand.name }}</option>
+                        <option value="{{ brand.id }}" {% if request.GET.brand == brand.id %}selected{% endif %}>{{ brand.name }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -78,12 +79,12 @@
                         <i data-lucide="banknote" class="w-3.5 h-3.5 text-blue-600"></i>
                         <span class="text-[9px] font-black text-slate-400 uppercase italic tracking-widest">Price Range</span>
                     </div>
-                    <select class="w-full p-4 pt-2 text-sm font-bold text-slate-900 italic uppercase bg-transparent border-none focus:ring-0 cursor-pointer">
-                        <option>All Prices</option>
-                        <option>Under Rs. 5,000</option>
-                        <option>Rs. 5,000 - Rs. 15,000</option>
-                        <option>Rs. 15,000 - Rs. 30,000</option>
-                        <option>Over Rs. 30,000</option>
+                    <select onchange="this.form.submit()" class="w-full p-4 pt-2 text-sm font-bold text-slate-900 italic uppercase bg-transparent border-none focus:ring-0 cursor-pointer">
+                        <option value="all" {% if request.GET.price == 'all' %}selected{% endif %}>All Prices</option>
+                        <option value="under_5000" {% if request.GET.price == 'under_5000' %}selected{% endif %}>Under Rs. 5,000</option>
+                        <option value="5000_15000" {% if request.GET.price == '5000_15000' %}selected{% endif %}>Rs. 5,000 - Rs. 15,000</option>
+                        <option value="15000_30000" {% if request.GET.price == '15000_30000' %}selected{% endif %}>Rs. 15,000 - Rs. 30,000</option>
+                        <option value="over_30000" {% if request.GET.price == 'over_30000' %}selected{% endif %}>Over Rs. 30,000</option>
                     </select>
                 </div>
 
@@ -91,6 +92,7 @@
                     Reset Catalog
                 </button>
             </aside>
+            </form>
 
             <div class="flex-grow">
                 <div class="flex flex-col sm:flex-row justify-between items-center mb-10 gap-4 border-b border-slate-200 pb-6">
