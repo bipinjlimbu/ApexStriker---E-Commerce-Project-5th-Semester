@@ -23,8 +23,8 @@ def home_view(request):
     
     if position:
         products = Product.objects.filter(position=position).order_by('-created_at')
+        context['recommended_products'] = products[:4]
         
-    context['recommended_products'] = products[:4]
 
     return render(request, 'main/home_page.html', context)
 

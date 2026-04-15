@@ -134,9 +134,8 @@ def marketplace_view(request):
 
     if position:
         recommended = Product.objects.filter(position=position).order_by('-created_at')
+        context['recommended_products'] = recommended
         
-        
-    context['recommended_products'] = recommended
     context['products'] = products
     context['brands'] = Brand.objects.filter(is_active=True).order_by('created_at')
     
