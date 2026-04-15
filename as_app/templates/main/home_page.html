@@ -1,11 +1,14 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home | ApexStriker Marketplace</title>
     {% load static %}
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
 </head>
 
-<body class="bg-slate-50">
+<body class="bg-slate-50 min-h-screen flex flex-col">
     {% include 'components/_navbar.html' %}
 
     {% include 'components/_alert_messages.html' %}
@@ -55,14 +58,13 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {% for product in products %}
-                <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden group hover:shadow-2xl hover:-translate-y-1 transition-all">
+                <div class="group bg-white rounded-[2.5rem] border border-slate-200 overflow-hidden hover:border-blue-500 hover:shadow-2xl transition-all duration-500 flex flex-col h-full">
                     <div class="relative h-64 bg-slate-100 overflow-hidden">
-                        
                         {% if product.get_primary %}
                             <img src="{{ product.get_primary.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                         {% else %}
                             <div class="flex items-center justify-center h-full">
-                                <i data-lucide="package" class="w-16 h-16 text-slate-300"></i>
+                                <i data-lucide="package" class="w-12 h-12 text-slate-300"></i>
                             </div>
                         {% endif %}
 
@@ -73,22 +75,24 @@
                         {% endif %}
                     </div>
 
-                    <div class="p-6">
+                    <div class="p-8 flex-grow flex flex-col">
                         <p class="text-[10px] text-blue-600 font-black uppercase tracking-[0.2em] mb-1 italic">
                             {{ product.brand.name }}
                         </p>
-                        <h3 class="font-bold text-lg text-slate-900 group-hover:text-blue-600 transition-colors mb-1 truncate uppercase italic">
+                        <h3 class="font-bold text-lg text-slate-900 group-hover:text-blue-600 transition-colors mb-4 uppercase italic tracking-tighter truncate">
                             {{ product.name }}
                         </h3>
                         
-                        <div class="flex items-center justify-between mt-4">
-                            <div>
-                                <span class="text-xs text-slate-400 block font-bold uppercase italic">Price</span>
-                                <span class="text-xl font-black text-slate-900">Rs. {{ product.price | floatformat:0 }}</span>
-                            </div>
-                            <button class="bg-slate-900 text-white p-3 rounded-2xl hover:bg-blue-600 hover:scale-110 transition-all shadow-xl shadow-slate-900/10">
-                                <i data-lucide="shopping-cart" class="w-5 h-5"></i>
-                            </button>
+                        <div class="mb-6">
+                            <span class="text-[10px] text-slate-400 block font-black uppercase italic tracking-widest">Price</span>
+                            <span class="text-xl font-black text-slate-900 italic">Rs. {{ product.price | floatformat:0 }}</span>
+                        </div>
+
+                        <div class="mt-auto">
+                            <a href="/products/{{ product.id }}/" class="w-full inline-flex items-center justify-center gap-3 bg-slate-900 text-white font-black py-4 rounded-2xl transition-all uppercase italic tracking-widest text-[11px] hover:bg-blue-600 shadow-xl shadow-slate-900/10">
+                                <span>View Details</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -125,9 +129,9 @@
                             </div>
                             <h3 class="text-2xl font-black text-slate-900 uppercase italic mb-3 tracking-tighter">{{ brand.name }}</h3>
                             <p class="text-slate-500 text-sm leading-relaxed mb-6 italic font-medium">
-                                Innovation for the modern athlete. Explore the latest Mercurial and Phantom collections.
+                                {{ brand.description|truncatechars:100 }}
                             </p>
-                            <a href="#" class="inline-flex items-center gap-2 text-[11px] font-black text-blue-600 uppercase tracking-[0.2em] border-b-2 border-transparent hover:border-blue-600 transition-all">
+                            <a href="/marketplace/?brand={{ brand.id }}" class="inline-flex items-center gap-2 text-[11px] font-black text-blue-600 uppercase tracking-[0.2em] border-b-2 border-transparent hover:border-blue-600 transition-all">
                                 Browse Brand <i data-lucide="arrow-right" class="w-3 h-3"></i>
                             </a>
                         </div>
@@ -144,6 +148,46 @@
             </div>
         </div>
     </section>
+
+    {% if recommended_products %}
+    <section class="max-w-7xl mx-auto px-4 py-20">
+        <div class="mb-10">
+            <h2 class="text-3xl font-black text-slate-900 uppercase">Recommended <span class="text-blue-600">For You</span></h2>
+            <div class="h-1.5 w-20 bg-blue-600 mt-2 rounded-full"></div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {% for product in recommended_products %}
+                <div class="group bg-white rounded-[2.5rem] border border-slate-200 overflow-hidden hover:border-blue-500 hover:shadow-2xl transition-all duration-500 flex flex-col h-full">
+                    <div class="relative h-64 bg-slate-100 overflow-hidden">
+                        {% if product.get_primary %}
+                            <img src="{{ product.get_primary.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+                        {% endif %}
+                        <div class="absolute top-4 right-4 bg-blue-600 text-white p-2 rounded-full shadow-lg">
+                            <i data-lucide="star" class="w-3 h-3 fill-current"></i>
+                        </div>
+                    </div>
+                    <div class="p-8 flex-grow flex flex-col">
+                        <p class="text-[10px] text-blue-600 font-black uppercase tracking-[0.2em] mb-1 italic">
+                            {{ product.brand.name }}
+                        </p>
+                        <h3 class="font-bold text-lg text-slate-900 group-hover:text-blue-600 transition-colors mb-4 uppercase italic tracking-tighter truncate">
+                            {{ product.name }}
+                        </h3>
+                        <div class="mb-6">
+                            <span class="text-xl font-black text-slate-900 italic">Rs. {{ product.price | floatformat:0 }}</span>
+                        </div>
+                        <div class="mt-auto">
+                            <a href="/products/{{ product.id }}/" class="w-full text-center bg-slate-900 text-white font-black py-4 rounded-2xl transition-all uppercase italic tracking-widest text-[11px] hover:bg-blue-600 shadow-xl shadow-slate-900/10">
+                                View Gear
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
 
     {% include 'components/_footer.html' %}
 
