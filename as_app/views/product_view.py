@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.db.models import Case, When, Value, IntegerField
 from ..models import Product, Brand, Vendor
 
 @login_required
@@ -77,10 +78,10 @@ def add_product_view(request):
 def marketplace_view(request):
     context = {}
     
-    category = request.GET.get('category')
-    brand_id = request.GET.get('brand')
-    price_range = request.GET.get('price')
-    sort = request.GET.get('sort')
+    category = request.GET.get('category', 'all')
+    brand_id = request.GET.get('brand', 'all')
+    price_range = request.GET.get('price', 'all')
+    sort = request.GET.get('sort', 'recommended')
     
     context['products'] = Product.objects.all().order_by('-created_at')
     
@@ -104,9 +105,21 @@ def marketplace_view(request):
             
     if sort:
         if sort == 'recommended':
-            context['products'] = context['products'].order_by('-created_at')
+            position = request.user.customer_profile.position if hasattr(request.user, 'customer_profile') else None
+            if position:
+                context['products'] = context['products'].annotate(
+                    priority=Case(
+                        When(position=position, then=Value(1)),
+                        default=Value(2),
+                        output_field=IntegerField()
+                    )
+                ).order_by('priority', '-created_at')
+            
+            else:
+                context['products'] = context['products'].order_by('-created_at')
+                
         elif sort == 'top_rated':
-            context['products'] = context['products'].order_by('-average_rating')
+            context['products'] = context['products'].order_by('-created_at')
         elif sort == 'latest':
             context['products'] = context['products'].order_by('-created_at')
         elif sort == 'price_low_high':
