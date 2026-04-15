@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
+from django.db.models import Case, When, Value, IntegerField
 from ..models import User, Product, Brand
 import threading
 import uuid
@@ -19,6 +20,20 @@ def home_view(request):
     
     context['brands'] = Brand.objects.filter(is_active=True).order_by('created_at')[:4]
     
+    position = request.user.customer_profile.position if hasattr(request.user, 'customer_profile') else None
+    if position:
+        products = Product.objects.annotate(
+            priority=Case(
+                When(position=position, then=Value(1)),
+                default=Value(2),
+                output_field=IntegerField()
+            )
+        ).order_by('priority', '-created_at')
+    else:
+        products = Product.objects.order_by('-created_at')
+        
+    context['recommended_products'] = products[:4]
+
     return render(request, 'main/home_page.html', context)
 
 def verify_email_view(request, token):
