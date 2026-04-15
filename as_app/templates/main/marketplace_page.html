@@ -105,7 +105,6 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                 {% for product in products %}
                 <div class="group bg-white rounded-[2.5rem] border border-slate-200 overflow-hidden hover:border-blue-500 hover:shadow-2xl transition-all duration-500 flex flex-col h-full">
-                    
                     <div class="relative h-64 bg-slate-100 overflow-hidden">
                         {% if product.get_primary %}
                             <img src="{{ product.get_primary.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
@@ -115,17 +114,19 @@
                             </div>
                         {% endif %}
 
-                        {% if product.is_new %}
-                        <span class="absolute top-4 left-4 bg-orange-500 text-white text-[9px] font-black px-3 py-1 rounded-full uppercase italic tracking-widest z-10 shadow-lg">
-                            New
-                        </span>
-                        {% endif %}
+                        <div class="absolute top-4 left-4 flex gap-2 z-10">
+                            {% if product.is_new %}
+                            <span class="bg-orange-500 text-white text-[9px] font-black px-3 py-1 rounded-full uppercase italic tracking-widest shadow-lg">
+                                New
+                            </span>
+                            {% endif %}
 
-                        {% if product in recommended_products %}
-                            <span class="absolute top-4 right-4 bg-orange-500 text-white text-[9px] font-black px-3 py-1 rounded-full uppercase italic tracking-widest shadow-lg z-10">
+                            {% if product in recommended_products %}
+                            <span class="bg-orange-500 text-white text-[9px] font-black px-3 py-1 rounded-full uppercase italic tracking-widest shadow-lg">
                                 Recommended
                             </span>
-                        {% endif %}
+                            {% endif %}
+                        </div>
                     </div>
 
                     <div class="p-8 flex-grow flex flex-col">
