@@ -127,9 +127,16 @@ def marketplace_view(request):
         products = products.order_by('price')
     elif sort == 'price_high_low':
         products = products.order_by('-price')
-    else: # Handles 'latest', 'top_rated', or default
+    else:
         products = products.order_by('-created_at')
+        
+    position = request.user.customer_profile.position if hasattr(request.user, 'customer_profile') else None
 
+    if position:
+        recommended = Product.objects.filter(position=position).order_by('-created_at')
+        
+        
+    context['recommended_products'] = recommended
     context['products'] = products
     context['brands'] = Brand.objects.filter(is_active=True).order_by('created_at')
     
