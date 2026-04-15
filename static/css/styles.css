@@ -416,7 +416,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   display: none;
 }
 
-.-translate-y-1\/2, .translate-x-20, .-translate-x-20, .translate-y-\[-10px\], .translate-x-1\/2, .skew-x-12, .-skew-x-12, .transform, .hover\:-translate-y-1, .hover\:scale-110, .active\:scale-95, .active\:scale-90, .group-hover\:translate-y-0, .group-hover\:rotate-90, .group-hover\:scale-110 {
+.-translate-y-1\/2, .translate-x-20, .-translate-x-20, .translate-y-\[-10px\], .translate-x-1\/2, .-translate-x-full, .skew-x-12, .-skew-x-12, .transform, .hover\:-translate-y-1, .hover\:scale-110, .active\:scale-95, .active\:scale-90, .active\:scale-\[0\.98\], .group-hover\:translate-y-0, .group-hover\:translate-x-1, .group-hover\:translate-x-full, .group-hover\:rotate-90, .group-hover\:scale-110 {
   --tw-translate-x: 0;
   --tw-translate-y: 0;
   --tw-rotate: 0;
@@ -1005,6 +1005,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   transform: var(--tw-transform);
 }
 
+.-translate-x-full {
+  --tw-translate-x: -100%;
+  transform: var(--tw-transform);
+}
+
 .skew-x-12 {
   --tw-skew-x: 12deg;
   transform: var(--tw-transform);
@@ -1062,6 +1067,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.flex-row {
+  flex-direction: row;
+}
+
 .flex-col {
   flex-direction: column;
 }
@@ -1076,6 +1085,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .items-center {
   align-items: center;
+}
+
+.items-stretch {
+  align-items: stretch;
 }
 
 .justify-start {
@@ -1198,6 +1211,18 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-space-y-reverse: 0;
   margin-top: calc(1.25rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(1.25rem * var(--tw-space-y-reverse));
+}
+
+.space-y-12 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(3rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(3rem * var(--tw-space-y-reverse));
+}
+
+.space-y-10 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(2.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(2.5rem * var(--tw-space-y-reverse));
 }
 
 .divide-y > :not([hidden]) ~ :not([hidden]) {
@@ -1651,12 +1676,29 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(30 41 59 / 0));
 }
 
+.from-transparent {
+  --tw-gradient-from: transparent;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(0 0 0 / 0));
+}
+
+.via-white\/10 {
+  --tw-gradient-stops: var(--tw-gradient-from), rgb(255 255 255 / 0.1), var(--tw-gradient-to, rgb(255 255 255 / 0));
+}
+
+.via-white\/5 {
+  --tw-gradient-stops: var(--tw-gradient-from), rgb(255 255 255 / 0.05), var(--tw-gradient-to, rgb(255 255 255 / 0));
+}
+
 .to-indigo-900 {
   --tw-gradient-to: #312e81;
 }
 
 .to-slate-900 {
   --tw-gradient-to: #0f172a;
+}
+
+.to-transparent {
+  --tw-gradient-to: transparent;
 }
 
 .fill-current {
@@ -1849,6 +1891,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-bottom: 4rem;
 }
 
+.py-3\.5 {
+  padding-top: 0.875rem;
+  padding-bottom: 0.875rem;
+}
+
 .pt-6 {
   padding-top: 1.5rem;
 }
@@ -1911,6 +1958,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .pb-1 {
   padding-bottom: 0.25rem;
+}
+
+.pt-3 {
+  padding-top: 0.75rem;
+}
+
+.pt-1 {
+  padding-top: 0.25rem;
 }
 
 .text-left {
@@ -2039,6 +2094,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .tracking-\[0\.2em\] {
   letter-spacing: 0.2em;
+}
+
+.tracking-\[0\.15em\] {
+  letter-spacing: 0.15em;
 }
 
 .text-slate-900 {
@@ -2402,6 +2461,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   transition-duration: 700ms;
 }
 
+.duration-1000 {
+  transition-duration: 1000ms;
+}
+
 .file\:mr-4::file-selector-button {
   margin-right: 1rem;
 }
@@ -2552,6 +2615,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(30 41 59 / var(--tw-bg-opacity));
 }
 
+.hover\:bg-blue-50\/50:hover {
+  background-color: rgb(239 246 255 / 0.5);
+}
+
 .hover\:text-blue-600:hover {
   --tw-text-opacity: 1;
   color: rgb(37 99 235 / var(--tw-text-opacity));
@@ -2652,8 +2719,24 @@ Ensure the default browser behavior of the `hidden` attribute.
   transform: var(--tw-transform);
 }
 
+.active\:scale-\[0\.98\]:active {
+  --tw-scale-x: 0.98;
+  --tw-scale-y: 0.98;
+  transform: var(--tw-transform);
+}
+
 .group:hover .group-hover\:translate-y-0 {
   --tw-translate-y: 0px;
+  transform: var(--tw-transform);
+}
+
+.group:hover .group-hover\:translate-x-1 {
+  --tw-translate-x: 0.25rem;
+  transform: var(--tw-transform);
+}
+
+.group:hover .group-hover\:translate-x-full {
+  --tw-translate-x: 100%;
   transform: var(--tw-transform);
 }
 
@@ -2666,6 +2749,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-scale-x: 1.1;
   --tw-scale-y: 1.1;
   transform: var(--tw-transform);
+}
+
+.group:hover .group-hover\:animate-\[shimmer_1\.5s_infinite\] {
+  animation: shimmer 1.5s infinite;
 }
 
 .group:hover .group-hover\:border-blue-200 {
@@ -2797,6 +2884,10 @@ Ensure the default browser behavior of the `hidden` attribute.
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
+  .lg\:grid-cols-5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
   .lg\:flex-row {
     flex-direction: row;
   }
@@ -2810,5 +2901,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 @media (min-width: 1280px) {
   .xl\:grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .xl\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
