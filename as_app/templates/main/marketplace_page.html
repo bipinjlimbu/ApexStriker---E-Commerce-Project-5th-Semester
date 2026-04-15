@@ -51,7 +51,7 @@
                         <i data-lucide="layers" class="w-3.5 h-3.5 text-blue-600"></i>
                         <span class="text-[9px] font-black text-slate-400 uppercase italic tracking-widest">Select Category</span>
                     </div>
-                    <select onchange="this.form.submit()" class="w-full p-4 pt-2 text-sm font-bold text-slate-900 italic uppercase bg-transparent border-none focus:ring-0 cursor-pointer">
+                    <select name="category" onchange="this.form.submit()" class="w-full p-4 pt-2 text-sm font-bold text-slate-900 italic uppercase bg-transparent border-none focus:ring-0 cursor-pointer">
                         <option value="all" {% if request.GET.category == 'all' %}selected{% endif %}>All Categories</option>
                         <option value="kits" {% if request.GET.category == 'kits' %}selected{% endif %}>Jersey & Kits</option>
                         <option value="boots" {% if request.GET.category == 'boots' %}selected{% endif %}>Football Boots</option>
@@ -66,7 +66,7 @@
                         <i data-lucide="award" class="w-3.5 h-3.5 text-blue-600"></i>
                         <span class="text-[9px] font-black text-slate-400 uppercase italic tracking-widest">Select Brand</span>
                     </div>
-                    <select onchange="this.form.submit()" class="w-full p-4 pt-2 text-sm font-bold text-slate-900 italic uppercase bg-transparent border-none focus:ring-0 cursor-pointer">
+                    <select name="brand" onchange="this.form.submit()" class="w-full p-4 pt-2 text-sm font-bold text-slate-900 italic uppercase bg-transparent border-none focus:ring-0 cursor-pointer">
                         <option value="all" {% if request.GET.brand == 'all' %}selected{% endif %}>All Brands</option>
                         {% for brand in brands %}
                         <option value="{{ brand.id }}" {% if request.GET.brand == brand.id %}selected{% endif %}>{{ brand.name }}</option>
@@ -79,7 +79,7 @@
                         <i data-lucide="banknote" class="w-3.5 h-3.5 text-blue-600"></i>
                         <span class="text-[9px] font-black text-slate-400 uppercase italic tracking-widest">Price Range</span>
                     </div>
-                    <select onchange="this.form.submit()" class="w-full p-4 pt-2 text-sm font-bold text-slate-900 italic uppercase bg-transparent border-none focus:ring-0 cursor-pointer">
+                    <select name="price" onchange="this.form.submit()" class="w-full p-4 pt-2 text-sm font-bold text-slate-900 italic uppercase bg-transparent border-none focus:ring-0 cursor-pointer">
                         <option value="all" {% if request.GET.price == 'all' %}selected{% endif %}>All Prices</option>
                         <option value="under_5000" {% if request.GET.price == 'under_5000' %}selected{% endif %}>Under Rs. 5,000</option>
                         <option value="5000_15000" {% if request.GET.price == '5000_15000' %}selected{% endif %}>Rs. 5,000 - Rs. 15,000</option>
@@ -101,14 +101,16 @@
                         <p class="text-[10px] text-slate-500 uppercase tracking-widest mt-1 font-bold italic">Active Terminal Results</p>
                     </div>
                     <div class="flex items-center gap-4">
+                        <form method="get">
                         <span class="text-[10px] font-black text-slate-400 uppercase italic">Sort:</span>
-                        <select class="bg-transparent border-none text-xs font-black uppercase italic text-slate-900 focus:ring-0 cursor-pointer">
-                            <option>Recommended</option>
-                            <option>Top Rated</option>
-                            <option>Latest Arrival</option>
-                            <option>Price: Low-High</option>
-                            <option>Price: High-Low</option>
-                        </select>
+                        <select name="sort" onchange="this.form.submit()" class="bg-transparent border-none text-xs font-black uppercase italic text-slate-900 focus:ring-0 cursor-pointer">
+                            <option value="recommended" {% if request.GET.sort == 'recommended' %}selected{% endif %}>Recommended</option>
+                            <option value="top_rated" {% if request.GET.sort == 'top_rated' %}selected{% endif %}>Top Rated</option>
+                            <option value="latest" {% if request.GET.sort == 'latest' %}selected{% endif %}>Latest Arrival</option>
+                            <option value="price_low_high" {% if request.GET.sort == 'price_low_high' %}selected{% endif %}>Price: Low-High</option>
+                            <option value="price_high_low" {% if request.GET.sort == 'price_high_low' %}selected{% endif %}>Price: High-Low</option>
+                        </select>``
+                        </form>
                     </div>
                 </div>
 
