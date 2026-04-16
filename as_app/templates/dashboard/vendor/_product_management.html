@@ -17,7 +17,7 @@
     </div>
 
     <div class="shrink-0 bg-white border-b border-slate-200 px-12 py-8 z-40 shadow-sm">
-        <form method="get" action="/dashboard/vendor/?section=product-management/" class="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <form method="get" class="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div>
                 <p class="text-[9px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Search</p>
                 <div class="relative">
@@ -28,13 +28,13 @@
             <div>
                 <p class="text-[9px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Category</p>
                 <div class="relative">
-                    <select name="category" class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic appearance-none cursor-pointer focus:outline-none">
-                        <option value="all">All Gear</option>
-                        <option value="kits">Jersey & Kits</option>
-                        <option value="boots">Boots</option>
-                        <option value="accessories">Accessories</option>
-                        <option value="equipment">Training Equipment</option>
-                        <option value="supplements">Health & Supplements</option>
+                    <select name="category" onchange="this.form.submit()" class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic appearance-none cursor-pointer focus:outline-none">
+                        <option {% if request.GET.category == 'all' %}selected{% endif %} value="all">All Gear</option>
+                        <option {% if request.GET.category == 'kits' %}selected{% endif %} value="kits">Jersey & Kits</option>
+                        <option {% if request.GET.category == 'boots' %}selected{% endif %} value="boots">Boots</option>
+                        <option {% if request.GET.category == 'accessories' %}selected{% endif %} value="accessories">Accessories</option>
+                        <option {% if request.GET.category == 'equipment' %}selected{% endif %} value="equipment">Training Equipment</option>
+                        <option {% if request.GET.category == 'supplements' %}selected{% endif %} value="supplements">Health & Supplements</option>
                     </select>
                     <i data-lucide="chevron-down" class="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
                 </div>
@@ -42,12 +42,12 @@
             <div>
                 <p class="text-[9px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Position</p>
                 <div class="relative">
-                    <select name="position" class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic appearance-none cursor-pointer focus:outline-none">
-                        <option value="all">All Positions</option>
-                        <option value="attacker">Attacker</option>
-                        <option value="midfielder">Midfielder</option>
-                        <option value="defender">Defender</option>
-                        <option value="goalkeeper">Goalkeeper</option>
+                    <select name="position" onchange="this.form.submit()" class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic appearance-none cursor-pointer focus:outline-none">
+                        <option {% if request.GET.position == 'all' %}selected{% endif %} value="all">All Positions</option>
+                        <option {% if request.GET.position == 'attacker' %}selected{% endif %} value="attacker">Attacker</option>
+                        <option {% if request.GET.position == 'midfielder' %}selected{% endif %} value="midfielder">Midfielder</option>
+                        <option {% if request.GET.position == 'defender' %}selected{% endif %} value="defender">Defender</option>
+                        <option {% if request.GET.position == 'goalkeeper' %}selected{% endif %} value="goalkeeper">Goalkeeper</option>
                     </select>
                     <i data-lucide="chevron-down" class="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
                 </div>
@@ -55,13 +55,13 @@
             <div>
                 <p class="text-[9px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Sort</p>
                 <div class="relative">
-                    <select name="sort" class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic appearance-none cursor-pointer focus:outline-none">
-                        <option value="latest">Latest</option>
-                        <option value="oldest">Oldest</option>
-                        <option value="price-low-high">Price: Low to High</option>
-                        <option value="price-high-low">Price: High to Low</option>
-                        <option value="stock-low-high">Stock: Low to High</option>
-                        <option value="stock-high-low">Stock: High to Low</option>
+                    <select name="sort" onchange="this.form.submit()" class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic appearance-none cursor-pointer focus:outline-none">
+                        <option {% if request.GET.sort == 'latest' %}selected{% endif %} value="latest">Latest</option>
+                        <option {% if request.GET.sort == 'oldest' %}selected{% endif %} value="oldest">Oldest</option>
+                        <option {% if request.GET.sort == 'price-low-high' %}selected{% endif %} value="price-low-high">Price: Low to High</option>
+                        <option {% if request.GET.sort == 'price-high-low' %}selected{% endif %} value="price-high-low">Price: High to Low</option>
+                        <option {% if request.GET.sort == 'stock-low-high' %}selected{% endif %} value="stock-low-high">Stock: Low to High</option>
+                        <option {% if request.GET.sort == 'stock-high-low' %}selected{% endif %} value="stock-high-low">Stock: High to Low</option>
                     </select>
                     <i data-lucide="arrow-up-down" class="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
                 </div>
