@@ -1,142 +1,163 @@
-<div class="shrink-0 bg-slate-900 p-12 relative overflow-hidden z-50 shadow-2xl">
-    <div class="absolute top-0 right-0 w-1/4 h-full bg-blue-600 skew-x-12 translate-x-20 opacity-10"></div>
-    <div class="relative z-10 flex justify-between items-end">
-        <div>
-            <span class="inline-block bg-blue-600 text-white text-[10px] font-black px-3 py-1 rounded-full mb-4 uppercase tracking-widest italic">System Overview</span>
-            <h2 class="text-5xl font-black text-white italic uppercase tracking-tighter">Gear <span class="text-blue-500">Manifest</span></h2>
+<div class="flex-grow flex flex-col h-screen bg-slate-50 overflow-hidden">
+    
+    <div class="shrink-0 bg-slate-900 p-12 relative overflow-hidden z-50 shadow-2xl">
+        <div class="absolute top-0 right-0 w-1/4 h-full bg-blue-600 skew-x-12 translate-x-20 opacity-10"></div>
+        <div class="relative z-10 flex justify-between items-end">
+            <div>
+                <span class="inline-block bg-blue-600 text-white text-[10px] font-black px-3 py-1 rounded-full mb-4 uppercase tracking-widest italic">Inventory Control</span>
+                <h2 class="text-5xl font-black text-white italic uppercase tracking-tighter">Gear <span class="text-blue-500">Manifest</span></h2>
+            </div>
+            <div class="flex items-center gap-4">
+                <button class="h-16 flex items-center gap-6 bg-blue-600 hover:bg-blue-700 text-white px-10 rounded-2xl transition-all shadow-2xl shadow-blue-600/30 active:scale-95 group border border-blue-400/20">
+                    <i data-lucide="plus-square" class="w-6 h-6 group-hover:scale-110 transition-transform"></i>
+                    <span class="text-sm font-black uppercase italic tracking-[0.15em]">Add New Products</span>
+                </button>
+            </div>
         </div>
-        <div class="flex items-center gap-4">
-            <button class="h-16 flex items-center gap-4 bg-blue-600 hover:bg-blue-700 text-white px-10 rounded-2xl transition-all shadow-2xl shadow-blue-600/30 active:scale-95 group border border-blue-400/20">
-                <i data-lucide="plus" class="w-6 h-6 group-hover:rotate-90 transition-transform duration-300"></i>
-                <span class="text-xs font-black uppercase italic tracking-[0.15em]">Add New Gear</span>
-            </button>
-            <div class="h-16 bg-white/5 border border-white/10 px-6 rounded-2xl backdrop-blur-md flex items-center gap-4">
-                <div class="h-10 w-10 bg-blue-600/20 rounded-xl flex items-center justify-center text-blue-500">
-                    <i data-lucide="database" class="w-5 h-5"></i>
+    </div>
+
+    <div class="shrink-0 bg-white border-b border-slate-200 px-12 py-8 z-40 shadow-sm">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div>
+                <p class="text-[9px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Search</p>
+                <div class="relative">
+                    <i data-lucide="search" class="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                    <input type="text" placeholder="SEARCH FOR PRODUCTS..." class="w-full pl-12 pr-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all">
                 </div>
-                <div>
-                    <p class="text-[9px] font-black text-slate-500 uppercase italic tracking-widest leading-none">Live Units</p>
-                    <p class="text-xl font-black text-white italic leading-tight mt-1">1,284</p>
+            </div>
+            <div>
+                <p class="text-[9px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Category</p>
+                <div class="relative">
+                    <select class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic appearance-none cursor-pointer focus:outline-none">
+                        <option value="all">All Gear</option>
+                        <option value="kits">Jersey & Kits</option>
+                        <option value="boots">Boots</option>
+                        <option value="accessories">Accessories</option>
+                        <option value="equipment">Training Equipment</option>
+                        <option value="supplements">Health & Supplements</option>
+                    </select>
+                    <i data-lucide="chevron-down" class="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
+                </div>
+            </div>
+            <div>
+                <p class="text-[9px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Tactical</p>
+                <div class="relative">
+                    <select class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic appearance-none cursor-pointer focus:outline-none">
+                        <option value="all">All Positions</option>
+                        <option value="attacker">Attacker</option>
+                        <option value="midfielder">Midfielder</option>
+                        <option value="defender">Defender</option>
+                        <option value="goalkeeper">Goalkeeper</option>
+                    </select>
+                    <i data-lucide="chevron-down" class="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
+                </div>
+            </div>
+            <div>
+                <p class="text-[9px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Sort</p>
+                <div class="relative">
+                    <select class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic appearance-none cursor-pointer focus:outline-none">
+                        <option value="latest">Latest</option>
+                        <option value="oldest">Oldest</option>
+                        <option value="price-low-high">Price: Low to High</option>
+                        <option value="price-high-low">Price: High to Low</option>
+                        <option value="stock-low-high">Stock: Low to High</option>
+                        <option value="stock-high-low">Stock: High to Low</option>
+                    </select>
+                    <i data-lucide="arrow-up-down" class="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="flex-grow overflow-y-auto custom-scrollbar">
-    <div class="p-12 -mt-8 relative z-10">
-        <div class="bg-white rounded-[2.5rem] border border-slate-200 shadow-2xl shadow-slate-200/50 overflow-hidden mb-12">
-            
-            <div class="px-10 py-8 bg-white/90 backdrop-blur-md sticky top-0 z-40 border-b border-slate-100">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                    <div>
-                        <p class="text-[9px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Search Inventory</p>
-                        <div class="relative">
-                            <i data-lucide="search" class="w-3.5 h-3.5 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                            <input type="text" placeholder="NAME OR SKU..." class="w-full pl-10 pr-5 py-3 bg-slate-50 border border-slate-200 rounded-xl text-[10px] font-black uppercase italic focus:outline-none focus:border-blue-500 transition-all">
-                        </div>
+    <div class="flex-grow overflow-y-auto custom-scrollbar p-12">
+        <div class="space-y-8 pb-12">
+            {% for product in products %}
+            <div class="bg-white rounded-[3rem] border border-slate-200 shadow-xl overflow-hidden group hover:border-blue-500 transition-all duration-500">
+                <div class="flex flex-col lg:flex-row items-stretch">
+                    <div class="lg:w-80 shrink-0 bg-slate-100 relative overflow-hidden border-r border-slate-100">
+                        {% if product.get_primary %}
+                            <img src="{{ product.get_primary.image.url }}" class="h-full w-full min-h-[320px] object-cover transition-transform duration-700 group-hover:scale-105">
+                        {% else %}
+                            <div class="h-full w-full min-h-[320px] flex flex-col items-center justify-center bg-slate-200 text-slate-400">
+                                <i data-lucide="box" class="w-16 h-16 mb-4 opacity-20"></i>
+                                <span class="text-xs font-black uppercase italic">No Visual Data</span>
+                            </div>
+                        {% endif %}
                     </div>
-                    <div>
-                        <p class="text-[9px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Category</p>
-                        <select class="w-full px-5 py-3 bg-slate-50 border border-slate-200 rounded-xl text-[10px] font-black uppercase italic appearance-none cursor-pointer">
-                            <option>All Divisions</option>
-                            <option>Football Boots</option>
-                            <option>Jersey & Kits</option>
-                            <option>Accessories (Socks, Guards)</option>
-                            <option>Training Equipment (Balls, Cones)</option>
-                            <option>Health & Supplements</option>
-                        </select>
-                    </div>
-                    <div>
-                        <p class="text-[9px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Tactical Position</p>
-                        <select class="w-full px-5 py-3 bg-slate-50 border border-slate-200 rounded-xl text-[10px] font-black uppercase italic appearance-none cursor-pointer">
-                            <option>All Positions</option>
-                            <option>Attacker</option>
-                            <option>Midfielder</option>
-                            <option>Defender</option>
-                            <option>Goalkeeper</option>
-                        </select>
-                    </div>
-                    <div>
-                        <p class="text-[9px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Manifest Sort</p>
-                        <select class="w-full px-5 py-3 bg-slate-50 border border-slate-200 rounded-xl text-[10px] font-black uppercase italic appearance-none cursor-pointer">
-                            <option>Latest</option>
-                            <option>Oldest</option>
-                            <option>Name: A to Z</option>
-                            <option>Name: Z to A</option>
-                            <option>Price: Low to High</option>
-                            <option>Price: High to Low</option>
-                            <option>Stock: High to Low</option>
-                            <option>Stock: Low to High</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
 
-            <table class="w-full text-left">
-                <thead>
-                    <tr class="bg-slate-50/30">
-                        <th class="px-10 py-6 text-[10px] font-black text-slate-400 uppercase italic tracking-widest">Product Profile</th>
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase italic tracking-widest">Position</th>
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase italic tracking-widest">Stock</th>
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase italic tracking-widest">Price</th>
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase italic tracking-widest">Status</th>
-                        <th class="px-10 py-6 text-[10px] font-black text-slate-400 uppercase italic tracking-widest text-right">Action</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-50">
-                    {% for i in 'x'|rjust:12 %}
-                    <tr class="hover:bg-slate-50/80 transition-colors">
-                        <td class="px-10 py-6">
-                            <div class="flex items-center gap-4">
-                                <div class="h-12 w-12 bg-slate-900 rounded-2xl flex items-center justify-center text-blue-500 shadow-lg shrink-0">
-                                    <i data-lucide="package" class="w-5 h-5"></i>
+                    <div class="flex-grow p-12 flex flex-col">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <div class="flex items-center gap-3 mb-3">
+                                    <span class="text-xs font-black text-blue-600 uppercase italic tracking-widest">{{ product.brand.name }}</span>
+                                    <span class="h-1 w-1 rounded-full bg-slate-300"></span>
+                                    <span class="text-xs font-black text-slate-400 uppercase italic tracking-widest">{{ product.get_category_display }}</span>
                                 </div>
-                                <div>
-                                    <p class="font-black text-slate-900 italic uppercase leading-none mb-1">X Crazyfast Elite</p>
-                                    <div class="flex items-center gap-2 text-[9px] font-black uppercase italic">
-                                        <span class="text-blue-600">Adidas</span>
-                                        <span class="text-slate-300">| Boots</span>
+                                <h3 class="text-4xl font-black text-slate-900 uppercase italic tracking-tighter leading-none">{{ product.name }}</h3>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-4xl font-black text-blue-600 italic tracking-tighter leading-none"><span class="text-sm mr-1">$</span>{{ product.price }}</p>
+                                <div class="inline-flex items-center gap-2 mt-4 bg-slate-50 px-3 py-1.5 rounded-full border border-slate-100">
+                                    <div class="h-2 w-2 rounded-full {% if product.is_active %}bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.4)]{% else %}bg-red-500{% endif %}"></div>
+                                    <span class="text-[10px] font-black text-slate-700 uppercase italic">{% if product.is_active %}Active Status{% else %}Offline{% endif %}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-10">
+                            <p class="text-slate-500 text-base leading-relaxed italic font-medium max-w-3xl line-clamp-3">
+                                {{ product.description|default:"No technical description provided for this tactical asset." }}
+                            </p>
+                        </div>
+
+                        <div class="mt-auto pt-8 border-t border-slate-100 flex flex-wrap items-center justify-between gap-6">
+                            <div class="flex items-center gap-10">
+                                <div class="flex items-center gap-4">
+                                    <div class="h-12 w-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center border border-blue-100 shadow-sm">
+                                        <i data-lucide="crosshair" class="w-6 h-6"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-[9px] font-black text-slate-400 uppercase italic leading-none mb-1 tracking-widest">Position</p>
+                                        <p class="text-sm font-black text-slate-900 uppercase italic">{{ product.get_position_display|default:"Multi-Role" }}</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <div class="h-12 w-12 bg-slate-50 text-slate-600 rounded-2xl flex items-center justify-center border border-slate-200 shadow-sm">
+                                        <i data-lucide="package" class="w-6 h-6"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-[9px] font-black text-slate-400 uppercase italic leading-none mb-1 tracking-widest">Stock</p>
+                                        <p class="text-sm font-black text-slate-900 uppercase italic">{{ product.stock }} Units</p>
                                     </div>
                                 </div>
                             </div>
-                        </td>
-                        <td class="px-8 py-6">
-                            <span class="inline-flex items-center gap-1.5 bg-blue-50 text-blue-700 px-3 py-1.5 rounded-lg text-[9px] font-black uppercase italic border border-blue-100 shadow-sm">
-                                <i data-lucide="crosshair" class="w-3 h-3"></i> Attacker
-                            </span>
-                        </td>
-                        <td class="px-8 py-6">
-                            <div class="flex flex-col">
-                                <span class="text-sm font-black text-slate-900 italic uppercase">42</span>
-                                <span class="text-[8px] font-black text-slate-400 uppercase tracking-widest">Units</span>
-                            </div>
-                        </td>
-                        <td class="px-8 py-6">
-                            <span class="text-base font-black text-blue-600 italic uppercase tracking-tighter">
-                                <span class="text-[10px] mr-0.5">$</span>249.99
-                            </span>
-                        </td>
-                        <td class="px-8 py-6">
-                            <div class="flex items-center gap-2">
-                                <div class="h-2 w-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.4)]"></div>
-                                <span class="text-[10px] font-black text-slate-700 uppercase italic tracking-wider">Active</span>
-                            </div>
-                        </td>
-                        <td class="px-10 py-6 text-right">
-                            <div class="flex items-center justify-end gap-2">
-                                <button class="flex items-center gap-2 bg-white text-slate-900 px-4 py-2 rounded-xl font-black italic uppercase text-[9px] border border-slate-200 shadow-sm hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all">
-                                    <i data-lucide="edit-3" class="w-3.5 h-3.5"></i> Edit
+
+                            <div class="flex items-center gap-3">
+                                <button class="flex items-center gap-3 bg-slate-900 text-white px-10 py-4 rounded-2xl font-black italic uppercase text-xs hover:bg-blue-600 transition-all shadow-xl shadow-slate-900/10">
+                                    <i data-lucide="edit-3" class="w-4 h-4 text-blue-400"></i> Modify Gear
                                 </button>
-                                <button class="p-2 bg-slate-50 text-slate-400 rounded-lg hover:text-red-600 hover:bg-red-50 transition-colors">
-                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                <button class="h-14 w-14 flex items-center justify-center bg-white border-2 border-slate-100 text-slate-300 rounded-2xl hover:text-red-600 hover:border-red-100 hover:bg-red-50 transition-all">
+                                    <i data-lucide="trash-2" class="w-6 h-6"></i>
                                 </button>
                             </div>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            {% empty %}
+            <div class="flex flex-col items-center justify-center py-32 bg-white rounded-[3rem] border-2 border-dashed border-slate-200">
+                <div class="h-24 w-24 bg-slate-50 rounded-full flex items-center justify-center mb-8 border border-slate-100 shadow-inner">
+                    <i data-lucide="database-zap" class="w-10 h-10 text-slate-300"></i>
+                </div>
+                <h3 class="text-3xl font-black text-slate-900 uppercase italic tracking-tighter mb-2">Manifest is Empty</h3>
+                <p class="text-slate-400 font-black uppercase italic text-[10px] tracking-[0.2em] mb-8 text-center px-10">No products currently indexed in the central database.</p>
+                <button class="flex items-center gap-4 bg-blue-600 text-white px-8 py-4 rounded-2xl font-black italic uppercase text-xs hover:bg-blue-700 transition-all shadow-xl shadow-blue-600/20 active:scale-95 group">
+                    <i data-lucide="plus-square" class="w-5 h-5 transition-transform"></i>
+                    Register Products
+                </button>
+            </div>
+            {% endfor %}
         </div>
     </div>
 </div>
