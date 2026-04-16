@@ -24,7 +24,7 @@
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
                             <i data-lucide="search" class="w-4 h-4"></i>
                         </div>
-                        <input type="text" name="q" placeholder="Search..." 
+                        <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Search..." 
                                class="block w-full pl-9 pr-3 py-2 border border-slate-200 rounded-xl bg-slate-50 text-xs font-medium focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all leading-tight">
                     </form>
                 </div>
