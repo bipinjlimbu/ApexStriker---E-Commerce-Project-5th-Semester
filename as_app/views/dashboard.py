@@ -137,13 +137,16 @@ def vendor_dashboard_view(request):
         messages.warning(request, "Your vendor account is currently under review. Please wait for approval to access the dashboard.")
         return redirect(f'/profile/{request.user.id}/')
     
-    section = request.GET.get('section', 'sales-overview')
+    section = request.GET.get('section', 'product-management')
     
     context = {
         'pending_orders': None,
         'section': section,
     }
     
+    if section == 'product-management':
+        context['products'] = None
+        
     if section == 'sales-overview':
         context['sales_overview'] = None
         
