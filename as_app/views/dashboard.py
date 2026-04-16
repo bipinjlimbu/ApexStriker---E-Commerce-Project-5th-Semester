@@ -148,23 +148,23 @@ def vendor_dashboard_view(request):
         category = request.GET.get('category', 'all')
         position = request.GET.get('position', 'all')
         sort = request.GET.get('sort', 'latest')
+        
+        products = Product.objects.filter(vendor=request.user.vendor_profile).order_by('-created_at')
 
         if category != 'all':
-            products = Product.objects.filter(vendor=request.user.vendor_profile, category=category)
+            products = products.filter(category=category)
         if position != 'all':
-            products = Product.objects.filter(vendor=request.user.vendor_profile, position=position)
-        if sort == 'latest':
-            products = Product.objects.filter(vendor=request.user.vendor_profile).order_by('-created_at')
+            products = products.filter(position=position)
         elif sort == 'oldest':
-            products = Product.objects.filter(vendor=request.user.vendor_profile).order_by('created_at')
+            products = products.order_by('created_at')
         elif sort == 'price-low-high':
-            products = Product.objects.filter(vendor=request.user.vendor_profile).order_by('price')
+            products = products.order_by('price')
         elif sort == 'price-high-low':
-            products = Product.objects.filter(vendor=request.user.vendor_profile).order_by('-price')
+            products = products.order_by('-price')
         elif sort == 'stock-low-high':
-            products = Product.objects.filter(vendor=request.user.vendor_profile).order_by('stock')
+            products = products.order_by('stock')
         elif sort == 'stock-high-low':
-            products = Product.objects.filter(vendor=request.user.vendor_profile).order_by('-stock')
+            products = products.order_by('-stock')
         
         context['products'] = products
         
