@@ -1,0 +1,123 @@
+<div class="h-[calc(100vh-20px)] overflow-y-auto custom-scrollbar">
+    
+    <div class="bg-slate-900 p-12 relative overflow-hidden shrink-0">
+        <div class="absolute top-0 right-0 w-1/4 h-full bg-blue-600 skew-x-12 translate-x-20 opacity-10"></div>
+        
+        <div class="relative z-10 flex justify-between items-end">
+            <div>
+                <span class="inline-block bg-blue-600 text-white text-[10px] font-black px-3 py-1 rounded-full mb-4 uppercase tracking-widest italic">Inventory Control</span>
+                <h2 class="text-5xl font-black text-white italic uppercase tracking-tighter">Brand <span class="text-blue-500">Registry</span></h2>
+                <p class="text-slate-400 text-xs font-bold mt-2 uppercase tracking-wider italic">Manage official partners and vendor submissions</p>
+            </div>
+            
+            <div class="flex gap-4">
+                <div class="bg-white/5 border border-white/10 p-4 rounded-3xl backdrop-blur-md flex items-center gap-4 text-white">
+                    <div class="h-12 w-12 bg-blue-600/20 rounded-2xl flex items-center justify-center text-blue-500">
+                        <i data-lucide="award" class="w-6 h-6"></i>
+                    </div>
+                    <div class="pr-4">
+                        <p class="text-[9px] font-black text-slate-500 uppercase italic tracking-widest leading-none mb-1">Total Brands</p>
+                        <p class="text-2xl font-black italic tracking-tighter">{{ brands|length }}</p>
+                    </div>
+                </div>
+                
+                <a href="/brands/" class="h-20 px-8 bg-white/5 border border-white/10 rounded-3xl flex items-center gap-4 text-slate-400 hover:bg-blue-600 hover:text-white transition-all shadow-lg shadow-blue-600/20 active:scale-95 group">
+                    <i data-lucide="eye" class="w-6 h-6 text-slate-400 group-hover:text-white transition-colors"></i>
+                    <span class="font-black italic uppercase tracking-widest text-sm">Go to Brands</span>
+                </a>
+
+                <a href="/brands/add/" class="h-20 px-8 bg-blue-600 rounded-3xl flex items-center gap-4 text-white hover:bg-blue-700 transition-all shadow-xl shadow-blue-600/20 active:scale-95 group border border-blue-400/20">
+                    <i data-lucide="plus-circle" class="w-6 h-6 group-hover:rotate-90 transition-transform duration-300"></i>
+                    <span class="font-black italic uppercase tracking-widest text-sm">Register Brand</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="p-12 -mt-8 relative z-20 pb-24">
+        <div class="bg-white rounded-[2.5rem] border border-slate-200 shadow-2xl shadow-slate-200/50 overflow-hidden">
+            <table class="w-full text-left">
+                <thead>
+                    <tr class="bg-slate-50 border-b border-slate-100">
+                        <th class="px-10 py-6 text-[11px] font-black text-slate-400 uppercase italic tracking-widest">Brand Identity</th>
+                        <th class="px-10 py-6 text-[11px] font-black text-slate-400 uppercase italic tracking-widest">Description</th>
+                        <th class="px-10 py-6 text-[11px] font-black text-slate-400 uppercase italic tracking-widest text-center">Authorization</th>
+                        <th class="px-10 py-6 text-[11px] font-black text-slate-400 uppercase italic tracking-widest text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-50">
+                    {% for brand in brands %}
+                        {% if brand.is_active %}
+                        <tr class="hover:bg-slate-50 transition-colors group">
+                            <td class="px-10 py-6">
+                                <div class="flex items-center gap-4">
+                                    <div class="h-16 w-16 bg-white rounded-2xl border border-slate-100 p-2 flex items-center justify-center shrink-0 shadow-sm group-hover:border-blue-200 transition-all">
+                                        <img src="{{ brand.logo.url }}" class="max-h-full max-w-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-500">
+                                    </div>
+                                    <div>
+                                        <p class="font-black text-slate-900 italic uppercase leading-none mb-1 text-lg tracking-tighter">{{ brand.name }}</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-10 py-6 max-w-xs">
+                                <p class="text-xs text-slate-500 font-medium italic line-clamp-2">{{ brand.description }}</p>
+                            </td>
+                            <td class="px-10 py-6">
+                                <div class="flex items-center justify-center gap-2">
+                                    <span class="text-[10px] font-black text-green-600 bg-green-50 px-3 py-1.5 rounded-lg uppercase italic border border-green-100 shadow-sm flex items-center gap-1.5">
+                                        <div class="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse"></div>
+                                        Verified
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="px-10 py-6">
+                                <div class="flex items-center justify-end gap-2">
+                                    <a href="/brands/edit/{{ brand.id }}/" class="p-3 bg-slate-50 rounded-xl text-slate-400 hover:bg-slate-900 hover:text-white transition-all border border-slate-200 active:scale-90" title="Edit Brand">
+                                        <i data-lucide="edit-3" class="w-4 h-4"></i>
+                                    </a>
+                                    <a href="/brands/delete/{{ brand.id }}/" class="p-3 bg-slate-50 rounded-xl text-slate-400 hover:bg-red-600 hover:text-white transition-all border border-slate-200 active:scale-90" title="Delete Brand">
+                                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+
+                        {% elif not brand.is_active %}
+                        <tr class="hover:bg-slate-50 transition-colors group bg-amber-50/20">
+                            <td class="px-10 py-6">
+                                <div class="flex items-center gap-4">
+                                    <div class="h-16 w-16 bg-white rounded-2xl border border-amber-100 p-2 flex items-center justify-center shrink-0 shadow-sm">
+                                        <img src="{{ brand.logo.url }}" class="max-h-full max-w-full object-contain filter grayscale opacity-70">
+                                    </div>
+                                    <div>
+                                        <p class="font-black text-slate-900 italic uppercase leading-none mb-1 text-lg tracking-tighter">{{ brand.name }}</p>
+                                        <p class="text-[10px] text-amber-600 font-bold italic uppercase tracking-wider">Vendor Submission</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-10 py-6 max-w-xs">
+                                <p class="text-xs text-slate-500 font-medium italic line-clamp-2">{{ brand.description }}</p>
+                            </td>
+                            <td class="px-10 py-6">
+                                <div class="flex items-center justify-center gap-2">
+                                    <span class="text-[10px] font-black text-amber-600 bg-amber-50 px-3 py-1.5 rounded-lg uppercase italic border border-amber-100 shadow-sm">Pending Approval</span>
+                                </div>
+                            </td>
+                            <td class="px-10 py-6 text-right">
+                                <div class="flex items-center justify-end gap-2">
+                                    <a href="/approve_brand/{{ brand.id }}/" class="bg-blue-600 text-white px-5 py-2.5 rounded-xl font-black italic uppercase text-[10px] hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/20 active:scale-95 flex items-center gap-2">
+                                        <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Authorize
+                                    </a>
+                                    <a href="/brands/delete/{{ brand.id }}/" class="p-3 bg-white rounded-xl text-slate-400 hover:bg-red-600 hover:text-white transition-all border border-slate-200 active:scale-90">
+                                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
