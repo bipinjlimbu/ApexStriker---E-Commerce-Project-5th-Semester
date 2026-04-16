@@ -17,7 +17,7 @@
     </div>
 
     <div class="shrink-0 bg-white border-b border-slate-200 px-12 py-8 z-40 shadow-sm">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <form method="get" class="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div>
                 <p class="text-[9px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Search</p>
                 <div class="relative">
@@ -28,7 +28,7 @@
             <div>
                 <p class="text-[9px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Category</p>
                 <div class="relative">
-                    <select class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic appearance-none cursor-pointer focus:outline-none">
+                    <select name="category" class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic appearance-none cursor-pointer focus:outline-none">
                         <option value="all">All Gear</option>
                         <option value="kits">Jersey & Kits</option>
                         <option value="boots">Boots</option>
@@ -40,9 +40,9 @@
                 </div>
             </div>
             <div>
-                <p class="text-[9px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Tactical</p>
+                <p class="text-[9px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Position</p>
                 <div class="relative">
-                    <select class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic appearance-none cursor-pointer focus:outline-none">
+                    <select name="position" class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic appearance-none cursor-pointer focus:outline-none">
                         <option value="all">All Positions</option>
                         <option value="attacker">Attacker</option>
                         <option value="midfielder">Midfielder</option>
@@ -55,7 +55,7 @@
             <div>
                 <p class="text-[9px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Sort</p>
                 <div class="relative">
-                    <select class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic appearance-none cursor-pointer focus:outline-none">
+                    <select name="sort" class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic appearance-none cursor-pointer focus:outline-none">
                         <option value="latest">Latest</option>
                         <option value="oldest">Oldest</option>
                         <option value="price-low-high">Price: Low to High</option>
@@ -66,7 +66,7 @@
                     <i data-lucide="arrow-up-down" class="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 
     <div class="flex-grow overflow-y-auto custom-scrollbar p-12">
