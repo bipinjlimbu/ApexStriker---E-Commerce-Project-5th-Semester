@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.conf import settings
+from django.db.models import Q
 from django.contrib import messages
 from ..models import User, Vendor, Brand, Product
 import threading
@@ -145,13 +146,17 @@ def vendor_dashboard_view(request):
     }
     
     if section == 'product-management':
+        q = request.GET.get('q', '')
         category = request.GET.get('category', 'all')
         position = request.GET.get('position', 'all')
         sort = request.GET.get('sort', 'latest')
         
         products = Product.objects.filter(vendor=request.user.vendor_profile).order_by('-created_at')
-
-        if category != 'all':
+        
+        if q:
+            query = Q(name__icontains=q) | Q(description__icontains=q) | Q(category__icontains=q) | Q(position__icontains=q) | Q(brand__name__icontains=q)
+            products = products.filter(query)
+        elif category != 'all':
             products = products.filter(category=category)
         if position != 'all':
             products = products.filter(position=position)
