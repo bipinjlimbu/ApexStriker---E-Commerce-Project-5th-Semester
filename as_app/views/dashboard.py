@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import messages
-from ..models import User, Vendor, Brand
+from ..models import User, Vendor, Brand, Product
 import threading
     
 def send_email_async(subject, message, recipient):
@@ -145,7 +145,7 @@ def vendor_dashboard_view(request):
     }
     
     if section == 'product-management':
-        context['products'] = None
+        context['products'] = Product.objects.filter(vendor=request.user.vendor_profile).order_by('-created_at')
         
     if section == 'sales-overview':
         context['sales_overview'] = None
