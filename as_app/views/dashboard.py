@@ -145,7 +145,29 @@ def vendor_dashboard_view(request):
     }
     
     if section == 'product-management':
-        context['products'] = Product.objects.filter(vendor=request.user.vendor_profile).order_by('-created_at')
+        category = request.GET.get('category', 'all')
+        position = request.GET.get('position', 'all')
+        sort = request.GET.get('sort', 'latest')
+
+        if category != 'all':
+            products = Product.objects.filter(vendor=request.user.vendor_profile, category=category)
+        if position != 'all':
+            products = products.filter(position=position)
+        if sort == 'latest':
+            products = products.order_by('-created_at')
+        elif sort == 'oldest':
+            products = products.order_by('created_at')
+        elif sort == 'price-low-high':
+            products = products.order_by('price')
+        elif sort == 'price-high-low':
+            products = products.order_by('-price')
+        elif sort == 'stock-low-high':
+            products = products.order_by('stock')
+        elif sort == 'stock-high-low':
+            products = products.order_by('-stock')
+        
+        context['products'] = products
+        
         
     if section == 'sales-overview':
         context['sales_overview'] = None
