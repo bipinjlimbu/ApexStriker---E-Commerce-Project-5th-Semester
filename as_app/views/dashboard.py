@@ -152,19 +152,19 @@ def vendor_dashboard_view(request):
         if category != 'all':
             products = Product.objects.filter(vendor=request.user.vendor_profile, category=category)
         if position != 'all':
-            products = products.filter(position=position)
+            products = Product.objects.filter(vendor=request.user.vendor_profile, position=position)
         if sort == 'latest':
-            products = products.order_by('-created_at')
+            products = Product.objects.filter(vendor=request.user.vendor_profile).order_by('-created_at')
         elif sort == 'oldest':
-            products = products.order_by('created_at')
+            products = Product.objects.filter(vendor=request.user.vendor_profile).order_by('created_at')
         elif sort == 'price-low-high':
-            products = products.order_by('price')
+            products = Product.objects.filter(vendor=request.user.vendor_profile).order_by('price')
         elif sort == 'price-high-low':
-            products = products.order_by('-price')
+            products = Product.objects.filter(vendor=request.user.vendor_profile).order_by('-price')
         elif sort == 'stock-low-high':
-            products = products.order_by('stock')
+            products = Product.objects.filter(vendor=request.user.vendor_profile).order_by('stock')
         elif sort == 'stock-high-low':
-            products = products.order_by('-stock')
+            products = Product.objects.filter(vendor=request.user.vendor_profile).order_by('-stock')
         
         context['products'] = products
         
