@@ -237,3 +237,6 @@ def delete_product_view(request, product_id):
     
     messages.success(request, f"Product '{product_name}' has been deleted successfully.")
     return redirect('/dashboard/vendor/')
+
+def single_product_view(request, product_id):
+    return render(request, 'main/single_product_page.html')
