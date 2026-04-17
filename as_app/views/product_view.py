@@ -149,6 +149,7 @@ def edit_product_view(request, product_id):
     
     brands = Brand.objects.filter(is_active=True).order_by('created_at')
     product = Product.objects.get(id=product_id)
+    print(product.position)
     
     errors = {}
     if request.method == 'POST':
