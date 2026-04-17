@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modify Gear | ApexStriker</title>
+    {% load static %}
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+    <style>
+        .image-card { transition: all 0.3s ease; }
+        .image-card:hover { transform: translateY(-5px); }
+        input:focus, select:focus, textarea:focus { border-color: #2563eb !important; background-color: white !important; }
+        .removal-overlay {
+            position: absolute; inset: 0; background: rgba(239, 68, 68, 0.8);
+            backdrop-filter: blur(2px); opacity: 0; display: flex;
+            align-items: center; justify-content: center; transition: 0.3s; cursor: pointer;
+            z-index: 20;
+        }
+        .removal-overlay:hover { opacity: 1; }
+        
+        /* Primary Selection UI */
+        .primary-badge {
+            position: absolute; top: 8px; right: 8px; z-index: 30;
+            background: white; border-radius: 99px; padding: 4px;
+            cursor: pointer; border: 2px solid transparent; transition: 0.3s;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .image-card.is-primary { border: 4px solid #2563eb; }
+        .image-card.is-primary .primary-badge { background: #2563eb; color: white; border-color: #2563eb; }
+    </style>
+</head>
+
+<body class="bg-slate-50 flex flex-col min-h-screen font-sans">
+    {% include 'components/_navbar.html' %}
+
+    <main class="flex-grow flex items-center justify-center py-12 px-4 relative">
+        <div class="max-w-3xl w-full bg-white p-8 rounded-[2.5rem] shadow-2xl border border-slate-100">
+            
+            <div class="text-center mb-10">
+                <div class="inline-block bg-slate-900 text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-[0.2em] italic mb-4">Update Terminal</div>
+                <h2 class="text-3xl font-black text-slate-900 tracking-tighter uppercase italic">Modify <span class="text-blue-600">Product</span></h2>
+            </div>
+
+            <form id="productForm" method="POST" enctype="multipart/form-data" class="space-y-6" onsubmit="syncQueueToInput(event)">
+                {% csrf_token %}
+
+                <input type="hidden" name="primary_image_name" id="primary-image-name-input">
+
+                <div class="space-y-4">
+                    <label class="block text-sm font-bold text-slate-700 flex items-center gap-2 italic">
+                        <i data-lucide="refresh-cw" class="w-4 h-4 text-blue-600"></i> Update Gallery (Multiple)
+                    </label>
+                    <div class="grid grid-cols-1 gap-4">
+                        <label class="relative group flex flex-col items-center justify-center w-full h-32 border-2 border-slate-300 border-dashed rounded-[2rem] cursor-pointer bg-slate-50 hover:bg-slate-100 transition shadow-inner">
+                            <div class="flex flex-col items-center justify-center">
+                                <i data-lucide="plus-square" class="w-6 h-6 text-blue-500 mb-1"></i>
+                                <p class="text-[10px] text-slate-500 font-black uppercase tracking-widest italic">Add More Photos</p>
+                            </div>
+                            <input type="file" id="selection-input" accept="image/*" multiple class="hidden" onchange="handleQueueSelection(this)" />
+                            <input type="file" name="images" id="real-images-input" multiple class="hidden" />
+                        </label>
+                        
+                        <div id="image-gallery-grid" class="grid grid-cols-3 md:grid-cols-4 gap-3"></div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 pt-4 border-t border-slate-100">
+                    <div class="space-y-1">
+                        <label class="text-[11px] font-black text-slate-500 uppercase tracking-widest ml-2 italic flex items-center gap-2"><i data-lucide="tag" class="w-3 h-3 text-blue-500"></i> Product Name</label>
+                        <input type="text" name="name" placeholder="Update product name" value="" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none transition italic">
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="text-[11px] font-black text-slate-500 uppercase tracking-widest ml-2 italic flex items-center gap-2"><i data-lucide="banknote" class="w-3 h-3 text-blue-500"></i> Price (Rs.)</label>
+                        <input type="number" name="price" placeholder="Update price" value="" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none transition italic">
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="text-[11px] font-black text-slate-500 uppercase tracking-widest ml-2 italic flex items-center gap-2"><i data-lucide="layers" class="w-3 h-3 text-blue-500"></i> Category</label>
+                        <select name="category" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none transition italic appearance-none cursor-pointer">
+                            <option value="kits">Jersey & Kits</option>
+                            <option value="boots">Football Boots</option>
+                            <option value="accessories">Accessories</option>
+                            <option value="equipment">Training Equipment</option>
+                            <option value="supplements">Health & Supplements</option>
+                        </select>
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="text-[11px] font-black text-slate-500 uppercase tracking-widest ml-2 italic flex items-center gap-2"><i data-lucide="award" class="w-3 h-3 text-blue-500"></i> Brand</label>
+                        <select name="brand" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none transition italic appearance-none cursor-pointer">
+                            </select>
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="text-[11px] font-black text-slate-500 uppercase tracking-widest ml-2 italic flex items-center gap-2"><i data-lucide="crosshair" class="w-3 h-3 text-blue-500"></i> Position</label>
+                        <select name="position" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none transition italic appearance-none cursor-pointer">
+                            <option value="">N/A (General Gear)</option>
+                            <option value="attacker">Attacker</option>
+                            <option value="midfielder">Midfielder</option>
+                            <option value="defender">Defender</option>
+                            <option value="goalkeeper">Goalkeeper</option>
+                        </select>
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="text-[11px] font-black text-slate-500 uppercase tracking-widest ml-2 italic flex items-center gap-2"><i data-lucide="box" class="w-3 h-3 text-blue-500"></i> Stock Available</label>
+                        <input type="number" name="stock" placeholder="Update stock" value="" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none transition italic">
+                    </div>
+
+                    <div class="space-y-1 md:col-span-2">
+                        <label class="text-[11px] font-black text-slate-500 uppercase tracking-widest ml-2 italic flex items-center gap-2"><i data-lucide="align-left" class="w-3 h-3 text-blue-500"></i> Description</label>
+                        <textarea name="description" rows="4" placeholder="Update product description" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none transition italic"></textarea>
+                    </div>
+                </div>
+
+                <div class="space-y-4 pt-6">
+                    <button type="submit" class="w-full bg-slate-900 text-white font-black py-5 rounded-2xl hover:bg-blue-600 transition-all active:scale-95 flex items-center justify-center gap-3 uppercase italic tracking-[0.2em] text-xs">
+                        <i data-lucide="save" class="w-5 h-5"></i> Commit Changes
+                    </button>
+                    <a href="javascript:history.back()" class="w-full bg-slate-100/50 border border-slate-200 text-slate-500 font-bold py-4 rounded-2xl hover:bg-slate-200/50 hover:text-slate-800 transition-all flex items-center justify-center gap-3 uppercase italic tracking-widest text-[10px]">
+                        <i data-lucide="x-circle" class="w-4 h-4"></i> Discard Changes
+                    </a>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script src="{% static 'js/lucide.min.js' %}"></script>
+    <script>
+        lucide.createIcons();
+        let virtualImageQueue = [];
+        let primaryImageId = null;
+
+        function handleQueueSelection(input) {
+            Array.from(input.files).forEach(file => {
+                const exists = virtualImageQueue.some(f => f.name === file.name && f.size === file.size);
+                if (!exists) {
+                    virtualImageQueue.push(file);
+                    addQueueItemToGallery(file);
+                }
+            });
+            input.value = ''; 
+        }
+
+        function addQueueItemToGallery(file) {
+            const grid = document.getElementById('image-gallery-grid');
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const uniqueId = 'img-' + Date.now() + Math.random().toString(36).substr(2, 9);
+                const div = document.createElement('div');
+                div.className = "image-card relative aspect-square rounded-2xl overflow-hidden border border-slate-200 shadow-lg group";
+                div.setAttribute('data-id', uniqueId);
+                div.fileRef = file; 
+
+                if (virtualImageQueue.length === 1 && !primaryImageId) {
+                    primaryImageId = uniqueId;
+                    div.classList.add('is-primary');
+                }
+
+                div.innerHTML = `
+                    <img src="${e.target.result}" class="w-full h-full object-cover">
+                    <div class="primary-badge shadow-md" onclick="setPrimary('${uniqueId}')" title="Set as Primary">
+                        <i data-lucide="star" class="w-4 h-4"></i>
+                    </div>
+                    <div class="removal-overlay" onclick="removeImage('${uniqueId}', this)">
+                        <div class="bg-white p-2 rounded-full border border-red-500 shadow-lg">
+                            <i data-lucide="trash-2" class="text-red-600 w-5 h-5"></i>
+                        </div>
+                    </div>`;
+                
+                grid.appendChild(div);
+                lucide.createIcons();
+            }
+            reader.readAsDataURL(file);
+        }
+
+        function setPrimary(id) {
+            primaryImageId = id;
+            document.querySelectorAll('.image-card').forEach(card => {
+                card.classList.remove('is-primary');
+                if (card.getAttribute('data-id') === id) {
+                    card.classList.add('is-primary');
+                }
+            });
+        }
+
+        function removeImage(id, el) {
+            const card = el.closest('[data-id]');
+            virtualImageQueue = virtualImageQueue.filter(f => f !== card.fileRef);
+            card.remove();
+
+            if (primaryImageId === id && virtualImageQueue.length > 0) {
+                const firstRemaining = document.querySelector('.image-card');
+                if (firstRemaining) setPrimary(firstRemaining.getAttribute('data-id'));
+            } else if (virtualImageQueue.length === 0) {
+                primaryImageId = null;
+            }
+        }
+
+        function syncQueueToInput(event) {
+            const realInput = document.getElementById('real-images-input');
+            const primaryHiddenInput = document.getElementById('primary-image-name-input');
+            const dataTransfer = new DataTransfer();
+
+            virtualImageQueue.forEach(file => {
+                dataTransfer.items.add(file);
+            });
+
+            realInput.files = dataTransfer.files;
+
+            const primaryCard = document.querySelector(`.image-card[data-id="${primaryImageId}"]`);
+            if (primaryCard && primaryCard.fileRef) {
+                primaryHiddenInput.value = primaryCard.fileRef.name;
+            }
+        }
+    </script>
+</body>
+</html>
