@@ -10,7 +10,7 @@ def add_product_view(request):
         messages.error(request, "You are not authorized to add products.")
         return redirect('/')
     
-    brand = Brand.objects.all()
+    brand = Brand.objects.filter(is_active=True).order_by('created_at')
     
     errors = {}
     if request.method == 'POST':
@@ -143,4 +143,72 @@ def marketplace_view(request):
 
 @login_required
 def edit_product_view(request, product_id):
-    return render(request, 'main/edit_product_page.html')
+    if request.user.role != 'vendor' and not Vendor.objects.filter(user=request.user, is_active=True).exists():
+        messages.error(request, "You are not authorized to edit products.")
+        return redirect('/')
+    
+    brands = Brand.objects.filter(is_active=True).order_by('created_at')
+    products = Product.objects.get(id=product_id)
+    
+    errors = {}
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        description = request.POST.get('description')
+        price = request.POST.get('price')
+        stock = request.POST.get('stock')
+        category = request.POST.get('category')
+        brand_id = request.POST.get('brand')
+        images = request.FILES.getlist('images')
+        position = request.POST.get('position')
+        primary_image = request.POST.get('primary_image_name')
+        
+        if not name:
+            errors['name'] = "Product name is required."
+            
+        if not description:
+            errors['description'] = "Product description is required."
+            
+        if not price or float(price) <= 0:
+            errors['price'] = "Price must be a positive number."
+            
+        if not stock or int(stock) < 0:
+            errors['stock'] = "Stock must be a non-negative integer."
+            
+        if not category:
+            errors['category'] = "Category selection is required."
+            
+        if not brand_id:
+            errors['brand'] = "Brand selection is required."
+            
+        if len(images) == 0:
+            errors['images'] = "At least one image is required."
+        if len(images) > 5:
+            errors['images'] = "You can upload a maximum of 5 images."
+
+        if errors:
+            return render(request, 'main/add_product_page.html', { 'brands': brands,'products': products, 'data': request.POST, 'errors': errors })
+        
+        brand_instance = Brand.objects.get(id=brand_id)
+        
+        products.name = name
+        products.description = description
+        products.price = price
+        products.stock = stock
+        products.brand = brand_instance
+        products.position = position
+        products.save()
+        
+        if images:
+            products.images.all().delete()
+            for image in images:
+                is_primary = (image.name == primary_image)
+                
+                if is_primary:
+                    products.images.create(image=image, is_primary=True)
+                else:
+                    products.images.create(image=image)
+                    
+        messages.success(request, f"Product '{products.name}' has been updated successfully.")
+        return redirect('/dashboard/vendor/')
+        
+    return render(request, 'main/edit_product_page.html', {'brands': brands, 'products': products})
