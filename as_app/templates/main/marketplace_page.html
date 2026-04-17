@@ -133,12 +133,16 @@
                             <a href="/products/edit/{{ product.id }}/" class="bg-white hover:bg-blue-600 text-slate-900 hover:text-white p-2.5 rounded-xl shadow-xl transition-all duration-200 flex items-center justify-center border border-slate-100" title="Edit Gear">
                                 <i data-lucide="edit-3" class="w-4 h-4"></i>
                             </a>
-                            <a href="/products/delete/{{ product.id }}/" onclick="confirmDelete('Are you sure you want to delete {{ product.name }}?')" class="bg-white hover:bg-red-600 text-slate-900 hover:text-white p-2.5 rounded-xl shadow-xl transition-all duration-200 flex items-center justify-center border border-slate-100" title="Delete Gear">
-                                <i data-lucide="trash-2" class="w-4 h-4"></i>
-                            </a>
+
+                            <form method="POST" action="/products/delete/{{ product.id }}/" onsubmit="return confirm('Are you sure you want to delete {{ product.name }}?');">
+                                {% csrf_token %}
+                                <button type="submit" class="bg-white hover:bg-red-600 text-slate-900 hover:text-white p-2.5 rounded-xl shadow-xl transition-all duration-200 flex items-center justify-center border border-slate-100" title="Delete Gear">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                </button>
+                            </form>
                         </div>
                         {% endif %}
-                        
+
                     </div>
 
                     <div class="p-8 flex-grow flex flex-col">
