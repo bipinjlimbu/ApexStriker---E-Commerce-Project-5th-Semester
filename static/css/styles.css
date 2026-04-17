@@ -416,7 +416,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   display: none;
 }
 
-.-translate-y-1\/2, .translate-x-20, .translate-y-\[-10px\], .translate-x-1\/2, .-translate-x-full, .skew-x-12, .transform, .active\:scale-95, .active\:scale-\[0\.98\], .active\:scale-90, .group-hover\:translate-y-0, .group-hover\:translate-x-full, .group-hover\:translate-x-1, .group-hover\:rotate-90, .group-hover\:scale-110, .group-hover\:scale-105 {
+.-translate-y-1\/2, .translate-x-20, .translate-y-\[-10px\], .translate-x-1\/2, .-translate-x-full, .translate-x-12, .skew-x-12, .transform, .active\:scale-95, .active\:scale-\[0\.98\], .active\:scale-90, .group-hover\:translate-y-0, .group-hover\:translate-x-full, .group-hover\:translate-x-1, .group-hover\:translate-x-0, .group-hover\:rotate-90, .group-hover\:scale-110, .group-hover\:scale-105 {
   --tw-translate-x: 0;
   --tw-translate-y: 0;
   --tw-rotate: 0;
@@ -1010,6 +1010,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .-translate-x-full {
   --tw-translate-x: -100%;
+  transform: var(--tw-transform);
+}
+
+.translate-x-12 {
+  --tw-translate-x: 3rem;
   transform: var(--tw-transform);
 }
 
@@ -1656,6 +1661,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .bg-emerald-50 {
   --tw-bg-opacity: 1;
   background-color: rgb(236 253 245 / var(--tw-bg-opacity));
+}
+
+.bg-blue-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(59 130 246 / var(--tw-bg-opacity));
 }
 
 .bg-gradient-to-r {
@@ -2471,6 +2481,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   transition-duration: 1000ms;
 }
 
+.duration-200 {
+  transition-duration: 200ms;
+}
+
 .file\:mr-4::file-selector-button {
   margin-right: 1rem;
 }
@@ -2742,6 +2756,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .group:hover .group-hover\:translate-x-1 {
   --tw-translate-x: 0.25rem;
+  transform: var(--tw-transform);
+}
+
+.group:hover .group-hover\:translate-x-0 {
+  --tw-translate-x: 0px;
   transform: var(--tw-transform);
 }
 
