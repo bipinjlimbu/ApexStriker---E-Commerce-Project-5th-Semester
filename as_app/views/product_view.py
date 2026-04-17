@@ -148,7 +148,7 @@ def edit_product_view(request, product_id):
         return redirect('/')
     
     brands = Brand.objects.filter(is_active=True).order_by('created_at')
-    products = Product.objects.get(id=product_id)
+    product = Product.objects.get(id=product_id)
     
     errors = {}
     if request.method == 'POST':
@@ -186,29 +186,29 @@ def edit_product_view(request, product_id):
             errors['images'] = "You can upload a maximum of 5 images."
 
         if errors:
-            return render(request, 'main/add_product_page.html', { 'brands': brands,'products': products, 'data': request.POST, 'errors': errors })
+            return render(request, 'main/add_product_page.html', { 'brands': brands,'product': product, 'data': request.POST, 'errors': errors })
         
         brand_instance = Brand.objects.get(id=brand_id)
         
-        products.name = name
-        products.description = description
-        products.price = price
-        products.stock = stock
-        products.brand = brand_instance
-        products.position = position
-        products.save()
+        product.name = name
+        product.description = description
+        product.price = price
+        product.stock = stock
+        product.brand = brand_instance
+        product.position = position
+        product.save()
         
         if images:
-            products.images.all().delete()
+            product.images.all().delete()
             for image in images:
                 is_primary = (image.name == primary_image)
                 
                 if is_primary:
-                    products.images.create(image=image, is_primary=True)
+                    product.images.create(image=image, is_primary=True)
                 else:
-                    products.images.create(image=image)
+                    product.images.create(image=image)
                     
-        messages.success(request, f"Product '{products.name}' has been updated successfully.")
+        messages.success(request, f"Product '{product.name}' has been updated successfully.")
         return redirect('/dashboard/vendor/')
         
-    return render(request, 'main/edit_product_page.html', {'brands': brands, 'products': products})
+    return render(request, 'main/edit_product_page.html', {'brands': brands, 'product': product})
