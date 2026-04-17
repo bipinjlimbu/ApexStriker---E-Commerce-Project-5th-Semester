@@ -224,3 +224,16 @@ def edit_product_view(request, product_id):
         return redirect('/dashboard/vendor/')
         
     return render(request, 'main/edit_product_page.html', {'brands': brands, 'product': product})
+
+@login_required
+def delete_product_view(request, product_id):
+    if request.user.role != 'vendor' and not Vendor.objects.filter(user=request.user, is_active=True).exists():
+        messages.error(request, "You are not authorized to delete products.")
+        return redirect('/')
+    
+    product = Product.objects.get(id=product_id)
+    product_name = product.name
+    product.delete()
+    
+    messages.success(request, f"Product '{product_name}' has been deleted successfully.")
+    return redirect('/dashboard/vendor/')
