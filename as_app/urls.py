@@ -3,7 +3,7 @@ from .views.auth_view import register_view, login_view, logout_view
 from .views.main_view import home_view, verify_email_view, password_reset_view, password_reset_confirm_view
 from .views.profile_view import profile_view, edit_profile_view, resend_verification_email, delete_profile_view
 from .views.brand_view import brands_view, add_brand_view, edit_brand_view, delete_brand_view
-from .views.product_view import add_product_view, marketplace_view
+from .views.product_view import add_product_view, marketplace_view, edit_product_view
 from .views.dashboard import admin_dashboard_view, approve_vendor_view, reject_vendor_view, approve_brand_view, delete_brand_view, vendor_dashboard_view, customer_dashboard_view
 
 urlpatterns = [
@@ -31,4 +31,5 @@ urlpatterns = [
     path('brands/delete/<int:brand_id>/', delete_brand_view, name='delete_brand'),
     path('products/add/', add_product_view, name='add_product'),
     path('marketplace/', marketplace_view, name='marketplace_page'),
+    path('products/edit/<int:product_id>/', edit_product_view, name='edit_product'),
 ]

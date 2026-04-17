@@ -140,3 +140,7 @@ def marketplace_view(request):
     context['brands'] = Brand.objects.filter(is_active=True).order_by('created_at')
     
     return render(request, 'main/marketplace_page.html', context)
+
+@login_required
+def edit_product_view(request, product_id):
+    return render(request, 'main/edit_product_page.html')
