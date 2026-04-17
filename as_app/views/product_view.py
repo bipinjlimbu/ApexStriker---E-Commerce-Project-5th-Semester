@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q, Case, When, Value, IntegerField
 from ..models import Product, Brand, Vendor
+import json
 
 @login_required
 def add_product_view(request):
@@ -159,9 +160,12 @@ def edit_product_view(request, product_id):
         stock = request.POST.get('stock')
         category = request.POST.get('category')
         brand_id = request.POST.get('brand')
-        images = request.FILES.getlist('images')
         position = request.POST.get('position')
+        
+        new_images = request.FILES.getlist('images')
         primary_image = request.POST.get('primary_image_name')
+        keep_existing_json = request.POST.get('keep_existing','[]')
+        keep_existing_names = json.loads(keep_existing_json)
         
         if not name:
             errors['name'] = "Product name is required."
@@ -181,9 +185,10 @@ def edit_product_view(request, product_id):
         if not brand_id:
             errors['brand'] = "Brand selection is required."
             
-        if len(images) == 0:
+        total_images = len(new_images) + len(keep_existing_names)
+        if total_images == 0:
             errors['images'] = "At least one image is required."
-        if len(images) > 5:
+        if total_images > 5:
             errors['images'] = "You can upload a maximum of 5 images."
 
         if errors:
@@ -199,15 +204,21 @@ def edit_product_view(request, product_id):
         product.position = position
         product.save()
         
-        if images:
-            product.images.all().delete()
-            for image in images:
-                is_primary = (image.name == primary_image)
+        product.images.exclude(image__in=keep_existing_names).delete()
+        product.images.all().update(is_primary=False)
+        existing_primary = product.images.filter(image=primary_image).first()
+        
+        if existing_primary:
+            existing_primary.is_primary = True
+            existing_primary.save()
+            
+        for image in new_images:
+            is_primary = (image.name == primary_image)
+            
+            if existing_primary:
+                is_primary = False
                 
-                if is_primary:
-                    product.images.create(image=image, is_primary=True)
-                else:
-                    product.images.create(image=image)
+            product.images.create(image=image, is_primary=is_primary)
                     
         messages.success(request, f"Product '{product.name}' has been updated successfully.")
         return redirect('/dashboard/vendor/')
