@@ -239,4 +239,5 @@ def delete_product_view(request, product_id):
     return redirect('/dashboard/vendor/')
 
 def single_product_view(request, product_id):
-    return render(request, 'main/single_product_page.html')
+    product = Product.objects.get(id=product_id)
+    return render(request, 'main/single_product_page.html', {'product': product})
