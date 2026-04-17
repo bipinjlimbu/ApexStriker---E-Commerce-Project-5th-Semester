@@ -68,7 +68,7 @@
                             </div>
                         {% endif %}
 
-                        <div class="absolute top-4 left-4 flex gap-2 z-10">
+                        <div class="absolute top-4 left-4 flex flex-col gap-2 z-10">
                             {% if product.is_new %}
                                 <span class="bg-orange-500 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase italic tracking-widest shadow-lg">
                                     New
@@ -76,11 +76,26 @@
                             {% endif %}
 
                             {% if product in recommended_products %}
-                                <span class="bg-orange-500 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase italic tracking-widest shadow-lg">
+                                <span class="bg-blue-600 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase italic tracking-widest shadow-lg">
                                     Recommended
                                 </span>
                             {% endif %}
                         </div>
+
+                        {% if user.is_authenticated and user.role == 'vendor' and product.vendor.user == user %}
+                        <div class="absolute top-4 right-4 flex flex-col gap-2 z-20 translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300">
+                            <a href="/products/edit/{{ product.id }}/" class="bg-white hover:bg-blue-600 text-slate-900 hover:text-white p-2.5 rounded-xl shadow-xl transition-all duration-200 flex items-center justify-center border border-slate-100" title="Edit Gear">
+                                <i data-lucide="edit-3" class="w-4 h-4"></i>
+                            </a>
+
+                            <form method="POST" action="/products/delete/{{ product.id }}/" onsubmit="return confirm('Are you sure you want to delete {{ product.name }}?');">
+                                {% csrf_token %}
+                                <button type="submit" class="bg-white hover:bg-red-600 text-slate-900 hover:text-white p-2.5 rounded-xl shadow-xl transition-all duration-200 flex items-center justify-center border border-slate-100" title="Delete Gear">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                </button>
+                            </form>
+                        </div>
+                        {% endif %}
                     </div>
 
                     <div class="p-8 flex-grow flex flex-col">
