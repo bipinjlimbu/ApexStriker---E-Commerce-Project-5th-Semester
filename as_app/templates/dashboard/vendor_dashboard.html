@@ -67,24 +67,25 @@
     </aside>
 
     <main class="flex-grow flex flex-col h-screen bg-slate-50">
+        {% include 'components/_alert_messages.html' %}
+            
+        {% if section == 'product-management' or not section %}
+
+        {% include 'dashboard/vendor/_product_management.html' %}
+
+        {% elif section == 'sales-overview' %}
+
+        {% include 'dashboard/vendor/_sales_overview.html' %}
+
+        {% elif section == 'pending-orders' %}
+
+        {% include 'dashboard/vendor/_pending_orders.html' %}
+
+        {% elif section == 'completed-orders' %}
+
+        {% include 'dashboard/vendor/_completed_orders.html' %}
         
-    {% if section == 'product-management' or not section %}
-
-    {% include 'dashboard/vendor/_product_management.html' %}
-
-    {% elif section == 'sales-overview' %}
-
-    {% include 'dashboard/vendor/_sales_overview.html' %}
-
-    {% elif section == 'pending-orders' %}
-
-    {% include 'dashboard/vendor/_pending_orders.html' %}
-
-    {% elif section == 'completed-orders' %}
-
-    {% include 'dashboard/vendor/_completed_orders.html' %}
-    
-    {% endif %}
+        {% endif %}
     </main>
 
     <script src="{% static 'js/lucide.min.js' %}"></script>
