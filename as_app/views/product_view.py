@@ -60,7 +60,8 @@ def add_product_view(request):
             stock=stock,
             brand=brand_instance,
             vendor=request.user.vendor_profile,
-            position=position
+            position=position,
+            category=category
         )
         
         for image in images:
@@ -202,6 +203,7 @@ def edit_product_view(request, product_id):
         product.stock = stock
         product.brand = brand_instance
         product.position = position
+        product.category = category
         product.save()
         
         product.images.exclude(image__in=keep_existing_names).delete()
