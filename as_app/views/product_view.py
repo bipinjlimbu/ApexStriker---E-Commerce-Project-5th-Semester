@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q, Case, When, Value, IntegerField
-from ..models import Product, Brand, Vendor
+from ..models import Product, Brand, Vendor, Cart
 import json
 
 @login_required
@@ -242,4 +242,25 @@ def delete_product_view(request, product_id):
 
 def single_product_view(request, product_id):
     product = Product.objects.get(id=product_id)
+    
+    if request.method == 'POST':
+        if not request.user.is_authenticated or request.user.role != 'customer':
+            messages.error(request, "You must be logged in as a customer to add products to the cart.")
+            return redirect('/login/')
+        
+        quantity = request.POST.get('quantity')
+        
+        if int(quantity) > product.stock:
+            messages.error(request, "Requested quantity exceeds available stock.")
+            return redirect(f'/products/{product_id}/')
+        
+        Cart.objects.create(
+            customer=request.user.customer_profile,
+            product=product,
+            quantity=quantity
+        )
+        
+        messages.success(request, f"Added {quantity} of '{product.name}' to your cart.")
+        return redirect('/cart/')
+        
     return render(request, 'main/single_product_page.html', {'product': product})
