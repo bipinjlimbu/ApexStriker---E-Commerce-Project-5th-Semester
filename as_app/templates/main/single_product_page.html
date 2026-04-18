@@ -120,7 +120,7 @@
                                     </button>
 
                                     <a href="/wishlist/toggle/{{ product.id }}/" class="px-7 bg-white text-slate-400 border border-slate-200 rounded-[1.5rem] hover:bg-red-50 hover:text-red-500 transition-all flex items-center justify-center active:scale-95 group shadow-sm">
-                                        {% if product in user.customer_profile.wishlist.all %}
+                                        {% if product.in_wishlist %}
                                             <i data-lucide="heart" class="w-6 h-6 fill-red-500 text-red-500"></i>
                                         {% else %}
                                             <i data-lucide="heart" class="w-6 h-6 transition-colors group-hover:fill-red-500"></i>
