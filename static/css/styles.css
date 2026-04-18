@@ -1750,6 +1750,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   fill: #facc15;
 }
 
+.fill-red-500 {
+  fill: #ef4444;
+}
+
 .object-contain {
   -o-object-fit: contain;
      object-fit: contain;
@@ -1936,6 +1940,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .py-32 {
   padding-top: 8rem;
   padding-bottom: 8rem;
+}
+
+.px-7 {
+  padding-left: 1.75rem;
+  padding-right: 1.75rem;
 }
 
 .pt-6 {
