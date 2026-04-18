@@ -20,4 +20,5 @@ def send_email_async(subject, message, recipient):
             
 @login_required
 def cart_view(request):
-    return render(request, 'main/cart_page.html', {'cart_count': cart_count(request)})
+    cart = Cart.objects.filter(customer=request.user.customer_profile)
+    return render(request, 'main/cart_page.html', {'cart_count': cart_count(request), 'cart': cart})
