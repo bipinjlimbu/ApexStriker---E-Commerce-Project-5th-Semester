@@ -3,8 +3,14 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
-from ..models import Brand
+from ..models import Brand, Cart
 import threading
+
+def cart_count(request):
+    if request.user.is_authenticated and request.user.role == 'customer':
+        cart_items_count = Cart.objects.filter(customer=request.user.customer_profile).count()
+        return cart_items_count
+    return 0
 
 def send_email_async(subject, message, recipient):
         try:
@@ -12,10 +18,9 @@ def send_email_async(subject, message, recipient):
         except Exception as e:
             print(f"Error sending email: {e}")
             
-
 def brands_view(request):
     brands = Brand.objects.all()
-    return render(request, 'main/brands_page.html', {'brands': brands})
+    return render(request, 'main/brands_page.html', {'brands': brands, 'cart_count': cart_count(request)})
             
 @login_required
 def add_brand_view(request):
@@ -63,9 +68,9 @@ def add_brand_view(request):
             messages.success(request, f"Brand '{brand.name}' has been submitted successfully and is pending approval.")
             return redirect('/brands/')
         
-        return render(request, 'main/add_brand_page.html', {'errors': errors, 'data': request.POST})
+        return render(request, 'main/add_brand_page.html', {'errors': errors, 'data': request.POST, 'cart_count': cart_count(request)})
     
-    return render(request, 'main/add_brand_page.html')
+    return render(request, 'main/add_brand_page.html', {'cart_count': cart_count(request)})
 
 @login_required
 def edit_brand_view(request, brand_id):
@@ -112,9 +117,9 @@ def edit_brand_view(request, brand_id):
             messages.success(request, f"Brand '{brand.name}' has been updated successfully.")
             return redirect('/dashboard/admin/?section=brand-management')
         
-        return render(request, 'main/edit_brand_page.html', {'errors': errors, 'data': request.POST, 'brand': brand})
+        return render(request, 'main/edit_brand_page.html', {'errors': errors, 'data': request.POST, 'brand': brand, 'cart_count': cart_count(request)})
     
-    return render(request, 'main/edit_brand_page.html', {'brand': brand})
+    return render(request, 'main/edit_brand_page.html', {'brand': brand, 'cart_count': cart_count(request)})
 
 @login_required
 def delete_brand_view(request, brand_id):
