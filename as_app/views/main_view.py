@@ -2,9 +2,15 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
-from ..models import User, Product, Brand
+from ..models import User, Product, Brand, Cart
 import threading
 import uuid
+
+def cart_count(request):
+    if request.user.is_authenticated and request.user.role == 'customer':
+        cart_items_count = Cart.objects.filter(customer=request.user.customer_profile).count()
+        return cart_items_count
+    return 0
 
 def send_email_async(subject, message, recipient):
         try:
@@ -18,6 +24,8 @@ def home_view(request):
     context['products'] = Product.objects.all().order_by('-created_at')[:4]
     
     context['brands'] = Brand.objects.filter(is_active=True).order_by('created_at')[:4]
+    
+    context['cart_count'] = cart_count(request)
     
     position = request.user.customer_profile.position if hasattr(request.user, 'customer_profile') else None
     
@@ -53,7 +61,8 @@ def verify_email_view(request, token):
     
     return render(request, 'main/verification_result_page.html', {
         'status': status, 
-        'user': user
+        'user': user,
+        'cart_count': cart_count(request)
     })
     
 def password_reset_view(request):
@@ -75,7 +84,7 @@ def password_reset_view(request):
             messages.success(request, "If an account with that email exists, a password reset link has been sent.")
         except User.DoesNotExist:
             messages.success(request, "If an account with that email exists, a password reset link has been sent.")
-    return render(request, 'main/password_reset_page.html')
+    return render(request, 'main/password_reset_page.html', {'cart_count': cart_count(request)})
 
 def password_reset_confirm_view(request, token):
     if request.method == 'POST':
@@ -84,7 +93,7 @@ def password_reset_confirm_view(request, token):
         
         if password != confirm_password:
             messages.error(request, "Passwords do not match.")
-            return render(request, 'main/password_reset_confirm_page.html')
+            return render(request, 'main/password_reset_confirm_page.html', {'cart_count': cart_count(request)})
         
         try:
             user = User.objects.get(auth_token=token)
@@ -96,6 +105,6 @@ def password_reset_confirm_view(request, token):
             return redirect('/login/')
         except User.DoesNotExist:
             messages.error(request, "Invalid or expired password reset token.")
-            return render(request, 'main/password_reset_confirm_page.html')
+            return render(request, 'main/password_reset_confirm_page.html', {'cart_count': cart_count(request)})
         
-    return render(request, 'main/password_reset_confirm_page.html')
+    return render(request, 'main/password_reset_confirm_page.html', {'cart_count': cart_count(request)})
