@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deployment Loadout | ApexStriker</title>
+    {% load static %}
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+    <style>
+        .italic-force { font-style: italic; }
+        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+
+<body class="bg-slate-50 flex flex-col min-h-screen">
+    {% include 'components/_navbar.html' %}
+    {% include 'components/_alert_messages.html' %}
+
+    <main class="flex-grow py-12 px-4">
+        <div class="max-w-7xl mx-auto">
+            
+            <div class="mb-12">
+                <div class="flex items-center gap-3 text-[9px] font-black uppercase tracking-[0.25em] italic text-slate-400 mb-4">
+                    <a href="/">Home</a>
+                    <i data-lucide="chevron-right" class="w-3 h-3 text-slate-300"></i>
+                    <span class="text-slate-900">Your Loadout</span>
+                </div>
+                <h1 class="text-5xl md:text-6xl font-black text-slate-900 uppercase italic tracking-tighter leading-none">
+                    Pre-Deployment <span class="text-blue-600">Cart</span>
+                </h1>
+                <p class="text-slate-400 italic font-medium mt-4 text-sm">Review your gear before initiating payment protocol.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
+                
+                <div class="lg:col-span-2 space-y-6">
+                    
+                    <div class="cart-item bg-white p-6 rounded-[2.5rem] border border-slate-100 shadow-xl shadow-slate-200/50 flex flex-col md:flex-row items-center gap-8 group transition-all" data-price="24500">
+                        <div class="w-32 h-32 bg-slate-100 rounded-[2rem] overflow-hidden flex-shrink-0 border border-slate-50">
+                            <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        </div>
+                        
+                        <div class="flex-grow text-center md:text-left">
+                            <p class="text-[10px] text-blue-600 font-black uppercase tracking-widest italic mb-1">Nike Performance</p>
+                            <h3 class="text-xl font-black text-slate-900 uppercase italic tracking-tight">Phantom GX Elite FG</h3>
+                        </div>
+
+                        <div class="flex items-center bg-slate-50 border border-slate-200 rounded-2xl p-1.5 h-max">
+                            <button onclick="updateQty(this, -1)" class="w-8 h-8 flex items-center justify-center hover:bg-white rounded-lg transition-all active:scale-90">
+                                <i data-lucide="minus" class="w-3 h-3"></i>
+                            </button>
+                            <input type="number" value="1" class="qty-input w-10 text-center bg-transparent border-none font-black text-slate-900 italic text-sm" readonly>
+                            <button onclick="updateQty(this, 1)" class="w-8 h-8 flex items-center justify-center hover:bg-white rounded-lg transition-all text-blue-600 active:scale-90">
+                                <i data-lucide="plus" class="w-3 h-3"></i>
+                            </button>
+                        </div>
+
+                        <div class="text-right min-w-[140px]">
+                            <p class="text-xl font-black text-slate-900 italic item-total">Rs. 24,500</p>
+                            <button class="text-[9px] font-black text-red-500 uppercase tracking-widest italic hover:text-red-700 mt-2 transition-colors">Remove Gear</button>
+                        </div>
+                    </div>
+
+                    <div class="cart-item bg-white p-6 rounded-[2.5rem] border border-slate-100 shadow-xl shadow-slate-200/50 flex flex-col md:flex-row items-center gap-8 group transition-all" data-price="38000">
+                        <div class="w-32 h-32 bg-slate-100 rounded-[2rem] overflow-hidden flex-shrink-0 border border-slate-50">
+                            <img src="https://images.unsplash.com/photo-1511886929837-354d827aae26?q=80&w=1964&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        </div>
+                        
+                        <div class="flex-grow text-center md:text-left">
+                            <p class="text-[10px] text-orange-600 font-black uppercase tracking-widest italic mb-1">Adidas Pro</p>
+                            <h3 class="text-xl font-black text-slate-900 uppercase italic tracking-tight">Predator Accuracy.1</h3>
+                        </div>
+
+                        <div class="flex items-center bg-slate-50 border border-slate-200 rounded-2xl p-1.5 h-max">
+                            <button onclick="updateQty(this, -1)" class="w-8 h-8 flex items-center justify-center hover:bg-white rounded-lg transition-all active:scale-90">
+                                <i data-lucide="minus" class="w-3 h-3"></i>
+                            </button>
+                            <input type="number" value="1" class="qty-input w-10 text-center bg-transparent border-none font-black text-slate-900 italic text-sm" readonly>
+                            <button onclick="updateQty(this, 1)" class="w-8 h-8 flex items-center justify-center hover:bg-white rounded-lg transition-all text-blue-600 active:scale-90">
+                                <i data-lucide="plus" class="w-3 h-3"></i>
+                            </button>
+                        </div>
+
+                        <div class="text-right min-w-[140px]">
+                            <p class="text-xl font-black text-slate-900 italic item-total">Rs. 38,000</p>
+                            <button class="text-[9px] font-black text-red-500 uppercase tracking-widest italic hover:text-red-700 mt-2 transition-colors">Remove Gear</button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="lg:sticky lg:top-8">
+                    <div class="bg-slate-900 p-8 rounded-[3rem] text-white shadow-2xl shadow-blue-900/30 border border-slate-800">
+                        <h2 class="text-2xl font-black uppercase italic tracking-tighter mb-8 pb-4 border-b border-white/10 flex items-center gap-3">
+                            <i data-lucide="bar-chart-3" class="w-5 h-5 text-blue-500"></i>
+                            Summary
+                        </h2>
+                        
+                        <div class="space-y-5 mb-10">
+                            <div class="flex justify-between text-slate-400">
+                                <span class="text-[10px] font-black uppercase tracking-widest italic">Subtotal</span>
+                                <span class="font-bold italic text-white" id="summary-subtotal">Rs. 0</span>
+                            </div>
+                            <div class="flex justify-between text-slate-400">
+                                <span class="text-[10px] font-black uppercase tracking-widest italic">Transaction Fee</span>
+                                <span class="font-bold italic text-green-400">FREE</span>
+                            </div>
+                            
+                            <div class="pt-6 border-t border-white/20 flex justify-between items-end">
+                                <div>
+                                    <span class="text-[9px] font-black uppercase tracking-widest italic text-blue-400 block mb-1">Final Amount</span>
+                                    <span class="text-sm font-black uppercase italic text-slate-300">Total Credits</span>
+                                </div>
+                                <span class="text-4xl font-black italic tracking-tighter text-white" id="summary-total">Rs. 0</span>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <button type="submit" class="w-full bg-blue-600 text-white font-black py-5 rounded-[1.5rem] hover:bg-blue-500 transition-all flex items-center justify-center gap-3 uppercase italic tracking-widest text-xs shadow-xl active:scale-95 group">
+                                <i data-lucide="credit-card" class="w-4 h-4 transition-transform group-hover:scale-110"></i>
+                                Proceed for Payment
+                            </button>
+                            
+                            <a href="/marketplace/" class="w-full flex items-center justify-center py-2 text-[10px] font-black text-slate-500 uppercase tracking-widest hover:text-white transition-colors group">
+                                <i data-lucide="arrow-left" class="w-3 h-3 mr-2 transition-transform group-hover:-translate-x-1"></i> Continue Scouting
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 flex flex-col items-center gap-3 p-6 bg-white rounded-[2rem] border border-slate-100 shadow-sm">
+                        <div class="flex items-center gap-2 text-slate-500">
+                            <i data-lucide="lock" class="w-4 h-4 text-blue-600"></i>
+                            <span class="text-[9px] font-black uppercase tracking-[0.2em] italic">Encrypted Digital Gateway</span>
+                        </div>
+                        <p class="text-[8px] text-slate-300 font-bold uppercase text-center px-4 leading-relaxed">
+                            Funds are held in secure escrow until field deployment is confirmed.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    {% include 'components/_footer.html' %}
+
+    <script src="{% static 'js/lucide.min.js' %}"></script>
+    <script>
+        lucide.createIcons();
+
+        function updateQty(btn, change) {
+            const itemContainer = btn.closest('.cart-item');
+            const input = itemContainer.querySelector('.qty-input');
+            const pricePerItem = parseInt(itemContainer.getAttribute('data-price'));
+            const itemTotalDisplay = itemContainer.querySelector('.item-total');
+
+            let currentQty = parseInt(input.value);
+            let newQty = currentQty + change;
+            
+            if (newQty < 1) return; 
+            input.value = newQty;
+
+            const newItemTotal = newQty * pricePerItem;
+            itemTotalDisplay.innerText = `Rs. ${newItemTotal.toLocaleString()}`;
+
+            calculateGlobalTotal();
+        }
+
+        function calculateGlobalTotal() {
+            let grandTotal = 0;
+            const allItems = document.querySelectorAll('.cart-item');
+            
+            allItems.forEach(item => {
+                const qty = parseInt(item.querySelector('.qty-input').value);
+                const price = parseInt(item.getAttribute('data-price'));
+                grandTotal += (qty * price);
+            });
+
+            const formattedTotal = `Rs. ${grandTotal.toLocaleString()}`;
+            document.getElementById('summary-subtotal').innerText = formattedTotal;
+            document.getElementById('summary-total').innerText = formattedTotal;
+        }
+
+        // Initialize math on page load
+        calculateGlobalTotal();
+    </script>
+</body>
+</html>
