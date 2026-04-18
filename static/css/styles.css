@@ -988,6 +988,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   flex: 1 1 0%;
 }
 
+.flex-\[2\] {
+  flex: 2;
+}
+
 .flex-shrink-0 {
   flex-shrink: 0;
 }
@@ -2884,6 +2888,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .group:hover .group-hover\:bg-blue-700 {
   --tw-bg-opacity: 1;
   background-color: rgb(29 78 216 / var(--tw-bg-opacity));
+}
+
+.group:hover .group-hover\:fill-red-500 {
+  fill: #ef4444;
 }
 
 .group:hover .group-hover\:text-blue-500 {

@@ -264,3 +264,21 @@ def single_product_view(request, product_id):
         return redirect('/cart/')
         
     return render(request, 'main/single_product_page.html', {'product': product})
+
+@login_required
+def wishlist_toggle_view(request, product_id):
+    if not request.user.is_authenticated or request.user.role != 'customer':
+        messages.error(request, "You must be logged in as a customer to manage your wishlist.")
+        return redirect('/login/')
+    
+    product = Product.objects.get(id=product_id)
+    wishlist_item = request.user.customer_profile.wishlist.filter(product=product).first()
+    
+    if wishlist_item:
+        wishlist_item.delete()
+        messages.info(request, f"'{product.name}' has been removed from your wishlist.")
+    else:
+        request.user.customer_profile.wishlist.create(product=product)
+        messages.success(request, f"'{product.name}' has been added to your wishlist.")
+    
+    return redirect(f'/products/{product_id}/')
