@@ -3,9 +3,15 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
-from ..models import User, Vendor
+from ..models import User, Vendor, Cart
 import uuid
 import threading
+
+def cart_count(request):
+    if request.user.is_authenticated and request.user.role == 'customer':
+        cart_items_count = Cart.objects.filter(customer=request.user.customer_profile).count()
+        return cart_items_count
+    return 0
 
 def send_email_async(subject, message, recipient):
         try:
@@ -16,7 +22,7 @@ def send_email_async(subject, message, recipient):
 @login_required
 def profile_view(request, user_id):
     profile = User.objects.get(id=user_id)
-    return render(request, 'main/profile_page.html', {'profile': profile})
+    return render(request, 'main/profile_page.html', {'profile': profile, 'cart_count': cart_count(request)})
 
 @login_required
 def resend_verification_email(request, user_id):
@@ -86,7 +92,7 @@ def edit_profile_view(request, user_id):
                 errors['bank_account_number'] = "Bank account number is required for vendors."
                               
         if errors:
-            return render(request, 'main/edit_profile_page.html', { 'user': user, 'data': request.POST, 'errors': errors })
+            return render(request, 'main/edit_profile_page.html', { 'user': user, 'data': request.POST, 'errors': errors, 'cart_count': cart_count(request) })
         
         user.username = username
         user.first_name = first_name
@@ -127,7 +133,7 @@ def edit_profile_view(request, user_id):
         messages.success(request, "Profile updated successfully.")
         return redirect(f'/profile/{user.id}/')
         
-    return render(request, 'main/edit_profile_page.html',{"user": user})
+    return render(request, 'main/edit_profile_page.html',{"user": user, "cart_count": cart_count(request)})
 
 @login_required
 def delete_profile_view(request, user_id):
