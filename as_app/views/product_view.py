@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q, Case, When, Value, IntegerField
-from ..models import Product, Brand, Vendor, Cart
+from ..models import Product, Brand, Vendor, Cart, Wishlist
 import json
 
 @login_required
@@ -272,13 +272,13 @@ def wishlist_toggle_view(request, product_id):
         return redirect('/login/')
     
     product = Product.objects.get(id=product_id)
-    wishlist_item = request.user.customer_profile.wishlist.filter(product=product).first()
+    wishlist_item = Wishlist.objects.filter(customer=request.user.customer_profile, product=product).first()
     
     if wishlist_item:
         wishlist_item.delete()
         messages.info(request, f"'{product.name}' has been removed from your wishlist.")
     else:
-        request.user.customer_profile.wishlist.create(product=product)
+        Wishlist.objects.create(customer=request.user.customer_profile, product=product)
         messages.success(request, f"'{product.name}' has been added to your wishlist.")
     
     return redirect(f'/products/{product_id}/')
