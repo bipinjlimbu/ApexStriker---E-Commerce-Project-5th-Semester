@@ -5,6 +5,12 @@ from django.db.models import Q, Case, When, Value, IntegerField
 from ..models import Product, Brand, Vendor, Cart, Wishlist
 import json
 
+def cart_count(request):
+    if request.user.is_authenticated and request.user.role == 'customer':
+        cart_items_count = Cart.objects.filter(customer=request.user.customer_profile).count()
+        return cart_items_count
+    return 0
+
 @login_required
 def add_product_view(request):
     if request.user.role != 'vendor' and not Vendor.objects.filter(user=request.user, status=Vendor.Status.APPROVED).exists():
@@ -49,7 +55,7 @@ def add_product_view(request):
             errors['images'] = "You can upload a maximum of 5 images."
 
         if errors:
-            return render(request, 'main/add_product_page.html', { 'brands': brand, 'data': request.POST, 'errors': errors })
+            return render(request, 'main/add_product_page.html', { 'brands': brand, 'data': request.POST, 'errors': errors, 'cart_count': cart_count(request) })
         
         brand_instance = Brand.objects.get(id=brand_id)
         
@@ -75,7 +81,7 @@ def add_product_view(request):
         messages.success(request, f"Product '{product.name}' has been added successfully.")
         return redirect('/dashboard/vendor/')
     
-    return render(request, 'main/add_product_page.html', {'brands': brand})
+    return render(request, 'main/add_product_page.html', {'brands': brand, 'cart_count': cart_count(request)})
 
 def marketplace_view(request):
     context = {}
@@ -140,6 +146,7 @@ def marketplace_view(request):
         
     context['products'] = products
     context['brands'] = Brand.objects.filter(is_active=True).order_by('created_at')
+    context['cart_count'] = cart_count(request)
     
     return render(request, 'main/marketplace_page.html', context)
 
@@ -193,7 +200,7 @@ def edit_product_view(request, product_id):
             errors['images'] = "You can upload a maximum of 5 images."
 
         if errors:
-            return render(request, 'main/add_product_page.html', { 'brands': brands,'product': product, 'data': request.POST, 'errors': errors })
+            return render(request, 'main/add_product_page.html', { 'brands': brands,'product': product, 'data': request.POST, 'errors': errors, 'cart_count': cart_count(request) })
         
         brand_instance = Brand.objects.get(id=brand_id)
         
@@ -225,7 +232,7 @@ def edit_product_view(request, product_id):
         messages.success(request, f"Product '{product.name}' has been updated successfully.")
         return redirect('/dashboard/vendor/')
         
-    return render(request, 'main/edit_product_page.html', {'brands': brands, 'product': product})
+    return render(request, 'main/edit_product_page.html', {'brands': brands, 'product': product, 'cart_count': cart_count(request)})
 
 @login_required
 def delete_product_view(request, product_id):
@@ -247,7 +254,7 @@ def single_product_view(request, product_id):
         product.in_wishlist = True
     else:
         product.in_wishlist = False
-        
+
     if request.method == 'POST':
         if not request.user.is_authenticated or request.user.role != 'customer':
             messages.error(request, "You must be logged in as a customer to add products to the cart.")
@@ -268,7 +275,7 @@ def single_product_view(request, product_id):
         messages.success(request, f"Added {quantity} of '{product.name}' to your cart.")
         return redirect('/cart/')
         
-    return render(request, 'main/single_product_page.html', {'product': product})
+    return render(request, 'main/single_product_page.html', {'product': product, 'cart_count': cart_count(request)})
 
 @login_required
 def wishlist_toggle_view(request, product_id):
