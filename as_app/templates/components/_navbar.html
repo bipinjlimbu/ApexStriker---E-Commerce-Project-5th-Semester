@@ -31,7 +31,9 @@
 
                 <a href="/cart/" class="relative p-2 text-slate-600 hover:bg-slate-100 rounded-full transition-colors">
                     <i data-lucide="shopping-cart" class="w-6 h-6"></i>
-                    <span class="absolute top-1 right-1 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow-sm">0</span>
+                    {% if cart_count > 0 %}
+                        <span class="absolute top-1 right-1 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow-sm">{{ cart_count }}</span>
+                    {% endif %}
                 </a>
 
                 {% if user.is_authenticated %}
