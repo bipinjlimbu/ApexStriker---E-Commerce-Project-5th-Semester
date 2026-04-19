@@ -57,39 +57,49 @@ def initiate_esewa_payment(request):
     return redirect('cart')
 
 def payment_success(request):
-    # 1. Get the encoded data from the URL
     encoded_data = request.GET.get('data')
     if not encoded_data:
         return redirect('payment_failed')
 
-    # 2. Decode the response
     decoded_bytes = base64.b64decode(encoded_data)
     decoded_data = json.loads(decoded_bytes.decode('utf-8'))
     
-    # 3. VERIFY WITH ESEWA (Backend handshake)
-    # We must check if the status is 'COMPLETE' via their API
     product_code = "EPAYTEST"
     transaction_uuid = decoded_data['transaction_uuid']
     total_amount = decoded_data['total_amount']
     
-    # Verification URL for Sandbox
-    verify_url = f"https://uat.esewa.com.np/api/epay/transaction/status/?product_code={product_code}&total_amount={total_amount}&transaction_uuid={transaction_uuid}"
+    # FIXED URL: uat.esewa.com.np is dead. Use rc-epay.
+    verify_url = "https://rc-epay.esewa.com.np/api/epay/transaction/status/"
+    params = {
+        'product_code': product_code,
+        'total_amount': total_amount,
+        'transaction_uuid': transaction_uuid
+    }
     
-    response = requests.get(verify_url)
-    verification_status = response.json()
+    try:
+        # Single request with timeout and params
+        response = requests.get(verify_url, params=params, timeout=10)
+        response.raise_for_status()
+        verification_status = response.json()
+    except (requests.exceptions.ConnectionError, requests.exceptions.Timeout):
+        messages.error(request, "Communication failure with eSewa. Check DNS/Internet.")
+        return redirect('payment_failed')
+    except Exception as e:
+        messages.error(request, f"Error: {str(e)}")
+        return redirect('payment_failed')
 
     if verification_status.get('status') == "COMPLETE":
-        # --- START ORDER CREATION ---
-        customer = request.user.customer # Adjust based on your Auth model
+        # --- DB SAVING LOGIC (AS PER YOUR ORIGINAL) ---
+        customer = request.user.customer
         cart_items = Cart.objects.filter(customer=customer)
         
-        # 1. Create the Main Order
+        # 1. Create Main Order
         order = Order.objects.create(
             customer=customer,
-            total_amount=float(total_amount.replace(',', '')), # Remove commas if any
+            total_amount=float(total_amount.replace(',', '')),
             transaction_id=transaction_uuid,
             status=Order.Status.PAID,
-            shipping_address=customer.shipping_address # Ensure this field exists in Customer
+            shipping_address=customer.shipping_address
         )
         
         # 2. Move items from Cart to OrderItem
@@ -102,11 +112,10 @@ def payment_success(request):
                 quantity=item.quantity
             )
         
-        # 3. CLEAR THE CART
+        # 3. Clear Cart
         cart_items.delete()
         
-        messages.success(request, "Deployment Confirmed. Gear is being prepared.")
-        return render(request, 'store/payment_confirmed.html', {'order': order})
+        return render(request, 'main/payment_confirmed_page.html', {'order': order})
 
     else:
         messages.error(request, "Verification Failed. Protocol Aborted.")
@@ -114,4 +123,4 @@ def payment_success(request):
     
 def payment_failed(request):
     messages.error(request, "Payment Failed or Cancelled. Please try again.")
-    return redirect('cart')
+    return render(request, 'main/payment_failed_page.html')
