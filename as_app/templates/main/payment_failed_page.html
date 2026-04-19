@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Payment Aborted</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="error-wrapper">
+        <div class="status-img">
+            <i data-lucide="x-circle" class="w-16 h-16 text-red-600"></i>
+        </div>
+        <h1>Protocol Aborted</h1>
+        <p class="error-text">
+            {% if messages %}
+                {% for message in messages %}{{ message }}{% endfor %}
+            {% else %}
+                Verification failed or connection lost.
+            {% endif %}
+        </p>
+        <div class="btn-box">
+            <a href="/cart/" class="btn-main">View Cart</a>
+            <a href="/" class="btn-sub">Back to Base</a>
+        </div>
+    </div>
+    <script src="{% static 'js/lucide.min.js' %}"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
