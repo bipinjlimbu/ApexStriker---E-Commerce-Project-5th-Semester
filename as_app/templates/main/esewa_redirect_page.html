@@ -6,51 +6,21 @@
     <title>Secure Gateway | ApexStriker</title>
     {% load static %}
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
-    <style>
-        @keyframes pulse-custom {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-        .animate-pulse-slow {
-            animation: pulse-custom 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-    </style>
 </head>
-<body class="bg-slate-950 flex items-center justify-center min-h-screen overflow-hidden">
-
-    <div class="absolute inset-0 overflow-hidden pointer-events-none">
-        <div class="absolute -top-24 -left-24 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px]"></div>
-        <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-blue-900/10 rounded-full blur-[120px]"></div>
-    </div>
-
-    <div class="relative z-10 text-center px-6">
+<body class="bg-slate-950 flex items-center justify-center min-h-screen">
+    <div class="text-center px-6">
         <div class="relative w-24 h-24 mx-auto mb-8">
             <div class="absolute inset-0 border-4 border-slate-800 rounded-full"></div>
             <div class="absolute inset-0 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
             <div class="absolute inset-4 bg-blue-600/20 rounded-full flex items-center justify-center">
-                <i data-lucide="shield-check" class="w-6 h-6 text-blue-500 animate-pulse-slow"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-500 animate-pulse"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             </div>
         </div>
 
-        <h2 class="text-white font-black uppercase italic tracking-[0.3em] text-2xl mb-2">
-            Initiating <span class="text-blue-500">Gateway</span>
-        </h2>
-        <p class="text-slate-500 text-[10px] font-bold uppercase tracking-widest italic animate-pulse-slow">
-            Connecting to eSewa Secure Protocol...
-        </p>
+        <h2 class="text-white font-black uppercase italic tracking-[0.3em] text-2xl mb-2">Initiating <span class="text-blue-500">Gateway</span></h2>
+        <p class="text-slate-500 text-[10px] font-bold uppercase tracking-widest italic opacity-50">Syncing Secure Protocol...</p>
 
-        <div class="mt-12 flex items-center justify-center gap-8 border-t border-white/5 pt-8">
-            <div class="text-left">
-                <p class="text-[8px] text-slate-600 font-black uppercase tracking-widest">Protocol</p>
-                <p class="text-[10px] text-slate-300 font-mono italic">AES-256 / HMAC</p>
-            </div>
-            <div class="text-left">
-                <p class="text-[8px] text-slate-600 font-black uppercase tracking-widest">Status</p>
-                <p class="text-[10px] text-green-500 font-mono italic">ENCRYPTED</p>
-            </div>
-        </div>
-
-        <form id="esewa_form" action="{{ esewa_url }}" method="POST" class="hidden">
+        <form id="esewa_form" action="{{ esewa_url }}" method="POST">
             <input type="hidden" name="amount" value="{{ amount }}">
             <input type="hidden" name="tax_amount" value="0">
             <input type="hidden" name="total_amount" value="{{ amount }}">
@@ -65,16 +35,11 @@
         </form>
     </div>
 
-    <script src="{% static 'js/lucide.min.js' %}"></script>
     <script>
-        // Initialize Icons
-        lucide.createIcons();
-
-        // Safety Delay to allow user to see the cool UI before redirect
         window.onload = function() {
             setTimeout(function() {
                 document.getElementById('esewa_form').submit();
-            }, 1500); // 1.5 seconds delay
+            }, 800); 
         };
     </script>
 </body>
