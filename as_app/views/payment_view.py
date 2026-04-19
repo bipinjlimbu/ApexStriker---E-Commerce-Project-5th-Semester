@@ -90,7 +90,7 @@ def payment_success(request):
 
     if verification_status.get('status') == "COMPLETE":
         # --- DB SAVING LOGIC (AS PER YOUR ORIGINAL) ---
-        customer = request.user.customer
+        customer = request.user.customer_profile
         cart_items = Cart.objects.filter(customer=customer)
         
         # 1. Create Main Order
@@ -99,7 +99,7 @@ def payment_success(request):
             total_amount=float(total_amount.replace(',', '')),
             transaction_id=transaction_uuid,
             status=Order.Status.PAID,
-            shipping_address=customer.shipping_address
+            shipping_address=customer.user.address
         )
         
         # 2. Move items from Cart to OrderItem
@@ -111,6 +111,10 @@ def payment_success(request):
                 price_at_purchase=item.product.price,
                 quantity=item.quantity
             )
+            
+            product = item.product
+            product.stock -= item.quantity
+            product.save()
         
         # 3. Clear Cart
         cart_items.delete()
