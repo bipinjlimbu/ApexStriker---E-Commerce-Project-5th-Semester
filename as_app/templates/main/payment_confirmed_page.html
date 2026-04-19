@@ -1,45 +1,53 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Deployment Confirmed</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deployment Confirmed | ApexStriker</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
 </head>
-<body class="bg-slate-950 flex items-center justify-center min-h-screen p-4">
 
-    <div class="success-wrapper bg-white rounded-[2rem] shadow-2xl max-w-md w-full p-10 text-center border-b-[10px] border-green-500">
-        
-        <div class="status-img flex justify-center mb-6">
-            <div class="bg-green-100 p-5 rounded-full">
-                <i data-lucide="check-circle" class="w-16 h-16 text-green-600 stroke-[3px]"></i>
+<body class="bg-slate-50 flex flex-col min-h-screen">
+    {% include 'components/_navbar.html' %}
+
+    <main class="flex-grow flex items-center justify-center py-12 px-4">
+        <div class="success-wrapper bg-white rounded-[2rem] shadow-xl max-w-md w-full p-10 text-center border border-slate-100 border-b-[10px] border-b-green-500">
+            
+            <div class="status-img flex justify-center mb-6">
+                <div class="bg-green-50 p-5 rounded-full shadow-inner">
+                    <i data-lucide="check-circle" class="w-16 h-16 text-green-600 stroke-[3px]"></i>
+                </div>
             </div>
+
+            <h2 class="text-3xl font-black text-slate-900 tracking-tight uppercase italic mb-2">
+                Gear <span class="text-green-600">Prepared</span>
+            </h2>
+            <p class="text-slate-500 mb-8 font-medium">Deployment assets secured, Striker.</p>
+
+            <div class="order-info bg-slate-50 rounded-2xl p-6 mb-8 text-left border border-slate-200 divide-y divide-slate-200">
+                <p class="flex justify-between py-3">
+                    <strong class="text-slate-500 uppercase text-[10px] tracking-[0.2em]">Order ID</strong> 
+                    <span class="text-slate-900 font-bold">#{{ order.id }}</span>
+                </p>
+                <p class="flex justify-between py-3">
+                    <strong class="text-slate-500 uppercase text-[10px] tracking-[0.2em]">Ref Code</strong> 
+                    <span class="text-slate-900 font-mono text-xs font-semibold truncate ml-4 italic">{{ order.transaction_id }}</span>
+                </p>
+                <p class="flex justify-between py-3 pt-4">
+                    <strong class="text-slate-500 uppercase text-[10px] tracking-[0.2em]">Total Amount</strong> 
+                    <span class="text-green-600 font-black text-xl">Rs. {{ order.total_amount }}</span>
+                </p>
+            </div>
+
+            <a href="/" class="btn-main group flex items-center justify-center w-full bg-slate-900 text-white py-4 rounded-2xl font-black uppercase tracking-widest hover:bg-black transition-all active:scale-95 shadow-xl shadow-slate-200">
+                Return to Store
+                <i data-lucide="chevron-right" class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+            </a>
         </div>
+    </main>
 
-        <h1 class="text-3xl font-black text-slate-800 uppercase tracking-tighter mb-4">
-            Gear Prepared
-        </h1>
-
-        <div class="order-info bg-slate-50 rounded-2xl p-6 mb-8 text-left border border-slate-200 divide-y divide-slate-200">
-            <p class="flex justify-between py-3">
-                <strong class="text-slate-500 uppercase text-[10px] tracking-widest">Order ID</strong> 
-                <span class="text-slate-900 font-bold">#{{ order.id }}</span>
-            </p>
-            <p class="flex justify-between py-3">
-                <strong class="text-slate-500 uppercase text-[10px] tracking-widest">Ref Code</strong> 
-                <span class="text-slate-900 font-mono text-xs font-semibold truncate ml-4">{{ order.transaction_id }}</span>
-            </p>
-            <p class="flex justify-between py-3 pt-4">
-                <strong class="text-slate-500 uppercase text-[10px] tracking-widest">Total</strong> 
-                <span class="text-green-600 font-black text-xl">Rs. {{ order.total_amount }}</span>
-            </p>
-        </div>
-
-        <a href="/" class="btn-main group flex items-center justify-center w-full bg-slate-900 text-white py-4 rounded-xl font-bold uppercase tracking-widest hover:bg-black transition-all active:scale-95 shadow-lg">
-            Return to Store
-            <i data-lucide="chevron-right" class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
-        </a>
-    </div>
+    {% include 'components/_footer.html' %}
 
     <script src="{% static 'js/lucide.min.js' %}"></script>
     <script>
