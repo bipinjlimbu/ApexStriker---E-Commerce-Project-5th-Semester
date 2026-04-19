@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Deployment Confirmed</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="success-wrapper">
+        <div class="status-img">
+            <img src="{% static 'images/success-check.png' %}" alt="Success">
+        </div>
+        <h1>Gear Prepared</h1>
+        <div class="order-info">
+            <p><strong>Order ID:</strong> #{{ order.id }}</p>
+            <p><strong>Ref Code:</strong> {{ order.transaction_id }}</p>
+            <p><strong>Total:</strong> Rs. {{ order.total_amount }}</p>
+        </div>
+        <a href="/" class="btn-main">Return to Store</a>
+    </div>
+</body>
+</html>
