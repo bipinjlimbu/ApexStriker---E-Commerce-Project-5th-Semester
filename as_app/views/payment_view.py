@@ -45,8 +45,8 @@ def initiate_esewa_payment(request):
             'product_code': product_code,
             'signature': signature,
             'esewa_url': "https://rc-epay.esewa.com.np/api/epay/main/v2/form",
-            'success_url': "http://127.0.0.1:8000/payment-success/",
-            'failure_url': "http://127.0.0.1:8000/payment-failed/",
+            'success_url': "http://127.0.0.1:8000/payment/success/",
+            'failure_url': "http://127.0.0.1:8000/payment/failed/",
         }
         
         return render(request, 'main/esewa_redirect_page.html', context)
