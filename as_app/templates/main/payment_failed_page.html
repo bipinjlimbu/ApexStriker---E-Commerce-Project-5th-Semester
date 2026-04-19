@@ -6,24 +6,40 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
-<body>
-    <div class="error-wrapper">
-        <div class="status-img">
-            <i data-lucide="x-circle" class="w-16 h-16 text-red-600"></i>
+<body class="bg-slate-950 flex items-center justify-center min-h-screen p-4">
+
+    <div class="error-wrapper bg-white rounded-[2rem] shadow-2xl max-w-md w-full p-10 text-center border-b-[10px] border-red-600">
+        
+        <div class="status-img flex justify-center mb-6">
+            <div class="bg-red-100 p-5 rounded-full animate-pulse">
+                <i data-lucide="x-circle" class="w-16 h-16 text-red-600 stroke-[3px]"></i>
+            </div>
         </div>
-        <h1>Protocol Aborted</h1>
-        <p class="error-text">
+
+        <h1 class="text-3xl font-black text-slate-800 uppercase tracking-tighter mb-4">
+            Protocol Aborted
+        </h1>
+
+        <p class="error-text bg-red-50 text-red-700 font-medium p-4 rounded-xl border border-red-100 mb-8 text-sm leading-relaxed">
             {% if messages %}
                 {% for message in messages %}{{ message }}{% endfor %}
             {% else %}
                 Verification failed or connection lost.
             {% endif %}
         </p>
-        <div class="btn-box">
-            <a href="/cart/" class="btn-main">View Cart</a>
-            <a href="/" class="btn-sub">Back to Base</a>
+
+        <div class="btn-box flex flex-col gap-3">
+            <a href="/cart/" class="btn-main group flex items-center justify-center w-full bg-slate-900 text-white py-4 rounded-xl font-bold uppercase tracking-widest hover:bg-black transition-all active:scale-95 shadow-lg">
+                View Cart
+                <i data-lucide="shopping-cart" class="ml-2 w-5 h-5 opacity-70"></i>
+            </a>
+            
+            <a href="/" class="btn-sub text-slate-500 font-bold uppercase text-xs tracking-[0.2em] hover:text-slate-800 transition-colors py-2">
+                Back to Base
+            </a>
         </div>
     </div>
+
     <script src="{% static 'js/lucide.min.js' %}"></script>
     <script>
         lucide.createIcons();
