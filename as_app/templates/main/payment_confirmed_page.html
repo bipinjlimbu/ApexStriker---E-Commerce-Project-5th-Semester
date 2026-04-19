@@ -9,7 +9,7 @@
 <body>
     <div class="success-wrapper">
         <div class="status-img">
-            <img src="{% static 'images/success-check.png' %}" alt="Success">
+            <i data-lucide="check-circle" class="w-16 h-16 text-green-600"></i>
         </div>
         <h1>Gear Prepared</h1>
         <div class="order-info">
@@ -19,5 +19,9 @@
         </div>
         <a href="/" class="btn-main">Return to Store</a>
     </div>
+    <script src="{% static 'js/lucide.min.js' %}"></script>
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>
