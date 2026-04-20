@@ -208,3 +208,17 @@ def customer_dashboard_view(request):
         context['wishlist'] = Wishlist.objects.filter(customer=request.user.customer_profile).order_by('-added_at')
     
     return render(request, 'dashboard/customer_dashboard.html', context)
+
+def wishlist_remove_view(request, item_id):
+    if not request.user.is_authenticated or request.user.role != 'customer':
+        messages.error(request, "You are not authorized to perform this action.")
+        return redirect('/')
+
+    wishlist_item = Wishlist.objects.filter(id=item_id, customer=request.user.customer_profile).first()
+    if wishlist_item:
+        wishlist_item.delete()
+        messages.success(request, "Item removed from your wishlist.")
+    else:
+        messages.error(request, "Wishlist item not found.")
+
+    return redirect('/dashboard/customer/?section=wishlist')
