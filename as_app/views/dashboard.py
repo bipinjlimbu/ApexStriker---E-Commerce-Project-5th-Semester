@@ -4,7 +4,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.db.models import Q
 from django.contrib import messages
-from ..models import User, Vendor, Brand, Product
+from ..models import User, Vendor, Brand, Product, Order, Wishlist
 import threading
     
 def send_email_async(subject, message, recipient):
@@ -191,4 +191,18 @@ def customer_dashboard_view(request):
         messages.error(request, "You are not authorized to access the customer dashboard.")
         return redirect('/')
     
-    return render(request, 'dashboard/customer_dashboard.html')
+    section = request.GET.get('section', 'my-orders')
+    
+    context = {
+        'orders': None,
+        'wishlist': None,
+        'section': section,
+    }
+    
+    if section == 'my-orders':
+        context['orders'] = Order.objects.filter(customer=request.user.customer_profile).order_by('-created_at')
+        
+    elif section == 'wishlist':
+        context['wishlist'] = Wishlist.objects.filter(customer=request.user.customer_profile).order_by('-added_at')
+    
+    return render(request, 'dashboard/customer_dashboard.html', context)
