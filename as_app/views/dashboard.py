@@ -281,7 +281,8 @@ def remove_order_view(request, order_id):
         messages.error(request, "Only cancelled orders can be removed.")
         return redirect('/dashboard/customer/')
     
+    id = order.id
     order.delete()
     
-    messages.success(request, f"Order #{order.id} has been removed from your history.")
+    messages.success(request, f"Order #{id} has been removed from your history.")
     return redirect('/dashboard/customer/?section=my-orders')
