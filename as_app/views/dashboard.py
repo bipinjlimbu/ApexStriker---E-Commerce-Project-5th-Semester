@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.conf import settings
+from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from django.contrib import messages
 from ..models import User, Vendor, Brand, Product, Order, Wishlist
@@ -222,3 +223,23 @@ def wishlist_remove_view(request, item_id):
         messages.error(request, "Wishlist item not found.")
 
     return redirect('/dashboard/customer/?section=wishlist')
+
+def cancel_order_view(request, order_id):
+    if not request.user.is_authenticated or request.user.role != 'customer':
+        messages.error(request, "You are not authorized to perform this action.")
+        return redirect('/')
+    
+    order = get_object_or_404(Order, id=order_id, customer=request.user.customer_profile)
+    if order.status != 'paid':
+        messages.error(request, "Only paid orders can be cancelled.")
+        return redirect('/dashboard/customer/')
+    
+    order.status = 'cancelled'
+    order.save()
+    
+    subject = "ApexStriker - Order Cancelled"
+    message = f"Hi {request.user.first_name},\n\nYour order #{order.id} has been cancelled successfully. If you have any questions, please contact our support team.\n\nThank you for being a part of ApexStriker!"
+    threading.Thread(target=send_email_async, args=(subject, message, request.user.email)).start()
+    
+    messages.success(request, f"Order #{order.id} has been cancelled successfully.")
+    return redirect('/dashboard/customer/?section=my-orders')

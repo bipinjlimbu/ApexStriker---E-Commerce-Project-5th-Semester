@@ -3,12 +3,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
-from ..models import Cart
+from ..models import Cart, Order
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 import threading
 import json
-
 
 def cart_count(request):
     if request.user.is_authenticated and request.user.role == 'customer':
