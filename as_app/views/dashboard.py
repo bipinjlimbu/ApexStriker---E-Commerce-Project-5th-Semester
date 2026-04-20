@@ -269,3 +269,19 @@ def cancel_order_view(request, order_id):
     
     messages.success(request, f"Order #{order.id} has been cancelled successfully.")
     return redirect('/dashboard/customer/?section=my-orders')
+
+def remove_order_view(request, order_id):
+    if not request.user.is_authenticated or request.user.role != 'customer':
+        messages.error(request, "You are not authorized to perform this action.")
+        return redirect('/')
+    
+    order = get_object_or_404(Order, id=order_id, customer=request.user.customer_profile)
+    
+    if order.status != 'cancelled':
+        messages.error(request, "Only cancelled orders can be removed.")
+        return redirect('/dashboard/customer/')
+    
+    order.delete()
+    
+    messages.success(request, f"Order #{order.id} has been removed from your history.")
+    return redirect('/dashboard/customer/?section=my-orders')
