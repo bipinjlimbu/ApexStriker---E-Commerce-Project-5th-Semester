@@ -4,7 +4,7 @@ from .views.main_view import home_view, verify_email_view, password_reset_view, 
 from .views.profile_view import profile_view, edit_profile_view, resend_verification_email, delete_profile_view
 from .views.brand_view import brands_view, add_brand_view, edit_brand_view, delete_brand_view
 from .views.product_view import add_product_view, marketplace_view, edit_product_view, delete_product_view, single_product_view, wishlist_toggle_view
-from .views.order_view import cart_view
+from .views.order_view import cart_view, update_cart_quantity
 from .views.payment_view import initiate_esewa_payment, payment_success, payment_failed
 from .views.dashboard import admin_dashboard_view, approve_vendor_view, reject_vendor_view, approve_brand_view, delete_brand_view, vendor_dashboard_view, customer_dashboard_view
 
@@ -38,6 +38,7 @@ urlpatterns = [
     path('products/<int:product_id>/', single_product_view, name='single_product_page'),
     path('wishlist/toggle/<int:product_id>/', wishlist_toggle_view, name='wishlist_toggle'),
     path('cart/', cart_view, name='cart_page'),
+    path('cart/update-quantity/', update_cart_quantity, name='update_cart_quantity'),
     path('payment/initiate/', initiate_esewa_payment, name='initiate_esewa_payment'),
     path('payment/success/', payment_success, name='payment_success'),
     path('payment/failed/', payment_failed, name='payment_failed'),
