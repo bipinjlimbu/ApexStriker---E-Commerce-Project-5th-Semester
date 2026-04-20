@@ -196,6 +196,8 @@ def customer_dashboard_view(request):
     context = {
         'completed_orders_count': Order.objects.filter(customer=request.user.customer_profile, status='completed').count(),
         'pending_orders_count': Order.objects.filter(customer=request.user.customer_profile, status='paid').count(),
+        'wishlist_count': Wishlist.objects.filter(customer=request.user.customer_profile).count(),
+        'wishlist_total_amount': sum(item.product.price for item in Wishlist.objects.filter(customer=request.user.customer_profile)),
         'section': section,
     }
     
