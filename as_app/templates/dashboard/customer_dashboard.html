@@ -51,7 +51,7 @@
 
     <main class="flex-1 overflow-y-auto no-scrollbar">   
         {% if section == 'my-orders' or not section %}
-            {% include 'dashboard/customer/customer_orders.html' %}
+            {% include 'dashboard/customer/_my_orders.html' %}
         {% elif section == 'wishlist' %}
             {% include 'dashboard/customer/customer_wishlist.html' %}
         {% endif %}
