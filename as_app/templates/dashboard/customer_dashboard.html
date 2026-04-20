@@ -29,6 +29,9 @@
                 <a href="?section=my-orders" class="flex items-center gap-4 px-4 py-4 rounded-2xl {% if section == 'my-orders' or not section %}bg-blue-600 text-white shadow-lg{% else %}text-slate-400 hover:bg-blue-600 hover:text-white{% endif %} font-black italic uppercase text-xs tracking-widest transition-all group">
                     <i data-lucide="package" class="w-4 h-4"></i>
                     My Orders
+                    {% if pending_orders_count > 0 %}
+                        <span class="ml-auto bg-white/20 text-white px-2 py-0.5 rounded-lg text-[10px]"> {{ pending_orders_count }}</span>
+                    {% endif %}
                 </a>
                 <a href="?section=wishlist" class="flex items-center gap-4 px-4 py-4 rounded-2xl {% if section == 'wishlist' %}bg-blue-600 text-white shadow-lg{% else %}text-slate-400 hover:bg-blue-600 hover:text-white{% endif %} font-black italic uppercase text-xs tracking-widest transition-all mt-1">
                     <i data-lucide="heart" class="w-4 h-4"></i>
