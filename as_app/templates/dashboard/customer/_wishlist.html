@@ -61,6 +61,10 @@
                                 </div>
                             </td>
                         </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3" class="px-10 py-6 text-center text-slate-500 italic">Your wishlist is empty.</td>
+                        </tr>
                         {% endfor %}
                     </tbody>
                 </table>
