@@ -203,8 +203,28 @@ def customer_dashboard_view(request):
     }
     
     if section == 'my-orders':
-        context['orders'] = Order.objects.filter(customer=request.user.customer_profile).order_by('-created_at')
+        q = request.GET.get('q', '')
+        status = request.GET.get('status', 'all')
+        sort = request.GET.get('sort', 'latest')
         
+        orders = Order.objects.filter(customer=request.user.customer_profile).order_by('-created_at')
+        
+        if q:
+            query = Q(id__icontains=q) | Q(items__product__name__icontains=q) | Q(items__product__brand__name__icontains=q) | Q(items__product__category__icontains=q)
+            orders = orders.filter(query).distinct()
+        
+        if status != 'all':
+            orders = orders.filter(status=status)
+        
+        if sort == 'oldest':
+            orders = orders.order_by('created_at')
+        elif sort == 'high-to-low':
+            orders = orders.order_by('-total_amount')
+        elif sort == 'low-to-high':
+            orders = orders.order_by('total_amount')
+            
+        context['orders'] = orders
+
     elif section == 'wishlist':
         context['wishlist'] = Wishlist.objects.filter(customer=request.user.customer_profile).order_by('-added_at')
     
