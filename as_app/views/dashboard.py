@@ -230,10 +230,16 @@ def cancel_order_view(request, order_id):
         return redirect('/')
     
     order = get_object_or_404(Order, id=order_id, customer=request.user.customer_profile)
+    
     if order.status != 'paid':
         messages.error(request, "Only paid orders can be cancelled.")
         return redirect('/dashboard/customer/')
     
+    for item in order.items.all():
+        product = item.product
+        product.stock += item.quantity
+        product.save()
+        
     order.status = 'cancelled'
     order.save()
     
