@@ -17,11 +17,11 @@
             <div class="flex gap-4">
                 <div class="bg-white/5 border border-white/10 p-5 rounded-[1.5rem] backdrop-blur-md min-w-[150px]">
                     <p class="text-[9px] font-black text-slate-500 uppercase italic tracking-widest mb-1">Total Deployments</p>
-                    <p class="text-3xl font-black text-white italic">42</p>
+                    <p class="text-3xl font-black text-white italic">{{ completed_orders_count }}</p>
                 </div>
                 <div class="bg-white/5 border border-white/10 p-5 rounded-[1.5rem] backdrop-blur-md min-w-[150px]">
                     <p class="text-[9px] font-black text-slate-500 uppercase italic tracking-widest mb-1">Pending Delivery</p>
-                    <p class="text-3xl font-black text-blue-500 italic">02</p>
+                    <p class="text-3xl font-black text-blue-500 italic">{{ pending_orders_count }}</p>
                 </div>
             </div>
         </div>

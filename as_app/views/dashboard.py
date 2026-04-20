@@ -194,8 +194,8 @@ def customer_dashboard_view(request):
     section = request.GET.get('section', 'my-orders')
     
     context = {
-        'orders': None,
-        'wishlist': None,
+        'completed_orders_count': Order.objects.filter(customer=request.user.customer_profile, status='completed').count(),
+        'pending_orders_count': Order.objects.filter(customer=request.user.customer_profile, status='paid').count(),
         'section': section,
     }
     
