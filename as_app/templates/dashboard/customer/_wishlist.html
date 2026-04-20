@@ -1,0 +1,89 @@
+<div class="flex-grow flex flex-col h-screen bg-slate-50 overflow-hidden">
+    
+    <div class="shrink-0 bg-slate-900 p-12 relative overflow-hidden z-50 shadow-2xl">
+        <div class="absolute top-0 right-0 w-1/4 h-full bg-blue-600 skew-x-12 translate-x-20 opacity-10"></div>
+        <div class="relative z-10 flex justify-between items-end">
+            <div>
+                <span class="inline-block bg-blue-600 text-white text-[10px] font-black px-3 py-1 rounded-full mb-4 uppercase tracking-widest italic">Scouting Phase</span>
+                <h2 class="text-5xl font-black text-white italic uppercase tracking-tighter">Scouted <span class="text-blue-500">Gear</span></h2>
+            </div>
+            
+            <div class="flex gap-4">
+                <div class="bg-white/5 border border-white/10 p-5 rounded-[1.5rem] backdrop-blur-md min-w-[150px]">
+                    <p class="text-[9px] font-black text-slate-500 uppercase italic tracking-widest mb-1">Items in Queue</p>
+                    <p class="text-3xl font-black text-white italic">08</p>
+                </div>
+                <div class="bg-white/5 border border-white/10 p-5 rounded-[1.5rem] backdrop-blur-md min-w-[150px]">
+                    <p class="text-[9px] font-black text-slate-500 uppercase italic tracking-widest mb-1">Queue Value</p>
+                    <p class="text-3xl font-black text-blue-500 italic">45k</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex-grow overflow-y-auto custom-scrollbar p-12">
+        <div class="space-y-8 pb-12">
+            
+            <div class="bg-white rounded-[3rem] border border-slate-200 shadow-xl overflow-hidden">
+                <div class="px-10 py-6 border-b border-slate-100 bg-white sticky top-0 z-30">
+                    <h3 class="font-black text-slate-900 italic uppercase tracking-tight text-sm">Armory Queue (Wishlist)</h3>
+                </div>
+
+                <table class="w-full text-left border-collapse">
+                    <thead class="sticky top-[72px] z-20 bg-slate-50/95 backdrop-blur-md shadow-sm">
+                        <tr>
+                            <th class="px-10 py-6 text-[11px] font-black text-slate-400 uppercase italic">Gear Details</th>
+                            <th class="px-10 py-6 text-[11px] font-black text-slate-400 uppercase italic">Unit Price</th>
+                            <th class="px-10 py-6 text-[11px] font-black text-slate-400 uppercase italic text-right">Protocol</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-50">
+                        <tr class="hover:bg-slate-50/50 transition-colors group">
+                            <td class="px-10 py-6">
+                                <div class="flex items-center gap-4">
+                                    <div class="h-16 w-16 bg-slate-100 rounded-2xl overflow-hidden border border-slate-200 group-hover:border-blue-300 transition-all shrink-0">
+                                        <img src="https://via.placeholder.com/150" class="w-full h-full object-cover">
+                                    </div>
+                                    <div>
+                                        <p class="text-[10px] text-blue-600 font-black uppercase tracking-widest italic mb-0.5">NIKE PRO</p>
+                                        <h4 class="font-black text-slate-900 italic uppercase leading-none text-lg">Phantom GX II Academy</h4>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-10 py-6 font-black text-slate-900 italic text-lg">Rs. 12,500</td>
+                            <td class="px-10 py-6 text-right">
+                                <div class="flex items-center justify-end gap-3">
+                                    <button class="text-[10px] font-black text-slate-600 bg-slate-100 px-4 py-2 rounded-xl uppercase italic hover:bg-slate-900 hover:text-white transition-all">View Details</button>
+                                    <button class="p-2.5 text-red-500 bg-red-50 rounded-xl hover:bg-red-500 hover:text-white transition-all border border-red-100">
+                                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        {% for i in "123456789" %}
+                        <tr class="hover:bg-slate-50/50 transition-colors group">
+                            <td class="px-10 py-6">
+                                <div class="flex items-center gap-4">
+                                    <div class="h-16 w-16 bg-slate-50 rounded-2xl border border-slate-100 shrink-0"></div>
+                                    <div>
+                                        <p class="text-[10px] text-slate-400 font-black uppercase tracking-widest italic mb-0.5">Scout Gear</p>
+                                        <h4 class="font-black text-slate-900 italic uppercase leading-none text-lg">Apex Predator Model {{ i }}</h4>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-10 py-6 font-black text-slate-900 italic text-lg">Rs. 18,000</td>
+                            <td class="px-10 py-6 text-right">
+                                <button class="p-2.5 text-slate-300 bg-slate-50 rounded-xl">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -52,7 +52,7 @@
         </div>
     </aside>
 
-    <main class="flex-1 overflow-y-auto no-scrollbar">   
+    <main class="flex-grow flex flex-col h-screen overflow-y-auto">
         {% if section == 'my-orders' or not section %}
             {% include 'dashboard/customer/_my_orders.html' %}
         {% elif section == 'wishlist' %}
