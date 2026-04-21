@@ -179,6 +179,8 @@ def edit_product_view(request, product_id):
         category = request.POST.get('category')
         brand_id = request.POST.get('brand')
         position = request.POST.get('position')
+        kit_size = request.POST.get('kit_size','')
+        boot_size = request.POST.get('boot_size','')
         
         new_images = request.FILES.getlist('images')
         primary_image = request.POST.get('primary_image_name')
@@ -203,6 +205,12 @@ def edit_product_view(request, product_id):
         if not brand_id:
             errors['brand'] = "Brand selection is required."
             
+        if category == 'kits' and not kit_size:
+            errors['kit_size'] = "Kit size selection is required for jersey & kits."
+            
+        if category == 'boots' and not boot_size:
+            errors['boot_size'] = "Boot size selection is required for football boots."
+            
         total_images = len(new_images) + len(keep_existing_names)
         if total_images == 0:
             errors['images'] = "At least one image is required."
@@ -221,6 +229,8 @@ def edit_product_view(request, product_id):
         product.brand = brand_instance
         product.position = position
         product.category = category
+        product.kit_size = kit_size
+        product.boot_size = boot_size
         product.save()
         
         product.images.exclude(image__in=keep_existing_names).delete()
