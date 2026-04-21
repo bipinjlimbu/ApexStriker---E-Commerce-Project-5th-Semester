@@ -5,7 +5,7 @@ from django.conf import settings
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from django.contrib import messages
-from ..models import User, Vendor, Brand, Product, Order, Wishlist
+from ..models import User, Vendor, Brand, Product, Order, Wishlist, OrderItem
 import threading
     
 def send_email_async(subject, message, recipient):
@@ -182,7 +182,7 @@ def vendor_dashboard_view(request):
         context['inventory'] = None
     
     if section == 'pending-orders':
-        context['orders'] = None
+        context['orders'] = Order.objects.filter(items__vendor=request.user.vendor_profile, status='paid').distinct().order_by('-created_at')
         
     return render(request, 'dashboard/vendor_dashboard.html', context)
 
