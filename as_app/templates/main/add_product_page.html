@@ -57,7 +57,6 @@
                                 <p class="text-[10px] text-slate-500 font-black uppercase tracking-widest italic">Add Gear Photos</p>
                             </div>
                             <input type="file" id="selection-input" accept="image/*" multiple class="hidden" onchange="handleQueueSelection(this)" />
-                            
                             <input type="file" name="images" id="real-images-input" multiple class="hidden" />
                         </label>
                         
@@ -88,7 +87,7 @@
 
                     <div class="space-y-1">
                         <label class="text-[11px] font-black text-slate-500 uppercase tracking-widest ml-2 italic flex items-center gap-2"><i data-lucide="layers" class="w-3 h-3 text-blue-500"></i> Category</label>
-                        <select name="category" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none transition italic appearance-none cursor-pointer">
+                        <select name="category" id="categorySelect" onchange="toggleSizeFields()" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none transition italic appearance-none cursor-pointer">
                             <option value="" hidden>Select Category</option>
                             <option value="kits" {% if data.category == "kits" %}selected{% endif %}>Jersey & Kits</option>
                             <option value="boots" {% if data.category == "boots" %}selected{% endif %}>Football Boots</option>
@@ -99,6 +98,22 @@
                         {% if errors.category %}
                             <p class="text-red-500 text-xs italic mt-1">{{ errors.category }}</p>
                         {% endif %}
+                    </div>
+
+                    <div id="kitSizeField" class="hidden space-y-1">
+                        <label class="text-[11px] font-black text-slate-500 uppercase tracking-widest ml-2 italic flex items-center gap-2"><i data-lucide="maximize" class="w-3 h-3 text-blue-500"></i> Kit Size</label>
+                        <select name="kit_size" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none transition italic appearance-none cursor-pointer">
+                            <option value="S">Small (S)</option>
+                            <option value="M">Medium (M)</option>
+                            <option value="L">Large (L)</option>
+                            <option value="XL">Extra Large (XL)</option>
+                            <option value="XXL">Double XL (XXL)</option>
+                        </select>
+                    </div>
+
+                    <div id="bootSizeField" class="hidden space-y-1">
+                        <label class="text-[11px] font-black text-slate-500 uppercase tracking-widest ml-2 italic flex items-center gap-2"><i data-lucide="ruler" class="w-3 h-3 text-blue-500"></i> Boot Size (UK/EU)</label>
+                        <input type="number" step="0.5" name="boot_size" placeholder="e.g. 9.5" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none transition italic">
                     </div>
 
                     <div class="space-y-1">
@@ -125,7 +140,6 @@
                             <option value="defender" {% if data.position == "defender" %}selected{% endif %}>Defender</option>
                             <option value="goalkeeper" {% if data.position == "goalkeeper" %}selected{% endif %}>Goalkeeper</option>
                         </select>
-                        <p class="text-[9px] text-slate-400 font-bold uppercase italic">Select if the product is position-specific</p>
                     </div>
 
                     <div class="space-y-1">
@@ -160,6 +174,27 @@
     <script src="{% static 'js/lucide.min.js' %}"></script>
     <script>
         lucide.createIcons();
+
+        // TOGGLE SIZE FIELDS LOGIC
+        function toggleSizeFields() {
+            const category = document.getElementById('categorySelect').value;
+            const kitField = document.getElementById('kitSizeField');
+            const bootField = document.getElementById('bootSizeField');
+
+            // Reset visibility
+            kitField.classList.add('hidden');
+            bootField.classList.add('hidden');
+
+            if (category === 'kits') {
+                kitField.classList.remove('hidden');
+            } else if (category === 'boots') {
+                bootField.classList.remove('hidden');
+            }
+        }
+        
+        // Run on load to handle pre-filled data (e.g. from validation errors)
+        window.addEventListener('DOMContentLoaded', toggleSizeFields);
+
         let virtualImageQueue = [];
         let primaryImageId = null;
 
@@ -184,7 +219,6 @@
                 div.setAttribute('data-id', uniqueId);
                 div.fileRef = file; 
 
-                // Automatic primary for the first upload
                 if (virtualImageQueue.length === 1) {
                     primaryImageId = uniqueId;
                     div.classList.add('is-primary');
