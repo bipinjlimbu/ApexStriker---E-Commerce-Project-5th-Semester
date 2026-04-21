@@ -145,6 +145,10 @@ class OrderItem(models.Model):
     vendor = models.ForeignKey('Vendor', on_delete=models.CASCADE)
     price_at_purchase = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.PositiveIntegerField(default=1)
+    
+    @property
+    def total_price(self):
+        return self.price_at_purchase * self.quantity
 
 class Disbursement(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
