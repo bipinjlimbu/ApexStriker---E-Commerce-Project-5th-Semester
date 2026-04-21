@@ -85,6 +85,7 @@ class Product(models.Model):
         M = 'M', 'Medium'
         L = 'L', 'Large'
         XL = 'XL', 'Extra Large'
+        XXL = 'XXL', 'Double Extra Large'
         
     vendor = models.ForeignKey('Vendor', on_delete=models.CASCADE, related_name='products')
     brand = models.ForeignKey(Brand, on_delete=models.SET_NULL, null=True)
