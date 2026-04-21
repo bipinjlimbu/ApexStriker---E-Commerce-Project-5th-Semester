@@ -29,6 +29,8 @@ def add_product_view(request):
         brand_id = request.POST.get('brand')
         images = request.FILES.getlist('images')
         position = request.POST.get('position')
+        kit_size = request.POST.get('kit_size','')
+        boot_size = request.POST.get('boot_size','')
         primary_image = request.POST.get('primary_image_name')
         
         if not name:
@@ -53,6 +55,12 @@ def add_product_view(request):
             errors['images'] = "At least one image is required."
         if len(images) > 5:
             errors['images'] = "You can upload a maximum of 5 images."
+            
+        if category == 'kits' and not kit_size:
+            errors['kit_size'] = "Kit size selection is required for jersey & kits."
+            
+        if category == 'boots' and not boot_size:
+            errors['boot_size'] = "Boot size selection is required for football boots."
 
         if errors:
             return render(request, 'main/add_product_page.html', { 'brands': brand, 'data': request.POST, 'errors': errors, 'cart_count': cart_count(request) })
@@ -67,7 +75,9 @@ def add_product_view(request):
             brand=brand_instance,
             vendor=request.user.vendor_profile,
             position=position,
-            category=category
+            category=category,
+            kit_size=kit_size,
+            boot_size=boot_size
         )
         
         for image in images:
