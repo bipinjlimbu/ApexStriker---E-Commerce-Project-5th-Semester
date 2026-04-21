@@ -725,16 +725,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-top: -2rem;
 }
 
-.mr-1 {
-  margin-right: 0.25rem;
-}
-
 .mb-0\.5 {
   margin-bottom: 0.125rem;
 }
 
 .mb-0 {
   margin-bottom: 0px;
+}
+
+.mr-1 {
+  margin-right: 0.25rem;
 }
 
 .block {
@@ -868,10 +868,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .max-h-full {
   max-height: 100%;
-}
-
-.max-h-\[500px\] {
-  max-height: 500px;
 }
 
 .min-h-screen {
@@ -1376,11 +1372,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .rounded-\[3\.5rem\] {
   border-radius: 3.5rem;
-}
-
-.rounded-t-\[3rem\] {
-  border-top-left-radius: 3rem;
-  border-top-right-radius: 3rem;
 }
 
 .border {
@@ -2113,12 +2104,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-left: 3rem;
 }
 
-.pr-5 {
-  padding-right: 1.25rem;
-}
-
 .pb-12 {
   padding-bottom: 3rem;
+}
+
+.pr-5 {
+  padding-right: 1.25rem;
 }
 
 .text-left {
@@ -3188,16 +3179,16 @@ Ensure the default browser behavior of the `hidden` attribute.
     width: 16rem;
   }
 
-  .lg\:w-80 {
-    width: 20rem;
-  }
-
   .lg\:w-1\/2 {
     width: 50%;
   }
 
   .lg\:w-1\/4 {
     width: 25%;
+  }
+
+  .lg\:w-80 {
+    width: 20rem;
   }
 
   .lg\:grid-cols-3 {

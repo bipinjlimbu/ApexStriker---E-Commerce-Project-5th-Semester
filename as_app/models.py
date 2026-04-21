@@ -75,9 +75,16 @@ class Product(models.Model):
     class Category(models.TextChoices):
         KITS = 'kits', 'Jersey & Kits'
         BOOTS = 'boots', 'Football Boots'
-        ACCESSORIES = 'accessories', 'Accessories (Socks, Guards)'
-        EQUIPMENT = 'equipment', 'Training Equipment (Balls, Cones)'
+        ACCESSORIES = 'accessories', 'Accessories'
+        EQUIPMENT = 'equipment', 'Training Equipment'
         SUPPLEMENTS = 'supplements', 'Health & Supplements'
+        
+    class KitSize(models.TextChoices):
+        XS = 'XS', 'Extra Small'
+        S = 'S', 'Small'
+        M = 'M', 'Medium'
+        L = 'L', 'Large'
+        XL = 'XL', 'Extra Large'
         
     vendor = models.ForeignKey('Vendor', on_delete=models.CASCADE, related_name='products')
     brand = models.ForeignKey(Brand, on_delete=models.SET_NULL, null=True)
@@ -87,6 +94,8 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     stock = models.PositiveIntegerField(default=0)
     position = models.CharField(max_length=20, choices=Position.choices, null=True, blank=True)
+    kit_size = models.CharField(max_length=20, choices=KitSize.choices, null=True, blank=True)
+    boot_size = models.CharField(max_length=20, null=True, blank=True)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
