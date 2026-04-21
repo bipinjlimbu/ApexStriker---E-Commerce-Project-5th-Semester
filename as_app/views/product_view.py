@@ -218,7 +218,7 @@ def edit_product_view(request, product_id):
             errors['images'] = "You can upload a maximum of 5 images."
 
         if errors:
-            return render(request, 'main/add_product_page.html', { 'brands': brands,'product': product, 'data': request.POST, 'errors': errors, 'cart_count': cart_count(request) })
+            return render(request, 'main/edit_product_page.html', { 'brands': brands,'product': product, 'data': request.POST, 'errors': errors, 'cart_count': cart_count(request) })
         
         brand_instance = Brand.objects.get(id=brand_id)
         
