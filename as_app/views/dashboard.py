@@ -183,7 +183,7 @@ def vendor_dashboard_view(request):
     
     if section == 'pending-orders':
         context['orders'] = Order.objects.filter(items__vendor=request.user.vendor_profile, status='paid').distinct().order_by('-created_at')
-        
+                
     return render(request, 'dashboard/vendor_dashboard.html', context)
 
 @login_required
