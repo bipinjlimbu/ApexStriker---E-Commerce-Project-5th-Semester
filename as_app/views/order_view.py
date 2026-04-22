@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
-from ..models import Cart, Order
+from ..models import Cart, Order, OrderItem
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 import threading
@@ -45,3 +45,20 @@ def update_cart_quantity(request):
         
         return JsonResponse({'status': 'success', 'message': 'Quantity updated'})
     return JsonResponse({'status': 'error'}, status=400)
+
+def dispatch_item_view(request, item_id):
+    if request.user.role != 'vendor':
+        messages.error(request, "You are not authorized to perform this action.")
+        return redirect('/dashboard/vendor/?section=pending-order-items')
+    
+    order_item = get_object_or_404(OrderItem, id=item_id, vendor=request.user.vendor_profile)
+    order_item.dispatched = True
+    order_item.save()
+    
+    subject = "Your Order Item Has Been Dispatched - ApexStriker"
+    message = f"Hi {order_item.order.customer.user.username},\n\nThe item '{order_item.product.name}' from your order #{order_item.order.id} has been dispatched by the vendor.\n\nThank you for shopping with us!"
+    email_thread = threading.Thread(target=send_email_async, args=(subject, message, order_item.order.customer.user.email))
+    email_thread.start()
+    
+    messages.success(request, f"Order item '{order_item.product.name}' marked as dispatched and customer notified.")
+    return redirect('/dashboard/vendor/?section=pending-order-items')
