@@ -115,16 +115,32 @@
                             <div class="flex items-center gap-4">
                                 <div class="inline-flex items-center gap-2 bg-slate-50 px-3 py-1.5 rounded-full border border-slate-200">
                                     <div class="h-1.5 w-1.5 rounded-full bg-blue-500 animate-pulse"></div>
-                                    <span class="text-[9px] font-black text-slate-600 uppercase italic">Pending Dispatch</span>
+                                    {% if item.dispatched %}
+                                        <span class="text-[9px] font-black text-slate-600 uppercase italic">Dispatched</span>
+                                    {% else %}
+                                        <span class="text-[9px] font-black text-slate-600 uppercase italic">Pending Dispatch</span>
+                                    {% endif %}
                                 </div>
                                 <span class="text-[10px] font-black text-slate-300 uppercase italic tracking-widest">{{ order.created_at|timesince }} ago</span>
                             </div>
 
                             <div class="flex items-center gap-3">
+                                {% if item.dispatched and not item.received %}
+                                    <div class="flex items-center gap-3 bg-green-600 text-white px-8 py-4 rounded-xl font-black italic uppercase text-[10px]">
+                                        <i data-lucide="truck" class="w-4 h-4 text-green-300"></i> 
+                                        Dispatched But Not Received by Admin
+                                    </div>
+                                {% elif item.dispatched and item.received %}
+                                    <div class="flex items-center gap-3 bg-green-600 text-white px-8 py-4 rounded-xl font-black italic uppercase text-[10px]">
+                                        <i data-lucide="check" class="w-4 h-4 text-green-300"></i> 
+                                        Successfully Received by Admin
+                                    </div>
+                                {% else %}
                                 <a href="/orders/dispatch/{{ item.id }}/" class="flex items-center gap-3 bg-slate-900 text-white px-8 py-4 rounded-xl font-black italic uppercase text-[10px] hover:bg-blue-600 transition-all shadow-lg active:scale-95 group">
                                     <i data-lucide="package-check" class="w-4 h-4 text-blue-400 group-hover:text-white transition-colors"></i> 
                                     Dispatch Item
                                 </a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
