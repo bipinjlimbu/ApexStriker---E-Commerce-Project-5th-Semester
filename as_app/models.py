@@ -146,6 +146,7 @@ class OrderItem(models.Model):
     price_at_purchase = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.PositiveIntegerField(default=1)
     dispatched = models.BooleanField(default=False)
+    received_by_admin = models.BooleanField(default=False)
     
     @property
     def total_price(self):
