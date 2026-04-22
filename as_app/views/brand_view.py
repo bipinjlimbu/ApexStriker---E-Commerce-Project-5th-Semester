@@ -73,7 +73,7 @@ def add_brand_view(request):
     return render(request, 'main/add_brand_page.html', {'cart_count': cart_count(request)})
 
 @login_required
-def approve_brand_view(request, brand_id):
+def approve_brand_request_view(request, brand_id):
     if request.user.role != 'admin':
         messages.error(request, "You are not authorized to perform this action.")
         return redirect('/')
@@ -94,7 +94,7 @@ def approve_brand_view(request, brand_id):
     return redirect('/dashboard/admin/?section=brand-management')
 
 @login_required
-def delete_brand_view(request, brand_id):
+def delete_brand_request_view(request, brand_id):
     if request.user.role != 'admin':
         messages.error(request, "You are not authorized to perform this action.")
         return redirect('/')

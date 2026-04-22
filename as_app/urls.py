@@ -2,11 +2,11 @@ from django.urls import path
 from .views.auth_view import register_view, login_view, logout_view
 from .views.main_view import home_view, verify_email_view, password_reset_view, password_reset_confirm_view
 from .views.profile_view import profile_view, edit_profile_view, resend_verification_email, delete_profile_view
-from .views.brand_view import brands_view, add_brand_view, edit_brand_view, delete_brand_view
+from .views.brand_view import brands_view, add_brand_view, approve_brand_request_view, delete_brand_request_view, edit_brand_view, delete_brand_view
 from .views.product_view import add_product_view, marketplace_view, edit_product_view, delete_product_view, single_product_view, wishlist_toggle_view
 from .views.order_view import cart_view, update_cart_quantity
 from .views.payment_view import initiate_esewa_payment, payment_success, payment_failed
-from .views.dashboard import admin_dashboard_view, approve_vendor_view, reject_vendor_view, approve_brand_view, delete_brand_view, vendor_dashboard_view, customer_dashboard_view, wishlist_remove_view, cancel_order_view, remove_order_view
+from .views.dashboard import admin_dashboard_view, approve_vendor_view, reject_vendor_view, vendor_dashboard_view, customer_dashboard_view, wishlist_remove_view, cancel_order_view, remove_order_view
 
 urlpatterns = [
     path('', home_view, name='home_page'),
@@ -24,11 +24,11 @@ urlpatterns = [
     path('dashboard/admin/', admin_dashboard_view, name='admin_dashboard'),
     path('approve_vendor/<int:vendor_id>/', approve_vendor_view, name='approve_vendor'),
     path('reject_vendor/<int:vendor_id>/', reject_vendor_view, name='reject_vendor'),
-    path('approve_brand/<int:brand_id>/', approve_brand_view, name='approve_brand'),
-    path('delete_brand/<int:brand_id>/', delete_brand_view, name='delete_brand'),
     path('dashboard/vendor/', vendor_dashboard_view, name='vendor_dashboard'),
     path('dashboard/customer/', customer_dashboard_view, name='customer_dashboard'),
     path('brands/add/', add_brand_view, name='add_brand'),
+    path('brands/request/approve/<int:brand_id>/', approve_brand_request_view, name='approve_brand'),
+    path('brands/request/delete/<int:brand_id>/', delete_brand_request_view, name='delete_brand'),
     path('brands/edit/<int:brand_id>/', edit_brand_view, name='edit_brand'),
     path('brands/delete/<int:brand_id>/', delete_brand_view, name='delete_brand'),
     path('products/add/', add_product_view, name='add_product'),
