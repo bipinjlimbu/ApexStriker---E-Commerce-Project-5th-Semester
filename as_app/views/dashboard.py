@@ -141,7 +141,29 @@ def vendor_dashboard_view(request):
         context['inventory'] = None
     
     if section == 'pending-order-items':
-        context['orders'] = Order.objects.filter(items__vendor=request.user.vendor_profile, status='paid').distinct().order_by('-created_at')
+        q = request.GET.get('q', '')
+        status = request.GET.get('status', 'all')
+        sort = request.GET.get('sort', 'latest')
+        
+        orders = Order.objects.filter(items__vendor=request.user.vendor_profile, status='paid').distinct()
+        
+        if q:
+            query = Q(id__icontains=q) | Q(customer__user__first_name__icontains=q) | Q(customer__user__last_name__icontains=q) | Q(items__product__name__icontains=q) | Q(items__product__brand__name__icontains=q) | Q(items__product__category__icontains=q)
+            orders = orders.filter(query).distinct()
+            
+        if status != 'all':
+            orders = orders.filter(status=status)
+            
+        if sort == 'latest':
+            orders = orders.order_by('-created_at')
+        if sort == 'oldest':
+            orders = orders.order_by('created_at')
+        elif sort == 'price_low':
+            orders = orders.order_by('total_amount')
+        elif sort == 'price_high':
+            orders = orders.order_by('-total_amount')
+            
+        context['orders'] = orders
                 
     return render(request, 'dashboard/vendor_dashboard.html', context)
 
