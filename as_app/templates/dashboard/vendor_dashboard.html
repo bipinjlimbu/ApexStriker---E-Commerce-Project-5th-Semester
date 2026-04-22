@@ -43,13 +43,15 @@
                 
                 <a href="?section=pending-orders" class="flex items-center gap-4 px-4 py-4 rounded-2xl {% if section == 'pending-orders' %}bg-blue-600 text-white shadow-lg{% else %}text-slate-400 hover:bg-blue-600 hover:text-white{% endif %} font-black italic uppercase text-xs tracking-widest transition-all group">
                     <i data-lucide="shopping-cart" class="w-4 h-4 group-hover:text-blue-500 transition-colors"></i>
-                    Pending Orders
-                    <span class="ml-auto bg-blue-600/20 text-blue-500 px-2 py-0.5 rounded-lg text-[10px]">04</span>
+                    Pending Order Items
+                    {% if pending_order_count %}
+                        <span class="ml-auto bg-blue-600/20 text-blue-500 px-2 py-0.5 rounded-lg text-[10px]">{{ pending_order_count }}</span>
+                    {% endif %}
                 </a>
 
                 <a href="?section=completed-orders" class="flex items-center gap-4 px-4 py-4 rounded-2xl {% if section == 'completed-orders' %}bg-blue-600 text-white shadow-lg{% else %}text-slate-400 hover:bg-blue-600 hover:text-white{% endif %} font-black italic uppercase text-xs tracking-widest transition-all group">
                     <i data-lucide="check-circle" class="w-4 h-4 group-hover:text-blue-500 transition-colors"></i>
-                    Completed Orders
+                    Completed Order Items
                 </a>
             </div>
         </nav>
