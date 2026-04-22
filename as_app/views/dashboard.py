@@ -151,7 +151,9 @@ def vendor_dashboard_view(request):
             query = Q(id__icontains=q) | Q(customer__user__first_name__icontains=q) | Q(customer__user__last_name__icontains=q) | Q(items__product__name__icontains=q) | Q(items__product__brand__name__icontains=q) | Q(items__product__category__icontains=q)
             orders = orders.filter(query).distinct()
             
-        if status != 'all' and status == 'dispatched':
+        if status != 'all' and status == 'pending':
+            orders = orders.filter(items__dispatched=False).distinct()
+        elif status != 'all' and status == 'dispatched':
             orders = orders.filter(items__dispatched=True).distinct()
         elif status != 'all' and status == 'received':
             orders = orders.filter(items__dispatched=True, items__received=True).distinct()
