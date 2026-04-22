@@ -73,6 +73,47 @@ def add_brand_view(request):
     return render(request, 'main/add_brand_page.html', {'cart_count': cart_count(request)})
 
 @login_required
+def approve_brand_view(request, brand_id):
+    if request.user.role != 'admin':
+        messages.error(request, "You are not authorized to perform this action.")
+        return redirect('/')
+    
+    try:
+        brand = Brand.objects.get(id=brand_id)
+        brand.is_active = True
+        brand.save()
+        
+        subject = "ApexStriker - Brand Approved"
+        message = f"Hi {request.user.first_name},\n\nThe brand '{brand.name}' has been approved and is now live on ApexStriker. Thank you for contributing to our platform!"
+        threading.Thread(target=send_email_async, args=(subject, message, request.user.email)).start()
+        
+        messages.success(request, f"Brand '{brand.name}' has been approved successfully.")
+    except Brand.DoesNotExist:
+        messages.error(request, "Brand not found.")
+    
+    return redirect('/dashboard/admin/?section=brand-management')
+
+@login_required
+def delete_brand_view(request, brand_id):
+    if request.user.role != 'admin':
+        messages.error(request, "You are not authorized to perform this action.")
+        return redirect('/')
+    
+    try:
+        brand = Brand.objects.get(id=brand_id)
+        brand.delete()
+        
+        subject = "ApexStriker - Brand Deleted"
+        message = f"Hi {request.user.first_name},\n\nThe brand '{brand.name}' has been deleted from ApexStriker. If you have any questions, please contact our support team.\n\nThank you."
+        threading.Thread(target=send_email_async, args=(subject, message, request.user.email)).start()
+        
+        messages.success(request, f"Brand '{brand.name}' has been deleted successfully.")
+    except Brand.DoesNotExist:
+        messages.error(request, "Brand not found.")
+    
+    return redirect('/dashboard/admin/?section=brand-management')
+
+@login_required
 def edit_brand_view(request, brand_id):
     if request.user.role != 'admin':
         messages.error(request, "You are not authorized to edit a brand.")
