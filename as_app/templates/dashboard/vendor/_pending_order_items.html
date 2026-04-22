@@ -32,7 +32,8 @@
                 <div class="relative">
                     <select name="status" onchange="this.form.submit()" class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic appearance-none cursor-pointer focus:outline-none">
                         <option value="all" {% if request.GET.status == 'all' %}selected{% endif %}>All Records</option>
-                        <option value="paid" {% if request.GET.status == 'paid' %}selected{% endif %}>Pending Items</option>
+                        <option value="dispatched" {% if request.GET.status == 'dispatched' %}selected{% endif %}>Dispatched but Not Received by Admin</option>
+                        <option value="received" {% if request.GET.status == 'received' %}selected{% endif %}>Dispatched and Received by Admin</option>
                         <option value="shipping" {% if request.GET.status == 'shipping' %}selected{% endif %}>Shipping Items</option>
                         <option value="shipped" {% if request.GET.status == 'shipped' %}selected{% endif %}>Shipped Items</option>
                     </select>
