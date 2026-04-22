@@ -101,7 +101,7 @@ def vendor_dashboard_view(request):
     section = request.GET.get('section', 'product-management')
     
     context = {
-        'pending_orders': None,
+        'pending_order_count': OrderItem.objects.filter(vendor=request.user.vendor_profile, dispatched=False, order__status='paid').count(),
         'section': section,
     }
     
