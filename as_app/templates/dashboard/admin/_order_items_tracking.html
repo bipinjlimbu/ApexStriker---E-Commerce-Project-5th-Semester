@@ -1,161 +1,197 @@
-<div class="flex-grow flex-col h-screen bg-slate-50 overflow-hidden flex">
+<div class="flex-grow flex flex-col h-screen bg-slate-50 overflow-hidden">
     
     <div class="shrink-0 bg-slate-900 p-12 relative overflow-hidden z-50 shadow-2xl">
         <div class="absolute top-0 right-0 w-1/4 h-full bg-blue-600 skew-x-12 translate-x-20 opacity-10"></div>
-        <div class="relative z-10">
-            <div class="flex items-center gap-3 mb-4">
-                <span class="inline-block bg-blue-600 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest italic">Admin Oversight</span>
-                <span class="text-slate-500 text-[10px] font-black uppercase tracking-widest italic">System Time: 17:10:30</span>
+        <div class="relative z-10 flex justify-between items-end">
+            <div>
+                <span class="inline-block bg-blue-600 text-white text-[10px] font-black px-3 py-1 rounded-full mb-4 uppercase tracking-widest italic">Admin Intelligence</span>
+                <h2 class="text-5xl font-black text-white italic uppercase tracking-tighter">Operational <span class="text-blue-500">Logs</span></h2>
             </div>
-            <h2 class="text-5xl font-black text-white italic uppercase tracking-tighter leading-none">
-                Operational <span class="text-blue-500">Logs</span>
-            </h2>
-            <p class="text-slate-500 text-[10px] font-black uppercase tracking-[0.3em] mt-4 italic">Individual Item Tracking & Audit</p>
+            <div class="flex flex-col items-end">
+                <p class="text-[9px] font-black text-slate-500 uppercase italic tracking-widest mb-1">Global Item Audit</p>
+                <p class="text-3xl font-black text-white italic uppercase tracking-tighter">System <span class="text-blue-500">Registry</span></p>
+            </div>
         </div>
     </div>
 
-    <div class="shrink-0 bg-white border-b border-slate-200 px-12 py-6 z-40 shadow-sm">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+    <div class="shrink-0 bg-white border-b border-slate-200 px-12 py-8 z-40 shadow-sm">
+        <form id="filter-form" action="." method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <input type="hidden" name="section" value="order-items-tracking">
+            
             <div>
-                <p class="text-[9px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Search Item / ID</p>
+                <p class="text-[9px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Search Query</p>
                 <div class="relative">
                     <i data-lucide="search" class="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                    <input type="text" placeholder="SKU OR ORDER ID..." class="w-full pl-12 pr-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all">
+                    <input type="text" placeholder="ORDER ID / VENDOR..." class="w-full pl-12 pr-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all">
                 </div>
             </div>
 
             <div>
-                <p class="text-[9px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Processing Status</p>
-                <select class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic appearance-none cursor-pointer focus:outline-none">
-                    <option value="all">All Items</option>
-                    <option value="dispatched">Dispatched</option>
-                    <option value="pending">Awaiting Dispatch</option>
-                </select>
+                <p class="text-[9px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Warehouse Status</p>
+                <div class="relative">
+                    <select class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic appearance-none cursor-pointer focus:outline-none">
+                        <option value="all">All Logs</option>
+                        <option value="pending">Pending Dispatch</option>
+                        <option value="dispatched">Dispatched by Vendor</option>
+                        <option value="received">In Admin Custody</option>
+                    </select>
+                    <i data-lucide="activity" class="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
+                </div>
             </div>
 
             <div>
-                <p class="text-[9px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Sort Logs</p>
-                <select class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic appearance-none cursor-pointer focus:outline-none">
-                    <option value="-id">Most Recent</option>
-                    <option value="id">Oldest</option>
-                </select>
+                <p class="text-[9px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Sort Priority</p>
+                <div class="relative">
+                    <select class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic appearance-none cursor-pointer focus:outline-none">
+                        <option value="latest">Latest First</option>
+                        <option value="oldest">Historical</option>
+                    </select>
+                    <i data-lucide="arrow-up-down" class="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
+                </div>
             </div>
 
             <div class="flex items-end">
-                <button class="w-full h-[52px] flex items-center justify-center gap-2 bg-slate-100 text-slate-500 rounded-xl font-black italic uppercase text-[10px] hover:bg-red-50 hover:text-red-600 transition-all group">
+                <button class="w-full h-[52px] flex items-center justify-center gap-2 bg-slate-100 text-slate-500 rounded-xl font-black italic uppercase text-[10px] hover:bg-red-50 hover:text-red-600 transition-all shadow-sm group">
                     <i data-lucide="refresh-ccw" class="w-3 h-3 group-hover:rotate-180 transition-transform duration-500"></i>
-                    Reset Logs
+                    Clear Filters
                 </button>
             </div>
-        </div>
+        </form>
     </div>
 
-    <div class="flex-grow overflow-y-auto p-12 custom-scrollbar">
-        <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
-            
-            <div class="bg-white rounded-[2.5rem] border border-slate-200 p-8 flex items-center gap-8 group hover:border-blue-500 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500 relative overflow-hidden">
-                <div class="absolute left-0 top-0 h-full w-2 bg-green-500"></div>
-                <div class="h-28 w-28 bg-slate-50 rounded-[2rem] border border-slate-100 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform duration-500">
-                    <i data-lucide="box" class="w-10 h-10 text-blue-500"></i>
-                </div>
-                <div class="flex-grow min-w-0">
-                    <div class="flex items-center gap-2 mb-2">
-                        <span class="text-[9px] font-black text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md uppercase italic border border-blue-100">Order #8821</span>
-                        <span class="text-[9px] font-black text-slate-400 uppercase italic tracking-widest">ID: ITEM-990</span>
-                    </div>
-                    <h3 class="text-lg font-black text-slate-900 italic uppercase leading-tight truncate mb-1">NightVision Pro X1</h3>
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="flex items-center gap-1.5">
-                            <i data-lucide="user" class="w-3 h-3 text-slate-400"></i>
-                            <p class="text-[10px] font-bold text-slate-500 uppercase italic">Vendor: <span class="text-slate-900">TitanLogistics</span></p>
+    <div class="flex-grow overflow-y-auto custom-scrollbar p-12">
+        <div class="space-y-8 pb-12">
+
+            <div class="bg-white rounded-[3rem] border border-slate-200 shadow-xl overflow-hidden group hover:border-blue-500 transition-all duration-500">
+                <div class="flex flex-col lg:flex-row items-stretch">
+                    
+                    <div class="lg:w-64 shrink-0 relative flex flex-col justify-center items-center bg-slate-100 border-r border-slate-100 overflow-hidden">
+                        <i data-lucide="box" class="absolute inset-0 w-full h-full p-12 text-slate-300 opacity-20 grayscale group-hover:grayscale-0 transition-all duration-700"></i>
+                        <div class="relative z-10 w-40 h-40 flex items-center justify-center bg-white rounded-3xl shadow-2xl group-hover:scale-110 transition-transform duration-500">
+                            <i data-lucide="camera" class="w-16 h-16 text-blue-600"></i>
                         </div>
-                        <div class="flex items-center gap-1.5">
-                            <i data-lucide="layers" class="w-3 h-3 text-slate-400"></i>
-                            <p class="text-[10px] font-bold text-slate-500 uppercase italic">Qty: <span class="text-slate-900">02</span></p>
+                        <div class="absolute top-6 right-6 z-20 bg-slate-900 text-white text-[10px] font-black px-3 py-1 rounded-full italic">
+                            QTY: 02
                         </div>
                     </div>
-                    <div class="flex items-center justify-between pt-4 border-t border-slate-50">
-                        <div>
-                            <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest italic mb-1">Fulfillment Status</p>
-                            <span class="text-[9px] font-black text-green-600 flex items-center gap-1 uppercase italic">
-                                <i data-lucide="check-circle-2" class="w-3 h-3"></i> Dispatched by Vendor
-                            </span>
+
+                    <div class="flex-grow p-10 flex flex-col">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <div class="flex items-center gap-3 mb-2">
+                                    <span class="text-[10px] font-black text-blue-600 uppercase italic tracking-widest">Item ID: #LOG-9920</span>
+                                    <span class="h-1 w-1 rounded-full bg-slate-300"></span>
+                                    <span class="text-[10px] font-black text-slate-400 uppercase italic tracking-widest">Order #8821</span>
+                                </div>
+                                <h3 class="text-3xl font-black text-slate-900 uppercase italic tracking-tighter leading-none mb-1">NightVision Goggles Gen-4</h3>
+                                <p class="text-xs font-black text-slate-500 uppercase italic tracking-widest">Vendor: Titan Logistics Co.</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-3xl font-black text-blue-600 italic tracking-tighter leading-none">Rs. 85,000</p>
+                            </div>
                         </div>
-                        <div class="text-right">
-                            <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest italic mb-1">Unit Valuation</p>
-                            <p class="text-sm font-black text-slate-900 italic">Rs. 45,000</p>
+
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 py-6 border-y border-slate-100 mb-8">
+                            <div>
+                                <p class="text-[9px] font-black text-slate-400 uppercase italic mb-1">Source Vendor</p>
+                                <p class="text-xs font-black text-slate-800 uppercase italic">Titan_Ops_01</p>
+                            </div>
+                            <div>
+                                <p class="text-[9px] font-black text-slate-400 uppercase italic mb-1">Warehouse Loc</p>
+                                <p class="text-xs font-black text-slate-800 uppercase italic">Sector-B/N-Grid</p>
+                            </div>
+                            <div>
+                                <p class="text-[9px] font-black text-slate-400 uppercase italic mb-1">Payment Status</p>
+                                <p class="text-xs font-black text-green-600 uppercase italic">PAID & VERIFIED</p>
+                            </div>
+                            <div>
+                                <p class="text-[9px] font-black text-slate-400 uppercase italic mb-1">Unit Valuation</p>
+                                <p class="text-xs font-black text-slate-800 uppercase italic">Rs. 42,500</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-auto flex items-center justify-between">
+                            <div class="flex items-center gap-4">
+                                <div class="inline-flex items-center gap-2 bg-green-50 px-3 py-1.5 rounded-full border border-green-200">
+                                    <div class="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse"></div>
+                                    <span class="text-[9px] font-black text-green-700 uppercase italic">Dispatched by Vendor</span>
+                                </div>
+                                <span class="text-[10px] font-black text-slate-300 uppercase italic tracking-widest">Logged 4h ago</span>
+                            </div>
+
+                            <div class="flex items-center gap-3">
+                                <div class="flex items-center gap-3 bg-amber-500 text-white px-8 py-4 rounded-xl font-black italic uppercase text-[10px] shadow-lg">
+                                    <i data-lucide="clock" class="w-4 h-4 text-white"></i> 
+                                    Awaiting Admin Receipt
+                                </div>
+                                <button class="h-12 w-12 flex items-center justify-center bg-slate-900 text-white rounded-xl hover:bg-blue-600 transition-all">
+                                    <i data-lucide="external-link" class="w-4 h-4"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="bg-white rounded-[2.5rem] border border-slate-200 p-8 flex items-center gap-8 group hover:border-blue-500 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500 relative overflow-hidden">
-                <div class="absolute left-0 top-0 h-full w-2 bg-amber-500"></div>
-                <div class="h-28 w-28 bg-slate-50 rounded-[2rem] border border-slate-100 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform duration-500">
-                    <i data-lucide="shield" class="w-10 h-10 text-slate-300"></i>
-                </div>
-                <div class="flex-grow min-w-0">
-                    <div class="flex items-center gap-2 mb-2">
-                        <span class="text-[9px] font-black text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md uppercase italic border border-blue-100">Order #8822</span>
-                        <span class="text-[9px] font-black text-slate-400 uppercase italic tracking-widest">ID: ITEM-991</span>
-                    </div>
-                    <h3 class="text-lg font-black text-slate-900 italic uppercase leading-tight truncate mb-1">Carbon Fiber Plating</h3>
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="flex items-center gap-1.5">
-                            <i data-lucide="user" class="w-3 h-3 text-slate-400"></i>
-                            <p class="text-[10px] font-bold text-slate-500 uppercase italic">Vendor: <span class="text-slate-900">ApexGears_Co</span></p>
-                        </div>
-                        <div class="flex items-center gap-1.5">
-                            <i data-lucide="layers" class="w-3 h-3 text-slate-400"></i>
-                            <p class="text-[10px] font-bold text-slate-500 uppercase italic">Qty: <span class="text-slate-900">01</span></p>
+            <div class="bg-white rounded-[3rem] border border-slate-200 shadow-xl overflow-hidden group hover:border-blue-500 transition-all duration-500 opacity-80">
+                <div class="flex flex-col lg:flex-row items-stretch">
+                    
+                    <div class="lg:w-64 shrink-0 relative flex flex-col justify-center items-center bg-slate-100 border-r border-slate-100 overflow-hidden">
+                        <i data-lucide="shield" class="relative z-10 w-24 h-24 text-slate-300 group-hover:scale-110 transition-transform duration-500"></i>
+                        <div class="absolute top-6 right-6 z-20 bg-slate-900 text-white text-[10px] font-black px-3 py-1 rounded-full italic">
+                            QTY: 01
                         </div>
                     </div>
-                    <div class="flex items-center justify-between pt-4 border-t border-slate-50">
-                        <div>
-                            <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest italic mb-1">Fulfillment Status</p>
-                            <span class="text-[9px] font-black text-amber-600 flex items-center gap-1 uppercase italic">
-                                <i data-lucide="clock" class="w-3 h-3"></i> Awaiting Dispatch
-                            </span>
-                        </div>
-                        <div class="text-right">
-                            <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest italic mb-1">Unit Valuation</p>
-                            <p class="text-sm font-black text-slate-900 italic">Rs. 12,800</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="bg-white rounded-[2.5rem] border border-slate-200 p-8 flex items-center gap-8 group hover:border-blue-500 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500 relative overflow-hidden">
-                <div class="absolute left-0 top-0 h-full w-2 bg-green-500"></div>
-                <div class="h-28 w-28 bg-slate-50 rounded-[2rem] border border-slate-100 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform duration-500">
-                    <i data-lucide="zap" class="w-10 h-10 text-blue-500"></i>
-                </div>
-                <div class="flex-grow min-w-0">
-                    <div class="flex items-center gap-2 mb-2">
-                        <span class="text-[9px] font-black text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md uppercase italic border border-blue-100">Order #8823</span>
-                        <span class="text-[9px] font-black text-slate-400 uppercase italic tracking-widest">ID: ITEM-995</span>
-                    </div>
-                    <h3 class="text-lg font-black text-slate-900 italic uppercase leading-tight truncate mb-1">Ion-Battery Pack</h3>
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="flex items-center gap-1.5">
-                            <i data-lucide="user" class="w-3 h-3 text-slate-400"></i>
-                            <p class="text-[10px] font-bold text-slate-500 uppercase italic">Vendor: <span class="text-slate-900">VoltSupplies</span></p>
+                    <div class="flex-grow p-10 flex flex-col">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <div class="flex items-center gap-3 mb-2">
+                                    <span class="text-[10px] font-black text-blue-600 uppercase italic tracking-widest">Item ID: #LOG-9945</span>
+                                    <span class="h-1 w-1 rounded-full bg-slate-300"></span>
+                                    <span class="text-[10px] font-black text-slate-400 uppercase italic tracking-widest">Order #8825</span>
+                                </div>
+                                <h3 class="text-3xl font-black text-slate-400 uppercase italic tracking-tighter leading-none mb-1">Carbon Tactical Helmet</h3>
+                                <p class="text-xs font-black text-slate-500 uppercase italic tracking-widest">Vendor: Apex Gear Works</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-3xl font-black text-slate-400 italic tracking-tighter leading-none">Rs. 15,500</p>
+                            </div>
                         </div>
-                        <div class="flex items-center gap-1.5">
-                            <i data-lucide="layers" class="w-3 h-3 text-slate-400"></i>
-                            <p class="text-[10px] font-bold text-slate-500 uppercase italic">Qty: <span class="text-slate-900">05</span></p>
+
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 py-6 border-y border-slate-100 mb-8">
+                            <div>
+                                <p class="text-[9px] font-black text-slate-400 uppercase italic mb-1">Source Vendor</p>
+                                <p class="text-xs font-black text-slate-800 uppercase italic">Apex_Admin_X</p>
+                            </div>
+                            <div>
+                                <p class="text-[9px] font-black text-slate-400 uppercase italic mb-1">Warehouse Loc</p>
+                                <p class="text-xs font-black text-slate-800 uppercase italic">External Depot 4</p>
+                            </div>
+                            <div>
+                                <p class="text-[9px] font-black text-slate-400 uppercase italic mb-1">Payment Status</p>
+                                <p class="text-xs font-black text-green-600 uppercase italic">PAID</p>
+                            </div>
+                            <div>
+                                <p class="text-[9px] font-black text-slate-400 uppercase italic mb-1">Unit Valuation</p>
+                                <p class="text-xs font-black text-slate-800 uppercase italic">Rs. 15,500</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="flex items-center justify-between pt-4 border-t border-slate-50">
-                        <div>
-                            <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest italic mb-1">Fulfillment Status</p>
-                            <span class="text-[9px] font-black text-green-600 flex items-center gap-1 uppercase italic">
-                                <i data-lucide="check-circle-2" class="w-3 h-3"></i> Dispatched by Vendor
-                            </span>
-                        </div>
-                        <div class="text-right">
-                            <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest italic mb-1">Unit Valuation</p>
-                            <p class="text-sm font-black text-slate-900 italic">Rs. 3,500</p>
+
+                        <div class="mt-auto flex items-center justify-between">
+                            <div class="flex items-center gap-4">
+                                <div class="inline-flex items-center gap-2 bg-slate-50 px-3 py-1.5 rounded-full border border-slate-200">
+                                    <div class="h-1.5 w-1.5 rounded-full bg-slate-400"></div>
+                                    <span class="text-[9px] font-black text-slate-500 uppercase italic">Awaiting Vendor Action</span>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-3">
+                                <button class="flex items-center gap-3 bg-slate-200 text-slate-500 px-8 py-4 rounded-xl font-black italic uppercase text-[10px] cursor-not-allowed">
+                                    <i data-lucide="alert-circle" class="w-4 h-4"></i> 
+                                    Awaiting Dispatch
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
