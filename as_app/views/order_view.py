@@ -62,3 +62,15 @@ def dispatch_item_view(request, item_id):
     
     messages.success(request, f"Order item '{order_item.product.name}' marked as dispatched and customer notified.")
     return redirect('/dashboard/vendor/?section=pending-order-items')
+
+def receive_item_view(request, item_id):
+    if request.user.role != 'admin':
+        messages.error(request, "You are not authorized to perform this action.")
+        return redirect('/dashboard/admin/?section=order-items-tracking')
+    
+    order_item = get_object_or_404(OrderItem, id=item_id)
+    order_item.received = True
+    order_item.save()
+    
+    messages.success(request, f"Order item '{order_item.product.name}' marked as received by admin.")
+    return redirect('/dashboard/admin/?section=order-items-tracking')
