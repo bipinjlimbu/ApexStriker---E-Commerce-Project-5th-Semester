@@ -205,9 +205,9 @@ def customer_dashboard_view(request):
         
         if sort == 'oldest':
             orders = orders.order_by('created_at')
-        elif sort == 'high-to-low':
+        elif sort == 'amount_desc':
             orders = orders.order_by('-total_amount')
-        elif sort == 'low-to-high':
+        elif sort == 'amount_asc':
             orders = orders.order_by('total_amount')
             
         context['orders'] = orders
