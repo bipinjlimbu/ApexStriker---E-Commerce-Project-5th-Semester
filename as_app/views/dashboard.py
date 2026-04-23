@@ -38,8 +38,34 @@ def admin_dashboard_view(request):
         context['brands'] = Brand.objects.all()
         
     elif section == 'order-items-tracking':
-        context['order_items'] = OrderItem.objects.filter(order__status='paid').order_by('-order__created_at')
+        q = request.GET.get('q', '')
+        status = request.GET.get('status', 'all')
+        sort = request.GET.get('sort', 'latest')
         
+        order_items = OrderItem.objects.filter(order__status='paid').order_by('-order__created_at')
+        
+        if q:
+            query = Q(order__id__icontains=q) | Q(vendor__shop_name__icontains=q) | Q(product__name__icontains=q) | Q(product__brand__name__icontains=q) | Q(product__category__icontains=q)
+            order_items = order_items.filter(query).distinct()
+            
+        if status != 'all' and status == 'pending':
+            order_items = order_items.filter(dispatched=False).distinct()
+        elif status != 'all' and status == 'dispatched':
+            order_items = order_items.filter(dispatched=True, received=False).distinct()
+        elif status != 'all' and status == 'received':
+            order_items = order_items.filter(dispatched=True, received=True).distinct()
+        
+        if sort == 'latest':
+            order_items = order_items.order_by('-order__created_at')
+        elif sort == 'oldest':
+            order_items = order_items.order_by('order__created_at')
+        elif sort == 'amount_desc':
+            order_items = order_items.order_by('-product__price')
+        elif sort == 'amount_asc':
+            order_items = order_items.order_by('product__price')
+            
+        context['order_items'] = order_items
+
     elif section == 'shipping-control':
         context['shipping_orders'] = None
         
