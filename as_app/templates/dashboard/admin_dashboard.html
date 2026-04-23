@@ -65,6 +65,20 @@
             </div>
 
             <div class="space-y-2">
+                <h3 class="px-4 text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4 italic">Orders Control</h3>
+                
+                <a href="?section=order-items-tracking" class="flex items-center gap-4 px-4 py-4 rounded-2xl {% if section == 'order-items-tracking' %}bg-blue-600 text-white shadow-lg{% else %}text-slate-400 hover:bg-blue-600 hover:text-white{% endif %} font-black italic uppercase text-xs tracking-widest transition-all group">
+                    <i data-lucide="activity" class="w-4 h-4 group-hover:scale-110 transition-transform"></i>
+                    Order Items Tracking
+                </a>
+
+                <a href="?section=shipping-control" class="flex items-center gap-4 px-4 py-4 rounded-2xl {% if section == 'shipping-control' %}bg-blue-600 text-white shadow-lg{% else %}text-slate-400 hover:bg-blue-600 hover:text-white{% endif %} font-black italic uppercase text-xs tracking-widest transition-all mt-1 group">
+                    <i data-lucide="truck" class="w-4 h-4 group-hover:scale-110 transition-transform"></i>
+                    Transit Control
+                </a>
+            </div>
+
+            <div class="space-y-2">
                 <h3 class="px-4 text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4 italic">Marketplace Audit</h3>
                 
                 <a href="?section=product-reviews" class="flex items-center gap-4 px-4 py-4 rounded-2xl {% if section == 'product-reviews' %}bg-blue-600 text-white shadow-lg{% else %}text-slate-400 hover:bg-blue-600 hover:text-white{% endif %} font-black italic uppercase text-xs tracking-widest transition-all group">
