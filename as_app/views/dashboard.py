@@ -37,6 +37,12 @@ def admin_dashboard_view(request):
     elif section == 'brand-management':
         context['brands'] = Brand.objects.all()
         
+    elif section == 'order-items-tracking':
+        context['order_items'] = OrderItem.objects.filter(dispatched=True).order_by('-order__created_at')
+        
+    elif section == 'shipping-control':
+        context['shipping_orders'] = None
+        
     elif section == 'product-reviews':
         context['product-reviews'] = None
         
