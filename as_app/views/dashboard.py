@@ -38,7 +38,7 @@ def admin_dashboard_view(request):
         context['brands'] = Brand.objects.all()
         
     elif section == 'order-items-tracking':
-        context['order_items'] = OrderItem.objects.filter(dispatched=True).order_by('-order__created_at')
+        context['order_items'] = OrderItem.objects.filter(order__status='paid').order_by('-order__created_at')
         
     elif section == 'shipping-control':
         context['shipping_orders'] = None
