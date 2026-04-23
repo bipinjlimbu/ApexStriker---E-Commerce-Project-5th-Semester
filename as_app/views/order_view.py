@@ -117,7 +117,8 @@ def mark_order_as_shipped(request, order_id):
     order.save()
     
     subject = "Your Order Has Been Shipped - ApexStriker"
-    message = f"Hi {order.customer.user.username},\n\nYour order #{order.id} has been shipped and is on its way to you.\n\nThank you for shopping with us!"
+    confirm_url = "/dashboard/customer/?section=my-orders"
+    message = f"Hi {order.customer.user.username},\n\nYour order #{order.id} has been shipped. You can Pick Up the item at the designated location and also Confirm Your Delivery here \n {confirm_url}.\n\nThank you for shopping with us!"
     email_thread = threading.Thread(target=send_email_async, args=(subject, message, order.customer.user.email))
     email_thread.start()
     
