@@ -67,7 +67,7 @@ def admin_dashboard_view(request):
         context['order_items'] = order_items
 
     elif section == 'shipping-control':
-        context['shipping_orders'] = None
+        context['shipping_orders'] = Order.objects.all().order_by('-created_at')
         
     elif section == 'product-reviews':
         context['product-reviews'] = None
