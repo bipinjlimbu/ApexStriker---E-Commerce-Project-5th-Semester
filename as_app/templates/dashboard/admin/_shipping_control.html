@@ -161,12 +161,12 @@
 
                             <div class="flex items-center gap-4">
                                 {% if order.status == "paid" %}
-                                <a href="orders/pickup/{{ order.id }}/" class="h-14 px-8 bg-yellow-500 text-white rounded-2xl font-black italic uppercase text-[10px] tracking-widest hover:bg-slate-900 transition-all shadow-xl shadow-yellow-500/20 flex items-center gap-3 active:scale-95 group">
+                                <a href="/orders/pickup/{{ order.id }}/" class="h-14 px-8 bg-yellow-500 text-white rounded-2xl font-black italic uppercase text-[10px] tracking-widest hover:bg-slate-900 transition-all shadow-xl shadow-yellow-500/20 flex items-center gap-3 active:scale-95 group">
                                     <i data-lucide="clock" class="w-4 h-4 group-hover:scale-110 transition-transform"></i>
                                     Mark as Picked Up
                                 </a>
                                 {% elif order.status == "shipping" %}
-                                <a href="orders/shipped/{{ order.id }}/" class="h-14 px-8 bg-orange-500 text-white rounded-2xl font-black italic uppercase text-[10px] tracking-widest hover:bg-slate-900 transition-all shadow-xl shadow-orange-500/20 flex items-center gap-3 active:scale-95 group">
+                                <a href="/orders/shipped/{{ order.id }}/" class="h-14 px-8 bg-orange-500 text-white rounded-2xl font-black italic uppercase text-[10px] tracking-widest hover:bg-slate-900 transition-all shadow-xl shadow-orange-500/20 flex items-center gap-3 active:scale-95 group">
                                     <i data-lucide="truck" class="w-4 h-4 group-hover:scale-110 transition-transform"></i>
                                     Mark as Shipped
                                 </a>
