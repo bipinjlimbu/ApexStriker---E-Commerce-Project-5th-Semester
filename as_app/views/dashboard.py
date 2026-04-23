@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.conf import settings
 from django.shortcuts import get_object_or_404
-from django.db.models import Q
+from django.db.models import Q, F
 from django.contrib import messages
 from ..models import User, Vendor, Brand, Product, Order, Wishlist, OrderItem
 import threading
@@ -60,9 +60,9 @@ def admin_dashboard_view(request):
         elif sort == 'oldest':
             order_items = order_items.order_by('order__created_at')
         elif sort == 'amount_desc':
-            order_items = order_items.order_by('-product__price')
+            order_items = order_items.annotate(price=F('price_at_purchase') * F('quantity')).order_by('-price')
         elif sort == 'amount_asc':
-            order_items = order_items.order_by('product__price')
+            order_items = order_items.annotate(price=F('price_at_purchase') * F('quantity')).order_by('price')
             
         context['order_items'] = order_items
 
