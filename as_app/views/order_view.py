@@ -101,3 +101,25 @@ def mark_order_as_pickup(request, order_id):
     
     messages.success(request, f"Order #{order.id} marked as picked up and in transit.")
     return redirect('/dashboard/admin/?section=shipping-control')
+
+def mark_order_as_shipped(request, order_id):
+    if request.user.role != 'admin':
+        messages.error(request, "You are not authorized to perform this action.")
+        return redirect('/dashboard/admin/?section=shipping-control')
+    
+    order = get_object_or_404(Order, id=order_id)
+    
+    if order.status != Order.Status.SHIPPING:
+        messages.error(request, f"Cannot mark order #{order.id} as shipped. It is not in transit yet.")
+        return redirect('/dashboard/admin/?section=shipping-control')
+    
+    order.status = Order.Status.SHIPPED
+    order.save()
+    
+    subject = "Your Order Has Been Shipped - ApexStriker"
+    message = f"Hi {order.customer.user.username},\n\nYour order #{order.id} has been shipped and is on its way to you.\n\nThank you for shopping with us!"
+    email_thread = threading.Thread(target=send_email_async, args=(subject, message, order.customer.user.email))
+    email_thread.start()
+    
+    messages.success(request, f"Order #{order.id} marked as shipped and customer notified.")
+    return redirect('/dashboard/admin/?section=shipping-control')
