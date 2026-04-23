@@ -29,7 +29,7 @@
             <div>
                 <p class="text-[9px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Warehouse Status</p>
                 <div class="relative">
-                    <select name="status" class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic appearance-none cursor-pointer focus:outline-none">
+                    <select name="status" onchange="this.form.submit()" class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic appearance-none cursor-pointer focus:outline-none">
                         <option value="all" {% if request.GET.status == 'all' %}selected{% endif %}>All Logs</option>
                         <option value="pending" {% if request.GET.status == 'pending' %}selected{% endif %}>Awaiting Dispatch</option>
                         <option value="dispatched" {% if request.GET.status == 'dispatched' %}selected{% endif %}>Dispatched by Vendor</option>
@@ -42,7 +42,7 @@
             <div>
                 <p class="text-[9px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Sort Priority</p>
                 <div class="relative">
-                    <select name="sort" class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic appearance-none cursor-pointer focus:outline-none">
+                    <select name="sort" onchange="this.form.submit()" class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic appearance-none cursor-pointer focus:outline-none">
                         <option value="latest" {% if request.GET.sort == 'latest' %}selected{% endif %}>Latest</option>
                         <option value="oldest" {% if request.GET.sort == 'oldest' %}selected{% endif %}>Oldest</option>
                         <option value="amount_desc" {% if request.GET.sort == 'amount_desc' %}selected{% endif %}>Amount: High to Low</option>
