@@ -22,18 +22,18 @@
                 <p class="text-[9px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Search Query</p>
                 <div class="relative">
                     <i data-lucide="search" class="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                    <input type="text" placeholder="ORDER ID / VENDOR..." class="w-full pl-12 pr-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all">
+                    <input type="text" name="q" value="{{ request.GET.q }}" placeholder="ORDER ID / VENDOR..." class="w-full pl-12 pr-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all">
                 </div>
             </div>
 
             <div>
                 <p class="text-[9px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Warehouse Status</p>
                 <div class="relative">
-                    <select class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic appearance-none cursor-pointer focus:outline-none">
-                        <option value="all">All Logs</option>
-                        <option value="pending">Pending Dispatch</option>
-                        <option value="dispatched">Dispatched by Vendor</option>
-                        <option value="received">In Admin Custody</option>
+                    <select name="status" class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic appearance-none cursor-pointer focus:outline-none">
+                        <option value="all" {% if request.GET.status == 'all' %}selected{% endif %}>All Logs</option>
+                        <option value="pending" {% if request.GET.status == 'pending' %}selected{% endif %}>Awaiting Dispatch</option>
+                        <option value="dispatched" {% if request.GET.status == 'dispatched' %}selected{% endif %}>Dispatched by Vendor</option>
+                        <option value="received" {% if request.GET.status == 'received' %}selected{% endif %}>Received in Warehouse</option>
                     </select>
                     <i data-lucide="activity" class="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
                 </div>
@@ -42,9 +42,11 @@
             <div>
                 <p class="text-[9px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Sort Priority</p>
                 <div class="relative">
-                    <select class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic appearance-none cursor-pointer focus:outline-none">
-                        <option value="latest">Latest First</option>
-                        <option value="oldest">Historical</option>
+                    <select name="sort" class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic appearance-none cursor-pointer focus:outline-none">
+                        <option value="latest" {% if request.GET.sort == 'latest' %}selected{% endif %}>Latest</option>
+                        <option value="oldest" {% if request.GET.sort == 'oldest' %}selected{% endif %}>Oldest</option>
+                        <option value="amount_desc" {% if request.GET.sort == 'amount_desc' %}selected{% endif %}>Amount: High to Low</option>
+                        <option value="amount_asc" {% if request.GET.sort == 'amount_asc' %}selected{% endif %}>Amount: Low to High</option>
                     </select>
                     <i data-lucide="arrow-up-down" class="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
                 </div>
