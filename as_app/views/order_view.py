@@ -7,6 +7,7 @@ from ..models import Cart, Order, OrderItem, Disbursement
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.db import models
+from decimal import Decimal
 import threading
 import json
 
@@ -137,20 +138,25 @@ def confirm_delivery_view(request, order_id):
         messages.error(request, f"Cannot confirm delivery for order #{order.id}. It has not been marked as shipped yet.")
         return redirect('/dashboard/customer/?section=my-orders')
     
-    sum_money = OrderItem.objects.filter(order=order, vendor=request.user.vendor_profile).aggregate(total=models.Sum('total_price'))['total'] or 0
-    
     order.status = Order.Status.COMPLETED
     order.save()
     
-    dibursement = Disbursement.objects.create(
-        order=order,
-        vendor=order.items.first().vendor,
-        admin_commission=sum_money * 0.10,
-        payout_amount=sum_money * 0.90,
-        is_transferred=False,
-        bank_ref_no=order.items.first().vendor.bank_account_number
-    )
-    dibursement.save()
+    vendors = OrderItem.objects.filter(order=order).values_list('vendor', flat=True).distinct()
+    
+    for vendor in vendors:
+        vendor_items = OrderItem.objects.filter(order=order, vendor_id=vendor)
+        total_amount = sum(item.total_price for item in vendor_items)
+        
+        admin_commission = total_amount * Decimal('0.10')
+        payout_amount = total_amount - admin_commission
+        
+        disbursement = Disbursement.objects.create(
+            order=order,
+            vendor_id=vendor,
+            admin_commission=admin_commission,
+            payout_amount=payout_amount
+        )
+        disbursement.save()
     
     subject = "Order Delivery Confirmed - ApexStriker"
     message = f"Hi {order.customer.user.username},\n\nThank you for confirming the delivery of your order #{order.id}. We hope you enjoy your purchase!\n\nBest regards,\nApexStriker Team"
