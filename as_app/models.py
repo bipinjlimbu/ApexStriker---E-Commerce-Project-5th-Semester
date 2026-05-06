@@ -162,6 +162,10 @@ class Disbursement(models.Model):
     bank_ref_no = models.CharField(max_length=100, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
+    @property
+    def total_amount(self):
+        return self.admin_commission + self.payout_amount
 
     class Meta:
         unique_together = ('order', 'vendor')
