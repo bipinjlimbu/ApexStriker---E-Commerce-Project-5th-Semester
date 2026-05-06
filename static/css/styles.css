@@ -416,7 +416,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   display: none;
 }
 
-.-translate-y-1\/2, .translate-y-\[-10px\], .translate-x-1\/2, .translate-x-20, .-translate-x-full, .translate-x-32, .rotate-3, .skew-x-12, .transform, .active\:scale-95, .active\:scale-90, .active\:scale-\[0\.98\], .group-hover\:translate-y-0, .group-hover\:-translate-x-1, .group-hover\:translate-x-full, .group-hover\:translate-x-1, .group-hover\:rotate-90, .group-hover\:rotate-180, .group-hover\:scale-110, .group-hover\:scale-125, .group-hover\:scale-105 {
+.-translate-y-1\/2, .translate-y-\[-10px\], .translate-x-1\/2, .translate-x-20, .-translate-x-full, .translate-x-32, .rotate-3, .skew-x-12, .transform, .active\:scale-95, .active\:scale-90, .active\:scale-\[0\.98\], .group-hover\:translate-y-0, .group-hover\:-translate-x-1, .group-hover\:translate-x-full, .group-hover\:translate-x-1, .group-hover\:-translate-y-1, .group-hover\:rotate-90, .group-hover\:rotate-180, .group-hover\:scale-110, .group-hover\:scale-125, .group-hover\:scale-105 {
   --tw-translate-x: 0;
   --tw-translate-y: 0;
   --tw-rotate: 0;
@@ -1355,6 +1355,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   white-space: nowrap;
 }
 
+.whitespace-nowrap {
+  white-space: nowrap;
+}
+
 .rounded-3xl {
   border-radius: 1.5rem;
 }
@@ -1603,6 +1607,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-color: rgb(239 68 68 / 0.2);
 }
 
+.border-emerald-500\/20 {
+  border-color: rgb(16 185 129 / 0.2);
+}
+
 .border-t-transparent {
   border-top-color: transparent;
 }
@@ -1838,6 +1846,15 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .bg-slate-50\/95 {
   background-color: rgb(248 250 252 / 0.95);
+}
+
+.bg-emerald-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(5 150 105 / var(--tw-bg-opacity));
+}
+
+.bg-emerald-600\/20 {
+  background-color: rgb(5 150 105 / 0.2);
 }
 
 .bg-gradient-to-r {
@@ -2527,6 +2544,21 @@ Ensure the default browser behavior of the `hidden` attribute.
   color: rgb(134 239 172 / var(--tw-text-opacity));
 }
 
+.text-rose-500 {
+  --tw-text-opacity: 1;
+  color: rgb(244 63 94 / var(--tw-text-opacity));
+}
+
+.text-emerald-400 {
+  --tw-text-opacity: 1;
+  color: rgb(52 211 153 / var(--tw-text-opacity));
+}
+
+.text-emerald-700 {
+  --tw-text-opacity: 1;
+  color: rgb(4 120 87 / var(--tw-text-opacity));
+}
+
 .opacity-0 {
   opacity: 0;
 }
@@ -2684,6 +2716,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .shadow-blue-600\/30 {
   --tw-shadow-color: rgb(37 99 235 / 0.3);
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
+.shadow-emerald-500\/20 {
+  --tw-shadow-color: rgb(16 185 129 / 0.2);
   --tw-shadow: var(--tw-shadow-colored);
 }
 
@@ -2851,6 +2888,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .hover\:border-red-100:hover {
   --tw-border-opacity: 1;
   border-color: rgb(254 226 226 / var(--tw-border-opacity));
+}
+
+.hover\:border-emerald-500:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(16 185 129 / var(--tw-border-opacity));
 }
 
 .hover\:bg-blue-700:hover {
@@ -3084,6 +3126,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-ring-color: rgb(59 130 246 / 0.2);
 }
 
+.focus\:ring-emerald-500\/20:focus {
+  --tw-ring-color: rgb(16 185 129 / 0.2);
+}
+
 .active\:scale-95:active {
   --tw-scale-x: .95;
   --tw-scale-y: .95;
@@ -3119,6 +3165,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .group:hover .group-hover\:translate-x-1 {
   --tw-translate-x: 0.25rem;
+  transform: var(--tw-transform);
+}
+
+.group:hover .group-hover\:-translate-y-1 {
+  --tw-translate-y: -0.25rem;
   transform: var(--tw-transform);
 }
 
@@ -3243,6 +3294,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
   .md\:flex {
     display: flex;
+  }
+
+  .md\:w-1\/2 {
+    width: 50%;
   }
 
   .md\:grid-cols-2 {
