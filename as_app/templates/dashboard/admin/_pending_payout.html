@@ -113,7 +113,7 @@
                         </div>
 
                         {% if not payout.is_transferred %}
-                            <form action="/payout/process/2045/" method="POST" class="mt-auto flex flex-col md:flex-row items-center justify-between pt-8 border-t border-slate-100 gap-6">
+                            <form action="payment/payout/{{ payout.id }}/" method="POST" class="mt-auto flex flex-col md:flex-row items-center justify-between pt-8 border-t border-slate-100 gap-6">
                                 <div class="w-full md:w-1/2">
                                     <p class="text-[9px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Bank Reference Number (Input after transfer)</p>
                                     <input type="text" name="bank_ref_no" placeholder="ENTER TRANSACTION ID..." class="w-full px-6 py-4 bg-slate-100 border border-slate-200 rounded-2xl text-xs font-black uppercase italic focus:ring-2 focus:ring-emerald-500/20 transition-all outline-none">
