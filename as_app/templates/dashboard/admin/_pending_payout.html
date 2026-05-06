@@ -1,6 +1,5 @@
 <div class="flex-grow flex flex-col h-screen bg-slate-50 overflow-hidden">
-    
-    <!-- HEADER: Financial Command -->
+
     <div class="shrink-0 bg-slate-900 p-12 relative overflow-hidden z-50 shadow-2xl">
         <div class="absolute top-0 right-0 w-1/4 h-full bg-emerald-600 skew-x-12 translate-x-20 opacity-10"></div>
         <div class="relative z-10 flex justify-between items-end">
@@ -15,7 +14,6 @@
         </div>
     </div>
 
-    <!-- FILTERS -->
     <div class="shrink-0 bg-white border-b border-slate-200 px-12 py-8 z-40 shadow-sm">
         <form class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
@@ -44,20 +42,18 @@
         </form>
     </div>
 
-    <!-- SCROLLABLE CONTENT -->
     <div class="flex-grow overflow-y-auto custom-scrollbar p-12 bg-slate-50/50">
         <div class="space-y-10 pb-20 max-w-[1600px] mx-auto">
 
-            <!-- DISBURSEMENT CARD (Repeated Item) -->
+            {% for payout in pending_payouts %}
             <div class="bg-white rounded-[3rem] border border-slate-200 shadow-xl overflow-hidden group hover:border-emerald-500 transition-all duration-500">
                 <div class="flex flex-col lg:flex-row items-stretch">
                     
-                    <!-- Left Sidebar: The ID and Status -->
                     <div class="lg:w-72 shrink-0 relative flex flex-col justify-between p-10 bg-slate-900 border-r border-slate-800 overflow-hidden">
                         <div class="absolute inset-0 bg-emerald-600 skew-x-12 translate-x-32 opacity-10"></div>
                         <div class="relative z-10">
                             <p class="text-[9px] font-black text-slate-500 uppercase italic tracking-widest mb-1">Disbursement ID</p>
-                            <h4 class="text-2xl font-black text-white italic uppercase tracking-tighter">DISB - #2045</h4>
+                            <h4 class="text-2xl font-black text-white italic uppercase tracking-tighter">DISB - #{{ payout.id }}</h4>
                         </div>
                         
                         <div class="relative z-10">
@@ -66,70 +62,81 @@
                             </div>
                             <div class="space-y-2">
                                 <span class="inline-flex items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-xl text-[9px] font-black uppercase italic">
-                                    <i data-lucide="alert-circle" class="w-3 h-3"></i> Ready for Payout
+                                    {% if not payout.is_transferred %}
+                                        <i data-lucide="alert-circle" class="w-3 h-3"></i> Ready for Payout
+                                    {% else %}
+                                        <i data-lucide="check-circle" class="w-3 h-3"></i> Payout Completed
+                                    {% endif %}
                                 </span>
-                                <p class="text-[8px] font-black text-slate-500 uppercase italic tracking-widest ml-1">Verified: 2 Mins Ago</p>
+                                <p class="text-[8px] font-black text-slate-500 uppercase italic tracking-widest ml-1">Requested: {{ payout.created_at|date:"M j, Y" }}</p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Main Body: Financial Details -->
                     <div class="flex-grow p-10 flex flex-col">
                         <div class="flex justify-between items-start mb-10">
                             <div class="flex-grow">
                                 <p class="text-[9px] font-black text-emerald-600 uppercase italic tracking-widest mb-2">Recipient Vendor</p>
                                 <h3 class="text-4xl font-black text-slate-900 uppercase italic tracking-tighter leading-none mb-3">
-                                    Titan <span class="text-emerald-500">Gear Co.</span>
+                                    <span class="text-emerald-500">{{ payout.vendor.shop_name }}</span>
                                 </h3>
                                 <div class="flex items-center gap-3">
                                     <div class="flex items-center gap-1.5 bg-slate-100 px-3 py-1 rounded-full">
                                         <i data-lucide="phone" class="w-3 h-3 text-emerald-600"></i>
-                                        <span class="text-[10px] font-black uppercase italic tracking-widest text-slate-600">eSewa: 98XXXXXXXX</span>
+                                        <span class="text-[10px] font-black uppercase italic tracking-widest text-slate-600">Bank Account No: {{ payout.vendor.bank_account_number }}</span>
                                     </div>
                                     <div class="flex items-center gap-1.5 bg-slate-100 px-3 py-1 rounded-full">
                                         <i data-lucide="hash" class="w-3 h-3 text-emerald-600"></i>
-                                        <span class="text-[10px] font-black uppercase italic tracking-widest text-slate-600">Order: #1008</span>
+                                        <span class="text-[10px] font-black uppercase italic tracking-widest text-slate-600">Order: #{{ payout.order.id }}</span>
                                     </div>
                                 </div>
                             </div>
                             <div class="text-right">
                                 <p class="text-[9px] font-black text-slate-400 uppercase italic mb-1">Net Payout Amount</p>
-                                <p class="text-4xl font-black text-emerald-600 italic tracking-tighter leading-none">Rs. 14,500.00</p>
+                                <p class="text-4xl font-black text-emerald-600 italic tracking-tighter leading-none">Rs. {{ payout.payout_amount|floatformat:2 }}</p>
                             </div>
                         </div>
 
-                        <!-- Financial Breakdown -->
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
                             <div class="p-6 rounded-3xl bg-slate-50 border border-slate-100">
                                 <p class="text-[8px] font-black text-slate-400 uppercase italic mb-1 tracking-widest">Gross Sales</p>
-                                <p class="text-xl font-black text-slate-900 italic tracking-tighter">Rs. 16,000.00</p>
+                                <p class="text-xl font-black text-slate-900 italic tracking-tighter">Rs. {{ payout.total_amount|floatformat:2 }}</p>
                             </div>
                             <div class="p-6 rounded-3xl bg-slate-50 border border-slate-100">
                                 <p class="text-[8px] font-black text-rose-400 uppercase italic mb-1 tracking-widest">Admin Commission (10%)</p>
-                                <p class="text-xl font-black text-rose-500 italic tracking-tighter">- Rs. 1,500.00</p>
+                                <p class="text-xl font-black text-rose-500 italic tracking-tighter">- Rs. {{ payout.admin_commission|floatformat:2 }}</p>
                             </div>
                             <div class="p-6 rounded-3xl bg-emerald-50 border border-emerald-100">
                                 <p class="text-[8px] font-black text-emerald-400 uppercase italic mb-1 tracking-widest">Payout Ready</p>
-                                <p class="text-xl font-black text-emerald-700 italic tracking-tighter">Rs. 14,500.00</p>
+                                <p class="text-xl font-black text-emerald-700 italic tracking-tighter">Rs. {{ payout.payout_amount|floatformat:2 }}</p>
                             </div>
                         </div>
 
-                        <!-- ACTION FOOTER -->
-                        <form action="/payout/process/2045/" method="POST" class="mt-auto flex flex-col md:flex-row items-center justify-between pt-8 border-t border-slate-100 gap-6">
-                            <div class="w-full md:w-1/2">
-                                <p class="text-[9px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Bank Reference Number (Input after transfer)</p>
-                                <input type="text" name="bank_ref_no" placeholder="ENTER TRANSACTION ID..." class="w-full px-6 py-4 bg-slate-100 border border-slate-200 rounded-2xl text-xs font-black uppercase italic focus:ring-2 focus:ring-emerald-500/20 transition-all outline-none">
-                            </div>
+                        {% if not payout.is_transferred %}
+                            <form action="/payout/process/2045/" method="POST" class="mt-auto flex flex-col md:flex-row items-center justify-between pt-8 border-t border-slate-100 gap-6">
+                                <div class="w-full md:w-1/2">
+                                    <p class="text-[9px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Bank Reference Number (Input after transfer)</p>
+                                    <input type="text" name="bank_ref_no" placeholder="ENTER TRANSACTION ID..." class="w-full px-6 py-4 bg-slate-100 border border-slate-200 rounded-2xl text-xs font-black uppercase italic focus:ring-2 focus:ring-emerald-500/20 transition-all outline-none">
+                                </div>
 
-                            <button type="submit" class="h-16 px-10 bg-emerald-600 text-white rounded-2xl font-black italic uppercase text-[10px] tracking-widest hover:bg-slate-900 transition-all shadow-xl shadow-emerald-500/20 flex items-center gap-3 active:scale-95 group whitespace-nowrap">
-                                <i data-lucide="send" class="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
-                                Confirm Disbursement
-                            </button>
-                        </form>
+                                <button type="submit" class="h-16 px-10 bg-emerald-600 text-white rounded-2xl font-black italic uppercase text-[10px] tracking-widest hover:bg-slate-900 transition-all shadow-xl shadow-emerald-500/20 flex items-center gap-3 active:scale-95 group whitespace-nowrap">
+                                    <i data-lucide="send" class="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
+                                    Confirm Disbursement
+                                </button>
+                            </form>
+                        {% else %}
+                            <div class="mt-auto flex items-center justify-center pt-8 border-t border-slate-100">
+                                <span class="inline-flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-xl text-[10px] font-black uppercase italic">
+                                    <i data-lucide="check-circle" class="w-3 h-3"></i> Payout Successfully Disbursed
+                                </span>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
-            <!-- END CARD -->
+            {% empty %}
+                <p class="text-center text-slate-500 italic font-bold uppercase tracking-widest">No pending payouts at the moment.</p>
+            {% endfor %}
 
         </div>
     </div>
