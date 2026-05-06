@@ -4,7 +4,7 @@ from .views.main_view import home_view, verify_email_view, password_reset_view, 
 from .views.profile_view import profile_view, edit_profile_view, resend_verification_email, delete_profile_view
 from .views.brand_view import brands_view, add_brand_view, approve_brand_view, edit_brand_view, delete_brand_view
 from .views.product_view import add_product_view, marketplace_view, edit_product_view, delete_product_view, single_product_view, wishlist_toggle_view
-from .views.order_view import cart_view, update_cart_quantity, dispatch_item_view, receive_item_view, mark_order_as_pickup, mark_order_as_shipped
+from .views.order_view import cart_view, update_cart_quantity, dispatch_item_view, receive_item_view, mark_order_as_pickup, mark_order_as_shipped, confirm_delivery_view
 from .views.payment_view import initiate_esewa_payment, payment_success, payment_failed
 from .views.dashboard import admin_dashboard_view, approve_vendor_view, reject_vendor_view, vendor_dashboard_view, customer_dashboard_view, wishlist_remove_view, cancel_order_view, remove_order_view
 
@@ -48,4 +48,5 @@ urlpatterns = [
     path('orders/receive/<int:item_id>/', receive_item_view, name='receive_item'),
     path('orders/pickup/<int:order_id>/', mark_order_as_pickup, name='mark_order_as_pickup'),
     path('orders/shipped/<int:order_id>/', mark_order_as_shipped, name='mark_order_as_shipped'),
+    path('orders/confirm/<int:order_id>/', confirm_delivery_view, name='confirm_delivery'),
 ]
