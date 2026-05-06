@@ -154,13 +154,16 @@ class OrderItem(models.Model):
         return self.price_at_purchase * self.quantity
 
 class Disbursement(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    vendor = models.ForeignKey('Vendor', on_delete=models.CASCADE)
-    payout_amount = models.DecimalField(max_digits=12, decimal_places=2, help_text="Amount after commission")
-    admin_commission = models.DecimalField(max_digits=12, decimal_places=2)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='disbursements')
+    vendor = models.ForeignKey('Vendor', on_delete=models.CASCADE, related_name='disbursements')
+    payout_amount = models.DecimalField(max_digits=12, decimal_places=2)
     is_transferred = models.BooleanField(default=False)
     bank_ref_no = models.CharField(max_length=100, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ('order', 'vendor')
 
 class Review(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
