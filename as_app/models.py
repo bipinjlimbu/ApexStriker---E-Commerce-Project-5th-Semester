@@ -156,6 +156,7 @@ class OrderItem(models.Model):
 class Disbursement(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='disbursements')
     vendor = models.ForeignKey('Vendor', on_delete=models.CASCADE, related_name='disbursements')
+    admin_commission = models.DecimalField(max_digits=12, decimal_places=2)
     payout_amount = models.DecimalField(max_digits=12, decimal_places=2)
     is_transferred = models.BooleanField(default=False)
     bank_ref_no = models.CharField(max_length=100, blank=True)
