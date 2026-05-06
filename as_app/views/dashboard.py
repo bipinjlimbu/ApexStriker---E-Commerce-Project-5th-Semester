@@ -5,7 +5,7 @@ from django.conf import settings
 from django.shortcuts import get_object_or_404
 from django.db.models import Q, F
 from django.contrib import messages
-from ..models import User, Vendor, Brand, Product, Order, Wishlist, OrderItem
+from ..models import User, Vendor, Brand, Product, Order, Wishlist, OrderItem, Disbursement
 import threading
     
 def send_email_async(subject, message, recipient):
@@ -25,6 +25,7 @@ def admin_dashboard_view(request):
     context = {
         'section' : section,
         'total_pending_vendors': Vendor.objects.filter(status=Vendor.Status.PENDING).count(),
+        'total_pending_payouts': Disbursement.objects.filter(is_transferred=False).count(),
         'total_products_reviews': 350,
     }
     
@@ -68,6 +69,9 @@ def admin_dashboard_view(request):
 
     elif section == 'shipping-control':
         context['shipping_orders'] = Order.objects.all().order_by('-created_at')
+        
+    elif section == 'pending-payout':
+        context['pending_payouts'] = Disbursement.objects.all().order_by('-created_at')
         
     elif section == 'product-reviews':
         context['product-reviews'] = None
