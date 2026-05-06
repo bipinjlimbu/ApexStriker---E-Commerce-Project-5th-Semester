@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
-from ..models import Cart, Order, OrderItem
+from ..models import Cart, Order, OrderItem, Disbursement
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 import threading
@@ -124,3 +124,27 @@ def mark_order_as_shipped(request, order_id):
     
     messages.success(request, f"Order #{order.id} marked as shipped and customer notified.")
     return redirect('/dashboard/admin/?section=shipping-control')
+
+def confirm_delivery_view(request, order_id):
+    if request.user.role != 'customer':
+        messages.error(request, "You are not authorized to perform this action.")
+        return redirect('/dashboard/customer/?section=my-orders')
+    
+    order = get_object_or_404(Order, id=order_id, customer=request.user.customer_profile)
+    
+    if order.status != Order.Status.SHIPPED:
+        messages.error(request, f"Cannot confirm delivery for order #{order.id}. It has not been marked as shipped yet.")
+        return redirect('/dashboard/customer/?section=my-orders')
+    
+    order.status = Order.Status.COMPLETED
+    order.save()
+    
+    Disbursement
+    
+    subject = "Order Delivery Confirmed - ApexStriker"
+    message = f"Hi {order.customer.user.username},\n\nThank you for confirming the delivery of your order #{order.id}. We hope you enjoy your purchase!\n\nBest regards,\nApexStriker Team"
+    email_thread = threading.Thread(target=send_email_async, args=(subject, message, order.customer.user.email))
+    email_thread.start()
+    
+    messages.success(request, f"Thank you for confirming delivery of order #{order.id}.")
+    return redirect('/dashboard/customer/?section=my-orders')
