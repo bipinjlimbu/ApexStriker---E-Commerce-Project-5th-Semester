@@ -76,6 +76,14 @@
                     <i data-lucide="truck" class="w-4 h-4 group-hover:scale-110 transition-transform"></i>
                     Transit Control
                 </a>
+
+                <a href="?section=pending-payout" class="flex items-center gap-4 px-4 py-4 rounded-2xl {% if section == 'pending-payout' %}bg-blue-600 text-white shadow-lg{% else %}text-slate-400 hover:bg-blue-600 hover:text-white{% endif %} font-black italic uppercase text-xs tracking-widest transition-all mt-1 group">
+                    <i data-lucide="dollar-sign" class="w-4 h-4 group-hover:scale-110 transition-transform"></i>
+                    Pending Payouts
+                    {% if total_pending_payouts > 0 %}
+                        <span class="ml-auto bg-white/20 text-white px-2 py-0.5 rounded-lg text-[10px]"> {{ total_pending_payouts }}</span>
+                    {% endif %}
+                </a>
             </div>
 
             <div class="space-y-2">
