@@ -77,7 +77,7 @@ def admin_dashboard_view(request):
         context['product-reviews'] = None
         
     elif section == 'revenue-logs':
-        context['revenue-logs'] = None
+        context['revenue-logs'] = Disbursement.objects.filter(is_transferred=True).order_by('-created_at')
 
     
     return render(request, 'dashboard/admin_dashboard.html', context)
