@@ -5,7 +5,7 @@ from .views.profile_view import profile_view, edit_profile_view, resend_verifica
 from .views.brand_view import brands_view, add_brand_view, approve_brand_view, edit_brand_view, delete_brand_view
 from .views.product_view import add_product_view, marketplace_view, edit_product_view, delete_product_view, single_product_view, wishlist_toggle_view
 from .views.order_view import cart_view, update_cart_quantity, dispatch_item_view, receive_item_view, mark_order_as_pickup, mark_order_as_shipped, confirm_delivery_view
-from .views.payment_view import initiate_esewa_payment, payment_success, payment_failed
+from .views.payment_view import initiate_esewa_payment, payment_success, payment_failed, payment_payout
 from .views.dashboard import admin_dashboard_view, approve_vendor_view, reject_vendor_view, vendor_dashboard_view, customer_dashboard_view, wishlist_remove_view, cancel_order_view, remove_order_view
 
 urlpatterns = [
@@ -42,6 +42,7 @@ urlpatterns = [
     path('payment/initiate/', initiate_esewa_payment, name='initiate_esewa_payment'),
     path('payment/success/', payment_success, name='payment_success'),
     path('payment/failed/', payment_failed, name='payment_failed'),
+    path('payment/payout/<int:payout_id>/', payment_payout, name='payment_payout'),
     path('orders/cancel/<int:order_id>/', cancel_order_view, name='cancel_order'),
     path('orders/remove/<int:order_id>/', remove_order_view, name='remove_order'),
     path('orders/dispatch/<int:item_id>/', dispatch_item_view, name='dispatch_item'),
