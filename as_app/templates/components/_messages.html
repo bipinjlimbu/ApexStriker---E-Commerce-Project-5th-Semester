@@ -1,0 +1,74 @@
+<!-- Toast Container -->
+<div id="toast-container" class="fixed top-5 right-5 z-[100] flex flex-col gap-3 pointer-events-none">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="toast-item pointer-events-auto translate-x-[120%] opacity-0 transition-all duration-500 ease-[cubic-bezier(0.18,0.89,0.32,1.28)] bg-slate-900 text-white p-4 rounded-lg shadow-2xl min-w-[320px] relative overflow-hidden"
+                 data-type="{{ message.tags }}">
+                
+                <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <!-- Icon Logic Based on Message Type -->
+                        {% if message.tags == 'success' %}
+                            <i data-lucide="check-circle-2" class="w-5 h-5 text-green-500"></i>
+                        {% elif message.tags == 'error' %}
+                            <i data-lucide="alert-circle" class="w-5 h-5 text-red-500"></i>
+                        {% else %}
+                            <i data-lucide="info" class="w-5 h-5 text-blue-400"></i>
+                        {% endif %}
+                        
+                        <p class="text-sm font-semibold tracking-wide">{{ message }}</p>
+                    </div>
+                    
+                    <button onclick="removeToast(this.parentElement.parentElement)" class="text-slate-500 hover:text-white transition-colors">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- Progress Bar Color Logic -->
+                <div class="absolute bottom-0 left-0 h-[3px] progress-bar 
+                    {% if message.tags == 'success' %}bg-green-500
+                    {% elif message.tags == 'error' %}bg-red-500
+                    {% else %}bg-blue-400{% endif %}" 
+                    style="width: 100%;">
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const toasts = document.querySelectorAll('.toast-item');
+
+        toasts.forEach((toast, index) => {
+            // Slide in
+            setTimeout(() => {
+                toast.classList.remove('translate-x-[120%]', 'opacity-0');
+                startToastTimer(toast);
+            }, index * 150);
+        });
+    });
+
+    function startToastTimer(toast) {
+        const bar = toast.querySelector('.progress-bar');
+        let width = 100;
+        const duration = 3000; 
+        const intervalTime = 10;
+        const step = (intervalTime / duration) * 100;
+
+        const timer = setInterval(() => {
+            width -= step;
+            bar.style.width = width + '%';
+
+            if (width <= 0) {
+                clearInterval(timer);
+                removeToast(toast);
+            }
+        }, intervalTime);
+    }
+
+    function removeToast(toast) {
+        toast.classList.add('translate-x-[120%]', 'opacity-0');
+        setTimeout(() => { toast.remove(); }, 500);
+    }
+</script>
