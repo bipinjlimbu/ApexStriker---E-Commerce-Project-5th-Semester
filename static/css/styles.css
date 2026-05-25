@@ -1072,6 +1072,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   max-width: 1600px;
 }
 
+.max-w-sm {
+  max-width: 24rem;
+}
+
 .flex-1 {
   flex: 1 1 0%;
 }
