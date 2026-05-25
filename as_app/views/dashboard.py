@@ -27,6 +27,9 @@ def admin_dashboard_view(request):
         'total_pending_vendors': Vendor.objects.filter(status=Vendor.Status.PENDING).count(),
         'total_pending_payouts': Disbursement.objects.filter(is_transferred=False).count(),
         'total_products_reviews': 350,
+        'total_admin_revenue': sum(disbursement.admin_commission for disbursement in Disbursement.objects.filter(is_transferred=True)),
+        'total_vendor_revenue': sum(disbursement.payout_amount for disbursement in Disbursement.objects.filter(is_transferred=True)),
+        'total_revenue': sum(disbursement.total_amount for disbursement in Disbursement.objects.filter(is_transferred=True)),
     }
     
     if section == 'member-list':
