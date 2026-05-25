@@ -133,6 +133,10 @@ def payment_payout(request, payout_id):
     if request.method == "POST":
         bank_ref_no = request.POST.get('bank_ref_no')
         
+        if not bank_ref_no:
+            messages.error(request, "Bank reference number is required.")
+            return redirect('/dashboard/admin/?section=pending-payout')
+        
         disbursement = Disbursement.objects.filter(id=payout_id).first()
         
         if not disbursement:
