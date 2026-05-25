@@ -10,6 +10,8 @@
 
 <body class="bg-slate-50 flex min-h-screen overflow-hidden">
 
+    {% include 'components/_messages.html' %}
+
     <aside class="w-80 bg-slate-900 text-white flex flex-col shadow-2xl relative z-30 h-screen">
         <div class="p-8 border-b border-white/5">
             <div class="flex items-center gap-3">
@@ -69,7 +71,6 @@
     </aside>
 
     <main class="flex-grow flex flex-col h-screen bg-slate-50">
-        {% include 'components/_alert_messages.html' %}
             
         {% if section == 'product-management' or not section %}
 
