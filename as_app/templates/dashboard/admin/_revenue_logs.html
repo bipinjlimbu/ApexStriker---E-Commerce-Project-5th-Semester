@@ -14,7 +14,7 @@
                 </div>
                 <div>
                     <p class="text-[9px] font-black text-slate-500 uppercase italic tracking-widest">Gross Volume (GMV)</p>
-                    <p class="text-2xl font-black text-white italic">Rs. 8,42,000</p>
+                    <p class="text-2xl font-black text-white italic">Rs. {{ total_revenue|floatformat:2 }}</p>
                 </div>
             </div>
 
@@ -24,7 +24,7 @@
                 </div>
                 <div>
                     <p class="text-[9px] font-black text-slate-500 uppercase italic tracking-widest">Platform Earnings</p>
-                    <p class="text-2xl font-black text-emerald-400 italic">Rs. 84,200</p>
+                    <p class="text-2xl font-black text-emerald-400 italic">Rs. {{ total_admin_revenue|floatformat:2 }}</p>
                 </div>
             </div>
 
@@ -34,7 +34,7 @@
                 </div>
                 <div>
                     <p class="text-[9px] font-black text-slate-500 uppercase italic tracking-widest">Vendor Payables</p>
-                    <p class="text-2xl font-black text-slate-300 italic">Rs. 7,57,800</p>
+                    <p class="text-2xl font-black text-slate-300 italic">Rs. {{ total_vendor_revenue|floatformat:2 }}</p>
                 </div>
             </div>
         </div>
