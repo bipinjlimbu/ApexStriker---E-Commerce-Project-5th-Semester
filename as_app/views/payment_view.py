@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.shortcuts import render, redirect
-from ..models import Cart, Order, OrderItem
+from ..models import Cart, Order, OrderItem, Disbursement
 from django.contrib import messages
 import requests
 import json
@@ -128,3 +128,22 @@ def payment_success(request):
 def payment_failed(request):
     messages.error(request, "Payment Failed or Cancelled. Please try again.")
     return render(request, 'main/payment_failed_page.html')
+
+def payment_payout(request, payout_id):
+    if request.method == "POST":
+        bank_ref_no = request.POST.get('bank_ref_no')
+        
+        disbursement = Disbursement.objects.filter(id=payout_id).first()
+        
+        if not disbursement:
+            messages.error(request, "Invalid payout ID.")
+            return redirect('/dashboard/admin/?section=pending-payout')
+        
+        disbursement.bank_ref_no = bank_ref_no
+        disbursement.is_transferred = True
+        disbursement.save()
+        
+        messages.success(request, "Payout marked as transferred.")
+        return redirect('/dashboard/admin/?section=pending-payout')
+    
+    return redirect('/dashboard/admin/?section=pending-payout')
