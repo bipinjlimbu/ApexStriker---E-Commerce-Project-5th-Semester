@@ -71,7 +71,7 @@ def admin_dashboard_view(request):
         context['shipping_orders'] = Order.objects.all().order_by('-created_at')
         
     elif section == 'pending-payout':
-        context['pending_payouts'] = Disbursement.objects.all().order_by('-created_at')
+        context['pending_payouts'] = Disbursement.objects.filter(is_transferred=False).order_by('-created_at')
         
     elif section == 'product-reviews':
         context['product-reviews'] = None
