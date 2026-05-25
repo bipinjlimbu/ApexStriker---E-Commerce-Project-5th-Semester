@@ -77,10 +77,10 @@ def admin_dashboard_view(request):
         context['pending_payouts'] = Disbursement.objects.filter(is_transferred=False).order_by('-created_at')
         
     elif section == 'product-reviews':
-        context['product-reviews'] = None
+        context['product_reviews'] = None
         
     elif section == 'revenue-logs':
-        context['revenue-logs'] = Disbursement.objects.filter(is_transferred=True).order_by('-created_at')
+        context['revenue_logs'] = Disbursement.objects.filter(is_transferred=True).order_by('-created_at')
 
     
     return render(request, 'dashboard/admin_dashboard.html', context)
