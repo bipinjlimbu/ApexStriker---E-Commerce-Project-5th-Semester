@@ -141,6 +141,9 @@ def vendor_dashboard_view(request):
     
     context = {
         'pending_order_count': OrderItem.objects.filter(vendor=request.user.vendor_profile, dispatched=False, order__status='paid').count(),
+        'Gross_revenue': sum(item.total_amount for item in Disbursement.objects.filter(vendor=request.user.vendor_profile, is_transferred=True)),
+        'Net_revenue': sum(item.payout_amount for item in Disbursement.objects.filter(vendor=request.user.vendor_profile, is_transferred=True)),
+        'Admin_commission': sum(item.admin_commission for item in Disbursement.objects.filter(vendor=request.user.vendor_profile, is_transferred=True)),
         'section': section,
     }
     
