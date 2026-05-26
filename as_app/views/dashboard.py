@@ -177,7 +177,7 @@ def vendor_dashboard_view(request):
         
         
     if section == 'sales-overview':
-        context['sales_overview'] = None
+        context['sales_overview'] = Disbursement.objects.filter(vendor=request.user.vendor_profile, is_transferred=True).order_by('-created_at')
         
     if section == 'inventory-management':
         context['inventory'] = None
