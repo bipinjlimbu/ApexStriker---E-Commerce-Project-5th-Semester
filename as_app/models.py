@@ -139,6 +139,10 @@ class Order(models.Model):
     transaction_id = models.CharField(max_length=100, help_text="eSewa/Khalti Ref ID")
     shipping_address = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    
+    @property
+    def item_count(self):
+        return self.items.aggregate(total=models.Sum('quantity'))['total'] or 0
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')

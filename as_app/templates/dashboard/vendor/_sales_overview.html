@@ -65,11 +65,11 @@
                         </thead>
                         <tbody class="divide-y divide-slate-50">
                             
-                            {% for i in "x"|ljust:"12" %}
+                            {% for disbursement in sales_overview %}
                             <tr class="hover:bg-emerald-50/10 transition-colors group">
                                 <td class="px-8 py-6">
-                                    <p class="text-xs font-black text-slate-900 italic uppercase tracking-tighter">ORD-#1008</p>
-                                    <p class="text-[9px] text-slate-400 font-bold italic uppercase">May 25, 2026 • 04:30 PM</p>
+                                    <p class="text-xs font-black text-slate-900 italic uppercase tracking-tighter">ORD-#{{ disbursement.order.id }}</p>
+                                    <p class="text-[9px] text-slate-400 font-bold italic uppercase">{{ disbursement.order.created_at|date:"M d, Y • h:i A" }}</p>
                                 </td>
                                 <td class="px-8 py-6">
                                     <div class="flex items-center gap-3">
@@ -77,22 +77,23 @@
                                             <i data-lucide="layers" class="w-5 h-5 text-slate-500"></i>
                                         </div>
                                         <div>
-                                            <p class="text-sm font-black text-slate-800 italic uppercase tracking-tight">Pro Elite Carbon Running Shoes</p>
-                                            <p class="text-[9px] text-slate-400 font-bold uppercase tracking-wider">SKU: RUN-BLK-42</p>
+                                            {% for item in disbursement.order.items.all %}
+                                                <p class="text-sm font-black text-slate-800 italic uppercase tracking-tight">{{ item.product.name }}</p>
+                                            {% endfor %}
                                         </div>
                                     </div>
                                 </td>
                                 <td class="px-8 py-6 text-center">
-                                    <span class="text-xs font-mono font-bold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-md">01</span>
+                                    <span class="text-xs font-mono font-bold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-md">{{ disbursement.order.item_count }}</span>
                                 </td>
                                 <td class="px-8 py-6 text-right">
-                                    <p class="font-black text-slate-900 italic text-sm">Rs. 16,000.00</p>
+                                    <p class="font-black text-slate-900 italic text-sm">Rs. {{ disbursement.order.total_amount|floatformat:2 }}</p>
                                 </td>
                                 <td class="px-8 py-6 text-right">
-                                    <p class="font-black text-rose-500/80 italic text-xs">- Rs. 1,600.00</p>
+                                    <p class="font-black text-rose-500/80 italic text-xs">- Rs. {{ disbursement.admin_commission|floatformat:2 }}</p>
                                 </td>
                                 <td class="px-8 py-6 text-right bg-emerald-50/20">
-                                    <p class="font-black text-emerald-600 italic text-base">Rs. 14,400.00</p>
+                                    <p class="font-black text-emerald-600 italic text-base">Rs. {{ disbursement.payout_amount|floatformat:2 }}</p>
                                 </td>
                                 <td class="px-8 py-6">
                                     <span class="mx-auto text-[9px] font-black text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-lg uppercase italic border border-emerald-100 flex items-center gap-1.5 w-fit shadow-sm">
