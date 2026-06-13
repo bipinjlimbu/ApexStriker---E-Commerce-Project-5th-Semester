@@ -318,4 +318,10 @@ def wishlist_toggle_view(request, product_id):
 
 @login_required
 def add_review_view(request, product_id):
-    return render(request, 'main/add_review_page.html', {'cart_count': cart_count(request)})
+    if request.user.role != 'customer':
+        messages.error(request, "Only customers can submit reviews.")
+        return redirect(f'/products/{product_id}/')
+    
+    product = Product.objects.get(id=product_id)
+    
+    return render(request, 'main/add_review_page.html', {'cart_count': cart_count(request), 'product': product})
