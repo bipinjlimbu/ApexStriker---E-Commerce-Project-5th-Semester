@@ -270,10 +270,11 @@ def delete_product_view(request, product_id):
 def single_product_view(request, product_id):
     product = Product.objects.get(id=product_id)
     
-    if Wishlist.objects.filter(customer=request.user.customer_profile, product=product).exists():
-        product.in_wishlist = True
-    else:
-        product.in_wishlist = False
+    if request.user.is_authenticated and request.user.role == 'customer':
+        if Wishlist.objects.filter(customer=request.user.customer_profile, product=product).exists():
+            product.in_wishlist = True
+        else:
+            product.in_wishlist = False
 
     if request.method == 'POST':
         if not request.user.is_authenticated or request.user.role != 'customer':
