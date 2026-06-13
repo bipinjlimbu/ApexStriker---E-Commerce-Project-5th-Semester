@@ -44,7 +44,32 @@ def add_review_view(request, product_id):
 
 @login_required
 def edit_review_view(request, review_id):
-    return render(request, 'main/edit_review_page.html', {'cart_count': cart_count(request)})
+    review = Review.objects.get(id=review_id)
+    
+    if review.customer != request.user.customer_profile:
+        messages.error(request, "You are not authorized to edit this review.")
+        return redirect(f'/products/{review.product.id}/')
+    
+    if request.method == 'POST':
+        rating = request.POST.get('rating')
+        comment = request.POST.get('comment')
+        
+        if not rating or int(rating) < 1 or int(rating) > 5:
+            messages.error(request, "Rating must be between 1 and 5.")
+            return redirect(f'/products/review/edit/{review_id}/')
+        
+        if not comment:
+            messages.error(request, "Comment cannot be empty.")
+            return redirect(f'/products/review/edit/{review_id}/')
+        
+        review.rating = rating
+        review.comment = comment
+        review.save()
+        
+        messages.success(request, "Your review has been updated successfully.")
+        return redirect(f'/products/{review.product.id}/')
+    
+    return render(request, 'main/edit_review_page.html', {'cart_count': cart_count(request), 'review': review})
 
 @login_required
 def delete_review_view(request, review_id):
