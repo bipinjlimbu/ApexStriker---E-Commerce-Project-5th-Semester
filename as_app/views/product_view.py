@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q, Case, When, Value, IntegerField
-from ..models import Product, Brand, Vendor, Cart, Wishlist
+from ..models import Product, Brand, Vendor, Cart, Wishlist, Review
 import json
 
 def cart_count(request):
@@ -323,5 +323,24 @@ def add_review_view(request, product_id):
         return redirect(f'/products/{product_id}/')
     
     product = Product.objects.get(id=product_id)
+    
+    if request.method == 'POST':
+        rating = request.POST.get('rating')
+        comment = request.POST.get('comment')
+        
+        if not rating or int(rating) < 1 or int(rating) > 5:
+            messages.error(request, "Rating must be between 1 and 5.")
+            return redirect(f'/products/{product_id}/')
+        
+        review = Review.objects.create(
+            product=product,
+            customer=request.user.customer_profile,
+            rating=rating,
+            comment=comment
+        )
+        review.save()
+        
+        messages.success(request, "Your review has been submitted successfully.")
+        return redirect(f'/products/{product_id}/')
     
     return render(request, 'main/add_review_page.html', {'cart_count': cart_count(request), 'product': product})
