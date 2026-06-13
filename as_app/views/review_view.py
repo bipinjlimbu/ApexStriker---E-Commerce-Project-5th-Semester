@@ -43,6 +43,10 @@ def add_review_view(request, product_id):
     return render(request, 'main/add_review_page.html', {'cart_count': cart_count(request), 'product': product})
 
 @login_required
+def edit_review_view(request, review_id):
+    return render(request, 'main/edit_review_page.html', {'cart_count': cart_count(request)})
+
+@login_required
 def delete_review_view(request, review_id):
     review = Review.objects.get(id=review_id)
     
