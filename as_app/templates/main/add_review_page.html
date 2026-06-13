@@ -9,7 +9,6 @@
     <style>
         input:focus, textarea:focus { border-color: #2563eb !important; background-color: white !important; }
         
-        /* Interactive Star UI System Transitions */
         .star-btn {
             transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
             outline: none !important;
@@ -31,21 +30,22 @@
     <main class="flex-grow flex items-center justify-center py-12 px-4">
         <div class="max-w-2xl w-full bg-white p-10 rounded-[2.5rem] shadow-2xl border border-slate-100">
             
-            <!-- Context Header Block -->
             <div class="text-center mb-10">
                 <div class="inline-block bg-blue-600 text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-[0.2em] italic mb-4">Customer Voice</div>
                 <h2 class="text-3xl font-black text-slate-900 tracking-tighter uppercase italic">Write A <span class="text-blue-600">Review</span></h2>
                 <p class="text-slate-500 text-xs font-bold mt-2 uppercase tracking-wider italic">Share your experience with the ecosystem</p>
             </div>
 
-            <!-- Django Native Form Frame -->
             <form method="POST" class="space-y-6">
                 {% csrf_token %}
 
-                <!-- STATIC PRODUCT PREVIEW CALLOUT -->
                 <div class="p-4 bg-slate-50 border border-slate-200/60 rounded-2xl flex items-center gap-4 mb-4">
                     <div class="h-12 w-12 bg-white rounded-xl flex items-center justify-center border border-slate-200 text-slate-400 shrink-0">
-                        <i data-lucide="package" class="w-6 h-6 text-blue-500"></i>
+                        {% if product.get_primary.image.url %}
+                            <img src="{{ product.get_primary.image.url }}" alt="{{ product.name }}" class="h-full w-full object-cover rounded-xl">
+                        {% else %}
+                            <i data-lucide="package" class="w-6 h-6 text-blue-500"></i>
+                        {% endif %}
                     </div>
                     <div>
                         <p class="text-[9px] font-black text-slate-400 uppercase italic tracking-widest">You Are Reviewing</p>
@@ -53,35 +53,31 @@
                     </div>
                 </div>
 
-                <!-- RATING MATRIX SELECTION LAYER (Maps to standard rating field) -->
                 <div class="space-y-2">
                     <label class="text-[11px] font-black text-slate-500 uppercase tracking-widest ml-2 italic flex items-center gap-2">
                         <i data-lucide="star" class="w-3 h-3 text-blue-500"></i> Select Product Rating
                     </label>
                     
                     <div class="flex items-center gap-2 p-4 bg-slate-50 border border-slate-200 rounded-2xl" id="star-rating-container">
-                        <!-- Five Clickable Structural Star Nodes -->
-                        <button type="button" data-value="1" class="star-btn text-amber-400">
-                            <i data-lucide="star" class="w-7 h-7 fill-current"></i>
+                        <button type="button" data-value="1" class="star-btn">
+                            <i data-lucide="star" class="w-7 h-7"></i>
                         </button>
-                        <button type="button" data-value="2" class="star-btn text-amber-400">
-                            <i data-lucide="star" class="w-7 h-7 fill-current"></i>
+                        <button type="button" data-value="2" class="star-btn">
+                            <i data-lucide="star" class="w-7 h-7"></i>
                         </button>
-                        <button type="button" data-value="3" class="star-btn text-amber-400">
-                            <i data-lucide="star" class="w-7 h-7 fill-current"></i>
+                        <button type="button" data-value="3" class="star-btn">
+                            <i data-lucide="star" class="w-7 h-7"></i>
                         </button>
-                        <button type="button" data-value="4" class="star-btn text-amber-400">
-                            <i data-lucide="star" class="w-7 h-7 fill-current"></i>
+                        <button type="button" data-value="4" class="star-btn">
+                            <i data-lucide="star" class="w-7 h-7"></i>
                         </button>
-                        <button type="button" data-value="5" class="star-btn text-amber-400">
-                            <i data-lucide="star" class="w-7 h-7 fill-current"></i>
+                        <button type="button" data-value="5" class="star-btn">
+                            <i data-lucide="star" class="w-7 h-7"></i>
                         </button>
                         
-                        <!-- Reactive UI Text Description Flag -->
-                        <span id="rating-text-flag" class="text-xs font-black text-blue-600 uppercase italic tracking-wider ml-3">Excellent (5/5)</span>
+                        <span id="rating-text-flag" class="text-xs font-black text-blue-600 uppercase italic tracking-wider ml-3"></span>
                     </div>
 
-                    <!-- Hidden Database Binding Input Element -->
                     <input type="hidden" name="rating" id="id_rating" value="{{ data.rating|default:'5' }}">
                     
                     {% if errors.rating %}
@@ -89,7 +85,6 @@
                     {% endif %}
                 </div>
 
-                <!-- COMMENT EXTENDED FIELD LAYER (Maps to comment textfield field) -->
                 <div class="space-y-1">
                     <label class="text-[11px] font-black text-slate-500 uppercase tracking-widest ml-2 italic flex items-center gap-2">
                         <i data-lucide="message-square" class="w-3 h-3 text-blue-500"></i> Detailed Review Comment
@@ -102,7 +97,6 @@
                     {% endif %}
                 </div>
 
-                <!-- TRANSACTION PROCESS SUBMIT ACTIONS -->
                 <div class="space-y-4 pt-6">
                     <button type="submit" class="w-full bg-blue-600 text-white font-black py-5 rounded-2xl hover:bg-blue-700 transition-all active:scale-95 flex items-center justify-center gap-3 uppercase italic tracking-[0.2em] text-xs">
                         <i data-lucide="send" class="w-4 h-4"></i> Submit Review Log
@@ -115,12 +109,10 @@
         </div>
     </main>
 
-    <!-- Vector Engine Hydration Hooks -->
     <script src="{% static 'js/lucide.min.js' %}"></script>
     <script>
         lucide.createIcons();
 
-        // CLIENT INTERACTIVE STAR SELECTOR ARCHITECTURE
         document.addEventListener('DOMContentLoaded', () => {
             const stars = document.querySelectorAll('.star-btn');
             const hiddenInput = document.getElementById('id_rating');
@@ -134,9 +126,9 @@
                 '5': 'Excellent (5/5)'
             };
 
-            // Setup state sync for server validation returns
-            const activeInitialVal = hiddenInput.value;
-            syncStarState(activeInitialVal);
+            setTimeout(() => {
+                syncStarState(hiddenInput.value);
+            }, 50);
 
             stars.forEach(button => {
                 button.addEventListener('click', () => {
@@ -150,17 +142,17 @@
                 visualLabel.textContent = textDescriptions[value] || '';
                 
                 stars.forEach(starNode => {
-                    const iconElement = starNode.querySelector('i');
+                    const svgElement = starNode.querySelector('svg');
                     const nodeValue = starNode.getAttribute('data-value');
                     
-                    if (parseInt(nodeValue) <= parseInt(value)) {
-                        starNode.classList.remove('text-slate-300');
-                        starNode.classList.add('text-amber-400');
-                        iconElement.classList.add('fill-current');
-                    } else {
-                        starNode.classList.remove('text-amber-400');
-                        starNode.classList.add('text-slate-300');
-                        iconElement.classList.remove('fill-current');
+                    if (svgElement) {
+                        if (parseInt(nodeValue) <= parseInt(value)) {
+                            svgElement.setAttribute('fill', '#f59e0b');
+                            svgElement.setAttribute('stroke', '#f59e0b');
+                        } else {
+                            svgElement.setAttribute('fill', 'none');
+                            svgElement.setAttribute('stroke', '#cbd5e1');
+                        }
                     }
                 });
             }
