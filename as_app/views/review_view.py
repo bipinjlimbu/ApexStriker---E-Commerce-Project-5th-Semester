@@ -29,6 +29,10 @@ def add_review_view(request, product_id):
             messages.error(request, "Rating must be between 1 and 5.")
             return redirect(f'/products/{product_id}/')
         
+        if not comment:
+            messages.error(request, "Comment cannot be empty.")
+            return redirect(f'/products/{product_id}/')
+        
         review = Review.objects.create(
             product=product,
             customer=request.user.customer_profile,
