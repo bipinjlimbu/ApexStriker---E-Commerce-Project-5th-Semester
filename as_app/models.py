@@ -106,6 +106,10 @@ class Product(models.Model):
     
     def get_primary(self):
         return self.images.filter(is_primary=True).first()
+    
+    @property
+    def average_rating(self):
+        return self.reviews.aggregate(avg_rating=models.Avg('rating'))['avg_rating'] or 0.0
 
     def __str__(self):
         return self.name
