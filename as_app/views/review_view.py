@@ -21,17 +21,19 @@ def add_review_view(request, product_id):
     
     product = Product.objects.get(id=product_id)
     
+    errors = {}
     if request.method == 'POST':
         rating = request.POST.get('rating')
         comment = request.POST.get('comment')
         
         if not rating or int(rating) < 1 or int(rating) > 5:
-            messages.error(request, "Rating must be between 1 and 5.")
-            return redirect(f'/products/{product_id}/')
+            errors['rating'] = "Rating must be between 1 and 5."
         
         if not comment:
-            messages.error(request, "Comment cannot be empty.")
-            return redirect(f'/products/{product_id}/')
+            errors['comment'] = "Comment cannot be empty."
+        
+        if errors:
+            return render(request, 'main/add_review_page.html', {'cart_count': cart_count(request), 'product': product, 'data': request.POST, 'errors': errors})
         
         review = Review.objects.create(
             product=product,
