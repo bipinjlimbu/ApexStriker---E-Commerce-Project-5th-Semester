@@ -173,11 +173,11 @@
                     <div class="flex items-center gap-6 bg-white px-6 py-4 rounded-[1.5rem] border border-slate-100 shadow-sm">
                         <div class="text-center border-r border-slate-100 pr-6">
                             <p class="text-2xl font-black italic text-slate-900 leading-none">
-                                {{ average_rating|default:"0.0" }}
+                                {{ product.average_rating| floatformat:"1" |default:"0.0" }}
                             </p>
                             <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest mt-1">Rating</p>
                         </div>
-                        <div class="flex gap-1 text-yellow-400" id="avg-stars-container" data-rating="{{ average_rating|default:'0' }}">
+                        <div class="flex gap-1 text-yellow-400" id="avg-stars-container" data-rating="{{ product.average_rating | floatformat:"1" |default:'0' }}">
                         </div>
                     </div>
                 </div>
@@ -267,14 +267,37 @@
         document.addEventListener('DOMContentLoaded', () => {
             const avgBox = document.getElementById('avg-stars-container');
             if (avgBox) {
-                const score = Math.round(parseFloat(avgBox.getAttribute('data-rating')));
-                renderStarRow(avgBox, score, 4);
+                const rawScore = parseFloat(avgBox.getAttribute('data-rating')) || 0;
+                renderComplexStars(avgBox, rawScore, 4);
             }
 
             document.querySelectorAll('.dynamic-star-row').forEach(row => {
-                const score = parseInt(row.getAttribute('data-score')) || 5;
-                renderStarRow(row, score, 3);
+                const score = parseFloat(row.getAttribute('data-score')) || 5;
+                renderStarRow(row, Math.round(score), 3);
             });
+
+            function renderComplexStars(targetElement, score, sizeUnit) {
+                targetElement.innerHTML = '';
+                const floorStars = Math.floor(score);
+                const hasHalf = (score % 1) >= 0.4 && (score % 1) <= 0.7;
+
+                for (let i = 1; i <= 5; i++) {
+                    const node = document.createElement('i');
+                    node.className = `w-${sizeUnit} h-${sizeUnit}`;
+
+                    if (i <= floorStars) {
+                        node.setAttribute('data-lucide', 'star');
+                        node.className += ' text-yellow-400 fill-yellow-400';
+                    } else if (i === floorStars + 1 && hasHalf) {
+                        node.setAttribute('data-lucide', 'star-half');
+                        node.className += ' text-yellow-400 fill-yellow-400';
+                    } else {
+                        node.setAttribute('data-lucide', 'star');
+                        node.className += ' text-slate-200';
+                    }
+                    targetElement.appendChild(node);
+                }
+            }
 
             function renderStarRow(targetElement, activeCount, sizeUnit) {
                 targetElement.innerHTML = '';
