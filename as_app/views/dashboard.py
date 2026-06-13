@@ -5,7 +5,7 @@ from django.conf import settings
 from django.shortcuts import get_object_or_404
 from django.db.models import Q, F
 from django.contrib import messages
-from ..models import User, Vendor, Brand, Product, Order, Wishlist, OrderItem, Disbursement
+from ..models import User, Vendor, Brand, Product, Order, Wishlist, OrderItem, Disbursement, Review
 import threading
     
 def send_email_async(subject, message, recipient):
@@ -77,7 +77,7 @@ def admin_dashboard_view(request):
         context['pending_payouts'] = Disbursement.objects.filter(is_transferred=False).order_by('-created_at')
         
     elif section == 'product-reviews':
-        context['product_reviews'] = None
+        context['product_reviews'] = Review.objects.all().order_by('-created_at')
         
     elif section == 'revenue-logs':
         context['revenue_logs'] = Disbursement.objects.filter(is_transferred=True).order_by('-created_at')
