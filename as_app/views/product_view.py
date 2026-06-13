@@ -322,6 +322,10 @@ def add_review_view(request, product_id):
         messages.error(request, "Only customers can submit reviews.")
         return redirect(f'/products/{product_id}/')
     
+    if Review.objects.filter(product_id=product_id, customer=request.user.customer_profile).exists():
+        messages.error(request, "You have already submitted a review for this product.")
+        return redirect(f'/products/{product_id}/')
+    
     product = Product.objects.get(id=product_id)
     
     if request.method == 'POST':
