@@ -6,7 +6,7 @@ from .views.brand_view import brands_view, add_brand_view, approve_brand_view, e
 from .views.product_view import add_product_view, marketplace_view, edit_product_view, delete_product_view, single_product_view, wishlist_toggle_view
 from .views.order_view import cart_view, update_cart_quantity, dispatch_item_view, receive_item_view, mark_order_as_pickup, mark_order_as_shipped, confirm_delivery_view
 from .views.payment_view import initiate_esewa_payment, payment_success, payment_failed, payment_payout
-from .views.review_view import add_review_view
+from .views.review_view import add_review_view, delete_review_view
 from .views.dashboard import admin_dashboard_view, approve_vendor_view, reject_vendor_view, vendor_dashboard_view, customer_dashboard_view, wishlist_remove_view, cancel_order_view, remove_order_view
 
 urlpatterns = [
@@ -39,6 +39,7 @@ urlpatterns = [
     path('wishlist/toggle/<int:product_id>/', wishlist_toggle_view, name='wishlist_toggle'),
     path('wishlist/remove/<int:item_id>/', wishlist_remove_view, name='wishlist_remove'),
     path('products/review/add/<int:product_id>/', add_review_view, name='add_review'),
+    path('products/review/delete/<int:review_id>/', delete_review_view, name='delete_review'),
     path('cart/', cart_view, name='cart_page'),
     path('cart/update-quantity/', update_cart_quantity, name='update_cart_quantity'),
     path('payment/initiate/', initiate_esewa_payment, name='initiate_esewa_payment'),
