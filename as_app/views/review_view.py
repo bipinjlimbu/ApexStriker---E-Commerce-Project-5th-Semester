@@ -41,3 +41,15 @@ def add_review_view(request, product_id):
         return redirect(f'/products/{product_id}/')
     
     return render(request, 'main/add_review_page.html', {'cart_count': cart_count(request), 'product': product})
+
+@login_required
+def delete_review_view(request, review_id):
+    review = Review.objects.get(id=review_id)
+    
+    if review.customer != request.user.customer_profile:
+        messages.error(request, "You are not authorized to delete this review.")
+        return redirect(f'/products/{review.product.id}/')
+    
+    review.delete()
+    messages.success(request, "Your review has been deleted successfully.")
+    return redirect(f'/products/{review.product.id}/')
