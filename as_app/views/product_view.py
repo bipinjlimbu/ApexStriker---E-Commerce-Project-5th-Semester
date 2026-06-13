@@ -315,3 +315,7 @@ def wishlist_toggle_view(request, product_id):
         messages.success(request, f"'{product.name}' has been added to your wishlist.")
     
     return redirect(f'/products/{product_id}/')
+
+@login_required
+def add_review_view(request, product_id):
+    return render(request, 'main/add_review_page.html', {'cart_count': cart_count(request)})
