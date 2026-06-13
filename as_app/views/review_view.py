@@ -56,17 +56,19 @@ def edit_review_view(request, review_id):
         messages.error(request, "You are not authorized to edit this review.")
         return redirect(f'/products/{review.product.id}/')
     
+    errors = {}
     if request.method == 'POST':
         rating = request.POST.get('rating')
         comment = request.POST.get('comment')
         
         if not rating or int(rating) < 1 or int(rating) > 5:
-            messages.error(request, "Rating must be between 1 and 5.")
-            return redirect(f'/products/review/edit/{review_id}/')
+            errors['rating'] = "Rating must be between 1 and 5."
         
         if not comment:
-            messages.error(request, "Comment cannot be empty.")
-            return redirect(f'/products/review/edit/{review_id}/')
+            errors['comment'] = "Comment cannot be empty."
+        
+        if errors:
+            return render(request, 'main/edit_review_page.html', {'cart_count': cart_count(request), 'review': review, 'data': request.POST, 'errors': errors})
         
         review.rating = rating
         review.comment = comment
