@@ -1,0 +1,112 @@
+<div class="flex-grow flex flex-col h-screen bg-slate-50 overflow-hidden">
+    
+    <div class="shrink-0 bg-slate-900 p-12 relative overflow-hidden z-50 shadow-2xl">
+        <div class="absolute top-0 right-0 w-1/4 h-full bg-emerald-500 skew-x-12 translate-x-20 opacity-10"></div>
+        
+        <div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+            <div>
+                <span class="inline-block bg-emerald-500 text-slate-900 text-[10px] font-black px-3 py-1 rounded-full mb-4 uppercase tracking-widest italic">Archived Shipments</span>
+                <h2 class="text-5xl font-black text-white italic uppercase tracking-tighter leading-none">Completed <span class="text-emerald-500">Items</span></h2>
+            </div>
+            
+            <div class="flex flex-wrap items-center gap-4 w-full md:w-auto">
+                <div class="bg-white/5 border border-white/10 p-4 rounded-3xl backdrop-blur-md flex items-center gap-4 min-w-[200px]">
+                    <div class="h-12 w-12 bg-blue-500/20 rounded-2xl flex items-center justify-center text-blue-400 shrink-0">
+                        <i data-lucide="package-check" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <p class="text-[9px] font-black text-slate-500 uppercase italic tracking-widest">Total Units Delivered</p>
+                        <p class="text-2xl font-black text-white italic">1,240 Pcs</p>
+                    </div>
+                </div>
+
+                <div class="bg-white/5 border border-white/10 p-4 rounded-3xl backdrop-blur-md flex items-center gap-4 min-w-[200px] border-emerald-500/30 bg-emerald-500/[0.02]">
+                    <div class="h-12 w-12 bg-emerald-500/20 rounded-2xl flex items-center justify-center text-emerald-500 shrink-0">
+                        <i data-lucide="check-square" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <p class="text-[9px] font-black text-emerald-500 uppercase italic tracking-widest">Settled Item Value</p>
+                        <p class="text-2xl font-black text-emerald-400 italic">Rs. 5,12,000</p>
+                    </div>
+                </div>
+
+                <div class="bg-white/5 border border-white/10 p-4 rounded-3xl backdrop-blur-md flex items-center gap-4 min-w-[200px]">
+                    <div class="h-12 w-12 bg-purple-500/20 rounded-2xl flex items-center justify-center text-purple-400 shrink-0">
+                        <i data-lucide="shopping-cart" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <p class="text-[9px] font-black text-slate-500 uppercase italic tracking-widest">Fulfilled Invoices</p>
+                        <p class="text-2xl font-black text-slate-300 italic">894 Orders</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex-grow overflow-y-auto custom-scrollbar p-12 bg-slate-50/50">
+        <div class="max-w-[1600px] mx-auto pb-20">
+            <div class="bg-white rounded-[2.5rem] border border-slate-200 shadow-2xl shadow-slate-200/50 overflow-hidden">
+                <div class="px-10 py-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+                    <h3 class="font-black text-slate-900 italic uppercase tracking-tight text-sm">Archived Fulfillment Log</h3>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left min-w-[1100px]">
+                        <thead>
+                            <tr class="bg-slate-50 border-b border-slate-100">
+                                <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase italic tracking-widest">Order / Line Ref</th>
+                                <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase italic tracking-widest">Item Description</th>
+                                <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase italic tracking-widest">Customer Profile</th>
+                                <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase italic tracking-widest text-center">Quantity</th>
+                                <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase italic tracking-widest text-right">Unit Price</th>
+                                <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase italic tracking-widest text-right text-emerald-600">Total Paid</th>
+                                <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase italic tracking-widest text-center">Fulfillment</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-50">
+                            
+                            {% for i in "x"|ljust:"12" %}
+                            <tr class="hover:bg-slate-50 transition-colors group">
+                                <td class="px-8 py-6">
+                                    <p class="text-xs font-black text-slate-900 italic uppercase tracking-tighter">ORD-#9024</p>
+                                    <p class="text-[9px] text-slate-400 font-bold italic uppercase">May 26, 2026 • 10:15 AM</p>
+                                </td>
+                                <td class="px-8 py-6">
+                                    <div class="flex items-center gap-3">
+                                        <div class="h-10 w-10 bg-slate-100 rounded-xl flex items-center justify-center text-slate-700 shrink-0 border border-slate-200/60 overflow-hidden">
+                                            <i data-lucide="shirt" class="w-5 h-5 text-slate-500"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-black text-slate-800 italic uppercase tracking-tight">Oversized Heavyweight Hoodie</p>
+                                            <p class="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Color: Sage Green • Size: L</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-8 py-6">
+                                    <p class="text-xs font-black text-slate-700 italic uppercase">Pranish Shrestha</p>
+                                    <p class="text-[9px] font-mono text-slate-400 font-bold">Kathmandu, Nepal</p>
+                                </td>
+                                <td class="px-8 py-6 text-center">
+                                    <span class="text-xs font-mono font-bold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-md">02</span>
+                                </td>
+                                <td class="px-8 py-6 text-right">
+                                    <p class="font-bold text-slate-500 italic text-xs">Rs. 3,500.00</p>
+                                </td>
+                                <td class="px-8 py-6 text-right bg-emerald-50/10">
+                                    <p class="font-black text-slate-900 italic text-sm">Rs. 7,000.00</p>
+                                </td>
+                                <td class="px-8 py-6">
+                                    <span class="mx-auto text-[9px] font-black text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-lg uppercase italic border border-emerald-100 flex items-center gap-1.5 w-fit shadow-sm">
+                                        <i data-lucide="check" class="w-3 h-3"></i> Handed Over
+                                    </span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

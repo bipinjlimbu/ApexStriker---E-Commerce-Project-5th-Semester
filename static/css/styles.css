@@ -1947,6 +1947,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(16 185 129 / 0.02);
 }
 
+.bg-emerald-50\/10 {
+  background-color: rgb(236 253 245 / 0.1);
+}
+
 .bg-rose-500\/20 {
   background-color: rgb(244 63 94 / 0.2);
 }
@@ -2194,14 +2198,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-bottom: 2rem;
 }
 
-.py-32 {
-  padding-top: 8rem;
-  padding-bottom: 8rem;
-}
-
 .px-2\.5 {
   padding-left: 0.625rem;
   padding-right: 0.625rem;
+}
+
+.py-32 {
+  padding-top: 8rem;
+  padding-bottom: 8rem;
 }
 
 .pt-6 {

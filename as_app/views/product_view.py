@@ -13,9 +13,9 @@ def cart_count(request):
 
 @login_required
 def add_product_view(request):
-    if request.user.role != 'vendor' and not Vendor.objects.filter(user=request.user, status=Vendor.Status.APPROVED).exists():
+    if request.user.role != 'vendor' or not Vendor.objects.filter(user=request.user, status=Vendor.Status.APPROVED).exists():
         messages.error(request, "You are not authorized to add products.")
-        return redirect('/')
+        return redirect('/marketplace/')
     
     brand = Brand.objects.filter(is_active=True).order_by('created_at')
     
