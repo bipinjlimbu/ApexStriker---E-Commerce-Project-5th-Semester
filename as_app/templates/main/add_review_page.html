@@ -89,7 +89,7 @@
                     <label class="text-[11px] font-black text-slate-500 uppercase tracking-widest ml-2 italic flex items-center gap-2">
                         <i data-lucide="message-square" class="w-3 h-3 text-blue-500"></i> Detailed Review Comment
                     </label>
-                    <textarea name="comment" rows="5" required placeholder="Describe the overall premium build quality, fit accuracy, and long-term durability performance metrics..."
+                    <textarea name="comment" rows="5" placeholder="Describe the overall premium build quality, fit accuracy, and long-term durability performance metrics..."
                               class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none transition italic resize-none">{{ data.comment|default:'' }}</textarea>
                     
                     {% if errors.comment %}
