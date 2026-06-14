@@ -7,6 +7,7 @@ from .views.product_view import add_product_view, marketplace_view, edit_product
 from .views.order_view import cart_view, update_cart_quantity, dispatch_item_view, receive_item_view, mark_order_as_pickup, mark_order_as_shipped, confirm_delivery_view
 from .views.payment_view import initiate_esewa_payment, payment_success, payment_failed, payment_payout
 from .views.review_view import add_review_view, edit_review_view, delete_review_view
+from .views.report_view import add_report_view
 from .views.dashboard import admin_dashboard_view, approve_vendor_view, reject_vendor_view, vendor_dashboard_view, customer_dashboard_view, wishlist_remove_view, cancel_order_view, remove_order_view
 
 urlpatterns = [
@@ -54,4 +55,5 @@ urlpatterns = [
     path('orders/pickup/<int:order_id>/', mark_order_as_pickup, name='mark_order_as_pickup'),
     path('orders/shipped/<int:order_id>/', mark_order_as_shipped, name='mark_order_as_shipped'),
     path('orders/confirm/<int:order_id>/', confirm_delivery_view, name='confirm_delivery'),
+    path('report/add/<int:user_id>/', add_report_view, name='add_report'),
 ]
