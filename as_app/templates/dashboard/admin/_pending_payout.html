@@ -136,7 +136,10 @@
                 </div>
             </div>
             {% empty %}
-                <p class="text-center text-slate-500 italic font-bold uppercase tracking-widest">No pending payouts at the moment.</p>
+                <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-12 text-center">
+                    <i data-lucide="inbox" class="w-12 h-12 mx-auto mb-4 text-slate-300"></i>
+                    <p class="text-sm font-black text-slate-500 uppercase italic tracking-widest">No pending payouts found.</p>
+                 </div>
             {% endfor %}
 
         </div>
