@@ -98,6 +98,14 @@
                     <i data-lucide="bar-chart-3" class="w-4 h-4 group-hover:scale-110 transition-transform"></i>
                     Revenue Logs
                 </a>
+
+                <a href="?section=reported-users" class="flex items-center gap-4 px-4 py-4 rounded-2xl {% if section == 'reported-users' %}bg-blue-600 text-white shadow-lg{% else %}text-slate-400 hover:bg-blue-600 hover:text-white{% endif %} font-black italic uppercase text-xs tracking-widest transition-all group">
+                    <i data-lucide="alert-triangle" class="w-4 h-4 group-hover:scale-110 transition-transform"></i>
+                    Reported Users
+                    {% if total_reported_users > 0 %}
+                        <span class="ml-auto bg-white/20 text-white px-2 py-0.5 rounded-lg text-[10px]"> {{ total_reported_users }}</span>
+                    {% endif %}
+                </a>
             </div>
         </nav>
 
@@ -149,6 +157,10 @@
         {% elif section == 'revenue-logs' %}
 
         {% include 'dashboard/admin/_revenue_logs.html' %}
+
+        {% elif section == 'reported-users' %}
+
+        {% include 'dashboard/admin/_reported_users.html' %}
 
         {% endif %}
 
