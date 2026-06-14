@@ -416,7 +416,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   display: none;
 }
 
-.-translate-y-1\/2, .translate-x-\[120\%\], .translate-y-\[-10px\], .translate-x-1\/2, .translate-x-20, .-translate-x-full, .translate-x-32, .rotate-3, .skew-x-12, .transform, .active\:scale-95, .active\:scale-90, .active\:scale-\[0\.98\], .group-hover\:translate-y-0, .group-hover\:-translate-x-1, .group-hover\:translate-x-full, .group-hover\:translate-x-1, .group-hover\:-translate-y-1, .group-hover\:rotate-90, .group-hover\:rotate-180, .group-hover\:scale-110, .group-hover\:scale-125, .group-hover\:scale-105 {
+.-translate-y-1\/2, .translate-x-\[120\%\], .translate-y-\[-10px\], .translate-x-1\/2, .translate-x-20, .-translate-x-full, .translate-x-32, .rotate-3, .skew-x-12, .transform, .active\:scale-95, .active\:scale-90, .active\:scale-\[0\.98\], .group-hover\:translate-y-0, .group-hover\:-translate-x-1, .group-hover\:translate-x-full, .group-hover\:translate-x-1, .group-hover\:-translate-y-1, .group-hover\:translate-x-0\.5, .group-hover\:-translate-y-0\.5, .group-hover\:translate-x-0, .group-hover\:-translate-y-0, .group-hover\:rotate-90, .group-hover\:rotate-180, .group-hover\:scale-110, .group-hover\:scale-125, .group-hover\:scale-105 {
   --tw-translate-x: 0;
   --tw-translate-y: 0;
   --tw-rotate: 0;
@@ -2876,6 +2876,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-shadow: var(--tw-shadow-colored);
 }
 
+.shadow-slate-900\/5 {
+  --tw-shadow-color: rgb(15 23 42 / 0.05);
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
 .outline-none {
   outline: 2px solid transparent;
   outline-offset: 2px;
@@ -3347,6 +3352,26 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .group:hover .group-hover\:-translate-y-1 {
   --tw-translate-y: -0.25rem;
+  transform: var(--tw-transform);
+}
+
+.group:hover .group-hover\:translate-x-0\.5 {
+  --tw-translate-x: 0.125rem;
+  transform: var(--tw-transform);
+}
+
+.group:hover .group-hover\:-translate-y-0\.5 {
+  --tw-translate-y: -0.125rem;
+  transform: var(--tw-transform);
+}
+
+.group:hover .group-hover\:translate-x-0 {
+  --tw-translate-x: 0px;
+  transform: var(--tw-transform);
+}
+
+.group:hover .group-hover\:-translate-y-0 {
+  --tw-translate-y: -0px;
   transform: var(--tw-transform);
 }
 
