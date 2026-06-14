@@ -5,7 +5,7 @@ from django.conf import settings
 from django.shortcuts import get_object_or_404
 from django.db.models import Q, F
 from django.contrib import messages
-from ..models import User, Vendor, Brand, Product, Order, Wishlist, OrderItem, Disbursement, Review
+from ..models import User, Vendor, Brand, Product, Order, Wishlist, OrderItem, Disbursement, Review, Report
 import threading
     
 def send_email_async(subject, message, recipient):
@@ -30,6 +30,7 @@ def admin_dashboard_view(request):
         'total_admin_revenue': sum(disbursement.admin_commission for disbursement in Disbursement.objects.filter(is_transferred=True)),
         'total_vendor_revenue': sum(disbursement.payout_amount for disbursement in Disbursement.objects.filter(is_transferred=True)),
         'total_revenue': sum(disbursement.total_amount for disbursement in Disbursement.objects.filter(is_transferred=True)),
+        'total_reported_users': Report.objects.filter(is_resolved=False).count(),
     }
     
     if section == 'member-list':
@@ -81,8 +82,10 @@ def admin_dashboard_view(request):
         
     elif section == 'revenue-logs':
         context['revenue_logs'] = Disbursement.objects.filter(is_transferred=True).order_by('-created_at')
-
-    
+        
+    elif section == 'reported-users':
+        context['reported_users'] = Report.objects.all().order_by('-created_at')
+        
     return render(request, 'dashboard/admin_dashboard.html', context)
 
 @login_required
