@@ -74,6 +74,11 @@
                             </div>
                         </td>
                     </tr>
+                    {% empty %}
+                    <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-12 text-center">
+                        <i data-lucide="inbox" class="w-12 h-12 mx-auto mb-4 text-slate-300"></i>
+                        <p class="text-sm font-black text-slate-500 uppercase italic tracking-widest">No reviews found.</p>
+                    </div>
                     {% endfor %}
 
                 </tbody>
