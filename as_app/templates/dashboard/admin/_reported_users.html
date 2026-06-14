@@ -38,7 +38,7 @@
                 </thead>
                 <tbody class="divide-y divide-slate-50">
 
-                    {% for i in "123456789012" %}
+                    {% for report in reported_users %}
                     <tr class="hover:bg-red-50/10 transition-colors group">
                         <td class="px-10 py-6">
                             <div class="flex items-center gap-4">
@@ -46,21 +46,29 @@
                                     RU
                                 </div>
                                 <div>
-                                    <p class="font-black text-slate-900 italic uppercase leading-none mb-1">Offender_Node_{{ forloop.counter }}</p>
-                                    <p class="text-[10px] text-slate-400 font-bold italic uppercase">By: Reporter_Pro_99</p>
+                                    <p class="font-black text-slate-900 italic uppercase leading-none mb-1">{{ report.reported_user.get_full_name }}</p>
+                                    <p class="text-[10px] text-slate-400 font-bold italic uppercase">By: {{ report.reporter.get_full_name }}</p>
                                 </div>
                             </div>
                         </td>
                         
                         <td class="px-10 py-6">
                             <span class="inline-block bg-red-100 text-red-600 text-[9px] font-black px-2.5 py-1 rounded-md uppercase tracking-wider italic border border-red-200/40">
-                                Fraudulent Activity
+                                {% if report.reason == "fraud" %}
+                                    Fraudulent Activity
+                                {% elif report.reason == "quality" %}
+                                    Poor Item Quality
+                                {% elif report.reason == "fake_id" %}
+                                    Fake Identity/Shop
+                                {% else %}
+                                    Other
+                                {% endif %}
                             </span>
                         </td>
                         
                         <td class="px-10 py-6 max-w-xs">
                             <p class="text-xs text-slate-600 font-bold italic line-clamp-2">
-                                "Attempted off-platform transaction execution on asset ledger item sequence reference index #{{ forloop.counter }}."
+                                "{{ report.description }}"
                             </p>
                         </td>
 
@@ -75,9 +83,13 @@
 
                         <td class="px-10 py-6">
                             <div class="flex items-center justify-end gap-2">
-                                <button class="p-3 bg-slate-100 rounded-xl text-slate-400 hover:bg-blue-600 hover:text-white transition-all border border-slate-200 active:scale-90" title="Resolve Incident File">
-                                    <i data-lucide="shield-check" class="w-4 h-4"></i>
-                                </button>
+
+                                {% if not report.is_resolved %}
+                                    <button class="p-3 bg-slate-100 rounded-xl text-slate-400 hover:bg-blue-600 hover:text-white transition-all border border-slate-200 active:scale-90" title="Resolve Incident File">
+                                        <i data-lucide="shield-check" class="w-4 h-4"></i>
+                                    </button>
+                                {% endif %}
+                                
                                 <button class="p-3 bg-slate-100 rounded-xl text-slate-400 hover:bg-red-600 hover:text-white transition-all border border-slate-200 active:scale-90" title="Purge Offending Node Record">
                                     <i data-lucide="trash-2" class="w-4 h-4"></i>
                                 </button>
