@@ -83,7 +83,12 @@ def edit_review_view(request, review_id):
 def delete_review_view(request, review_id):
     review = Review.objects.get(id=review_id)
     
-    if review.customer != request.user.customer_profile and request.user.role != 'vendor':
+    if request.user.is_staff:
+        review.delete()
+        messages.success(request, "The review has been deleted successfully.")
+        return redirect(f'/dashboard/admin/?section=product-reviews')
+    
+    if review.customer != request.user.customer_profile:
         messages.error(request, "You are not authorized to delete this review.")
         return redirect(f'/products/{review.product.id}/')
     
