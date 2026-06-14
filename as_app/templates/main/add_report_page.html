@@ -30,11 +30,15 @@
 
                 <div class="p-4 bg-slate-900 border border-slate-800 rounded-2xl flex items-center gap-4 mb-4 shadow-inner">
                     <div class="h-12 w-12 bg-red-600/10 rounded-xl flex items-center justify-center text-red-500 font-black italic shrink-0">
-                        RU
+                        {% if profile.profile_picture %}
+                            <img src="{{ profile.profile_picture.url }}" alt="Profile Image" class="h-full w-full object-cover rounded-xl">
+                        {% else %}
+                            <i data-lucide="user" class="w-6 h-6"></i>
+                        {% endif %}
                     </div>
                     <div>
                         <p class="text-[9px] font-black text-slate-400 uppercase italic tracking-widest">You Are Reporting</p>
-                        <h3 class="text-sm font-black text-white italic uppercase tracking-tight">{{ reported_user.username|default:"Target_Offender_Node" }}</h3>
+                        <h3 class="text-sm font-black text-white italic uppercase tracking-tight">{{ profile.get_full_name|default:"Target_Offender_Node" }}</h3>
                     </div>
                 </div>
 
