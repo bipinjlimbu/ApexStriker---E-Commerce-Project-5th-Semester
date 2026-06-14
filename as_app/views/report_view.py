@@ -12,4 +12,30 @@ def cart_count(request):
 @login_required
 def add_report_view(request, user_id):
     profile = User.objects.get(id=user_id)
+    
+    errors = {}
+    if request.method == 'POST':
+        reason = request.POST.get('reason')
+        description = request.POST.get('description')
+        
+        if not reason:
+            errors['reason'] = "Reason for reporting is required."
+        
+        if not description:
+            errors['description'] = "Description cannot be empty."
+        
+        if errors:
+            return render(request, 'main/add_report_page.html', {'cart_items_count': cart_count(request), 'profile': profile, 'data': request.POST, 'errors': errors})
+        
+        report = Report.objects.create(
+            reporter=request.user,
+            reported_user=profile,
+            reason=reason,
+            description=description
+        )
+        report.save()
+        
+        messages.success(request, "Your report has been submitted successfully.")
+        return redirect(f'/profile/{profile.id}/')
+    
     return render(request, 'main/add_report_page.html', {'cart_items_count': cart_count(request), 'profile': profile})
