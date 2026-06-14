@@ -450,7 +450,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-shadow-colored: 0 0 #0000;
 }
 
-.blur, .blur-3xl, .drop-shadow-2xl, .grayscale, .filter, .group-hover\:grayscale-0 {
+.blur, .blur-3xl, .drop-shadow-2xl, .drop-shadow-\[0_1px_2px_rgba\(245\2c 158\2c 11\2c 0\.2\)\], .grayscale, .filter, .group-hover\:grayscale-0 {
   --tw-blur: var(--tw-empty,/*!*/ /*!*/);
   --tw-brightness: var(--tw-empty,/*!*/ /*!*/);
   --tw-contrast: var(--tw-empty,/*!*/ /*!*/);
@@ -2026,6 +2026,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   fill: #facc15;
 }
 
+.fill-amber-500 {
+  fill: #f59e0b;
+}
+
 .stroke-\[3px\] {
   stroke-width: 3px;
 }
@@ -2895,6 +2899,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .drop-shadow-2xl {
   --tw-drop-shadow: drop-shadow(0 25px 25px rgb(0 0 0 / 0.15));
+  filter: var(--tw-filter);
+}
+
+.drop-shadow-\[0_1px_2px_rgba\(245\2c 158\2c 11\2c 0\.2\)\] {
+  --tw-drop-shadow: drop-shadow(0 1px 2px rgba(245,158,11,0.2));
   filter: var(--tw-filter);
 }
 

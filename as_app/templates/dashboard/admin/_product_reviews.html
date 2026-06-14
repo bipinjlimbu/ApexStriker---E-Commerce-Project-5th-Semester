@@ -1,6 +1,5 @@
 <div class="h-[calc(100vh-20px)] overflow-y-auto custom-scrollbar">
     
-    <!-- Header Hero Control Section -->
     <div class="bg-slate-900 p-12 relative overflow-hidden shrink-0">
         <div class="absolute top-0 right-0 w-1/4 h-full bg-blue-600 skew-x-12 translate-x-20 opacity-10"></div>
         
@@ -14,7 +13,7 @@
             <div class="flex gap-4">
                 <div class="bg-white/5 border border-white/10 p-4 rounded-3xl backdrop-blur-md flex items-center gap-4 text-white">
                     <div class="h-12 w-12 bg-blue-600/20 rounded-2xl flex items-center justify-center text-blue-500">
-                        <i data-lucide="star" class="w-6 h-6"></i>
+                        <i data-lucide="star" class="w-6 h-6 fill-current"></i>
                     </div>
                     <div class="pr-4">
                         <p class="text-[9px] font-black text-slate-500 uppercase italic tracking-widest leading-none mb-1">Avg. Platform Rating</p>
@@ -25,7 +24,6 @@
         </div>
     </div>
 
-    <!-- Scrollable Content Track Layout -->
     <div class="p-12 -mt-8 relative z-20 pb-24">
         <div class="bg-white rounded-[2.5rem] border border-slate-200 shadow-2xl shadow-slate-200/50 overflow-hidden">
             <table class="w-full text-left">
@@ -38,9 +36,8 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-50">
-                    
-                    <!-- Loop running exactly 12 times mimicking dynamic backend datasets -->
-                    {% for i in "123456789012" %}
+
+                    {% for review in product_reviews %}
                     <tr class="hover:bg-slate-50 transition-colors group">
                         <td class="px-10 py-6">
                             <div class="flex items-center gap-4">
@@ -48,23 +45,25 @@
                                     AS
                                 </div>
                                 <div>
-                                    <p class="font-black text-slate-900 italic uppercase leading-none mb-1">Aaryan_Striker_{{ forloop.counter }}</p>
-                                    <p class="text-[10px] text-blue-600 font-bold italic uppercase">Man City Jersey 25/26</p>
+                                    <p class="font-black text-slate-900 italic uppercase leading-none mb-1">{{ review.customer.user.get_full_name }}</p>
+                                    <p class="text-[10px] text-blue-600 font-bold italic uppercase">{{ review.product.name }}</p>
                                 </div>
                             </div>
                         </td>
                         <td class="px-10 py-6">
-                            <div class="flex items-center gap-1 text-blue-600">
-                                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
-                                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
-                                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
-                                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
-                                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                            <div class="flex items-center gap-1">
+                                {% for i in "12345" %}
+                                    {% if forloop.counter <= review.rating %}
+                                        <i data-lucide="star" class="w-4 h-4 text-amber-500 fill-amber-500 drop-shadow-[0_1px_2px_rgba(245,158,11,0.2)]"></i>
+                                    {% else %}
+                                        <i data-lucide="star" class="w-4 h-4 text-slate-200"></i>
+                                    {% endif %}
+                                {% endfor %}
                             </div>
                         </td>
                         <td class="px-10 py-6 max-w-xs">
                             <p class="text-xs text-slate-600 font-bold italic line-clamp-2">
-                                "Incredible premium jersey tier configuration! Logged verification telemetry entry index #{{ forloop.counter }}."
+                                "{{ review.comment }}"
                             </p>
                         </td>
                         <td class="px-10 py-6">
