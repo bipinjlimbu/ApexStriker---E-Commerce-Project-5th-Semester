@@ -11,4 +11,5 @@ def cart_count(request):
 
 @login_required
 def add_report_view(request, user_id):
-    return render(request, 'main/add_report_page.html', {'cart_items_count': cart_count(request), 'reported_user_id': user_id})
+    profile = User.objects.get(id=user_id)
+    return render(request, 'main/add_report_page.html', {'cart_items_count': cart_count(request), 'profile': profile})
