@@ -1700,6 +1700,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-color: rgb(16 185 129 / 0.3);
 }
 
+.border-red-200\/40 {
+  border-color: rgb(254 202 202 / 0.4);
+}
+
 .border-t-transparent {
   border-top-color: transparent;
 }
@@ -1973,6 +1977,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .bg-rose-500\/20 {
   background-color: rgb(244 63 94 / 0.2);
+}
+
+.bg-red-600\/20 {
+  background-color: rgb(220 38 38 / 0.2);
 }
 
 .bg-gradient-to-r {
@@ -3166,6 +3174,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .hover\:bg-slate-50\/50:hover {
   background-color: rgb(248 250 252 / 0.5);
+}
+
+.hover\:bg-red-50\/10:hover {
+  background-color: rgb(254 242 242 / 0.1);
 }
 
 .hover\:text-blue-600:hover {

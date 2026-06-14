@@ -1,0 +1,93 @@
+<div class="h-[calc(100vh-20px)] overflow-y-auto custom-scrollbar">
+    
+    <div class="bg-slate-900 p-12 relative overflow-hidden shrink-0">
+        <div class="absolute top-0 right-0 w-1/4 h-full bg-blue-600 skew-x-12 translate-x-20 opacity-10"></div>
+        
+        <div class="relative z-10 flex justify-between items-end">
+            <div>
+                <span class="inline-block bg-red-600 text-white text-[10px] font-black px-3 py-1 rounded-full mb-4 uppercase tracking-widest italic">Security Operations</span>
+                <h2 class="text-5xl font-black text-white italic uppercase tracking-tighter">Reported <span class="text-blue-500">Users</span></h2>
+                <p class="text-slate-400 text-xs font-bold mt-2 uppercase tracking-wider italic">Audit fraud telemetry, identify malicious actors, and enforce safety guidelines</p>
+            </div>
+            
+            <div class="flex gap-4">
+                <div class="bg-white/5 border border-white/10 p-4 rounded-3xl backdrop-blur-md flex items-center gap-4 text-white">
+                    <div class="h-12 w-12 bg-red-600/20 rounded-2xl flex items-center justify-center text-red-500">
+                        <i data-lucide="shield-alert" class="w-6 h-6"></i>
+                    </div>
+                    <div class="pr-4">
+                        <p class="text-[9px] font-black text-slate-500 uppercase italic tracking-widest leading-none mb-1">Pending Incidents</p>
+                        <p class="text-2xl font-black italic tracking-tighter text-red-500">12 Logged</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="p-12 -mt-8 relative z-20 pb-24">
+        <div class="bg-white rounded-[2.5rem] border border-slate-200 shadow-2xl shadow-slate-200/50 overflow-hidden">
+            <table class="w-full text-left">
+                <thead>
+                    <tr class="bg-slate-50 border-b border-slate-100">
+                        <th class="px-10 py-6 text-[11px] font-black text-slate-400 uppercase italic tracking-widest">Reported Target</th>
+                        <th class="px-10 py-6 text-[11px] font-black text-slate-400 uppercase italic tracking-widest">Classification</th>
+                        <th class="px-10 py-6 text-[11px] font-black text-slate-400 uppercase italic tracking-widest">Incident Description</th>
+                        <th class="px-10 py-6 text-[11px] font-black text-slate-400 uppercase italic tracking-widest text-center">Status</th>
+                        <th class="px-10 py-6 text-[11px] font-black text-slate-400 uppercase italic tracking-widest text-right">Resolution</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-50">
+
+                    {% for i in "123456789012" %}
+                    <tr class="hover:bg-red-50/10 transition-colors group">
+                        <td class="px-10 py-6">
+                            <div class="flex items-center gap-4">
+                                <div class="h-12 w-12 bg-slate-900 rounded-2xl flex items-center justify-center text-red-500 font-black italic shadow-inner">
+                                    RU
+                                </div>
+                                <div>
+                                    <p class="font-black text-slate-900 italic uppercase leading-none mb-1">Offender_Node_{{ forloop.counter }}</p>
+                                    <p class="text-[10px] text-slate-400 font-bold italic uppercase">By: Reporter_Pro_99</p>
+                                </div>
+                            </div>
+                        </td>
+                        
+                        <td class="px-10 py-6">
+                            <span class="inline-block bg-red-100 text-red-600 text-[9px] font-black px-2.5 py-1 rounded-md uppercase tracking-wider italic border border-red-200/40">
+                                Fraudulent Activity
+                            </span>
+                        </td>
+                        
+                        <td class="px-10 py-6 max-w-xs">
+                            <p class="text-xs text-slate-600 font-bold italic line-clamp-2">
+                                "Attempted off-platform transaction execution on asset ledger item sequence reference index #{{ forloop.counter }}."
+                            </p>
+                        </td>
+
+                        <td class="px-10 py-6">
+                            <div class="flex items-center justify-center">
+                                <span class="text-[10px] font-black text-amber-600 bg-amber-50 px-3 py-1.5 rounded-lg uppercase italic border border-amber-100 flex items-center gap-1.5">
+                                    <div class="h-1.5 w-1.5 rounded-full bg-amber-500 animate-pulse"></div>
+                                    Open Case
+                                </span>
+                            </div>
+                        </td>
+
+                        <td class="px-10 py-6">
+                            <div class="flex items-center justify-end gap-2">
+                                <button class="p-3 bg-slate-100 rounded-xl text-slate-400 hover:bg-blue-600 hover:text-white transition-all border border-slate-200 active:scale-90" title="Resolve Incident File">
+                                    <i data-lucide="shield-check" class="w-4 h-4"></i>
+                                </button>
+                                <button class="p-3 bg-slate-100 rounded-xl text-slate-400 hover:bg-red-600 hover:text-white transition-all border border-slate-200 active:scale-90" title="Purge Offending Node Record">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
