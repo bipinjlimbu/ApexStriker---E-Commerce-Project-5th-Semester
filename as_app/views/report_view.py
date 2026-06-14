@@ -13,6 +13,14 @@ def cart_count(request):
 def add_report_view(request, user_id):
     profile = User.objects.get(id=user_id)
     
+    if request.user == profile:
+        messages.error(request, "You cannot report yourself.")
+        return redirect(f'/profile/{profile.id}/')
+    
+    if Report.objects.filter(reporter=request.user, reported_user=profile).exists():
+        messages.error(request, "You have already reported this user.")
+        return redirect(f'/profile/{profile.id}/')
+    
     errors = {}
     if request.method == 'POST':
         reason = request.POST.get('reason')
