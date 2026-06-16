@@ -61,3 +61,16 @@ def resolve_report_view(request, report_id):
     
     messages.success(request, "The report has been marked as resolved.")
     return redirect("/dashboard/admin/?section=reported-users")
+
+@login_required
+def delete_report_view(request, report_id):
+    report = Report.objects.get(id=report_id)
+    
+    if request.user.role != 'admin':
+        messages.error(request, "Only admins can delete reports.")
+        return redirect(f'/reports/{report.id}/')
+    
+    report.delete()
+    
+    messages.success(request, "The report has been deleted.")
+    return redirect("/dashboard/admin/?section=reported-users")
