@@ -47,3 +47,17 @@ def add_report_view(request, user_id):
         return redirect(f'/profile/{profile.id}/')
     
     return render(request, 'main/add_report_page.html', {'cart_items_count': cart_count(request), 'profile': profile})
+
+@login_required
+def resolve_report_view(request, report_id):
+    report = Report.objects.get(id=report_id)
+    
+    if request.user.role != 'admin':
+        messages.error(request, "Only admins can resolve reports.")
+        return redirect(f'/reports/{report.id}/')
+    
+    report.is_resolved = True
+    report.save()
+    
+    messages.success(request, "The report has been marked as resolved.")
+    return redirect("/dashboard/admin/?section=reported-users")
