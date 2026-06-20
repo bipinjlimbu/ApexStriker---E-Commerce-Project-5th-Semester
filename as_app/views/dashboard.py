@@ -181,9 +181,6 @@ def vendor_dashboard_view(request):
         
     if section == 'sales-overview':
         context['sales_overview'] = Disbursement.objects.filter(vendor=request.user.vendor_profile, is_transferred=True).order_by('-created_at')
-        
-    if section == 'inventory-management':
-        context['inventory'] = None
     
     if section == 'pending-order-items':
         q = request.GET.get('q', '')
@@ -215,6 +212,9 @@ def vendor_dashboard_view(request):
             orders = orders.order_by('-total_amount')
             
         context['orders'] = orders
+        
+    if section == 'completed-order-items':            
+        context['completed_orders'] = OrderItem.objects.filter(vendor=request.user.vendor_profile, order__status='completed').order_by('-order__created_at')
                 
     return render(request, 'dashboard/vendor_dashboard.html', context)
 
