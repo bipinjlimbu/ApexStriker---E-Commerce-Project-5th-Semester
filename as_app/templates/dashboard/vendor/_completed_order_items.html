@@ -65,35 +65,38 @@
                         </thead>
                         <tbody class="divide-y divide-slate-50">
                             
-                            {% for i in "x"|ljust:"12" %}
+                            {% for orders in completed_orders %}
                             <tr class="hover:bg-slate-50 transition-colors group">
                                 <td class="px-8 py-6">
-                                    <p class="text-xs font-black text-slate-900 italic uppercase tracking-tighter">ORD-#9024</p>
-                                    <p class="text-[9px] text-slate-400 font-bold italic uppercase">May 26, 2026 • 10:15 AM</p>
+                                    <p class="text-xs font-black text-slate-900 italic uppercase tracking-tighter">ORD-#{{ orders.order.id }}</p>
+                                    <p class="text-[9px] text-slate-400 font-bold italic uppercase">{{ orders.order.created_at|date:"M d, Y • g:i A" }}</p>
                                 </td>
                                 <td class="px-8 py-6">
                                     <div class="flex items-center gap-3">
                                         <div class="h-10 w-10 bg-slate-100 rounded-xl flex items-center justify-center text-slate-700 shrink-0 border border-slate-200/60 overflow-hidden">
-                                            <i data-lucide="shirt" class="w-5 h-5 text-slate-500"></i>
+                                            {% if orders.product.get_primary.image %}
+                                                <img src="{{ orders.product.get_primary.image.url }}" alt="{{ orders.product.name }}" class="h-full w-full object-cover">
+                                            {% else %}
+                                                <i data-lucide="box" class="w-5 h-5"></i>
+                                            {% endif %}
                                         </div>
                                         <div>
-                                            <p class="text-sm font-black text-slate-800 italic uppercase tracking-tight">Oversized Heavyweight Hoodie</p>
-                                            <p class="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Color: Sage Green • Size: L</p>
+                                            <p class="text-sm font-black text-slate-800 italic uppercase tracking-tight">{{ orders.product.name }}</p>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="px-8 py-6">
-                                    <p class="text-xs font-black text-slate-700 italic uppercase">Pranish Shrestha</p>
-                                    <p class="text-[9px] font-mono text-slate-400 font-bold">Kathmandu, Nepal</p>
+                                    <p class="text-xs font-black text-slate-700 italic uppercase">{{ orders.order.customer.user.get_full_name }}</p>
+                                    <p class="text-[9px] font-mono text-slate-400 font-bold">{{ orders.order.customer.user.email }}</p>
                                 </td>
                                 <td class="px-8 py-6 text-center">
-                                    <span class="text-xs font-mono font-bold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-md">02</span>
+                                    <span class="text-xs font-mono font-bold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-md">{{ orders.quantity }}</span>
                                 </td>
                                 <td class="px-8 py-6 text-right">
-                                    <p class="font-bold text-slate-500 italic text-xs">Rs. 3,500.00</p>
+                                    <p class="font-bold text-slate-500 italic text-xs">Rs. {{ orders.product.price|floatformat:2 }}</p>
                                 </td>
                                 <td class="px-8 py-6 text-right bg-emerald-50/10">
-                                    <p class="font-black text-slate-900 italic text-sm">Rs. 7,000.00</p>
+                                    <p class="font-black text-slate-900 italic text-sm">Rs. {{ orders.total_amount|floatformat:2 }}</p>
                                 </td>
                                 <td class="px-8 py-6">
                                     <span class="mx-auto text-[9px] font-black text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-lg uppercase italic border border-emerald-100 flex items-center gap-1.5 w-fit shadow-sm">
