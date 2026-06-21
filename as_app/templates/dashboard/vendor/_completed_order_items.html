@@ -59,7 +59,6 @@
                                 <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase italic tracking-widest">Customer Profile</th>
                                 <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase italic tracking-widest text-center">Quantity</th>
                                 <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase italic tracking-widest text-right">Unit Price</th>
-                                <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase italic tracking-widest text-right text-emerald-600">Total Paid</th>
                                 <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase italic tracking-widest text-center">Fulfillment</th>
                             </tr>
                         </thead>
@@ -94,9 +93,6 @@
                                 </td>
                                 <td class="px-8 py-6 text-right">
                                     <p class="font-bold text-slate-500 italic text-xs">Rs. {{ orders.product.price|floatformat:2 }}</p>
-                                </td>
-                                <td class="px-8 py-6 text-right bg-emerald-50/10">
-                                    <p class="font-black text-slate-900 italic text-sm">Rs. {{ orders.total_amount|floatformat:2 }}</p>
                                 </td>
                                 <td class="px-8 py-6">
                                     <span class="mx-auto text-[9px] font-black text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-lg uppercase italic border border-emerald-100 flex items-center gap-1.5 w-fit shadow-sm">
