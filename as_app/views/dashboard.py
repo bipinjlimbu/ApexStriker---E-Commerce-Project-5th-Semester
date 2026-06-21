@@ -147,6 +147,8 @@ def vendor_dashboard_view(request):
         'Gross_revenue': sum(item.total_amount for item in Disbursement.objects.filter(vendor=request.user.vendor_profile, is_transferred=True)),
         'Net_revenue': sum(item.payout_amount for item in Disbursement.objects.filter(vendor=request.user.vendor_profile, is_transferred=True)),
         'Admin_commission': sum(item.admin_commission for item in Disbursement.objects.filter(vendor=request.user.vendor_profile, is_transferred=True)),
+        'completed_order_items_count': OrderItem.objects.filter(vendor=request.user.vendor_profile, order__status='completed').count(),
+        'completed_orders_count': Order.objects.filter(items__vendor=request.user.vendor_profile, status='completed').distinct().count(),
         'section': section,
     }
     
