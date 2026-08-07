@@ -8,89 +8,142 @@
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
 </head>
 
-<body class="bg-slate-50 min-h-screen flex flex-col">
+<body class="bg-[#F8FAFC] text-[#475569] min-h-screen flex flex-col font-sans antialiased selection:bg-[#D62828] selection:text-white">
     {% include 'components/_navbar.html' %}
 
     {% include 'components/_messages.html' %}
 
-    <section class="relative bg-slate-900 py-20 overflow-hidden">
-        <div class="absolute top-0 right-0 w-1/3 h-full bg-blue-600 skew-x-12 translate-x-20 opacity-20"></div>
+    <section class="relative bg-[#0F172A] text-white py-24 lg:py-32 overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#F4B400_1px,transparent_1px)] [background-size:24px_24px]"></div>
+        <div class="absolute -top-24 -right-24 w-96 h-96 bg-[#D62828] opacity-20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-0 left-1/3 w-80 h-80 bg-[#F4B400] opacity-10 rounded-full blur-3xl pointer-events-none"></div>
         
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="max-w-2xl">
-                <span class="inline-block bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full mb-4 uppercase tracking-widest">
-                    Season 2026 Arrivals
-                </span>
-                <h1 class="text-5xl md:text-7xl font-black text-white leading-tight mb-6">
-                    ELEVATE YOUR <span class="text-blue-500">GAME.</span>
-                </h1>
-                <p class="text-slate-400 text-lg mb-8 leading-relaxed">
-                    Premium football boots, jerseys, and professional gear from verified vendors across the country. Built for the elite, designed for the striker.
-                </p>
-                <div class="flex items-center gap-4">
-                    <a href="#shop" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-4 rounded-xl transition-all flex items-center gap-2">
-                        Shop Now <i data-lucide="arrow-right" class="w-5 h-5"></i>
-                    </a>
-                    {% if user.is_authenticated %}
-                    <a href="/profile/{{ user.id }}" class="bg-white/10 hover:bg-white/20 text-white font-bold px-8 py-4 rounded-xl border border-white/20 transition-all">
-                        View Profile
-                    </a>
-                    {% else %}
-                    <a href="/register/" class="bg-white/10 hover:bg-white/20 text-white font-bold px-8 py-4 rounded-xl border border-white/20 transition-all">
-                        Become a Member
-                    </a>
-                    {% endif %}
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <div class="lg:col-span-7">
+                    <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/15 px-4 py-2 rounded-full mb-6">
+                        <i data-lucide="trophy" class="w-4 h-4 text-[#F4B400]"></i>
+                        <span class="text-xs font-semibold tracking-wider uppercase text-white/90">Season 2026 Arrivals</span>
+                    </div>
+                    
+                    <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white mb-6 leading-[1.1]">
+                        ELEVATE YOUR <span class="text-[#D62828] relative inline-block">GAME<span class="absolute bottom-1 left-0 w-full h-2 bg-[#D62828]/30 rounded-full"></span></span>
+                    </h1>
+                    
+                    <p class="text-slate-300 text-lg sm:text-xl mb-10 max-w-2xl leading-relaxed font-normal">
+                        Discover top-tier football boots, official jerseys, and training gear from verified vendors across the nation. Everything you need to play at your highest level.
+                    </p>
+                    
+                    <div class="flex flex-wrap items-center gap-4">
+                        <a href="#shop" class="inline-flex items-center justify-center gap-3 bg-[#D62828] hover:bg-[#A61E1E] text-white font-bold px-8 py-4 rounded-xl transition-all duration-300 shadow-lg shadow-[#D62828]/25 hover:shadow-xl hover:shadow-[#D62828]/40 hover:-translate-y-0.5">
+                            <span>Shop Now</span>
+                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        </a>
+                        
+                        {% if user.is_authenticated %}
+                        <a href="/profile/{{ user.id }}" class="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white font-semibold px-8 py-4 rounded-xl border border-white/20 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5">
+                            <i data-lucide="user" class="w-5 h-5 text-[#F4B400]"></i>
+                            <span>View Profile</span>
+                        </a>
+                        {% else %}
+                        <a href="/register/" class="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white font-semibold px-8 py-4 rounded-xl border border-white/20 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5">
+                            <i data-lucide="user-plus" class="w-5 h-5 text-[#F4B400]"></i>
+                            <span>Become a Member</span>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5 hidden lg:block">
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-[#D62828] to-[#F4B400] rounded-3xl transform rotate-3 opacity-20 blur-lg"></div>
+                        <div class="relative bg-[#0F172A] border border-white/10 p-8 rounded-3xl shadow-2xl backdrop-blur-xl">
+                            <div class="space-y-6">
+                                <div class="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/5">
+                                    <div class="w-12 h-12 rounded-xl bg-[#D62828]/20 flex items-center justify-center text-[#D62828]">
+                                        <i data-lucide="shield-check" class="w-6 h-6"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-white font-bold">100% Genuine Gear</h4>
+                                        <p class="text-slate-400 text-sm">Verified stores & authentic items</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/5">
+                                    <div class="w-12 h-12 rounded-xl bg-[#F4B400]/20 flex items-center justify-center text-[#F4B400]">
+                                        <i data-lucide="truck" class="w-6 h-6"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-white font-bold">Fast Delivery</h4>
+                                        <p class="text-slate-400 text-sm">Direct to your doorstep nationwide</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/5">
+                                    <div class="w-12 h-12 rounded-xl bg-[#16A34A]/20 flex items-center justify-center text-[#16A34A]">
+                                        <i data-lucide="store" class="w-6 h-6"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-white font-bold">Multi-Vendor Choice</h4>
+                                        <p class="text-slate-400 text-sm">Best prices from official sellers</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="shop" class="max-w-7xl mx-auto px-4 py-16">
-        <div class="flex justify-between items-end mb-10">
+    <section id="shop" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-12 border-b border-[#E5E7EB] pb-6">
             <div>
-                <h2 class="text-3xl font-black text-slate-900 uppercase italic tracking-tighter">New <span class="text-blue-600">Arrivals</span></h2>
-                <div class="h-1.5 w-20 bg-blue-600 mt-2 rounded-full"></div>
+                <span class="text-xs font-extrabold uppercase tracking-widest text-[#D62828]">Fresh Stock</span>
+                <h2 class="text-3xl sm:text-4xl font-black text-[#111827] uppercase tracking-tight mt-1">New Arrivals</h2>
             </div>
-            <a href="/marketplace/?sort=new" class="text-blue-600 font-bold flex items-center gap-1 hover:underline">
-                View All New Products <i data-lucide="chevron-right" class="w-4 h-4"></i>
+            <a href="/marketplace/?sort=new" class="inline-flex items-center gap-2 text-[#D62828] hover:text-[#A61E1E] font-bold transition-colors group">
+                <span>View All New Products</span>
+                <i data-lucide="chevron-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
             </a>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {% for product in products %}
-                <div class="group bg-white rounded-[2.5rem] border border-slate-200 overflow-hidden hover:border-blue-500 hover:shadow-2xl transition-all duration-500 flex flex-col h-full">
-                    <div class="relative h-64 bg-slate-100 overflow-hidden">
+                <div class="group bg-white rounded-2xl border border-[#E5E7EB] overflow-hidden hover:shadow-xl hover:border-[#D62828]/30 transition-all duration-300 flex flex-col h-full relative">
+                    <div class="relative h-72 bg-[#F8FAFC] overflow-hidden flex items-center justify-center">
                         {% if product.get_primary %}
-                            <img src="{{ product.get_primary.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            <img src="{{ product.get_primary.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         {% else %}
-                            <div class="flex items-center justify-center h-full">
-                                <i data-lucide="package" class="w-12 h-12 text-slate-300"></i>
+                            <div class="flex flex-col items-center justify-center text-slate-300 p-6">
+                                <i data-lucide="package" class="w-16 h-16 mb-2"></i>
+                                <span class="text-xs uppercase tracking-wider font-semibold">No Image</span>
                             </div>
                         {% endif %}
 
-                        <div class="absolute top-4 left-4 flex flex-row gap-2 z-10">
+                        <div class="absolute top-3 left-3 flex flex-wrap gap-2 z-10">
                             {% if product.is_new %}
-                                <span class="bg-orange-500 text-white text-[9px] font-black px-3 py-1.5 rounded-lg uppercase italic tracking-widest shadow-lg backdrop-blur-sm">
+                                <span class="bg-[#D62828] text-white text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider shadow-md">
                                     New
                                 </span>
                             {% endif %}
 
                             {% if product in recommended_products %}
-                                <span class="bg-blue-600 text-white text-[9px] font-black px-3 py-1.5 rounded-lg uppercase italic tracking-widest shadow-lg">
+                                <span class="bg-[#F4B400] text-[#111827] text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider shadow-md">
                                     Recommended
                                 </span>
                             {% endif %}
                         </div>
 
                         {% if user.is_authenticated and user.role == 'vendor' and product.vendor.user == user %}
-                        <div class="absolute top-4 right-4 flex flex-row gap-2 z-20 translate-y-[-10px] opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                            <a href="/products/edit/{{ product.id }}/" class="bg-white hover:bg-blue-600 text-slate-900 hover:text-white p-2.5 rounded-xl shadow-xl transition-all duration-200 flex items-center justify-center border border-slate-100" title="Edit Gear">
+                        <div class="absolute top-3 right-3 flex gap-2 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <a href="/products/edit/{{ product.id }}/" class="bg-white/90 hover:bg-[#D62828] text-[#111827] hover:text-white p-2 rounded-lg shadow-md backdrop-blur-sm transition-colors" title="Edit Gear">
                                 <i data-lucide="edit-3" class="w-4 h-4"></i>
                             </a>
 
                             <form method="POST" action="/products/delete/{{ product.id }}/" onsubmit="return confirm('Are you sure you want to delete {{ product.name }}?');">
                                 {% csrf_token %}
-                                <button type="submit" class="bg-white hover:bg-red-600 text-slate-900 hover:text-white p-2.5 rounded-xl shadow-xl transition-all duration-200 flex items-center justify-center border border-slate-100" title="Delete Gear">
+                                <button type="submit" class="bg-white/90 hover:bg-[#DC2626] text-[#111827] hover:text-white p-2 rounded-lg shadow-md backdrop-blur-sm transition-colors" title="Delete Gear">
                                     <i data-lucide="trash-2" class="w-4 h-4"></i>
                                 </button>
                             </form>
@@ -98,21 +151,23 @@
                         {% endif %}
                     </div>
                     
-                    <div class="p-8 flex-grow flex flex-col">
-                        <p class="text-[10px] text-blue-600 font-black uppercase tracking-[0.2em] mb-1 italic">
-                            {{ product.brand.name }}
-                        </p>
-                        <h3 class="font-bold text-lg text-slate-900 group-hover:text-blue-600 transition-colors mb-4 uppercase italic tracking-tighter truncate">
-                            {{ product.name }}
-                        </h3>
-                        
-                        <div class="mb-6">
-                            <span class="text-[10px] text-slate-400 block font-black uppercase italic tracking-widest">Price</span>
-                            <span class="text-xl font-black text-slate-900 italic">Rs. {{ product.price | floatformat:0 }}</span>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <p class="text-xs font-bold text-[#D62828] uppercase tracking-wider mb-2">
+                                {{ product.brand.name }}
+                            </p>
+                            <h3 class="font-bold text-lg text-[#111827] group-hover:text-[#D62828] transition-colors mb-3 line-clamp-1">
+                                {{ product.name }}
+                            </h3>
                         </div>
+                        
+                        <div class="mt-4 pt-4 border-t border-[#E5E7EB]">
+                            <div class="flex items-baseline justify-between mb-4">
+                                <span class="text-xs text-[#475569] font-medium uppercase tracking-wider">Price</span>
+                                <span class="text-2xl font-black text-[#111827]">Rs. {{ product.price | floatformat:0 }}</span>
+                            </div>
 
-                        <div class="mt-auto">
-                            <a href="/products/{{ product.id }}/" class="w-full inline-flex items-center justify-center gap-3 bg-slate-900 text-white font-black py-4 rounded-2xl transition-all uppercase italic tracking-widest text-[11px] hover:bg-blue-600 shadow-xl shadow-slate-900/10">
+                            <a href="/products/{{ product.id }}/" class="w-full inline-flex items-center justify-center gap-2 bg-[#0F172A] hover:bg-[#D62828] text-white font-bold py-3.5 px-4 rounded-xl transition-all duration-300 text-sm shadow-md">
                                 <span>View Details</span>
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </a>
@@ -120,52 +175,52 @@
                     </div>
                 </div>
             {% empty %}
-                <div class="col-span-full py-20 flex flex-col items-center justify-center bg-white rounded-[3rem] border-2 border-dashed border-slate-200">
-                    <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mb-6 shadow-inner">
-                        <i data-lucide="search-x" class="w-10 h-10 text-slate-300"></i>
+                <div class="col-span-full py-16 px-6 text-center bg-white rounded-3xl border border-dashed border-[#E5E7EB]">
+                    <div class="w-16 h-16 bg-[#F8FAFC] rounded-2xl flex items-center justify-center mx-auto mb-4 text-[#475569]">
+                        <i data-lucide="shopping-bag" class="w-8 h-8"></i>
                     </div>
-                    <h3 class="text-2xl font-black text-slate-900 uppercase italic tracking-tighter">No Gear Detected</h3>
-                    <p class="text-slate-500 italic font-medium mt-2">The armory is currently being restocked. Check back soon.</p>
+                    <h3 class="text-xl font-bold text-[#111827] mb-1">No Gear Available</h3>
+                    <p class="text-[#475569] text-sm max-w-md mx-auto">Our store is currently being restocked with new football gear. Please check back soon.</p>
                 </div>
             {% endfor %}
         </div>
     </section>
 
-    <section class="bg-slate-100 py-20">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex justify-between items-end mb-12">
+    <section class="bg-white py-20 border-y border-[#E5E7EB]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-12">
                 <div>
-                    <h2 class="text-3xl font-black text-slate-900 uppercase italic tracking-tighter">Marketplace <span class="text-blue-600">Brands</span></h2>
-                    <div class="h-1.5 w-20 bg-slate-900 mt-2 rounded-full"></div>
+                    <span class="text-xs font-extrabold uppercase tracking-widest text-[#D62828]">Official Partners</span>
+                    <h2 class="text-3xl sm:text-4xl font-black text-[#111827] uppercase tracking-tight mt-1">Marketplace Brands</h2>
                 </div>
-                <a href="/brands/" class="text-blue-600 font-bold flex items-center gap-1 hover:underline">
-                    View All Brands <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                <a href="/brands/" class="inline-flex items-center gap-2 text-[#D62828] hover:text-[#A61E1E] font-bold transition-colors group">
+                    <span>View All Brands</span>
+                    <i data-lucide="chevron-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
                 </a>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 {% for brand in brands %}
-                    <div class="group bg-white rounded-[2.5rem] border border-slate-200 overflow-hidden hover:border-blue-500 hover:shadow-2xl transition-all duration-500">
-                        <div class="p-10 flex flex-col items-center text-center">
-                            <div class="h-24 w-24 bg-slate-50 rounded-3xl p-4 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
-                                <img src="{{ brand.logo.url }}" class="max-h-full max-w-full object-contain filter grayscale group-hover:grayscale-0 transition-all" alt="{{ brand.name }}">
-                            </div>
-                            <h3 class="text-2xl font-black text-slate-900 uppercase italic mb-3 tracking-tighter">{{ brand.name }}</h3>
-                            <p class="text-slate-500 text-sm leading-relaxed mb-6 italic font-medium">
-                                {{ brand.description|truncatechars:100 }}
-                            </p>
-                            <a href="/marketplace/?brand={{ brand.id }}" class="inline-flex items-center gap-2 text-[11px] font-black text-blue-600 uppercase tracking-[0.2em] border-b-2 border-transparent hover:border-blue-600 transition-all">
-                                Browse Brand <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                            </a>
+                    <div class="group bg-[#F8FAFC] rounded-2xl border border-[#E5E7EB] p-8 text-center hover:bg-white hover:shadow-xl hover:border-[#D62828]/30 transition-all duration-300 flex flex-col items-center">
+                        <div class="h-20 w-full flex items-center justify-center mb-6 px-4">
+                            <img src="{{ brand.logo.url }}" class="max-h-full max-w-full object-contain grayscale group-hover:grayscale-0 transition-all duration-300" alt="{{ brand.name }}">
                         </div>
+                        <h3 class="text-xl font-black text-[#111827] uppercase tracking-tight mb-2">{{ brand.name }}</h3>
+                        <p class="text-[#475569] text-xs leading-relaxed mb-6 line-clamp-2">
+                            {{ brand.description|truncatechars:100 }}
+                        </p>
+                        <a href="/marketplace/?brand={{ brand.id }}" class="mt-auto inline-flex items-center gap-2 text-xs font-bold text-[#D62828] uppercase tracking-wider hover:text-[#A61E1E] transition-colors">
+                            <span>Browse Brand</span>
+                            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                        </a>
                     </div>
                 {% empty %}
-                    <div class="col-span-full py-20 flex flex-col items-center justify-center bg-slate-50 rounded-[3rem] border-2 border-dashed border-slate-300">
-                        <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center mb-6 shadow-sm">
-                            <i data-lucide="shield-off" class="w-10 h-10 text-slate-300"></i>
+                    <div class="col-span-full py-16 px-6 text-center bg-[#F8FAFC] rounded-3xl border border-dashed border-[#E5E7EB]">
+                        <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mx-auto mb-4 text-[#475569]">
+                            <i data-lucide="shield-alert" class="w-8 h-8"></i>
                         </div>
-                        <h3 class="text-2xl font-black text-slate-900 uppercase italic tracking-tighter">No Brands Active</h3>
-                        <p class="text-slate-500 italic font-medium mt-2">Verified partners are currently offline. Deploying updates.</p>
+                        <h3 class="text-xl font-bold text-[#111827] mb-1">No Brands Found</h3>
+                        <p class="text-[#475569] text-sm">Verified partner brands will be featured here shortly.</p>
                     </div>
                 {% endfor %}
             </div>
@@ -173,59 +228,63 @@
     </section>
 
     {% if recommended_products %}
-    <section class="max-w-7xl mx-auto px-4 py-20">
-        <div class="flex justify-between items-end mb-10">
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-12 border-b border-[#E5E7EB] pb-6">
             <div>
-                <h2 class="text-3xl font-black text-slate-900 uppercase italic tracking-tighter">Recommended <span class="text-blue-600">For You</span></h2>
-                <div class="h-1.5 w-20 bg-blue-600 mt-2 rounded-full"></div>
+                <span class="text-xs font-extrabold uppercase tracking-widest text-[#D62828]">Handpicked Selection</span>
+                <h2 class="text-3xl sm:text-4xl font-black text-[#111827] uppercase tracking-tight mt-1">Recommended For You</h2>
             </div>
-            <a href="/marketplace/?sort=recommended" class="text-blue-600 font-bold flex items-center gap-1 hover:underline">
-                View All Recommended Products <i data-lucide="chevron-right" class="w-4 h-4"></i>
+            <a href="/marketplace/?sort=recommended" class="inline-flex items-center gap-2 text-[#D62828] hover:text-[#A61E1E] font-bold transition-colors group">
+                <span>View All Recommended Products</span>
+                <i data-lucide="chevron-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
             </a>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {% for product in recommended_products %}
-                <div class="group bg-white rounded-[2.5rem] border border-slate-200 overflow-hidden hover:border-blue-500 hover:shadow-2xl transition-all duration-500 flex flex-col h-full">
-                    <div class="relative h-64 bg-slate-100 overflow-hidden">
+                <div class="group bg-white rounded-2xl border border-[#E5E7EB] overflow-hidden hover:shadow-xl hover:border-[#D62828]/30 transition-all duration-300 flex flex-col h-full">
+                    <div class="relative h-72 bg-[#F8FAFC] overflow-hidden flex items-center justify-center">
                         {% if product.get_primary %}
-                            <img src="{{ product.get_primary.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            <img src="{{ product.get_primary.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         {% else %}
-                            <div class="flex items-center justify-center h-full">
-                                <i data-lucide="package" class="w-12 h-12 text-slate-300"></i>
+                            <div class="flex flex-col items-center justify-center text-slate-300 p-6">
+                                <i data-lucide="package" class="w-16 h-16 mb-2"></i>
+                                <span class="text-xs uppercase tracking-wider font-semibold">No Image</span>
                             </div>
                         {% endif %}
 
-                        <div class="absolute top-4 left-4 flex gap-2 z-10">
+                        <div class="absolute top-3 left-3 flex flex-wrap gap-2 z-10">
                             {% if product in recommended_products %}
-                                <span class="bg-orange-500 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase italic tracking-widest shadow-lg">
+                                <span class="bg-[#F4B400] text-[#111827] text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider shadow-md">
                                     Recommended
                                 </span>
                             {% endif %}
 
                             {% if product.is_new %}
-                                <span class="bg-orange-500 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase italic tracking-widest shadow-lg">
+                                <span class="bg-[#D62828] text-white text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider shadow-md">
                                     New
                                 </span>
                             {% endif %}
                         </div>
                     </div>
 
-                    <div class="p-8 flex-grow flex flex-col">
-                        <p class="text-[10px] text-blue-600 font-black uppercase tracking-[0.2em] mb-1 italic">
-                            {{ product.brand.name }}
-                        </p>
-                        <h3 class="font-bold text-lg text-slate-900 group-hover:text-blue-600 transition-colors mb-4 uppercase italic tracking-tighter truncate">
-                            {{ product.name }}
-                        </h3>
-                        
-                        <div class="mb-6">
-                            <span class="text-[10px] text-slate-400 block font-black uppercase italic tracking-widest">Price</span>
-                            <span class="text-xl font-black text-slate-900 italic">Rs. {{ product.price | floatformat:0 }}</span>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <p class="text-xs font-bold text-[#D62828] uppercase tracking-wider mb-2">
+                                {{ product.brand.name }}
+                            </p>
+                            <h3 class="font-bold text-lg text-[#111827] group-hover:text-[#D62828] transition-colors mb-3 line-clamp-1">
+                                {{ product.name }}
+                            </h3>
                         </div>
+                        
+                        <div class="mt-4 pt-4 border-t border-[#E5E7EB]">
+                            <div class="flex items-baseline justify-between mb-4">
+                                <span class="text-xs text-[#475569] font-medium uppercase tracking-wider">Price</span>
+                                <span class="text-2xl font-black text-[#111827]">Rs. {{ product.price | floatformat:0 }}</span>
+                            </div>
 
-                        <div class="mt-auto">
-                            <a href="/products/{{ product.id }}/" class="w-full inline-flex items-center justify-center gap-3 bg-slate-900 text-white font-black py-4 rounded-2xl transition-all uppercase italic tracking-widest text-[11px] hover:bg-blue-600 shadow-xl shadow-slate-900/10">
+                            <a href="/products/{{ product.id }}/" class="w-full inline-flex items-center justify-center gap-2 bg-[#0F172A] hover:bg-[#D62828] text-white font-bold py-3.5 px-4 rounded-xl transition-all duration-300 text-sm shadow-md">
                                 <span>View Details</span>
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </a>
