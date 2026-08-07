@@ -1,61 +1,131 @@
-<footer class="bg-slate-900 text-slate-300 pt-12 pb-8">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+<footer class="bg-[#0F172A] text-slate-300 border-t border-slate-800 pt-16 pb-12 relative overflow-hidden">
+    <div class="absolute top-0 left-1/4 w-96 h-96 bg-[#D62828]/5 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-[#F4B400]/5 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-12 mb-16">
             
-            <div class="col-span-1 md:col-span-1">
-                <div class="flex items-center gap-2 mb-4">
-                    <div class="bg-blue-600 p-1.5 rounded-lg text-white font-bold">
-                        <i data-lucide="zap" class="w-5 h-5 fill-current"></i>
+            <div class="lg:col-span-2 space-y-6">
+                <a href="/" class="flex items-center gap-2.5 inline-block group">
+                    <div class="bg-[#D62828] text-white p-2.5 rounded-xl group-hover:bg-[#A61E1E] transition-all duration-300 shadow-lg shadow-[#D62828]/25 group-hover:scale-105">
+                        <i data-lucide="zap" class="w-6 h-6 fill-current"></i>
                     </div>
-                    <span class="text-xl font-black tracking-tighter text-white uppercase">APEX<span class="text-blue-500">STRIKER</span></span>
-                </div>
-                <p class="text-sm leading-relaxed text-slate-400">
+                    <span class="text-2xl font-black tracking-tight text-white uppercase">
+                        APEX<span class="text-[#D62828]">STRIKER</span>
+                    </span>
+                </a>
+
+                <p class="text-slate-400 text-sm leading-relaxed max-w-sm">
                     The ultimate destination for premium football gear. Elevate your game with elite equipment from trusted vendors.
                 </p>
+
+                <div class="flex items-center gap-3 pt-2">
+                    <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs font-semibold text-slate-300">
+                        <i data-lucide="shield-check" class="w-4 h-4 text-[#F4B400]"></i>
+                        <span>Verified Vendors</span>
+                    </div>
+                    <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs font-semibold text-slate-300">
+                        <i data-lucide="truck" class="w-4 h-4 text-[#16A34A]"></i>
+                        <span>Fast Shipping</span>
+                    </div>
+                </div>
             </div>
 
             <div>
-                <h4 class="text-white font-bold mb-4 uppercase tracking-wider text-sm">Shop Gear</h4>
-                <ul class="space-y-2 text-sm">
-                    <li><a href="#" class="hover:text-blue-400 transition-colors">Football Boots</a></li>
-                    <li><a href="#" class="hover:text-blue-400 transition-colors">Training Kits</a></li>
-                    <li><a href="#" class="hover:text-blue-400 transition-colors">Accessories</a></li>
-                    <li><a href="#" class="hover:text-blue-400 transition-colors">Vendor Directory</a></li>
+                <h4 class="text-white font-extrabold mb-5 uppercase tracking-wider text-xs flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-[#D62828]"></span>
+                    <span>Shop Gear</span>
+                </h4>
+                <ul class="space-y-3 text-sm">
+                    <li>
+                        <a href="#" class="text-slate-400 hover:text-white hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-2">
+                            <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-[#D62828]"></i>
+                            <span>Football Boots</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="text-slate-400 hover:text-white hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-2">
+                            <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-[#D62828]"></i>
+                            <span>Training Kits</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="text-slate-400 hover:text-white hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-2">
+                            <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-[#D62828]"></i>
+                            <span>Accessories</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="text-slate-400 hover:text-white hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-2">
+                            <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-[#D62828]"></i>
+                            <span>Vendor Directory</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
 
             <div>
-                <h4 class="text-white font-bold mb-4 uppercase tracking-wider text-sm">Support</h4>
-                <ul class="space-y-2 text-sm">
-                    <li><a href="#" class="hover:text-blue-400 transition-colors">Help Center</a></li>
-                    <li><a href="#" class="hover:text-blue-400 transition-colors">Shipping Info</a></li>
-                    <li><a href="#" class="hover:text-blue-400 transition-colors">Returns</a></li>
-                    <li><a href="#" class="hover:text-blue-400 transition-colors">Contact Us</a></li>
+                <h4 class="text-white font-extrabold mb-5 uppercase tracking-wider text-xs flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-[#F4B400]"></span>
+                    <span>Support</span>
+                </h4>
+                <ul class="space-y-3 text-sm">
+                    <li>
+                        <a href="#" class="text-slate-400 hover:text-white hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-2">
+                            <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-[#F4B400]"></i>
+                            <span>Help Center</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="text-slate-400 hover:text-white hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-2">
+                            <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-[#F4B400]"></i>
+                            <span>Shipping Info</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="text-slate-400 hover:text-white hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-2">
+                            <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-[#F4B400]"></i>
+                            <span>Returns</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="text-slate-400 hover:text-white hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-2">
+                            <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-[#F4B400]"></i>
+                            <span>Contact Us</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
 
             <div>
-                <h4 class="text-white font-bold mb-4 uppercase tracking-wider text-sm">Stay Connected</h4>
-                <div class="flex space-x-4">
-                    <a href="#" class="bg-slate-800 p-2 rounded-lg hover:bg-blue-600 transition-all">
-                        <i data-lucide="facebook" class="w-5 h-5 text-white"></i>
+                <h4 class="text-white font-extrabold mb-5 uppercase tracking-wider text-xs flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-[#16A34A]"></span>
+                    <span>Stay Connected</span>
+                </h4>
+                <p class="text-slate-400 text-xs leading-relaxed mb-4">
+                    Follow us for official product drops and exclusive vendor deals.
+                </p>
+                <div class="flex space-x-3">
+                    <a href="#" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 hover:border-[#D62828] hover:bg-[#D62828] text-slate-300 hover:text-white flex items-center justify-center transition-all duration-300 shadow-md hover:-translate-y-0.5" title="Facebook">
+                        <i data-lucide="facebook" class="w-4 h-4"></i>
                     </a>
-                    <a href="#" class="bg-slate-800 p-2 rounded-lg hover:bg-blue-600 transition-all">
-                        <i data-lucide="instagram" class="w-5 h-5 text-white"></i>
+                    <a href="#" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 hover:border-[#D62828] hover:bg-[#D62828] text-slate-300 hover:text-white flex items-center justify-center transition-all duration-300 shadow-md hover:-translate-y-0.5" title="Instagram">
+                        <i data-lucide="instagram" class="w-4 h-4"></i>
                     </a>
-                    <a href="#" class="bg-slate-800 p-2 rounded-lg hover:bg-blue-600 transition-all">
-                        <i data-lucide="twitter" class="w-5 h-5 text-white"></i>
+                    <a href="#" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 hover:border-[#D62828] hover:bg-[#D62828] text-slate-300 hover:text-white flex items-center justify-center transition-all duration-300 shadow-md hover:-translate-y-0.5" title="Twitter">
+                        <i data-lucide="twitter" class="w-4 h-4"></i>
                     </a>
                 </div>
             </div>
+
         </div>
 
-        <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500">
-            <p>&copy; 2026 ApexStriker Select. All rights reserved.</p>
-            <div class="flex space-x-6 mt-4 md:mt-0">
-                <a href="#" class="hover:text-white">Privacy Policy</a>
-                <a href="#" class="hover:text-white">Terms of Service</a>
-                <a href="#" class="hover:text-white">Cookie Settings</a>
+        <div class="border-t border-slate-800/80 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-400">
+            <p class="font-medium">&copy; 2026 ApexStriker Select. All rights reserved.</p>
+            <div class="flex flex-wrap items-center gap-6 font-medium">
+                <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                <a href="#" class="hover:text-white transition-colors">Cookie Settings</a>
             </div>
         </div>
     </div>
