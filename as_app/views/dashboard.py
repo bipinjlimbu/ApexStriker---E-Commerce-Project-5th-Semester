@@ -142,6 +142,7 @@ def vendor_dashboard_view(request):
         return redirect(f'/profile/{request.user.id}/')
     
     section = request.GET.get('section', 'product-management')
+    brands = Brand.objects.filter(is_active=True).order_by('name')
     
     context = {
         'pending_order_count': OrderItem.objects.filter(vendor=request.user.vendor_profile, dispatched=False, order__status='paid').count(),
@@ -151,12 +152,14 @@ def vendor_dashboard_view(request):
         'completed_order_items_count': OrderItem.objects.filter(vendor=request.user.vendor_profile, order__status='completed').count(),
         'completed_orders_count': Order.objects.filter(items__vendor=request.user.vendor_profile, status='completed').distinct().count(),
         'section': section,
+        'brands': brands,
     }
     
     if section == 'product-management':
         q = request.GET.get('q', '')
         category = request.GET.get('category', 'all')
         position = request.GET.get('position', 'all')
+        brand = request.GET.get('brand', 'all')
         sort = request.GET.get('sort', 'latest')
         
         products = Product.objects.filter(vendor=request.user.vendor_profile).order_by('-created_at')
@@ -164,11 +167,17 @@ def vendor_dashboard_view(request):
         if q:
             query = Q(name__icontains=q) | Q(description__icontains=q) | Q(category__icontains=q) | Q(position__icontains=q) | Q(brand__name__icontains=q)
             products = products.filter(query)
-        elif category != 'all':
+            
+        if category != 'all':
             products = products.filter(category=category)
+            
+        if brand != 'all':
+            products = products.filter(brand__id=brand)
+            
         if position != 'all':
             products = products.filter(position=position)
-        elif sort == 'oldest':
+            
+        if sort == 'oldest':
             products = products.order_by('created_at')
         elif sort == 'price-low-high':
             products = products.order_by('price')
