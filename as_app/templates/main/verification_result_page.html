@@ -8,54 +8,59 @@
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
 </head>
 
-<body class="bg-slate-50 flex flex-col min-h-screen">
+<body class="bg-[#F8FAFC] text-[#475569] flex flex-col min-h-screen font-sans antialiased selection:bg-[#D62828] selection:text-[#FFFFFF]">
     {% include 'components/_navbar.html' %}
 
     {% include 'components/_messages.html' %}
 
-    <main class="flex-grow flex items-center justify-center py-12 px-4">
-        <div class="max-w-md w-full">
-            
-            <div class="bg-white rounded-[2.5rem] shadow-xl border border-slate-100 overflow-hidden shadow-slate-200/60">
+    <main class="flex-grow flex items-center justify-center py-12 sm:py-16 px-4 sm:px-6">
+        <div class="max-w-lg w-full">
+            <div class="bg-[#FFFFFF] rounded-3xl border border-[#E5E7EB] shadow-2xl overflow-hidden relative">
                 
-                <div class="h-24 bg-gradient-to-r {% if status == 'success' %}from-blue-700 to-indigo-900{% else %}from-slate-800 to-slate-900{% endif %}"></div>
-                
-                <div class="px-8 pb-10 text-center">
-                    <div class="relative flex justify-center -mt-12 mb-6">
-                        <div class="relative flex h-24 w-24">
+                <div class="h-32 bg-[#0F172A] relative overflow-hidden flex items-center justify-center">
+                    <div class="absolute -right-12 -top-12 w-48 h-48 bg-[#D62828]/20 rounded-full blur-2xl pointer-events-none"></div>
+                    <div class="absolute -left-12 -bottom-12 w-48 h-48 bg-[#F4B400]/15 rounded-full blur-2xl pointer-events-none"></div>
+                    
+                    <div class="absolute inset-0 bg-[radial-gradient(#E5E7EB_1px,transparent_1px)] [background-size:16px_16px] opacity-10"></div>
+                </div>
+
+                <div class="px-6 sm:px-10 pb-10 text-center relative z-10">
+                    <div class="relative flex justify-center -mt-14 mb-6">
+                        <div class="relative flex h-24 w-24 items-center justify-center">
                             {% if status == 'success' %}
-                                <span class="animate-ping absolute inline-flex h-full w-full rounded-3xl bg-green-400 opacity-20"></span>
-                                <div class="relative rounded-3xl border-4 border-white bg-green-50 w-24 h-24 flex items-center justify-center shadow-lg">
-                                    <i data-lucide="shield-check" class="w-10 h-10 text-green-500"></i>
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-2xl bg-[#16A34A] opacity-20"></span>
+                                <div class="relative rounded-2xl border-4 border-[#FFFFFF] bg-[#16A34A]/10 border-[#16A34A]/20 w-24 h-24 flex items-center justify-center shadow-xl backdrop-blur-md">
+                                    <i data-lucide="shield-check" class="w-12 h-12 text-[#16A34A]"></i>
                                 </div>
                             {% else %}
-                                <span class="animate-ping absolute inline-flex h-full w-full rounded-3xl bg-red-400 opacity-20"></span>
-                                <div class="relative rounded-3xl border-4 border-white bg-red-50 w-24 h-24 flex items-center justify-center shadow-lg">
-                                    <i data-lucide="shield-alert" class="w-10 h-10 text-red-500"></i>
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-2xl bg-[#DC2626] opacity-20"></span>
+                                <div class="relative rounded-2xl border-4 border-[#FFFFFF] bg-[#DC2626]/10 border-[#DC2626]/20 w-24 h-24 flex items-center justify-center shadow-xl backdrop-blur-md">
+                                    <i data-lucide="shield-alert" class="w-12 h-12 text-[#DC2626]"></i>
                                 </div>
                             {% endif %}
                         </div>
                     </div>
 
-                    <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 italic">
-                        Security Terminal
-                    </h3>
-                    
-                    <h1 class="text-2xl font-black text-slate-900 tracking-tight italic uppercase mb-4">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F8FAFC] border border-[#E5E7EB] text-xs font-bold text-[#475569] uppercase tracking-wider mb-3">
+                        <i data-lucide="lock" class="w-3.5 h-3.5 text-[#D62828]"></i>
+                        <span>Security Check</span>
+                    </div>
+
+                    <h1 class="text-2xl sm:text-3xl font-extrabold text-[#111827] tracking-tight mb-4">
                         {% if status == 'success' %}
-                            Verification <span class="text-blue-600">Complete</span>
+                            Verification <span class="text-[#16A34A]">Complete</span>
                         {% else %}
-                            Access <span class="text-red-500">Denied</span>
+                            Access <span class="text-[#DC2626]">Denied</span>
                         {% endif %}
                     </h1>
 
-                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100 mb-8">
+                    <div class="bg-[#F8FAFC] p-5 sm:p-6 rounded-2xl border border-[#E5E7EB] mb-8">
                         {% if status == 'success' %}
-                        <p class="text-slate-600 text-sm font-bold italic leading-relaxed">
+                        <p class="text-[#475569] text-sm sm:text-base font-medium leading-relaxed">
                             Your email has been successfully verified. You can now access your profile and explore the marketplace.
                         </p>
                         {% else %}
-                        <p class="text-slate-600 text-sm font-bold italic leading-relaxed">
+                        <p class="text-[#475569] text-sm sm:text-base font-medium leading-relaxed">
                             The verification link is invalid or has expired. Please request a new verification email to complete the process.
                         </p>
                         {% endif %}
@@ -64,27 +69,30 @@
                     <div class="space-y-3">
                         {% if status == 'success' %}
                             <a href="/profile/{{ user.id }}/" 
-                               class="w-full bg-blue-600 text-white font-black px-6 py-4 rounded-2xl hover:bg-blue-700 transition flex items-center justify-center gap-2 uppercase text-[10px] tracking-widest shadow-lg shadow-blue-200 italic">
-                                <i data-lucide="log-in" class="w-4 h-4"></i> Go to Profile
+                               class="w-full bg-[#D62828] text-[#FFFFFF] font-bold px-6 py-4 rounded-xl hover:bg-[#A61E1E] transition shadow-lg shadow-[#D62828]/25 flex items-center justify-center gap-2.5 text-sm uppercase tracking-wider">
+                                <i data-lucide="user" class="w-4 h-4"></i>
+                                <span>Go to Profile</span>
                             </a>
                         {% else %}
                             <a href="/profile/resend_verification/{{ user.id }}/" 
-                               class="w-full bg-slate-900 text-white font-black px-6 py-4 rounded-2xl hover:bg-slate-800 transition flex items-center justify-center gap-2 uppercase text-[10px] tracking-widest shadow-lg italic">
-                                <i data-lucide="refresh-cw" class="w-4 h-4"></i> Request New Link
+                               class="w-full bg-[#D62828] text-[#FFFFFF] font-bold px-6 py-4 rounded-xl hover:bg-[#A61E1E] transition shadow-lg shadow-[#D62828]/25 flex items-center justify-center gap-2.5 text-sm uppercase tracking-wider">
+                                <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                                <span>Request New Link</span>
                             </a>
                             <a href="/register/" 
-                               class="w-full bg-white text-slate-500 font-black px-6 py-4 rounded-2xl border border-slate-200 hover:bg-slate-50 transition flex items-center justify-center gap-2 uppercase text-[10px] tracking-widest italic">
-                                Back to Registration
+                               class="w-full bg-[#FFFFFF] text-[#111827] font-bold px-6 py-4 rounded-xl border border-[#E5E7EB] hover:bg-[#F8FAFC] transition flex items-center justify-center gap-2.5 text-sm uppercase tracking-wider shadow-sm">
+                                <i data-lucide="arrow-left" class="w-4 h-4 text-[#475569]"></i>
+                                <span>Back to Registration</span>
                             </a>
                         {% endif %}
                     </div>
 
-                    <div class="mt-8 pt-6 border-t border-slate-50 flex justify-center items-center gap-2">
-                        <div class="h-1 w-1 rounded-full bg-slate-300"></div>
-                        <p class="text-[9px] font-black text-slate-300 uppercase tracking-widest italic">
-                            ApexStriker Identity System
+                    <div class="mt-8 pt-6 border-t border-[#E5E7EB] flex justify-center items-center gap-2">
+                        <span class="h-1.5 w-1.5 rounded-full bg-[#D62828]"></span>
+                        <p class="text-xs font-bold text-[#475569] uppercase tracking-wider">
+                            ApexStriker Security System
                         </p>
-                        <div class="h-1 w-1 rounded-full bg-slate-300"></div>
+                        <span class="h-1.5 w-1.5 rounded-full bg-[#D62828]"></span>
                     </div>
                 </div>
             </div>

@@ -882,6 +882,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-top: -4rem;
 }
 
+.-mt-14 {
+  margin-top: -3.5rem;
+}
+
 .block {
   display: block;
 }
@@ -1251,6 +1255,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .max-w-6xl {
   max-width: 72rem;
+}
+
+.max-w-lg {
+  max-width: 32rem;
 }
 
 .flex-1 {
@@ -2236,6 +2244,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .bg-gradient-to-tr {
   background-image: linear-gradient(to top right, var(--tw-gradient-stops));
+}
+
+.bg-\[radial-gradient\(\#E5E7EB_1px\2c transparent_1px\)\] {
+  background-image: radial-gradient(#E5E7EB 1px,transparent 1px);
 }
 
 .from-blue-700 {
@@ -3402,6 +3414,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-size: 24px 24px;
 }
 
+.\[background-size\:16px_16px\] {
+  background-size: 16px 16px;
+}
+
 .selection\:bg-\[\#D62828\] *::-moz-selection {
   --tw-bg-opacity: 1;
   background-color: rgb(214 40 40 / var(--tw-bg-opacity));
@@ -3422,6 +3438,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
+.selection\:text-\[\#FFFFFF\] *::-moz-selection {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.selection\:text-\[\#FFFFFF\] *::selection {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
 .selection\:bg-\[\#D62828\]::-moz-selection {
   --tw-bg-opacity: 1;
   background-color: rgb(214 40 40 / var(--tw-bg-opacity));
@@ -3438,6 +3464,16 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 
 .selection\:text-white::selection {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.selection\:text-\[\#FFFFFF\]::-moz-selection {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.selection\:text-\[\#FFFFFF\]::selection {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
@@ -4191,6 +4227,10 @@ Ensure the default browser behavior of the `hidden` attribute.
     padding: 2rem;
   }
 
+  .sm\:p-6 {
+    padding: 1.5rem;
+  }
+
   .sm\:px-6 {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
@@ -4204,6 +4244,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   .sm\:px-8 {
     padding-left: 2rem;
     padding-right: 2rem;
+  }
+
+  .sm\:py-16 {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+
+  .sm\:px-10 {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
   }
 
   .sm\:text-6xl {
@@ -4229,6 +4279,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   .sm\:text-sm {
     font-size: 0.875rem;
     line-height: 1.25rem;
+  }
+
+  .sm\:text-base {
+    font-size: 1rem;
+    line-height: 1.5rem;
   }
 }
 
