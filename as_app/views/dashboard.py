@@ -25,6 +25,7 @@ def admin_dashboard_view(request):
     context = {
         'section' : section,
         'total_pending_vendors': Vendor.objects.filter(status=Vendor.Status.PENDING).count(),
+        'total_pending_brands': Brand.objects.filter(is_active=False).count(),
         'total_pending_payouts': Disbursement.objects.filter(is_transferred=False).count(),
         'total_products_reviews': 350,
         'total_admin_revenue': sum(disbursement.admin_commission for disbursement in Disbursement.objects.filter(is_transferred=True)),
