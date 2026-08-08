@@ -1,104 +1,162 @@
-<div class="bg-slate-900 p-12 relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-1/4 h-full bg-blue-600 skew-x-12 translate-x-20 opacity-10"></div>
+<div class="space-y-6 p-6 w-full">
+    <div class="bg-[#0F172A] rounded-2xl p-6 lg:p-8 text-white shadow-lg relative overflow-hidden border border-slate-800">
+        <div class="absolute -top-24 -right-24 w-96 h-96 bg-[#D62828]/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-[#F4B400]/10 rounded-full blur-3xl pointer-events-none"></div>
         
-        <div class="relative z-10 flex justify-between items-end">
-            <div>
-                <span class="inline-block bg-blue-600 text-white text-[10px] font-black px-3 py-1 rounded-full mb-4 uppercase tracking-widest italic">System Overview</span>
-                <h2 class="text-5xl font-black text-white italic uppercase tracking-tighter">Member <span class="text-blue-500">List</span></h2>
+        <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div class="space-y-1.5">
+                <div class="inline-flex items-center gap-2 bg-[#D62828]/10 border border-[#D62828]/30 px-3 py-1 rounded-full text-[#F4B400] text-xs font-bold uppercase tracking-wider">
+                    <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+                    <span>Admin Directory</span>
+                </div>
+                <h1 class="text-2xl lg:text-3xl font-extrabold text-white tracking-tight uppercase">
+                    All <span class="text-[#D62828]">Members</span>
+                </h1>
+                <p class="text-slate-400 text-xs sm:text-sm">
+                    Manage customer accounts, vendor access levels, and user contact records across the platform.
+                </p>
             </div>
             
-            <div class="bg-white/5 border border-white/10 p-4 rounded-3xl backdrop-blur-md flex items-center gap-4">
-                <div class="h-12 w-12 bg-blue-600/20 rounded-2xl flex items-center justify-center text-blue-500">
-                    <i data-lucide="database" class="w-6 h-6"></i>
+            <div class="bg-slate-800/80 border border-slate-700/80 p-4 rounded-xl backdrop-blur-sm flex items-center gap-4 shrink-0 shadow-sm">
+                <div class="h-10 w-10 bg-gradient-to-br from-[#D62828] to-[#A61E1E] rounded-lg flex items-center justify-center text-white shadow-md">
+                    <i data-lucide="users" class="w-5 h-5"></i>
                 </div>
-                <div class="pr-4">
-                    <p class="text-[9px] font-black text-slate-500 uppercase italic tracking-widest">Total Identities</p>
-                    <p class="text-2xl font-black text-white italic">{{ members.count }}</p>
+                <div>
+                    <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Total Members</p>
+                    <p class="text-xl font-black text-white leading-tight">{{ members.count }}</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="p-12 -mt-8 relative z-20">
-        <div class="bg-white rounded-[2.5rem] border border-slate-200 shadow-2xl shadow-slate-200/50 overflow-hidden">
-            <table class="w-full text-left">
+    <div class="bg-white rounded-2xl border border-[#E5E7EB] shadow-sm overflow-hidden w-full">
+        <div class="overflow-x-auto w-full">
+            <table class="w-full text-left border-collapse">
                 <thead>
-                    <tr class="bg-slate-50 border-b border-slate-100">
-                        <th class="px-10 py-6 text-[11px] font-black text-slate-400 uppercase italic tracking-widest">User Profile</th>
-                        <th class="px-10 py-6 text-[11px] font-black text-slate-400 uppercase italic tracking-widest">Account Type</th>
-                        <th class="px-10 py-6 text-[11px] font-black text-slate-400 uppercase italic tracking-widest">Status</th>
-                        <th class="px-10 py-6 text-[11px] font-black text-slate-400 uppercase italic tracking-widest">Actions</th>
+                    <tr class="bg-[#F8FAFC] border-b border-[#E5E7EB]">
+                        <th class="px-6 py-4 text-xs font-bold text-[#475569] uppercase tracking-wider">Member Details</th>
+                        <th class="px-6 py-4 text-xs font-bold text-[#475569] uppercase tracking-wider">Contact Info</th>
+                        <th class="px-6 py-4 text-xs font-bold text-[#475569] uppercase tracking-wider">Account Type</th>
+                        <th class="px-6 py-4 text-xs font-bold text-[#475569] uppercase tracking-wider">Status</th>
+                        <th class="px-6 py-4 text-xs font-bold text-[#475569] uppercase tracking-wider"></th>
+                        <th class="px-6 py-4 text-xs font-bold text-[#475569] uppercase tracking-wider text-right">Actions</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-50">
+                <tbody class="divide-y divide-[#E5E7EB]">
                     {% for member in members %}
-                    <tr class="hover:bg-slate-50 transition-colors group">
-                        <td class="px-10 py-6">
-                            <div class="flex items-center gap-4">
-                                <div class="relative h-12 w-12 shrink-0">
+                    <tr class="hover:bg-[#F8FAFC]/80 transition-colors group">
+                        <td class="px-6 py-4 align-middle">
+                            <div class="flex items-center gap-3.5">
+                                <div class="relative h-11 w-11 shrink-0">
                                     {% if member.profile_picture %}
                                         <img src="{{ member.profile_picture.url }}" 
-                                            class="h-full w-full object-cover rounded-2xl shadow-md border border-slate-100">
+                                             class="h-full w-full object-cover rounded-xl border border-[#E5E7EB] shadow-sm">
                                     {% else %}
-                                        <div class="h-full w-full bg-slate-900 rounded-2xl flex items-center justify-center text-blue-500 font-black italic shadow-inner">
-                                            <i data-lucide="user" class="w-6 h-6"></i>
+                                        <div class="h-full w-full bg-[#0F172A] rounded-xl flex items-center justify-center text-white font-bold shadow-sm">
+                                            <i data-lucide="user" class="w-5 h-5 text-slate-300"></i>
                                         </div>
                                     {% endif %}
                                 </div>
-
                                 <div>
-                                    <p class="font-black text-slate-900 italic uppercase leading-none mb-1">{{ member.first_name }} {{ member.last_name }}</p>
-                                    <p class="text-[10px] text-blue-400 font-bold italic uppercase tracking-wider">@{{ member.username }}</p>
+                                    <p class="font-bold text-[#111827] text-sm group-hover:text-[#D62828] transition-colors leading-snug">
+                                        {{ member.first_name }} {{ member.last_name }}
+                                    </p>
+                                    <p class="text-xs text-[#475569] font-medium">@{{ member.username }}</p>
                                 </div>
                             </div>
                         </td>
-                        <td class="px-10 py-6">
-                            {% if member.role == 'admin' %}
-                                <span class="text-[10px] font-black text-slate-500 bg-slate-100 px-3 py-1.5 rounded-lg uppercase italic border border-slate-200">Administrator</span>
-                            {% elif member.role == 'vendor' and member.vendor_profile.status == 'pending' %}
-                                <span class="text-[10px] font-black text-slate-500 bg-slate-100 px-3 py-1.5 rounded-lg uppercase italic border border-slate-200">Pending Vendor</span>
-                            {% elif member.role == 'vendor' and member.vendor_profile.status == 'approved' %}
-                                <span class="text-[10px] font-black text-slate-500 bg-slate-100 px-3 py-1.5 rounded-lg uppercase italic border border-slate-200">Trusted Vendor</span>
-                            {% elif member.role == 'vendor' and member.vendor_profile.status == 'rejected' %}
-                                <span class="text-[10px] font-black text-slate-500 bg-slate-100 px-3 py-1.5 rounded-lg uppercase italic border border-slate-200">Rejected Vendor</span>
-                            {% elif member.role == 'customer' and member.is_verified %}
-                                <span class="text-[10px] font-black text-slate-500 bg-slate-100 px-3 py-1.5 rounded-lg uppercase italic border border-slate-200">Verified Customer</span>
-                            {% else %}
-                                <span class="text-[10px] font-black text-slate-500 bg-slate-100 px-3 py-1.5 rounded-lg uppercase italic border border-slate-200">Customer</span>
-                            {% endif %}
-                        </td>
-                        <td class="px-10 py-6">
-                            <div class="flex items-center gap-2 text-slate-400">
-                                {% if member.is_active %}
-                                <div class="h-2 w-2 rounded-full bg-green-500"></div>
-                                <p class="text-[11px] font-black italic uppercase">Online</p>
-                                {% else %}
-                                <div class="h-2 w-2 rounded-full bg-slate-300"></div>
-                                <p class="text-[11px] font-black italic uppercase">Offline</p>
-                                {% endif %}
+
+                        <td class="px-6 py-4 align-middle">
+                            <div class="space-y-1 text-xs">
+                                <div class="flex items-center gap-2 text-[#111827]">
+                                    <i data-lucide="mail" class="w-3.5 h-3.5 text-[#475569] shrink-0"></i>
+                                    <span class="font-medium" title="{{ member.email }}">{{ member.email|default:"N/A" }}</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-[#475569]">
+                                    <i data-lucide="phone" class="w-3.5 h-3.5 text-[#475569] shrink-0"></i>
+                                    <span>{{ member.phone|default:"N/A" }}</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-[#475569]">
+                                    <i data-lucide="map-pin" class="w-3.5 h-3.5 text-[#475569] shrink-0"></i>
+                                    <span title="{{ member.address }}">{{ member.address|default:"N/A" }}</span>
+                                </div>
                             </div>
                         </td>
-                        <td class="px-10 py-6">
-                            <div class="flex items-center gap-3">
+
+                        <td class="px-6 py-4 align-middle">
+                            {% if member.role == 'admin' %}
+                                <span class="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F172A] bg-slate-100 px-3 py-1 rounded-full border border-slate-300">
+                                    <i data-lucide="shield" class="w-3 h-3 text-[#D62828]"></i> Admin
+                                </span>
+                            {% elif member.role == 'vendor' and member.vendor_profile.status == 'pending' %}
+                                <span class="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F172A] bg-[#F4B400]/20 px-3 py-1 rounded-full border border-[#F4B400]/40">
+                                    <i data-lucide="clock" class="w-3 h-3 text-[#F4B400]"></i> Pending Vendor
+                                </span>
+                            {% elif member.role == 'vendor' and member.vendor_profile.status == 'approved' %}
+                                <span class="inline-flex items-center gap-1.5 text-xs font-bold text-[#16A34A] bg-[#16A34A]/10 px-3 py-1 rounded-full border border-[#16A34A]/20">
+                                    <i data-lucide="store" class="w-3 h-3"></i> Trusted Vendor
+                                </span>
+                            {% elif member.role == 'vendor' and member.vendor_profile.status == 'rejected' %}
+                                <span class="inline-flex items-center gap-1.5 text-xs font-bold text-[#DC2626] bg-[#DC2626]/10 px-3 py-1 rounded-full border border-[#DC2626]/20">
+                                    <i data-lucide="x-circle" class="w-3 h-3"></i> Rejected Vendor
+                                </span>
+                            {% elif member.role == 'customer' and member.is_verified %}
+                                <span class="inline-flex items-center gap-1.5 text-xs font-bold text-[#16A34A] bg-[#16A34A]/10 px-3 py-1 rounded-full border border-[#16A34A]/20">
+                                    <i data-lucide="check-circle-2" class="w-3 h-3"></i> Verified Customer
+                                </span>
+                            {% else %}
+                                <span class="inline-flex items-center gap-1.5 text-xs font-bold text-[#475569] bg-slate-100 px-3 py-1 rounded-full border border-[#E5E7EB]">
+                                    <i data-lucide="user" class="w-3 h-3"></i> Customer
+                                </span>
+                            {% endif %}
+                        </td>
+
+                        <td class="px-6 py-4 align-middle">
+                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-bold {% if member.is_active %}bg-[#16A34A]/10 border-[#16A34A]/30 text-[#16A34A]{% else %}bg-slate-100 border-slate-300 text-[#475569]{% endif %}">
+                                <span class="h-2 w-2 rounded-full {% if member.is_active %}bg-[#16A34A] animate-pulse{% else %}bg-slate-400{% endif %}"></span>
+                                <span>{% if member.is_active %}Active{% else %}Inactive{% endif %}</span>
+                            </div>
+                        </td>
+
+                        <td class="px-6 py-4 align-middle">
+                            <form method="POST" action="/profile/status/toggle/{{ member.id }}/" class="inline-block">
+                                {% csrf_token %}
+                                <button type="submit" class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none {% if member.is_active %}bg-[#16A34A]{% else %}bg-slate-300{% endif %}" title="Toggle active status">
+                                    <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out {% if member.is_active %}translate-x-5{% else %}translate-x-0{% endif %}"></span>
+                                </button>
+                            </form>
+                        </td>
+
+                        <td class="px-6 py-4 align-middle text-right">
+                            <div class="flex items-center justify-end gap-2">
                                 <a href="/profile/{{ member.id }}/" 
-                                class="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-xl font-black italic uppercase text-[10px] hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/20">
-                                    <i data-lucide="eye" class="w-3.5 h-3.5"></i> View Profile
+                                   class="inline-flex items-center gap-1.5 bg-[#0F172A] hover:bg-slate-800 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition-all shadow-sm">
+                                    <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                                    <span>View Profile</span>
                                 </a>
 
-                                <form method="POST" action="/profile/delete/{{ member.id }}/" onsubmit="return confirm('Are you sure you want to delete this member?');">
+                                <form method="POST" action="/profile/delete/{{ member.id }}/" onsubmit="return confirm('Are you sure you want to delete this member?');" class="inline">
                                     {% csrf_token %}
-                                    <button type="submit" class="flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-xl font-black italic uppercase text-[10px] hover:bg-red-700 transition-all shadow-lg shadow-red-600/20 active:scale-95">
-                                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> Delete
+                                    <button type="submit" class="inline-flex items-center gap-1.5 bg-red-50 hover:bg-[#DC2626] text-[#DC2626] hover:text-white px-3.5 py-2 rounded-xl text-xs font-bold transition-all border border-red-200 hover:border-[#DC2626]">
+                                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                        <span>Delete</span>
                                     </button>
                                 </form>
                             </div>
                         </td>
                     </tr>
                     {% empty %}
-                        <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-12 text-center">
-                            <i data-lucide="inbox" class="w-12 h-12 mx-auto mb-4 text-slate-300"></i>
-                            <p class="text-sm font-black text-slate-500 uppercase italic tracking-widest">No members found.</p>
-                        </div>
+                    <tr>
+                        <td colspan="6" class="px-6 py-16 text-center">
+                            <div class="max-w-xs mx-auto space-y-3">
+                                <div class="w-12 h-12 bg-slate-100 text-slate-400 rounded-2xl flex items-center justify-center mx-auto">
+                                    <i data-lucide="users" class="w-6 h-6"></i>
+                                </div>
+                                <p class="text-base font-bold text-[#111827]">No members found</p>
+                                <p class="text-xs text-[#475569]">There are currently no registered members matching this criteria.</p>
+                            </div>
+                        </td>
+                    </tr>
                     {% endfor %}
                 </tbody>
             </table>
