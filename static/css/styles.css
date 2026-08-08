@@ -2436,6 +2436,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(15 23 42 / 0));
 }
 
+.from-\[\#F4B400\] {
+  --tw-gradient-from: #F4B400;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(244 180 0 / 0));
+}
+
 .via-white\/5 {
   --tw-gradient-stops: var(--tw-gradient-from), rgb(255 255 255 / 0.05), var(--tw-gradient-to, rgb(255 255 255 / 0));
 }
@@ -2458,6 +2463,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .to-\[\#A61E1E\] {
   --tw-gradient-to: #A61E1E;
+}
+
+.to-\[\#D62828\] {
+  --tw-gradient-to: #D62828;
 }
 
 .fill-current {
@@ -4105,6 +4114,16 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .hover\:bg-\[\#F8FAFC\]\/80:hover {
   background-color: rgb(248 250 252 / 0.8);
+}
+
+.hover\:bg-slate-200:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(226 232 240 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-green-700:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(21 128 61 / var(--tw-bg-opacity));
 }
 
 .hover\:text-blue-600:hover {
