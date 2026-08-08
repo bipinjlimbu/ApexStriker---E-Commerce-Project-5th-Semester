@@ -723,6 +723,18 @@ Ensure the default browser behavior of the `hidden` attribute.
   left: -6rem;
 }
 
+.-top-16 {
+  top: -4rem;
+}
+
+.-right-16 {
+  right: -4rem;
+}
+
+.-left-16 {
+  left: -4rem;
+}
+
 .z-10 {
   z-index: 10;
 }
@@ -768,6 +780,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .my-4 {
   margin-top: 1rem;
   margin-bottom: 1rem;
+}
+
+.my-6 {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .mb-10 {
@@ -1087,6 +1104,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: 2.75rem;
 }
 
+.h-36 {
+  height: 9rem;
+}
+
 .max-h-full {
   max-height: 100%;
 }
@@ -1231,6 +1252,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .w-11 {
   width: 2.75rem;
+}
+
+.w-36 {
+  width: 9rem;
 }
 
 .min-w-\[320px\] {
@@ -4142,6 +4167,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 .hover\:bg-\[\#0F172A\]:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(15 23 42 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-\[\#D62828\]\/5:hover {
+  background-color: rgb(214 40 40 / 0.05);
+}
+
+.hover\:bg-slate-200\/60:hover {
+  background-color: rgb(226 232 240 / 0.6);
 }
 
 .hover\:text-blue-600:hover {
