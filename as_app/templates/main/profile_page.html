@@ -199,7 +199,7 @@
 
                             <div class="space-y-1">
                                 <label class="text-xs font-bold text-[#475569] uppercase tracking-wider">PAN Number</label>
-                                <p class="text-base font-extrabold text-[#111827] tracking-widest">{{ profile.vendor_profile.pan_number }}</p>
+                                <p class="text-base font-extrabold text-[#111827] tracking-widest">{{ profile.vendor_profile.pan_number | default:"Not Provided" }}</p>
                             </div>
 
                             <div class="space-y-1">
@@ -209,7 +209,7 @@
 
                             <div class="space-y-1">
                                 <label class="text-xs font-bold text-[#475569] uppercase tracking-wider">Email Address</label>
-                                <p class="text-sm font-bold text-[#111827]">{{ profile.email }}</p>
+                                <p class="text-sm font-bold text-[#111827]">{{ profile.email | default:"Not Provided" }}</p>
                             </div>
                         </div>
 
@@ -235,7 +235,7 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             <div class="space-y-1">
                                 <label class="text-xs font-bold text-[#475569] uppercase tracking-wider">Email Address</label>
-                                <p class="text-sm font-bold text-[#111827]">{{ profile.email }}</p>
+                                <p class="text-sm font-bold text-[#111827]">{{ profile.email | default:"Not Provided" }}</p>
                             </div>
 
                             <div class="space-y-1">
@@ -271,7 +271,7 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             <div class="space-y-1">
                                 <label class="text-xs font-bold text-[#475569] uppercase tracking-wider">Full Name</label>
-                                <p class="text-base font-extrabold text-[#111827]">{{ profile.first_name }} {{ profile.last_name }}</p>
+                                <p class="text-base font-extrabold text-[#111827]">{{ profile.get_full_name | default:"Not Provided" }}</p>
                             </div>
 
                             <div class="space-y-1">
@@ -281,7 +281,7 @@
 
                             <div class="space-y-1">
                                 <label class="text-xs font-bold text-[#475569] uppercase tracking-wider">Email Address</label>
-                                <p class="text-sm font-bold text-[#111827]">{{ profile.email }}</p>
+                                <p class="text-sm font-bold text-[#111827]">{{ profile.email | default:"Not Provided" }}</p>
                             </div>
 
                             <div class="space-y-1">
