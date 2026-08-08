@@ -3,128 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Terminal | ApexStriker</title>
+    <title>Admin Dashboard | ApexStriker</title>
     {% load static %}
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
     <style>
         .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
+            width: 5px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
             background: transparent;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #e2e8f0;
+            background: #334155;
             border-radius: 10px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #3b82f6;
+            background: #D62828;
         }
     </style>
 </head>
 
-<body class="bg-slate-50 flex min-h-screen overflow-hidden">
+<body class="bg-[#F8FAFC] text-[#111827] flex min-h-screen overflow-hidden font-sans">
     
     {% include 'components/_messages.html' %}
 
-    <aside class="w-80 bg-slate-900 text-white flex flex-col shadow-2xl relative z-30">
-        <div class="p-8 border-b border-white/5">
-            <div class="flex items-center gap-3">
-                <div class="h-10 w-10 bg-blue-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/20">
-                    <i data-lucide="shield-check" class="w-6 h-6"></i>
+    <aside class="w-72 bg-[#0F172A] text-white flex flex-col shadow-2xl relative z-30 shrink-0 border-r border-slate-800">
+        <div class="p-6 border-b border-slate-800/80">
+            <div class="flex items-center gap-3.5">
+                <div class="h-11 w-11 bg-gradient-to-br from-[#D62828] to-[#A61E1E] rounded-2xl flex items-center justify-center shadow-lg shadow-red-900/30 ring-1 ring-white/20">
+                    <i data-lucide="shield-check" class="w-6 h-6 text-white"></i>
                 </div>
-                <h1 class="text-2xl font-black italic tracking-tighter uppercase">
-                    Apex<span class="text-blue-500">Striker</span>
-                </h1>
+                <div>
+                    <h1 class="text-xl font-black italic tracking-tight uppercase leading-none text-white">
+                        Apex<span class="text-[#D62828]">Striker</span>
+                    </h1>
+                    <span class="inline-block mt-1 text-[10px] font-bold uppercase tracking-widest text-[#F4B400] bg-[#F4B400]/10 px-2 py-0.5 rounded-full border border-[#F4B400]/20">
+                        Admin Portal
+                    </span>
+                </div>
             </div>
-            <p class="text-[10px] text-slate-500 font-black uppercase tracking-[0.3em] mt-4 italic">Management Console</p>
         </div>
 
-        <nav class="flex-grow p-6 space-y-6 overflow-y-auto">
+        <nav class="flex-grow p-4 space-y-6 overflow-y-auto custom-scrollbar">
             
-            <div class="space-y-2">
-                <h3 class="px-4 text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4 italic">Identity Control</h3>
+            <div class="space-y-1.5">
+                <h2 class="px-3 text-[11px] font-extrabold text-slate-400 uppercase tracking-wider mb-3">
+                    Users & Accounts
+                </h2>
                 
-                <a href="?section=member-list" class="flex items-center gap-4 px-4 py-4 rounded-2xl {% if section == 'member-list' or not section %}bg-blue-600 text-white shadow-lg{% else %}text-slate-400 hover:bg-blue-600 hover:text-white{% endif %} font-black italic uppercase text-xs tracking-widest transition-all group">
-                    <i data-lucide="users" class="w-4 h-4 group-hover:scale-110 transition-transform"></i>
-                    Member Directory
+                <a href="?section=member-list" class="flex items-center gap-3.5 px-3.5 py-3 rounded-xl transition-all font-bold text-xs uppercase tracking-wider group {% if section == 'member-list' or not section %}bg-[#D62828] text-white shadow-md shadow-red-900/20 ring-1 ring-white/10{% else %}text-slate-300 hover:bg-slate-800/80 hover:text-white{% endif %}">
+                    <i data-lucide="users" class="w-4 h-4 transition-transform group-hover:scale-110"></i>
+                    <span>All Members</span>
                 </a>
 
-                <a href="?section=pending-vendors" class="flex items-center gap-4 px-4 py-4 rounded-2xl {% if section == 'pending-vendors' %}bg-blue-600 text-white shadow-lg{% else %}text-slate-400 hover:bg-blue-600 hover:text-white{% endif %} font-black italic uppercase text-xs tracking-widest transition-all mt-1 group">
-                    <i data-lucide="clock" class="w-4 h-4 group-hover:scale-110 transition-transform"></i>
-                    Vendor Pending
+                <a href="?section=pending-vendors" class="flex items-center justify-between px-3.5 py-3 rounded-xl transition-all font-bold text-xs uppercase tracking-wider group {% if section == 'pending-vendors' %}bg-[#D62828] text-white shadow-md shadow-red-900/20 ring-1 ring-white/10{% else %}text-slate-300 hover:bg-slate-800/80 hover:text-white{% endif %}">
+                    <div class="flex items-center gap-3.5">
+                        <i data-lucide="clock" class="w-4 h-4 transition-transform group-hover:scale-110"></i>
+                        <span>Pending Vendors</span>
+                    </div>
                     {% if total_pending_vendors > 0 %}
-                        <span class="ml-auto bg-white/20 text-white px-2 py-0.5 rounded-lg text-[10px]"> {{ total_pending_vendors }}</span>
+                        <span class="bg-[#F4B400] text-[#0F172A] font-extrabold px-2 py-0.5 rounded-full text-[10px] shadow-sm">
+                            {{ total_pending_vendors }}
+                        </span>
                     {% endif %}
                 </a>
 
-                <a href="?section=brand-management" class="flex items-center gap-4 px-4 py-4 rounded-2xl {% if section == 'brand-management' %}bg-blue-600 text-white shadow-lg{% else %}text-slate-400 hover:bg-blue-600 hover:text-white{% endif %} font-black italic uppercase text-xs tracking-widest transition-all mt-1 group">
-                    <i data-lucide="tag" class="w-4 h-4 group-hover:scale-110 transition-transform"></i>
-                    Brand Management
+                <a href="?section=brand-management" class="flex items-center gap-3.5 px-3.5 py-3 rounded-xl transition-all font-bold text-xs uppercase tracking-wider group {% if section == 'brand-management' %}bg-[#D62828] text-white shadow-md shadow-red-900/20 ring-1 ring-white/10{% else %}text-slate-300 hover:bg-slate-800/80 hover:text-white{% endif %}">
+                    <i data-lucide="tag" class="w-4 h-4 transition-transform group-hover:scale-110"></i>
+                    <span>Brands</span>
                 </a>
             </div>
 
-            <div class="space-y-2">
-                <h3 class="px-4 text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4 italic">Orders Control</h3>
+            <div class="space-y-1.5">
+                <h2 class="px-3 text-[11px] font-extrabold text-slate-400 uppercase tracking-wider mb-3">
+                    Orders & Operations
+                </h2>
                 
-                <a href="?section=order-items-tracking" class="flex items-center gap-4 px-4 py-4 rounded-2xl {% if section == 'order-items-tracking' %}bg-blue-600 text-white shadow-lg{% else %}text-slate-400 hover:bg-blue-600 hover:text-white{% endif %} font-black italic uppercase text-xs tracking-widest transition-all group">
-                    <i data-lucide="activity" class="w-4 h-4 group-hover:scale-110 transition-transform"></i>
-                    Order Items Tracking
+                <a href="?section=order-items-tracking" class="flex items-center gap-3.5 px-3.5 py-3 rounded-xl transition-all font-bold text-xs uppercase tracking-wider group {% if section == 'order-items-tracking' %}bg-[#D62828] text-white shadow-md shadow-red-900/20 ring-1 ring-white/10{% else %}text-slate-300 hover:bg-slate-800/80 hover:text-white{% endif %}">
+                    <i data-lucide="activity" class="w-4 h-4 transition-transform group-hover:scale-110"></i>
+                    <span>Order Tracking</span>
                 </a>
 
-                <a href="?section=shipping-control" class="flex items-center gap-4 px-4 py-4 rounded-2xl {% if section == 'shipping-control' %}bg-blue-600 text-white shadow-lg{% else %}text-slate-400 hover:bg-blue-600 hover:text-white{% endif %} font-black italic uppercase text-xs tracking-widest transition-all mt-1 group">
-                    <i data-lucide="truck" class="w-4 h-4 group-hover:scale-110 transition-transform"></i>
-                    Transit Control
+                <a href="?section=shipping-control" class="flex items-center gap-3.5 px-3.5 py-3 rounded-xl transition-all font-bold text-xs uppercase tracking-wider group {% if section == 'shipping-control' %}bg-[#D62828] text-white shadow-md shadow-red-900/20 ring-1 ring-white/10{% else %}text-slate-300 hover:bg-slate-800/80 hover:text-white{% endif %}">
+                    <i data-lucide="truck" class="w-4 h-4 transition-transform group-hover:scale-110"></i>
+                    <span>Shipping Control</span>
                 </a>
 
-                <a href="?section=pending-payout" class="flex items-center gap-4 px-4 py-4 rounded-2xl {% if section == 'pending-payout' %}bg-blue-600 text-white shadow-lg{% else %}text-slate-400 hover:bg-blue-600 hover:text-white{% endif %} font-black italic uppercase text-xs tracking-widest transition-all mt-1 group">
-                    <i data-lucide="dollar-sign" class="w-4 h-4 group-hover:scale-110 transition-transform"></i>
-                    Pending Payouts
+                <a href="?section=pending-payout" class="flex items-center justify-between px-3.5 py-3 rounded-xl transition-all font-bold text-xs uppercase tracking-wider group {% if section == 'pending-payout' %}bg-[#D62828] text-white shadow-md shadow-red-900/20 ring-1 ring-white/10{% else %}text-slate-300 hover:bg-slate-800/80 hover:text-white{% endif %}">
+                    <div class="flex items-center gap-3.5">
+                        <i data-lucide="dollar-sign" class="w-4 h-4 transition-transform group-hover:scale-110"></i>
+                        <span>Vendor Payouts</span>
+                    </div>
                     {% if total_pending_payouts > 0 %}
-                        <span class="ml-auto bg-white/20 text-white px-2 py-0.5 rounded-lg text-[10px]"> {{ total_pending_payouts }}</span>
+                        <span class="bg-[#F4B400] text-[#0F172A] font-extrabold px-2 py-0.5 rounded-full text-[10px] shadow-sm">
+                            {{ total_pending_payouts }}
+                        </span>
                     {% endif %}
                 </a>
             </div>
 
-            <div class="space-y-2">
-                <h3 class="px-4 text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4 italic">Marketplace Audit</h3>
+            <div class="space-y-1.5">
+                <h2 class="px-3 text-[11px] font-extrabold text-slate-400 uppercase tracking-wider mb-3">
+                    Store Insights
+                </h2>
                 
-                <a href="?section=product-reviews" class="flex items-center gap-4 px-4 py-4 rounded-2xl {% if section == 'product-reviews' %}bg-blue-600 text-white shadow-lg{% else %}text-slate-400 hover:bg-blue-600 hover:text-white{% endif %} font-black italic uppercase text-xs tracking-widest transition-all group">
-                    <i data-lucide="package" class="w-4 h-4 group-hover:scale-110 transition-transform"></i>
-                    Product Reviews
+                <a href="?section=product-reviews" class="flex items-center gap-3.5 px-3.5 py-3 rounded-xl transition-all font-bold text-xs uppercase tracking-wider group {% if section == 'product-reviews' %}bg-[#D62828] text-white shadow-md shadow-red-900/20 ring-1 ring-white/10{% else %}text-slate-300 hover:bg-slate-800/80 hover:text-white{% endif %}">
+                    <i data-lucide="package" class="w-4 h-4 transition-transform group-hover:scale-110"></i>
+                    <span>Product Reviews</span>
                 </a>
                 
-                <a href="?section=revenue-logs" class="flex items-center gap-4 px-4 py-4 rounded-2xl {% if section == 'revenue-logs' %}bg-blue-600 text-white shadow-lg{% else %}text-slate-400 hover:bg-blue-600 hover:text-white{% endif %} font-black italic uppercase text-xs tracking-widest transition-all group">
-                    <i data-lucide="bar-chart-3" class="w-4 h-4 group-hover:scale-110 transition-transform"></i>
-                    Revenue Logs
+                <a href="?section=revenue-logs" class="flex items-center gap-3.5 px-3.5 py-3 rounded-xl transition-all font-bold text-xs uppercase tracking-wider group {% if section == 'revenue-logs' %}bg-[#D62828] text-white shadow-md shadow-red-900/20 ring-1 ring-white/10{% else %}text-slate-300 hover:bg-slate-800/80 hover:text-white{% endif %}">
+                    <i data-lucide="bar-chart-3" class="w-4 h-4 transition-transform group-hover:scale-110"></i>
+                    <span>Revenue Reports</span>
                 </a>
 
-                <a href="?section=reported-users" class="flex items-center gap-4 px-4 py-4 rounded-2xl {% if section == 'reported-users' %}bg-blue-600 text-white shadow-lg{% else %}text-slate-400 hover:bg-blue-600 hover:text-white{% endif %} font-black italic uppercase text-xs tracking-widest transition-all group">
-                    <i data-lucide="alert-triangle" class="w-4 h-4 group-hover:scale-110 transition-transform"></i>
-                    Reported Users
+                <a href="?section=reported-users" class="flex items-center justify-between px-3.5 py-3 rounded-xl transition-all font-bold text-xs uppercase tracking-wider group {% if section == 'reported-users' %}bg-[#D62828] text-white shadow-md shadow-red-900/20 ring-1 ring-white/10{% else %}text-slate-300 hover:bg-slate-800/80 hover:text-white{% endif %}">
+                    <div class="flex items-center gap-3.5">
+                        <i data-lucide="alert-triangle" class="w-4 h-4 transition-transform group-hover:scale-110"></i>
+                        <span>User Reports</span>
+                    </div>
                     {% if total_reported_users > 0 %}
-                        <span class="ml-auto bg-white/20 text-white px-2 py-0.5 rounded-lg text-[10px]"> {{ total_reported_users }}</span>
+                        <span class="bg-[#DC2626] text-white font-extrabold px-2 py-0.5 rounded-full text-[10px] shadow-sm">
+                            {{ total_reported_users }}
+                        </span>
                     {% endif %}
                 </a>
             </div>
         </nav>
 
-        <div class="p-6 border-t border-white/5 bg-slate-950/50 space-y-3">
+        <div class="p-4 border-t border-slate-800 bg-[#0F172A]/90 space-y-2">
             <a href="/profile/{{ request.user.id }}/" 
-            class="flex items-center justify-center gap-3 w-full bg-blue-600 text-white px-6 py-4 rounded-2xl font-black italic uppercase text-[10px] tracking-widest hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/20 active:scale-95">
-                <i data-lucide="user" class="w-4 h-4"></i>
-                Admin Profile
+               class="flex items-center justify-center gap-2.5 w-full bg-slate-800 hover:bg-slate-700 text-white px-4 py-3 rounded-xl font-bold uppercase text-[11px] tracking-wider transition-all border border-slate-700">
+                <i data-lucide="user" class="w-4 h-4 text-[#F4B400]"></i>
+                <span>Admin Profile</span>
             </a>
 
             <a href="/" target="_blank" 
-            class="flex items-center justify-center gap-3 w-full bg-white/5 border border-white/10 text-slate-400 px-6 py-4 rounded-2xl font-black italic uppercase text-[10px] tracking-widest hover:bg-blue-600 hover:text-white transition-all active:scale-95">
+               class="flex items-center justify-center gap-2.5 w-full bg-[#D62828] hover:bg-[#A61E1E] text-white px-4 py-3 rounded-xl font-bold uppercase text-[11px] tracking-wider transition-all shadow-md shadow-red-900/20">
                 <i data-lucide="external-link" class="w-4 h-4"></i>
-                Live Website
+                <span>View Storefront</span>
             </a>
         </div>
     </aside>
 
-    <main class="flex-grow flex flex-col h-screen overflow-y-auto">
+    <main class="flex-grow flex flex-col h-screen overflow-y-auto bg-[#F8FAFC]">
 
         {% if section == 'member-list' or not section %}
         
