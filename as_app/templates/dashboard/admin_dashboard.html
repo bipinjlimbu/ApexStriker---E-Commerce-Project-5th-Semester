@@ -68,9 +68,16 @@
                     {% endif %}
                 </a>
 
-                <a href="?section=brand-management" class="flex items-center gap-3.5 px-3.5 py-3 rounded-xl transition-all font-bold text-xs uppercase tracking-wider group {% if section == 'brand-management' %}bg-[#D62828] text-white shadow-md shadow-red-900/20 ring-1 ring-white/10{% else %}text-slate-300 hover:bg-slate-800/80 hover:text-white{% endif %}">
-                    <i data-lucide="tag" class="w-4 h-4 transition-transform group-hover:scale-110"></i>
-                    <span>Brands</span>
+                <a href="?section=brand-management" class="flex items-center justify-between px-3.5 py-3 rounded-xl transition-all font-bold text-xs uppercase tracking-wider group {% if section == 'brand-management' %}bg-[#D62828] text-white shadow-md shadow-red-900/20 ring-1 ring-white/10{% else %}text-slate-300 hover:bg-slate-800/80 hover:text-white{% endif %}">
+                    <div class="flex items-center gap-3.5">
+                        <i data-lucide="tag" class="w-4 h-4 transition-transform group-hover:scale-110"></i>
+                        <span>Brands</span>
+                    </div>
+                    {% if total_pending_brands > 0 %}
+                        <span class="bg-[#F4B400] text-[#0F172A] font-extrabold px-2 py-0.5 rounded-full text-[10px] shadow-sm">
+                            {{ total_pending_brands }}
+                        </span>
+                    {% endif %}
                 </a>
             </div>
 
