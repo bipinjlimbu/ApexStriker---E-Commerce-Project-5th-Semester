@@ -1,195 +1,231 @@
-<div class="flex-grow flex flex-col h-screen bg-slate-50 overflow-hidden">
-    
-    <div class="shrink-0 bg-slate-900 p-12 relative overflow-hidden z-50 shadow-2xl">
-        <div class="absolute top-0 right-0 w-1/4 h-full bg-blue-600 skew-x-12 translate-x-20 opacity-10"></div>
-        <div class="relative z-10 flex justify-between items-end">
-            <div>
-                <span class="inline-block bg-blue-600 text-white text-[10px] font-black px-3 py-1 rounded-full mb-4 uppercase tracking-widest italic">Inventory Control</span>
-                <h2 class="text-5xl font-black text-white italic uppercase tracking-tighter">Gear <span class="text-blue-500">Manifest</span></h2>
+<div class="space-y-6 p-6 w-full min-h-screen bg-[#F8FAFC]">
+    <div class="bg-[#0F172A] rounded-2xl p-6 lg:p-8 text-white shadow-lg relative overflow-hidden border border-slate-800">
+        <div class="absolute -top-24 -right-24 w-96 h-96 bg-[#D62828]/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-[#F4B400]/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+            <div class="space-y-1.5">
+                <div class="inline-flex items-center gap-2 bg-[#D62828]/10 border border-[#D62828]/30 px-3 py-1 rounded-full text-[#F4B400] text-xs font-bold uppercase tracking-wider">
+                    <i data-lucide="package-check" class="w-3.5 h-3.5"></i>
+                    <span>Inventory Management</span>
+                </div>
+                <h1 class="text-2xl lg:text-3xl font-extrabold text-white tracking-tight uppercase">
+                    Product <span class="text-[#D62828]">Catalog</span>
+                </h1>
+                <p class="text-slate-400 text-xs sm:text-sm">
+                    Manage store inventory, update product listings, and monitor stock availability.
+                </p>
             </div>
-            <div class="flex items-center gap-4">
-                <a href="/marketplace/" class="h-16 flex items-center gap-6 bg-white hover:bg-blue-600 text-slate-900 px-10 rounded-2xl transition-all shadow-2xl shadow-blue-600/30 active:scale-95 group border border-blue-400/20">
-                    <i data-lucide="external-link" class="w-6 h-6 group-hover:scale-110 transition-transform"></i>
-                    <span class="text-sm font-black uppercase italic tracking-[0.15em]">Go to Marketplace</span>
+
+            <div class="flex flex-wrap items-center gap-3">
+                <div class="bg-slate-800/80 border border-slate-700/80 px-4 py-2.5 rounded-xl backdrop-blur-sm flex items-center gap-3 shadow-sm">
+                    <div class="h-9 w-9 bg-gradient-to-br from-[#F4B400] to-[#D62828] rounded-lg flex items-center justify-center text-white shadow-md">
+                        <i data-lucide="boxes" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Products</p>
+                        <p class="text-lg font-black text-white leading-none">{{ products|length }}</p>
+                    </div>
+                </div>
+
+                <a href="/marketplace/" class="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-800/80 hover:bg-slate-700 border border-slate-700/80 text-slate-200 rounded-xl text-xs font-bold transition-all shadow-sm">
+                    <i data-lucide="store" class="w-4 h-4 text-[#F4B400]"></i>
+                    <span>View Storefront</span>
                 </a>
-                <a href="/products/add/" class="h-16 flex items-center gap-6 bg-blue-600 hover:bg-blue-700 text-white px-10 rounded-2xl transition-all shadow-2xl shadow-blue-600/30 active:scale-95 group border border-blue-400/20">
-                    <i data-lucide="plus-square" class="w-6 h-6 group-hover:scale-110 transition-transform"></i>
-                    <span class="text-sm font-black uppercase italic tracking-[0.15em]">Add New Products</span>
+
+                <a href="/products/add/" class="inline-flex items-center gap-2 px-4 py-2.5 bg-[#D62828] hover:bg-[#A61E1E] text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-[#D62828]/20">
+                    <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                    <span>Add New Product</span>
                 </a>
             </div>
         </div>
     </div>
 
-    <div class="shrink-0 bg-white border-b border-slate-200 px-12 py-8 z-40 shadow-sm">
-        <form method="get" class="grid grid-cols-1 md:grid-cols-4 gap-6">
-
+    <div class="bg-white rounded-2xl border border-[#E5E7EB] shadow-sm p-4 sm:p-6 w-full">
+        <form method="get" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <input type="hidden" name="section" value="product-management">
             
             <div>
-                <p class="text-[9px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Search</p>
+                <label class="block text-[11px] font-bold text-[#475569] uppercase tracking-wider mb-1.5">Search Products</label>
                 <div class="relative">
-                    <i data-lucide="search" class="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                    <input type="text" name="q" value="{{ request.GET.q }}" placeholder="SEARCH FOR PRODUCTS..." class="w-full pl-12 pr-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all">
+                    <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                    <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Search product name..." class="w-full pl-10 pr-4 py-2.5 bg-[#F8FAFC] border border-[#E5E7EB] rounded-xl text-xs font-semibold text-[#111827] focus:outline-none focus:border-[#D62828] focus:ring-1 focus:ring-[#D62828] transition-all">
                 </div>
             </div>
+
             <div>
-                <p class="text-[9px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Category</p>
+                <label class="block text-[11px] font-bold text-[#475569] uppercase tracking-wider mb-1.5">Category</label>
                 <div class="relative">
-                    <select name="category" onchange="this.form.submit()" class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic appearance-none cursor-pointer focus:outline-none">
-                        <option {% if request.GET.category == 'all' %}selected{% endif %} value="all">All Gear</option>
-                        <option {% if request.GET.category == 'kits' %}selected{% endif %} value="kits">Jersey & Kits</option>
-                        <option {% if request.GET.category == 'boots' %}selected{% endif %} value="boots">Boots</option>
+                    <select name="category" onchange="this.form.submit()" class="w-full pl-3.5 pr-8 py-2.5 bg-[#F8FAFC] border border-[#E5E7EB] rounded-xl text-xs font-semibold text-[#111827] appearance-none cursor-pointer focus:outline-none focus:border-[#D62828] focus:ring-1 focus:ring-[#D62828] transition-all">
+                        <option {% if request.GET.category == 'all' %}selected{% endif %} value="all">All Categories</option>
+                        <option {% if request.GET.category == 'kits' %}selected{% endif %} value="kits">Jerseys & Kits</option>
+                        <option {% if request.GET.category == 'boots' %}selected{% endif %} value="boots">Football Boots</option>
                         <option {% if request.GET.category == 'accessories' %}selected{% endif %} value="accessories">Accessories</option>
                         <option {% if request.GET.category == 'equipment' %}selected{% endif %} value="equipment">Training Equipment</option>
-                        <option {% if request.GET.category == 'supplements' %}selected{% endif %} value="supplements">Health & Supplements</option>
+                        <option {% if request.GET.category == 'supplements' %}selected{% endif %} value="supplements">Health & Nutrition</option>
                     </select>
-                    <i data-lucide="chevron-down" class="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
+                    <i data-lucide="chevron-down" class="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
                 </div>
             </div>
+
             <div>
-                <p class="text-[9px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Position</p>
+                <label class="block text-[11px] font-bold text-[#475569] uppercase tracking-wider mb-1.5">Player Position</label>
                 <div class="relative">
-                    <select name="position" onchange="this.form.submit()" class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic appearance-none cursor-pointer focus:outline-none">
+                    <select name="position" onchange="this.form.submit()" class="w-full pl-3.5 pr-8 py-2.5 bg-[#F8FAFC] border border-[#E5E7EB] rounded-xl text-xs font-semibold text-[#111827] appearance-none cursor-pointer focus:outline-none focus:border-[#D62828] focus:ring-1 focus:ring-[#D62828] transition-all">
                         <option {% if request.GET.position == 'all' %}selected{% endif %} value="all">All Positions</option>
                         <option {% if request.GET.position == 'attacker' %}selected{% endif %} value="attacker">Attacker</option>
                         <option {% if request.GET.position == 'midfielder' %}selected{% endif %} value="midfielder">Midfielder</option>
                         <option {% if request.GET.position == 'defender' %}selected{% endif %} value="defender">Defender</option>
                         <option {% if request.GET.position == 'goalkeeper' %}selected{% endif %} value="goalkeeper">Goalkeeper</option>
                     </select>
-                    <i data-lucide="chevron-down" class="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
+                    <i data-lucide="chevron-down" class="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
                 </div>
             </div>
+
             <div>
-                <p class="text-[9px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Sort</p>
+                <label class="block text-[11px] font-bold text-[#475569] uppercase tracking-wider mb-1.5">Sort Order</label>
                 <div class="relative">
-                    <select name="sort" onchange="this.form.submit()" class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic appearance-none cursor-pointer focus:outline-none">
-                        <option {% if request.GET.sort == 'latest' %}selected{% endif %} value="latest">Latest</option>
-                        <option {% if request.GET.sort == 'oldest' %}selected{% endif %} value="oldest">Oldest</option>
+                    <select name="sort" onchange="this.form.submit()" class="w-full pl-3.5 pr-8 py-2.5 bg-[#F8FAFC] border border-[#E5E7EB] rounded-xl text-xs font-semibold text-[#111827] appearance-none cursor-pointer focus:outline-none focus:border-[#D62828] focus:ring-1 focus:ring-[#D62828] transition-all">
+                        <option {% if request.GET.sort == 'latest' %}selected{% endif %} value="latest">Newest First</option>
+                        <option {% if request.GET.sort == 'oldest' %}selected{% endif %} value="oldest">Oldest First</option>
                         <option {% if request.GET.sort == 'price-low-high' %}selected{% endif %} value="price-low-high">Price: Low to High</option>
                         <option {% if request.GET.sort == 'price-high-low' %}selected{% endif %} value="price-high-low">Price: High to Low</option>
                         <option {% if request.GET.sort == 'stock-low-high' %}selected{% endif %} value="stock-low-high">Stock: Low to High</option>
                         <option {% if request.GET.sort == 'stock-high-low' %}selected{% endif %} value="stock-high-low">Stock: High to Low</option>
                     </select>
-                    <i data-lucide="arrow-up-down" class="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
+                    <i data-lucide="arrow-up-down" class="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
                 </div>
             </div>
         </form>
     </div>
 
-    <div class="flex-grow overflow-y-auto custom-scrollbar p-12">
-        <div class="space-y-8 pb-12">
-            {% for product in products %}
-            <div class="bg-white rounded-[3rem] border border-slate-200 shadow-xl overflow-hidden group hover:border-blue-500 transition-all duration-500">
-                <div class="flex flex-col lg:flex-row items-stretch">
-                    <div class="lg:w-80 shrink-0 bg-slate-100 relative overflow-hidden border-r border-slate-100">
-                        {% if product.get_primary %}
-                            <img src="{{ product.get_primary.image.url }}" class="h-full w-full min-h-[320px] object-cover transition-transform duration-700 group-hover:scale-105">
-                        {% else %}
-                            <div class="h-full w-full min-h-[320px] flex flex-col items-center justify-center bg-slate-200 text-slate-400">
-                                <i data-lucide="box" class="w-16 h-16 mb-4 opacity-20"></i>
-                                <span class="text-xs font-black uppercase italic">No Visual Data</span>
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    <div class="flex-grow p-12 flex flex-col">
-                        <div class="flex justify-between items-start mb-6">
-                            <div>
-                                <div class="flex items-center gap-3 mb-3">
-                                    <span class="text-xs font-black text-blue-600 uppercase italic tracking-widest">{{ product.brand.name }}</span>
-                                    <span class="h-1 w-1 rounded-full bg-slate-300"></span>
-                                    <span class="text-xs font-black text-slate-400 uppercase italic tracking-widest">{{ product.get_category_display }}</span>
-                                </div>
-                                <h3 class="text-4xl font-black text-slate-900 uppercase italic tracking-tighter leading-none">{{ product.name }}</h3>
-                            </div>
-                            <div class="text-right">
-                                <p class="text-4xl font-black text-blue-600 italic tracking-tighter leading-none">Rs. {{ product.price }}</p>
-                                <div class="inline-flex items-center gap-2 mt-4 bg-slate-50 px-3 py-1.5 rounded-full border border-slate-100">
-                                    <div class="h-2 w-2 rounded-full {% if product.is_active %}bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.4)]{% else %}bg-red-500{% endif %}"></div>
-                                    <span class="text-[10px] font-black text-slate-700 uppercase italic">{% if product.is_active %}Active Status{% else %}Offline{% endif %}</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mb-10">
-                            <p class="text-slate-500 text-base leading-relaxed italic font-medium max-w-3xl line-clamp-3">
-                                {{ product.description|default:"No technical description provided for this tactical asset." }}
-                            </p>
-                        </div>
-
-                        <div class="mt-auto pt-8 border-t border-slate-100 flex flex-wrap items-center justify-between gap-6">
-                            <div class="flex items-center gap-10">
+    <div class="bg-white rounded-2xl border border-[#E5E7EB] shadow-sm overflow-hidden w-full">
+        <div class="overflow-x-auto w-full">
+            <table class="w-full text-left border-collapse">
+                {% if products %}
+                    <thead>
+                        <tr class="bg-[#F8FAFC] border-b border-[#E5E7EB]">
+                            <th class="px-6 py-4 text-xs font-bold text-[#475569] uppercase tracking-wider">Product</th>
+                            <th class="px-6 py-4 text-xs font-bold text-[#475569] uppercase tracking-wider">Attributes</th>
+                            <th class="px-6 py-4 text-xs font-bold text-[#475569] uppercase tracking-wider text-center">Stock</th>
+                            <th class="px-6 py-4 text-xs font-bold text-[#475569] uppercase tracking-wider text-right">Price</th>
+                            <th class="px-6 py-4 text-xs font-bold text-[#475569] uppercase tracking-wider text-center">Status</th>
+                            <th class="px-6 py-4 text-xs font-bold text-[#475569] uppercase tracking-wider text-right">Actions</th>
+                        </tr>
+                    </thead>
+                {% endif %}
+                <tbody class="divide-y divide-[#E5E7EB]">
+                    {% for product in products %}
+                        <tr class="hover:bg-[#F8FAFC]/80 transition-colors group">
+                            <td class="px-6 py-4 align-middle">
                                 <div class="flex items-center gap-4">
-                                    <div class="h-12 w-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center border border-blue-100 shadow-sm">
-                                        <i data-lucide="crosshair" class="w-6 h-6"></i>
+                                    <div class="h-14 w-14 bg-white rounded-xl border border-[#E5E7EB] p-1.5 flex items-center justify-center shrink-0 shadow-sm group-hover:border-[#D62828]/30 transition-all overflow-hidden">
+                                        {% if product.get_primary %}
+                                            <img src="{{ product.get_primary.image.url }}" alt="{{ product.name }}" class="max-h-full max-w-full object-cover rounded-lg">
+                                        {% else %}
+                                            <i data-lucide="image-off" class="w-5 h-5 text-slate-400"></i>
+                                        {% endif %}
                                     </div>
-                                    <div>
-                                        <p class="text-[9px] font-black text-slate-400 uppercase italic leading-none mb-1 tracking-widest">Position</p>
-                                        <p class="text-sm font-black text-slate-900 uppercase italic">{{ product.get_position_display|default:"Multi-Role" }}</p>
+                                    <div class="space-y-1">
+                                        <div class="flex items-center gap-2">
+                                            <span class="bg-[#0F172A] text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">
+                                                {{ product.brand.name }}
+                                            </span>
+                                            <span class="text-[11px] font-semibold text-[#475569]">
+                                                {{ product.get_category_display }}
+                                            </span>
+                                        </div>
+                                        <p class="font-bold text-[#111827] text-sm group-hover:text-[#D62828] transition-colors leading-snug">
+                                            {{ product.name }}
+                                        </p>
+                                        <p class="text-xs text-[#475569] font-normal line-clamp-1 max-w-xs">
+                                            {{ product.description|default:"No description available." }}
+                                        </p>
                                     </div>
                                 </div>
-                                <div class="flex items-center gap-4">
-                                    <div class="h-12 w-12 bg-slate-50 text-slate-600 rounded-2xl flex items-center justify-center border border-slate-200 shadow-sm">
-                                        <i data-lucide="package" class="w-6 h-6"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-[9px] font-black text-slate-400 uppercase italic leading-none mb-1 tracking-widest">Stock</p>
-                                        <p class="text-sm font-black text-slate-900 uppercase italic">{{ product.stock }} Units</p>
-                                    </div>
-                                </div>
+                            </td>
 
-                                {% if product.category == 'kits' %}
-                                <div class="flex items-center gap-4">
-                                    <div class="h-12 w-12 bg-slate-50 text-slate-600 rounded-2xl flex items-center justify-center border border-slate-200 shadow-sm">
-                                        <i data-lucide="shirt" class="w-6 h-6"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-[9px] font-black text-slate-400 uppercase italic leading-none mb-1 tracking-widest">Kit Size</p>
-                                        <p class="text-sm font-black text-slate-900 uppercase italic">{{ product.kit_size }}</p>
-                                    </div>
+                            <td class="px-6 py-4 align-middle">
+                                <div class="flex flex-wrap items-center gap-1.5">
+                                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-[#F8FAFC] text-[#475569] border border-[#E5E7EB]">
+                                        <i data-lucide="target" class="w-3 h-3 text-[#D62828]"></i>
+                                        {{ product.get_position_display|default:"All Positions" }}
+                                    </span>
+                                    {% if product.category == 'kits' %}
+                                        <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-[#F8FAFC] text-[#475569] border border-[#E5E7EB]">
+                                            <i data-lucide="shirt" class="w-3 h-3 text-[#0F172A]"></i>
+                                            Size: {{ product.kit_size }}
+                                        </span>
+                                    {% endif %}
+                                    {% if product.category == 'boots' %}
+                                        <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-[#F8FAFC] text-[#475569] border border-[#E5E7EB]">
+                                            <i data-lucide="footprints" class="w-3 h-3 text-[#0F172A]"></i>
+                                            Size: {{ product.boot_size }}
+                                        </span>
+                                    {% endif %}
                                 </div>
+                            </td>
+
+                            <td class="px-6 py-4 align-middle text-center">
+                                <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold {% if product.stock > 10 %}bg-slate-100 text-[#0F172A] border border-slate-200{% elif product.stock > 0 %}bg-amber-50 text-[#F4B400] border border-amber-200{% else %}bg-rose-50 text-[#DC2626] border border-rose-200{% endif %}">
+                                    {{ product.stock }} units
+                                </span>
+                            </td>
+
+                            <td class="px-6 py-4 align-middle text-right">
+                                <span class="text-sm font-black text-[#D62828]">
+                                    Rs. {{ product.price }}
+                                </span>
+                            </td>
+
+                            <td class="px-6 py-4 align-middle text-center">
+                                {% if product.is_active %}
+                                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-green-50 text-[#16A34A] border border-green-200">
+                                        <span class="h-1.5 w-1.5 rounded-full bg-[#16A34A]"></span>
+                                        Active
+                                    </span>
+                                {% else %}
+                                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-rose-50 text-[#DC2626] border border-rose-200">
+                                        <span class="h-1.5 w-1.5 rounded-full bg-[#DC2626]"></span>
+                                        Inactive
+                                    </span>
                                 {% endif %}
+                            </td>
 
-                                {% if product.category == 'boots' %}
-                                <div class="flex items-center gap-4">
-                                    <div class="h-12 w-12 bg-slate-50 text-slate-600 rounded-2xl flex items-center justify-center border border-slate-200 shadow-sm">
-                                        <i data-lucide="ruler" class="w-6 h-6"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-[9px] font-black text-slate-400 uppercase italic leading-none mb-1 tracking-widest">Boot Size</p>
-                                        <p class="text-sm font-black text-slate-900 uppercase italic">{{ product.boot_size }}</p>
-                                    </div>
+                            <td class="px-6 py-4 align-middle text-right">
+                                <div class="flex items-center justify-end gap-2">
+                                    <a href="/products/edit/{{ product.id }}/" class="p-2 bg-slate-100 hover:bg-[#0F172A] text-[#475569] hover:text-white rounded-lg transition-all border border-[#E5E7EB]" title="Edit Product">
+                                        <i data-lucide="edit-3" class="w-4 h-4"></i>
+                                    </a>
+
+                                    <form method="POST" action="/products/delete/{{ product.id }}/" onsubmit="return confirm('Are you sure you want to delete this product?');" class="inline">
+                                        {% csrf_token %}
+                                        <button type="submit" class="p-2 bg-red-50 hover:bg-[#DC2626] text-[#DC2626] hover:text-white rounded-lg transition-all border border-red-200 hover:border-[#DC2626]" title="Delete Product">
+                                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                        </button>
+                                    </form>
                                 </div>
-                                {% endif %}
-                                
-                            </div>
-
-                            <div class="flex items-center gap-3">
-                                <a href="/products/edit/{{ product.id }}/" class="flex items-center gap-3 bg-slate-900 text-white px-10 py-4 rounded-2xl font-black italic uppercase text-xs hover:bg-blue-600 transition-all shadow-xl shadow-slate-900/10">
-                                    <i data-lucide="edit-3" class="w-4 h-4 text-blue-400"></i> Modify Gear
-                                </a>
-                                <a href="/products/delete/{{ product.id }}/" class="h-14 w-14 flex items-center justify-center bg-white border-2 border-slate-100 text-slate-300 rounded-2xl hover:text-red-600 hover:border-red-100 hover:bg-red-50 transition-all">
-                                    <i data-lucide="trash-2" class="w-6 h-6"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            {% empty %}
-            <div class="flex flex-col items-center justify-center py-32 bg-white rounded-[3rem] border-2 border-dashed border-slate-200">
-                <div class="h-24 w-24 bg-slate-50 rounded-full flex items-center justify-center mb-8 border border-slate-100 shadow-inner">
-                    <i data-lucide="database-zap" class="w-10 h-10 text-slate-300"></i>
-                </div>
-                <h3 class="text-3xl font-black text-slate-900 uppercase italic tracking-tighter mb-2">Manifest is Empty</h3>
-                <p class="text-slate-400 font-black uppercase italic text-[10px] tracking-[0.2em] mb-8 text-center px-10">No products currently indexed in the central database.</p>
-                <button class="flex items-center gap-4 bg-blue-600 text-white px-8 py-4 rounded-2xl font-black italic uppercase text-xs hover:bg-blue-700 transition-all shadow-xl shadow-blue-600/20 active:scale-95 group">
-                    <i data-lucide="plus-square" class="w-5 h-5 transition-transform"></i>
-                    Register Products
-                </button>
-            </div>
-            {% endfor %}
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="6" class="px-6 py-16 text-center">
+                                <div class="max-w-xs mx-auto space-y-3">
+                                    <div class="w-12 h-12 bg-slate-100 text-[#475569] rounded-2xl flex items-center justify-center mx-auto border border-[#E5E7EB]">
+                                        <i data-lucide="package-open" class="w-6 h-6"></i>
+                                    </div>
+                                    <p class="text-base font-bold text-[#111827]">No Products Found</p>
+                                    <p class="text-xs text-[#475569]">There are no products matching your active filters or query.</p>
+                                    <a href="/products/add/" class="inline-flex items-center gap-2 px-4 py-2 bg-[#D62828] hover:bg-[#A61E1E] text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-[#D62828]/20 mt-2">
+                                        <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                                        <span>Add First Product</span>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
