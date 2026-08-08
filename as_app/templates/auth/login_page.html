@@ -8,79 +8,153 @@
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
 </head>
 
-<body class="bg-slate-50 flex flex-col min-h-screen">
+<body class="bg-[#F8FAFC] text-[#475569] flex flex-col min-h-screen antialiased selection:bg-[#D62828] selection:text-white">
     {% include 'components/_navbar.html' %}
 
     {% include 'components/_messages.html' %}
 
-    <main class="flex-grow flex items-center justify-center py-12 px-4">
-        <div class="max-w-md w-full bg-white p-10 rounded-3xl shadow-xl border border-slate-100">
+    <main class="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        <div class="absolute top-1/4 -left-20 w-80 h-80 bg-[#D62828]/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-1/4 -right-20 w-80 h-80 bg-[#F4B400]/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-4xl w-full bg-white rounded-3xl shadow-2xl border border-[#E5E7EB] overflow-hidden grid grid-cols-1 lg:grid-cols-12 relative z-10">
             
-            <div class="text-center mb-10">
-                <h2 class="text-3xl font-black text-slate-900 tracking-tight uppercase italic">Apex<span class="text-blue-600">Striker</span></h2>
-                <p class="text-slate-500 mt-2 font-medium">Welcome back, Striker!</p>
+            <div class="lg:col-span-5 bg-[#0F172A] p-8 lg:p-12 text-white flex flex-col justify-between relative overflow-hidden">
+                <div class="absolute -top-12 -left-12 w-48 h-48 bg-[#D62828]/25 rounded-full blur-2xl"></div>
+                <div class="absolute -bottom-12 -right-12 w-48 h-48 bg-[#F4B400]/20 rounded-full blur-2xl"></div>
+
+                <div class="relative z-10">
+                    <div class="flex items-center gap-2.5 mb-8">
+                        <div class="bg-[#D62828] text-white p-2 rounded-xl shadow-lg shadow-[#D62828]/30">
+                            <i data-lucide="zap" class="w-6 h-6 fill-current"></i>
+                        </div>
+                        <span class="text-xl font-black tracking-tight uppercase">
+                            APEX<span class="text-[#D62828]">STRIKER</span>
+                        </span>
+                    </div>
+
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/10 text-xs font-semibold text-[#F4B400] mb-6 backdrop-blur-md">
+                        <i data-lucide="trophy" class="w-3.5 h-3.5"></i>
+                        <span>Match Ready Gear</span>
+                    </div>
+
+                    <h1 class="text-2xl lg:text-3xl font-black tracking-tight text-white uppercase italic leading-tight mb-4">
+                        Step Onto <br /><span class="text-[#D62828]">The Pitch.</span>
+                    </h1>
+
+                    <p class="text-slate-300 text-sm leading-relaxed mb-8">
+                        Access exclusive football boots, official club kits, and pro training gear from verified global vendors.
+                    </p>
+                </div>
+
+                <div class="relative z-10 pt-6 border-t border-white/10 space-y-4">
+                    <div class="flex items-center gap-3 text-xs font-medium text-slate-300">
+                        <div class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-[#16A34A] shrink-0">
+                            <i data-lucide="shield-check" class="w-4 h-4"></i>
+                        </div>
+                        <span>100% Authentic Football Brands</span>
+                    </div>
+
+                    <div class="flex items-center gap-3 text-xs font-medium text-slate-300">
+                        <div class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-[#F4B400] shrink-0">
+                            <i data-lucide="truck" class="w-4 h-4"></i>
+                        </div>
+                        <span>Express Worldwide Shipping</span>
+                    </div>
+                </div>
             </div>
 
-            {% if messages %}
-                <div class="mb-6 space-y-2">
-                    {% for message in messages %}
-                        <div class="p-4 rounded-xl text-sm font-bold {% if message.tags == 'success' %}bg-green-50 text-green-700 border border-green-100{% else %}bg-red-50 text-red-700 border border-red-100{% endif %}">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-
-            <form method="POST" action="/login/" class="space-y-6">
-                {% csrf_token %}
-
-                <div class="space-y-1">
-                    <label class="text-sm font-bold text-slate-700 flex items-center gap-2">
-                        <i data-lucide="user" class="w-4 h-4 text-blue-600"></i> Username or Email
-                    </label>
-                    <input type="text" name="username" placeholder="Enter your username" value="{{ data.username }}"
-                           class="w-full p-4 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-500 outline-none transition bg-white {% if errors.username %}input-error{% endif %}">
-                    {% if errors.username %}
-                        <p class="text-xs text-red-500 mt-1">{{ errors.username }}</p>
-                    {% endif %}
+            <div class="lg:col-span-7 p-8 sm:p-12 flex flex-col justify-center bg-white">
+                <div class="mb-8">
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-[#111827] tracking-tight">
+                        Sign In
+                    </h2>
+                    <p class="text-sm text-[#475569] mt-1.5 font-medium">
+                        Welcome back! Please enter your details to continue.
+                    </p>
                 </div>
 
-                <div class="space-y-1">
-                    <div class="flex justify-between items-center">
-                        <label class="text-sm font-bold text-slate-700 flex items-center gap-2">
-                            <i data-lucide="lock" class="w-4 h-4 text-blue-600"></i> Password
-                        </label>
-                        <a href="/password-reset/" class="text-xs font-bold text-blue-600 hover:underline">Forgot?</a>
+                {% if messages %}
+                    <div class="mb-6 space-y-2">
+                        {% for message in messages %}
+                            <div class="p-4 rounded-2xl text-xs font-bold flex items-center gap-2.5 transition-all {% if message.tags == 'success' %}bg-[#16A34A]/10 text-[#16A34A] border border-[#16A34A]/20{% else %}bg-[#DC2626]/10 text-[#DC2626] border border-[#DC2626]/20{% endif %}">
+                                <i data-lucide="{% if message.tags == 'success' %}check-circle{% else %}alert-triangle{% endif %}" class="w-4 h-4 shrink-0"></i>
+                                <span>{{ message }}</span>
+                            </div>
+                        {% endfor %}
                     </div>
-                    <div class="relative">
-                        <input type="password" name="password" id="passwordInput" placeholder="••••••••"  value="{{ data.password }}"
-                               class="w-full p-4 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-500 outline-none transition bg-white {% if errors.password %}input-error{% endif %}">
-                        <button type="button" onclick="togglePass()" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-blue-600">
-                            <i data-lucide="eye" id="eyeIcon" class="w-5 h-5"></i>
-                        </button>
-                        {% if errors.password %}
-                            <p class="text-xs text-red-500 mt-1">{{ errors.password }}</p>
+                {% endif %}
+
+                <form method="POST" action="/login/" class="space-y-5">
+                    {% csrf_token %}
+
+                    <div>
+                        <label class="block text-xs font-bold text-[#111827] uppercase tracking-wider mb-2 flex items-center gap-2">
+                            <i data-lucide="user" class="w-4 h-4 text-[#D62828]"></i>
+                            <span>Username or Email</span>
+                        </label>
+                        <div class="relative">
+                            <input type="text" name="username" placeholder="Enter your username or email" value="{{ data.username }}"
+                                   class="w-full px-4 py-3.5 bg-[#F8FAFC] border border-[#E5E7EB] rounded-2xl text-[#111827] text-sm placeholder-slate-400 focus:outline-none focus:border-[#D62828] focus:ring-2 focus:ring-[#D62828]/15 transition-all duration-200 {% if errors.username %}border-[#DC2626] bg-red-50/20{% endif %}">
+                        </div>
+                        {% if errors.username %}
+                            <p class="text-xs font-medium text-[#DC2626] mt-2 flex items-center gap-1">
+                                <i data-lucide="alert-circle" class="w-3.5 h-3.5 shrink-0"></i>
+                                <span>{{ errors.username }}</span>
+                            </p>
                         {% endif %}
                     </div>
+
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="block text-xs font-bold text-[#111827] uppercase tracking-wider flex items-center gap-2">
+                                <i data-lucide="lock" class="w-4 h-4 text-[#D62828]"></i>
+                                <span>Password</span>
+                            </label>
+                            <a href="/password-reset/" class="text-xs font-bold text-[#D62828] hover:text-[#A61E1E] hover:underline transition-colors">
+                                Forgot Password?
+                            </a>
+                        </div>
+                        <div class="relative">
+                            <input type="password" name="password" id="passwordInput" placeholder="••••••••" value="{{ data.password }}"
+                                   class="w-full px-4 py-3.5 bg-[#F8FAFC] border border-[#E5E7EB] rounded-2xl text-[#111827] text-sm placeholder-slate-400 focus:outline-none focus:border-[#D62828] focus:ring-2 focus:ring-[#D62828]/15 transition-all duration-200 pr-12 {% if errors.password %}border-[#DC2626] bg-red-50/20{% endif %}">
+                            <button type="button" onclick="togglePass()" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-[#0F172A] transition-colors p-1">
+                                <i data-lucide="eye" id="eyeIcon" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                        {% if errors.password %}
+                            <p class="text-xs font-medium text-[#DC2626] mt-2 flex items-center gap-1">
+                                <i data-lucide="alert-circle" class="w-3.5 h-3.5 shrink-0"></i>
+                                <span>{{ errors.password }}</span>
+                            </p>
+                        {% endif %}
+                    </div>
+
+                    <div class="flex items-center gap-2.5 pt-1">
+                        <input type="checkbox" name="remember" id="remember" 
+                               class="w-4 h-4 rounded border-[#E5E7EB] text-[#D62828] focus:ring-[#D62828] cursor-pointer">
+                        <label for="remember" class="text-xs font-semibold text-[#475569] cursor-pointer select-none">
+                            Keep me logged in
+                        </label>
+                    </div>
+
+                    <button type="submit" 
+                            class="w-full bg-[#D62828] hover:bg-[#A61E1E] text-white font-extrabold py-4 px-6 rounded-2xl shadow-xl shadow-[#D62828]/20 flex items-center justify-center gap-2.5 transition-all duration-200 active:scale-[0.99] uppercase tracking-wider text-sm mt-2">
+                        <i data-lucide="log-in" class="w-4 h-4"></i>
+                        <span>Sign In</span>
+                    </button>
+                </form>
+
+                <div class="mt-8 text-center border-t border-[#E5E7EB] pt-6">
+                    <p class="text-xs font-semibold text-[#475569]">
+                        Don't have an account? 
+                        <a href="/register/" class="text-[#D62828] font-bold hover:text-[#A61E1E] hover:underline ml-1">
+                            Register Now
+                        </a>
+                    </p>
                 </div>
-
-                <div class="flex items-center gap-2">
-                    <input type="checkbox" name="remember" id="remember" class="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500">
-                    <label for="remember" class="text-sm font-medium text-slate-600 cursor-pointer">Keep me logged in</label>
-                </div>
-
-                <button type="submit" class="w-full bg-blue-600 text-white font-black py-4 rounded-2xl hover:bg-blue-700 shadow-xl shadow-blue-100 flex items-center justify-center gap-3 transition-all active:scale-95 uppercase tracking-wider">
-                    <i data-lucide="log-in" class="w-5 h-5"></i>
-                    Sign In
-                </button>
-            </form>
-
-            <div class="mt-10 text-center border-t border-slate-100 pt-6">
-                <p class="text-slate-500 font-medium">
-                    Don't have an account? 
-                    <a href="/register/" class="text-blue-600 font-bold hover:underline ml-1">Register Now</a>
-                </p>
             </div>
+
         </div>
     </main>
 
@@ -101,7 +175,7 @@
                 passInput.type = 'password';
                 eyeIcon.setAttribute('data-lucide', 'eye');
             }
-            lucide.createIcons(); // Refresh icons after change
+            lucide.createIcons();
         }
     </script>
 </body>
