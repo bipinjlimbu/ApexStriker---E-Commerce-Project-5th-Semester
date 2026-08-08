@@ -8,7 +8,7 @@
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
 </head>
 
-<body class="bg-slate-50 flex flex-col min-h-screen">
+<body class="bg-[#F8FAFC] text-[#111827] flex flex-col min-h-screen">
     {% include 'components/_navbar.html' %}
 
     {% include 'components/_messages.html' %}
@@ -19,11 +19,14 @@
             <form method="POST" enctype="multipart/form-data" class="space-y-8">
                 {% csrf_token %}
 
-                <div class="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden">
-                    <div class="h-24 bg-gradient-to-r from-blue-700 to-indigo-900"></div>
-                    <div class="px-8 pb-8 flex flex-col md:flex-row items-end gap-6 -mt-10">
+                <div class="bg-white rounded-3xl shadow-xl border border-slate-200/80 overflow-hidden">
+                    <div class="relative h-32 bg-[#0F172A] overflow-hidden">
+                        <div class="absolute -top-10 -left-10 w-40 h-40 bg-[#D62828] rounded-full blur-3xl opacity-20"></div>
+                        <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-[#F4B400] rounded-full blur-3xl opacity-20"></div>
+                    </div>
+                    <div class="px-8 pb-8 flex flex-col md:flex-row items-end gap-6 -mt-12 relative z-10">
                         <div class="relative group">
-                            <div class="w-32 h-32 rounded-3xl border-4 border-white bg-slate-100 shadow-lg overflow-hidden">
+                            <div class="w-32 h-32 rounded-2xl border-4 border-white bg-slate-100 shadow-xl overflow-hidden">
                                 {% if user.profile_picture %}
                                     <img id="image-preview" src="{{ user.profile_picture.url }}" class="w-full h-full object-cover">
                                 {% else %}
@@ -32,88 +35,88 @@
                                     </div>
                                 {% endif %}
                             </div>
-                            <label for="profile_picture" class="absolute -bottom-2 -right-2 bg-blue-600 text-white p-2.5 rounded-2xl shadow-lg cursor-pointer hover:bg-blue-700 transition border-4 border-white">
+                            <label for="profile_picture" class="absolute -bottom-2 -right-2 bg-[#D62828] text-white p-2.5 rounded-2xl shadow-lg cursor-pointer hover:bg-[#A61E1E] transition border-4 border-white">
                                 <i data-lucide="camera" class="w-5 h-5"></i>
                                 <input type="file" id="profile_picture" name="profile_picture" class="hidden" accept="image/*" onchange="previewImage(event)">
                             </label>
                         </div>
                         <div class="mb-2">
-                            <h1 class="text-2xl font-black text-slate-900 italic uppercase">Modify <span class="text-blue-600">Identity</span></h1>
-                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] italic">Role: {{ user.role }}</p>
+                            <h1 class="text-2xl font-black text-[#111827] italic uppercase tracking-tight">Modify <span class="text-[#D62828]">Identity</span></h1>
+                            <p class="text-[10px] text-[#475569] font-bold uppercase tracking-[0.2em] italic">Role: {{ user.role }}</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div class="md:col-span-2 space-y-8">
-                        <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
-                            <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-8 italic border-b pb-2">User Credentials</h3>
+                        <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200/80">
+                            <h3 class="text-[10px] font-black text-[#475569] uppercase tracking-widest mb-8 italic border-b border-slate-100 pb-2">User Credentials</h3>
                             
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                 <div class="space-y-1">
-                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">First Name</label>
-                                    <input type="text" name="first_name" {% if data %} value="{{ data.first_name }}" {% else %} value="{{ user.first_name }}" {% endif %} class="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-sm font-bold text-slate-700 focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition italic">
-                                    <p class="text-[9px] text-red-500 mt-1 italic">{{ errors.first_name }}</p>
+                                    <label class="text-[10px] font-black text-[#475569] uppercase tracking-widest ml-2">First Name</label>
+                                    <input type="text" name="first_name" {% if data %} value="{{ data.first_name }}" {% else %} value="{{ user.first_name }}" {% endif %} class="w-full bg-[#F8FAFC] border border-slate-200 rounded-2xl px-5 py-4 text-sm font-bold text-[#111827] focus:ring-4 focus:ring-[#D62828]/10 focus:border-[#D62828] outline-none transition italic">
+                                    <p class="text-[9px] text-[#DC2626] mt-1 italic">{{ errors.first_name }}</p>
                                 </div>
                                 <div class="space-y-1">
-                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">Last Name</label>
-                                    <input type="text" name="last_name" {% if data %} value="{{ data.last_name }}" {% else %} value="{{ user.last_name }}" {% endif %} class="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-sm font-bold text-slate-700 focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition italic">
-                                    <p class="text-[9px] text-red-500 mt-1 italic">{{ errors.last_name }}</p>
+                                    <label class="text-[10px] font-black text-[#475569] uppercase tracking-widest ml-2">Last Name</label>
+                                    <input type="text" name="last_name" {% if data %} value="{{ data.last_name }}" {% else %} value="{{ user.last_name }}" {% endif %} class="w-full bg-[#F8FAFC] border border-slate-200 rounded-2xl px-5 py-4 text-sm font-bold text-[#111827] focus:ring-4 focus:ring-[#D62828]/10 focus:border-[#D62828] outline-none transition italic">
+                                    <p class="text-[9px] text-[#DC2626] mt-1 italic">{{ errors.last_name }}</p>
                                 </div>
                                 <div class="space-y-1">
-                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">Email Address</label>
-                                    <input type="email" name="email" {% if data %} value="{{ data.email }}" {% else %} value="{{ user.email }}" {% endif %} class="w-full bg-slate-100 border border-slate-100 rounded-2xl px-5 py-4 text-sm font-bold text-slate-700 focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition italic">
-                                    <p class="text-[9px] text-red-500 mt-1 italic">{{ errors.email }}</p>
+                                    <label class="text-[10px] font-black text-[#475569] uppercase tracking-widest ml-2">Email Address</label>
+                                    <input type="email" name="email" {% if data %} value="{{ data.email }}" {% else %} value="{{ user.email }}" {% endif %} class="w-full bg-slate-100 border border-slate-200 rounded-2xl px-5 py-4 text-sm font-bold text-[#111827] focus:ring-4 focus:ring-[#D62828]/10 focus:border-[#D62828] outline-none transition italic">
+                                    <p class="text-[9px] text-[#DC2626] mt-1 italic">{{ errors.email }}</p>
                                 </div>
                                 <div class="space-y-1">
-                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">Username</label>
-                                    <input type="text" name="username" {% if data %} value="{{ data.username }}" {% else %} value="{{ user.username }}" {% endif %} class="w-full bg-slate-100 border border-slate-100 rounded-2xl px-5 py-4 text-sm font-bold text-slate-700 focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition italic">
-                                    <p class="text-[9px] text-red-500 mt-1 italic">{{ errors.username }}</p>
+                                    <label class="text-[10px] font-black text-[#475569] uppercase tracking-widest ml-2">Username</label>
+                                    <input type="text" name="username" {% if data %} value="{{ data.username }}" {% else %} value="{{ user.username }}" {% endif %} class="w-full bg-slate-100 border border-slate-200 rounded-2xl px-5 py-4 text-sm font-bold text-[#111827] focus:ring-4 focus:ring-[#D62828]/10 focus:border-[#D62828] outline-none transition italic">
+                                    <p class="text-[9px] text-[#DC2626] mt-1 italic">{{ errors.username }}</p>
                                 </div>
                                 <div class="space-y-1">
-                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">Phone Number</label>
-                                    <input type="text" name="phone" {% if data %} value="{{ data.phone }}" {% else %} value="{{ user.phone }}" {% endif %} class="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-sm font-bold text-slate-700 focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition italic">
-                                    <p class="text-[9px] text-red-500 mt-1 italic">{{ errors.phone }}</p>
+                                    <label class="text-[10px] font-black text-[#475569] uppercase tracking-widest ml-2">Phone Number</label>
+                                    <input type="text" name="phone" {% if data %} value="{{ data.phone }}" {% else %} value="{{ user.phone }}" {% endif %} class="w-full bg-[#F8FAFC] border border-slate-200 rounded-2xl px-5 py-4 text-sm font-bold text-[#111827] focus:ring-4 focus:ring-[#D62828]/10 focus:border-[#D62828] outline-none transition italic">
+                                    <p class="text-[9px] text-[#DC2626] mt-1 italic">{{ errors.phone }}</p>
                                 </div>
                                 <div class="space-y-1">
-                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">Address</label>
-                                    <input type="text" name="address" {% if data %} value="{{ data.address }}" {% else %} value="{{ user.address }}" {% endif %} class="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-sm font-bold text-slate-700 focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition italic">
-                                    <p class="text-[9px] text-red-500 mt-1 italic">{{ errors.address }}</p>
+                                    <label class="text-[10px] font-black text-[#475569] uppercase tracking-widest ml-2">Address</label>
+                                    <input type="text" name="address" {% if data %} value="{{ data.address }}" {% else %} value="{{ user.address }}" {% endif %} class="w-full bg-[#F8FAFC] border border-slate-200 rounded-2xl px-5 py-4 text-sm font-bold text-[#111827] focus:ring-4 focus:ring-[#D62828]/10 focus:border-[#D62828] outline-none transition italic">
+                                    <p class="text-[9px] text-[#DC2626] mt-1 italic">{{ errors.address }}</p>
                                 </div>
                             </div>
                         </div>
 
                         {% if user.role == 'vendor' %}
-                        <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
-                            <h3 class="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-8 italic border-b border-blue-50 pb-2">Vendor Repository</h3>
+                        <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200/80">
+                            <h3 class="text-[10px] font-black text-[#D62828] uppercase tracking-widest mb-8 italic border-b border-red-100 pb-2">Vendor Repository</h3>
                             <div class="grid grid-cols-1 gap-6">
                                 <div class="space-y-1">
-                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">Shop Name</label>
-                                    <input type="text" name="shop_name" {% if data %} value="{{ data.shop_name }}" {% else %} value="{{ user.vendor_profile.shop_name }}" {% endif %} class="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-sm font-bold text-slate-700 focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition italic">
-                                    <p class="text-[9px] text-red-500 mt-1 italic">{{ errors.shop_name }}</p>
+                                    <label class="text-[10px] font-black text-[#475569] uppercase tracking-widest ml-2">Shop Name</label>
+                                    <input type="text" name="shop_name" {% if data %} value="{{ data.shop_name }}" {% else %} value="{{ user.vendor_profile.shop_name }}" {% endif %} class="w-full bg-[#F8FAFC] border border-slate-200 rounded-2xl px-5 py-4 text-sm font-bold text-[#111827] focus:ring-4 focus:ring-[#D62828]/10 focus:border-[#D62828] outline-none transition italic">
+                                    <p class="text-[9px] text-[#DC2626] mt-1 italic">{{ errors.shop_name }}</p>
                                 </div>
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div class="space-y-1">
-                                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">PAN Number</label>
-                                        <input type="text" name="pan_number" {% if data %} value="{{ data.pan_number }}" {% else %} value="{{ user.vendor_profile.pan_number }}" {% endif %} class="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-sm font-bold text-slate-700 focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition italic">
-                                        <p class="text-[9px] text-red-500 mt-1 italic">{{ errors.pan_number }}</p>
+                                        <label class="text-[10px] font-black text-[#475569] uppercase tracking-widest ml-2">PAN Number</label>
+                                        <input type="text" name="pan_number" {% if data %} value="{{ data.pan_number }}" {% else %} value="{{ user.vendor_profile.pan_number }}" {% endif %} class="w-full bg-[#F8FAFC] border border-slate-200 rounded-2xl px-5 py-4 text-sm font-bold text-[#111827] focus:ring-4 focus:ring-[#D62828]/10 focus:border-[#D62828] outline-none transition italic">
+                                        <p class="text-[9px] text-[#DC2626] mt-1 italic">{{ errors.pan_number }}</p>
                                     </div>
                                     <div class="space-y-1">
-                                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">Bank Account Number</label>
-                                        <input type="text" name="bank_account_number" {% if data %} value="{{ data.bank_account_number }}" {% else %} value="{{ user.vendor_profile.bank_account_number }}" {% endif %} class="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-sm font-bold text-slate-700 focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition italic">
-                                        <p class="text-[9px] text-red-500 mt-1 italic">{{ errors.bank_account_number }}</p>
+                                        <label class="text-[10px] font-black text-[#475569] uppercase tracking-widest ml-2">Bank Account Number</label>
+                                        <input type="text" name="bank_account_number" {% if data %} value="{{ data.bank_account_number }}" {% else %} value="{{ user.vendor_profile.bank_account_number }}" {% endif %} class="w-full bg-[#F8FAFC] border border-slate-200 rounded-2xl px-5 py-4 text-sm font-bold text-[#111827] focus:ring-4 focus:ring-[#D62828]/10 focus:border-[#D62828] outline-none transition italic">
+                                        <p class="text-[9px] text-[#DC2626] mt-1 italic">{{ errors.bank_account_number }}</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         {% elif user.role == 'customer' %}
-                        <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
-                            <h3 class="text-[10px] font-black text-indigo-600 uppercase tracking-widest mb-8 italic border-b border-indigo-50 pb-2">Customer Preferences</h3>
+                        <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200/80">
+                            <h3 class="text-[10px] font-black text-[#D62828] uppercase tracking-widest mb-8 italic border-b border-red-100 pb-2">Customer Preferences</h3>
                             <div class="grid grid-cols-1 gap-6">
                                 <div class="space-y-1">
-                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">Preferred Position</label>
-                                    <select name="position" class="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-sm font-black text-slate-700 focus:ring-4 focus:ring-indigo-50 outline-none appearance-none italic uppercase">
+                                    <label class="text-[10px] font-black text-[#475569] uppercase tracking-widest ml-2">Preferred Position</label>
+                                    <select name="position" class="w-full bg-[#F8FAFC] border border-slate-200 rounded-2xl px-5 py-4 text-sm font-black text-[#111827] focus:ring-4 focus:ring-[#D62828]/10 focus:border-[#D62828] outline-none appearance-none italic uppercase">
                                         <option value="attacker" {% if user.customer_profile.position == 'attacker' %}selected{% endif %}>Attacker</option>
                                         <option value="midfielder" {% if user.customer_profile.position == 'midfielder' %}selected{% endif %}>Midfielder</option>
                                         <option value="defender" {% if user.customer_profile.position == 'defender' %}selected{% endif %}>Defender</option>
@@ -126,11 +129,11 @@
                     </div>
 
                     <div class="space-y-6">
-                        <div class="bg-slate-900 p-8 rounded-3xl shadow-xl text-white">
-                            <h3 class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-6 italic border-b border-slate-800 pb-2">Finalize</h3>
-                            <p class="text-[11px] text-slate-400 mb-6 italic uppercase font-bold leading-relaxed">Ensure all data is accurate. Changes are synced across the entire platform.</p>
+                        <div class="bg-[#0F172A] p-8 rounded-3xl shadow-xl text-white">
+                            <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-6 italic border-b border-slate-800 pb-2">Finalize</h3>
+                            <p class="text-[11px] text-slate-300 mb-6 italic uppercase font-bold leading-relaxed">Ensure all data is accurate. Changes are synced across the entire platform.</p>
                             
-                            <button type="submit" class="w-full bg-blue-600 text-white font-black py-4 rounded-2xl hover:bg-blue-700 transition flex items-center justify-center gap-2 uppercase text-[10px] tracking-widest shadow-lg shadow-blue-900/20">
+                            <button type="submit" class="w-full bg-[#D62828] text-white font-black py-4 rounded-2xl hover:bg-[#A61E1E] transition flex items-center justify-center gap-2 uppercase text-[10px] tracking-widest shadow-lg shadow-red-900/20">
                                 <i data-lucide="save" class="w-4 h-4"></i> Save Changes
                             </button>
                             <a href="/profile/{{ user.id }}" class="w-full mt-4 flex items-center justify-center py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-white transition">
@@ -138,9 +141,9 @@
                             </a>
                         </div>
 
-                        <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm text-center">
-                            <i data-lucide="shield-check" class="w-8 h-8 text-green-500 mx-auto mb-3"></i>
-                            <p class="text-[9px] font-black text-slate-400 uppercase tracking-tighter">Security Verified Connection</p>
+                        <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm text-center">
+                            <i data-lucide="shield-check" class="w-8 h-8 text-[#16A34A] mx-auto mb-3"></i>
+                            <p class="text-[9px] font-black text-[#475569] uppercase tracking-tighter">Security Verified Connection</p>
                         </div>
                     </div>
                 </div>
