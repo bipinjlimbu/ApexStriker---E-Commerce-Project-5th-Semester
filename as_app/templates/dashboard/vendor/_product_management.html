@@ -42,7 +42,7 @@
     </div>
 
     <div class="bg-white rounded-2xl border border-[#E5E7EB] shadow-sm p-4 sm:p-6 w-full">
-        <form method="get" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        <form method="get" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4 items-end">
             <input type="hidden" name="section" value="product-management">
             
             <div>
@@ -108,6 +108,13 @@
                     </select>
                     <i data-lucide="arrow-up-down" class="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
                 </div>
+            </div>
+
+            <div>
+                <a href="?section=product-management" class="w-full h-[42px] inline-flex items-center justify-center gap-2 px-4 bg-slate-100 hover:bg-slate-200 text-[#475569] rounded-xl text-xs font-bold transition-all border border-[#E5E7EB]">
+                    <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+                    <span>Reset Filters</span>
+                </a>
             </div>
         </form>
     </div>
