@@ -42,7 +42,7 @@
     </div>
 
     <div class="bg-white rounded-2xl border border-[#E5E7EB] shadow-sm p-4 sm:p-6 w-full">
-        <form method="get" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <form method="get" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             <input type="hidden" name="section" value="product-management">
             
             <div>
@@ -50,6 +50,19 @@
                 <div class="relative">
                     <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
                     <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Search product name..." class="w-full pl-10 pr-4 py-2.5 bg-[#F8FAFC] border border-[#E5E7EB] rounded-xl text-xs font-semibold text-[#111827] focus:outline-none focus:border-[#D62828] focus:ring-1 focus:ring-[#D62828] transition-all">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-[11px] font-bold text-[#475569] uppercase tracking-wider mb-1.5">Brand</label>
+                <div class="relative">
+                    <select name="brand" onchange="this.form.submit()" class="w-full pl-3.5 pr-8 py-2.5 bg-[#F8FAFC] border border-[#E5E7EB] rounded-xl text-xs font-semibold text-[#111827] appearance-none cursor-pointer focus:outline-none focus:border-[#D62828] focus:ring-1 focus:ring-[#D62828] transition-all">
+                        <option {% if request.GET.brand == 'all' or not request.GET.brand %}selected{% endif %} value="all">All Brands</option>
+                        {% for brand in brands %}
+                            <option {% if request.GET.brand == brand.id|stringformat:'s' %}selected{% endif %} value="{{ brand.id }}">{{ brand.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <i data-lucide="chevron-down" class="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
                 </div>
             </div>
 
@@ -106,10 +119,12 @@
                     <thead>
                         <tr class="bg-[#F8FAFC] border-b border-[#E5E7EB]">
                             <th class="px-6 py-4 text-xs font-bold text-[#475569] uppercase tracking-wider">Product</th>
+                            <th class="px-6 py-4 text-xs font-bold text-[#475569] uppercase tracking-wider">Description</th>
                             <th class="px-6 py-4 text-xs font-bold text-[#475569] uppercase tracking-wider">Attributes</th>
                             <th class="px-6 py-4 text-xs font-bold text-[#475569] uppercase tracking-wider text-center">Stock</th>
                             <th class="px-6 py-4 text-xs font-bold text-[#475569] uppercase tracking-wider text-right">Price</th>
                             <th class="px-6 py-4 text-xs font-bold text-[#475569] uppercase tracking-wider text-center">Status</th>
+                            <th class="px-6 py-4 text-xs font-bold text-[#475569] uppercase tracking-wider text-center">Toggle</th>
                             <th class="px-6 py-4 text-xs font-bold text-[#475569] uppercase tracking-wider text-right">Actions</th>
                         </tr>
                     </thead>
@@ -138,11 +153,14 @@
                                         <p class="font-bold text-[#111827] text-sm group-hover:text-[#D62828] transition-colors leading-snug">
                                             {{ product.name }}
                                         </p>
-                                        <p class="text-xs text-[#475569] font-normal line-clamp-1 max-w-xs">
-                                            {{ product.description|default:"No description available." }}
-                                        </p>
                                     </div>
                                 </div>
+                            </td>
+
+                            <td class="px-6 py-4 align-middle">
+                                <p class="text-xs text-[#475569] font-normal max-w-xs" title="{{ product.description }}">
+                                    {{ product.description|truncatewords:18|default:"No description available." }}
+                                </p>
                             </td>
 
                             <td class="px-6 py-4 align-middle">
@@ -180,16 +198,25 @@
 
                             <td class="px-6 py-4 align-middle text-center">
                                 {% if product.is_active %}
-                                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-green-50 text-[#16A34A] border border-green-200">
-                                        <span class="h-1.5 w-1.5 rounded-full bg-[#16A34A]"></span>
+                                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-600 border border-emerald-200">
+                                        <span class="h-1.5 w-1.5 rounded-full bg-emerald-600"></span>
                                         Active
                                     </span>
                                 {% else %}
-                                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-rose-50 text-[#DC2626] border border-rose-200">
-                                        <span class="h-1.5 w-1.5 rounded-full bg-[#DC2626]"></span>
+                                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-rose-50 text-rose-600 border border-rose-200">
+                                        <span class="h-1.5 w-1.5 rounded-full bg-rose-600"></span>
                                         Inactive
                                     </span>
                                 {% endif %}
+                            </td>
+
+                            <td class="px-6 py-4 align-middle text-center">
+                                <form method="POST" action="/product/status/toggle/{{ product.id }}/" class="inline-flex items-center">
+                                    {% csrf_token %}
+                                    <button type="submit" class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none {% if product.is_active %}bg-emerald-500{% else %}bg-slate-300{% endif %}" title="Toggle Status">
+                                        <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out {% if product.is_active %}translate-x-5{% else %}translate-x-0{% endif %}"></span>
+                                    </button>
+                                </form>
                             </td>
 
                             <td class="px-6 py-4 align-middle text-right">
@@ -209,7 +236,7 @@
                         </tr>
                     {% empty %}
                         <tr>
-                            <td colspan="6" class="px-6 py-16 text-center">
+                            <td colspan="8" class="px-6 py-16 text-center">
                                 <div class="max-w-xs mx-auto space-y-3">
                                     <div class="w-12 h-12 bg-slate-100 text-[#475569] rounded-2xl flex items-center justify-center mx-auto border border-[#E5E7EB]">
                                         <i data-lucide="package-open" class="w-6 h-6"></i>
