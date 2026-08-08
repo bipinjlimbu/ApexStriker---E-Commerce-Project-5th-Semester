@@ -8,109 +8,139 @@
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
 </head>
 
-<body class="bg-slate-50 min-h-screen flex flex-col">
+<body class="bg-[#F8FAFC] min-h-screen flex flex-col text-[#475569] font-sans antialiased">
     {% include 'components/_navbar.html' %}
     
     {% include 'components/_messages.html' %}
 
-    <main class="max-w-7xl mx-auto px-4 py-16 flex-grow w-full">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 flex-grow w-full space-y-12">
         
-        <div class="flex flex-row justify-between items-center mb-12 border-b border-slate-200 pb-8">
-            <div>
-                <h2 class="text-3xl font-black text-slate-900 uppercase italic tracking-tighter">
-                    BRAND <span class="text-blue-600">HUB</span>
-                </h2>
-                <p class="text-[10px] text-slate-500 uppercase tracking-widest mt-1 font-bold italic">
-                    Discover gear by your favorite labels and manufacturers
-                </p>
-            </div>
+        <div class="bg-[#0F172A] rounded-3xl p-8 sm:p-12 text-white relative overflow-hidden shadow-2xl border border-[#E5E7EB]">
+            <div class="absolute -top-24 -right-24 w-80 h-80 bg-[#D62828]/20 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-24 -left-24 w-80 h-80 bg-[#F4B400]/10 rounded-full blur-3xl pointer-events-none"></div>
 
-            {% if user.is_authenticated and user.role != 'customer' %}
-            <div class="shrink-0">
-                <a href="/brands/add/" class="group relative inline-flex items-center gap-3 bg-slate-900 text-white font-black px-6 py-3.5 rounded-2xl transition-all uppercase italic tracking-widest text-[11px] hover:bg-blue-600 shadow-xl shadow-slate-900/10 active:scale-95">
-                    <i data-lucide="plus-circle" class="w-4 h-4 group-hover:rotate-90 transition-transform"></i>
-                    Add Brand
-                </a>
+            <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div class="space-y-3 max-w-2xl">
+                    <div class="inline-flex items-center gap-2 bg-[#D62828]/10 border border-[#D62828]/30 px-3.5 py-1 rounded-full text-[#F4B400] text-xs font-bold uppercase tracking-wider">
+                        <i data-lucide="award" class="w-4 h-4"></i>
+                        <span>Official Partners</span>
+                    </div>
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight">
+                        Explore Top Brands
+                    </h1>
+                    <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                        Discover authentic football boots, jerseys, and equipment from the world's leading sports brands.
+                    </p>
+                </div>
+
+                {% if user.is_authenticated and user.role != 'customer' %}
+                <div class="shrink-0">
+                    <a href="/brands/add/" class="inline-flex items-center justify-center gap-2 bg-[#D62828] hover:bg-[#A61E1E] text-white font-bold px-6 py-3.5 rounded-xl transition-all shadow-lg shadow-[#D62828]/25 text-sm uppercase tracking-wider active:scale-95">
+                        <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                        <span>Add New Brand</span>
+                    </a>
+                </div>
+                {% endif %}
             </div>
-            {% endif %}
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {% for brand in brands %}
-            <div class="group relative bg-white rounded-[2.5rem] border border-slate-200 overflow-hidden hover:border-blue-500 hover:shadow-2xl transition-all duration-500 flex flex-col">
-    
+            <div class="group relative bg-white rounded-2xl border border-[#E5E7EB] hover:border-[#D62828] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden">
+                
                 {% if user.is_authenticated and user.role == 'admin' %}
-                <div class="absolute top-6 right-6 flex gap-2 z-20 opacity-0 translate-y-[-10px] group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                    <a href="/brands/edit/{{ brand.id }}/" class="p-2.5 bg-slate-900/5 backdrop-blur-md border border-slate-200 rounded-xl text-slate-600 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all shadow-sm" title="Edit">
+                <div class="absolute top-4 right-4 flex items-center gap-1.5 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                    <a href="/brands/edit/{{ brand.id }}/" class="p-2 bg-white/90 backdrop-blur-md border border-[#E5E7EB] rounded-lg text-[#475569] hover:bg-[#0F172A] hover:text-white transition-all shadow-sm" title="Edit Brand">
                         <i data-lucide="edit-3" class="w-4 h-4"></i>
                     </a>
-                    <a href="/brands/delete/{{ brand.id }}/" class="p-2.5 bg-slate-900/5 backdrop-blur-md border border-slate-200 rounded-xl text-slate-600 hover:bg-red-600 hover:text-white hover:border-red-600 transition-all shadow-sm" title="Delete">
+                    <a href="/brands/delete/{{ brand.id }}/" class="p-2 bg-white/90 backdrop-blur-md border border-[#E5E7EB] rounded-lg text-[#475569] hover:bg-[#DC2626] hover:text-white transition-all shadow-sm" title="Delete Brand">
                         <i data-lucide="trash-2" class="w-4 h-4"></i>
                     </a>
                 </div>
                 {% endif %}
 
-                <div class="p-10 flex flex-col items-center text-center flex-grow">
-                    <div class="h-24 w-24 bg-slate-50 rounded-3xl p-4 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
-                        <img src="{{ brand.logo.url }}" class="max-h-full max-w-full object-contain filter grayscale group-hover:grayscale-0 transition-all" alt="{{ brand.name }}">
+                <div class="p-6 sm:p-8 flex flex-col items-center text-center flex-grow">
+                    <div class="h-28 w-full bg-[#F8FAFC] rounded-xl p-4 flex items-center justify-center mb-6 border border-[#E5E7EB]/60 group-hover:bg-white transition-colors duration-300">
+                        <img src="{{ brand.logo.url }}" class="max-h-full max-w-full object-contain filter transition-transform duration-300 group-hover:scale-105" alt="{{ brand.name }}">
                     </div>
 
-                    <h3 class="text-2xl font-black text-slate-900 uppercase italic mb-3 tracking-tighter">{{ brand.name }}</h3>
-                    <p class="text-slate-500 text-sm leading-relaxed mb-6 italic font-medium">
+                    <h3 class="text-xl font-bold text-[#111827] mb-2 tracking-tight">
+                        {{ brand.name }}
+                    </h3>
+                    
+                    <p class="text-[#475569] text-sm leading-relaxed mb-6 font-normal line-clamp-3">
                         {{ brand.description|truncatechars:100 }}
                     </p>
 
-                    <div class="mt-auto">
-                        <a href="/marketplace/?brand={{ brand.id }}" class="inline-flex items-center gap-2 text-[11px] font-black text-blue-600 uppercase tracking-[0.2em] border-b-2 border-transparent hover:border-blue-600 transition-all">
-                            Explore Gear <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                    <div class="mt-auto w-full pt-2">
+                        <a href="/marketplace/?brand={{ brand.id }}" class="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-[#F8FAFC] hover:bg-[#D62828] text-[#111827] hover:text-white font-bold rounded-xl border border-[#E5E7EB] hover:border-[#D62828] transition-all text-xs uppercase tracking-wider">
+                            <span>Shop Products</span>
+                            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                         </a>
                     </div>
                 </div>
             </div>
 
             {% empty %}
-            <div class="col-span-full py-20 text-center bg-white rounded-[3rem] border-2 border-dashed border-slate-200">
-                <div class="inline-flex items-center justify-center h-20 w-20 bg-slate-50 rounded-full mb-4 text-slate-300">
-                    <i data-lucide="search-x" class="w-10 h-10"></i>
+            <div class="col-span-full py-16 px-6 text-center bg-white rounded-2xl border-2 border-dashed border-[#E5E7EB]">
+                <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#F8FAFC] text-[#475569] mb-4">
+                    <i data-lucide="search-x" class="w-8 h-8"></i>
                 </div>
-                <p class="text-slate-500 text-lg italic font-medium">No brands currently listed.</p>
+                <h3 class="text-lg font-bold text-[#111827] mb-1">No Brands Available</h3>
+                <p class="text-[#475569] text-sm max-w-md mx-auto">
+                    There are no official brands listed at the moment. Please check back later.
+                </p>
             </div>
             {% endfor %}
         </div>
 
-        <div class="mt-24 relative rounded-[3rem] bg-slate-900 p-16 text-center overflow-hidden border border-white/5">
-            <div class="absolute top-0 right-0 w-96 h-96 bg-blue-600/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
+        <div class="relative rounded-3xl bg-[#0F172A] p-8 sm:p-12 text-center overflow-hidden border border-[#E5E7EB] shadow-xl">
+            <div class="absolute top-0 right-0 w-80 h-80 bg-[#D62828]/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl pointer-events-none"></div>
             
-            <div class="relative z-10">
+            <div class="relative z-10 space-y-6 max-w-2xl mx-auto">
                 {% if user.is_authenticated and user.role != 'customer' %}
-                    <h2 class="text-4xl font-black text-white uppercase italic mb-6 tracking-tighter">NEW <span class="text-blue-500">COLLECTION?</span></h2>
-                    <p class="text-slate-400 max-w-xl mx-auto mb-10 text-lg font-medium italic">
-                        Missing a label? Submit new brands to the ApexStriker directory to expand your shop's reach.
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                        Want to Add a Brand?
+                    </h2>
+                    <p class="text-slate-300 text-sm sm:text-base">
+                        Partner with ApexStriker and start listing official football gear for players and fans worldwide.
                     </p>
-                    <a href="/brands/add/" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-black px-12 py-5 rounded-2xl transition-all uppercase italic tracking-[0.2em] shadow-xl shadow-blue-600/20 active:scale-95">
-                        Add Brand
-                    </a>
+                    <div class="pt-2">
+                        <a href="/brands/add/" class="inline-flex items-center gap-2 bg-[#D62828] hover:bg-[#A61E1E] text-white font-bold px-8 py-4 rounded-xl transition-all shadow-lg shadow-[#D62828]/20 uppercase tracking-wider text-xs">
+                            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                            <span>Add Brand</span>
+                        </a>
+                    </div>
 
                 {% elif user.is_authenticated and user.role == 'customer' %}
-                    <h2 class="text-4xl font-black text-white uppercase italic mb-6 tracking-tighter">Ready to <span class="text-blue-500">Shop?</span></h2>
-                    <p class="text-slate-400 max-w-xl mx-auto mb-10 text-lg font-medium italic">
-                        Find the perfect fit from these top-tier labels in the marketplace.
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                        Ready to Find Your Gear?
+                    </h2>
+                    <p class="text-slate-300 text-sm sm:text-base">
+                        Explore our complete marketplace to discover boots, jerseys, gloves, and accessories.
                     </p>
-                    <a href="/marketplace/" class="inline-block bg-white text-slate-900 font-black px-12 py-5 rounded-2xl transition-all uppercase italic tracking-[0.2em] hover:bg-blue-600 hover:text-white active:scale-95">
-                        Go to Marketplace
-                    </a> 
+                    <div class="pt-2">
+                        <a href="/marketplace/" class="inline-flex items-center gap-2 bg-white text-[#111827] hover:bg-[#D62828] hover:text-white font-bold px-8 py-4 rounded-xl transition-all uppercase tracking-wider text-xs">
+                            <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                            <span>Shop Marketplace</span>
+                        </a>
+                    </div>
 
                 {% else %}
-                    <h2 class="text-4xl font-black text-white uppercase italic mb-6 tracking-tighter">ApexStriker <span class="text-blue-500">Network</span></h2>
-                    <p class="text-slate-400 max-w-xl mx-auto mb-10 text-lg font-medium italic">
-                        Join the striker ecosystem to start selling or exploring professional gear.
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                        Join ApexStriker Today
+                    </h2>
+                    <p class="text-slate-300 text-sm sm:text-base">
+                        Create an account to order authentic football equipment or register as a vendor to sell your gear.
                     </p>
-                    <div class="flex flex-col sm:flex-row justify-center gap-4">
-                        <a href="/register/" class="bg-blue-600 hover:bg-blue-700 text-white font-black px-12 py-5 rounded-2xl transition-all uppercase italic tracking-[0.2em] shadow-xl shadow-blue-600/20 active:scale-95">
-                            Join Now
+                    <div class="pt-2 flex flex-col sm:flex-row justify-center gap-4">
+                        <a href="/register/" class="inline-flex items-center justify-center gap-2 bg-[#D62828] hover:bg-[#A61E1E] text-white font-bold px-8 py-4 rounded-xl transition-all shadow-lg shadow-[#D62828]/20 uppercase tracking-wider text-xs">
+                            <i data-lucide="user-plus" class="w-4 h-4"></i>
+                            <span>Create Account</span>
                         </a>
-                        <a href="/login/" class="bg-white/5 border border-white/10 text-white font-black px-12 py-5 rounded-2xl transition-all uppercase italic tracking-[0.2em] hover:bg-white/10">
-                            Login
+                        <a href="/login/" class="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold px-8 py-4 rounded-xl transition-all uppercase tracking-wider text-xs">
+                            <i data-lucide="log-in" class="w-4 h-4"></i>
+                            <span>Sign In</span>
                         </a>
                     </div>
                 {% endif %}
