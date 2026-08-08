@@ -19,7 +19,7 @@ def send_email_async(subject, message, recipient):
             print(f"Error sending email: {e}")
             
 def brands_view(request):
-    brands = Brand.objects.all()
+    brands = Brand.objects.filter(is_active=True).order_by('name')
     return render(request, 'main/brands_page.html', {'brands': brands, 'cart_count': cart_count(request)})
             
 @login_required
