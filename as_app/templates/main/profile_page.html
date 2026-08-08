@@ -8,279 +8,293 @@
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
 </head>
 
-<body class="bg-slate-50 flex flex-col min-h-screen">
+<body class="bg-[#F8FAFC] text-[#475569] flex flex-col min-h-screen font-sans antialiased">
     {% include 'components/_navbar.html' %}
 
     {% include 'components/_messages.html' %}
 
-    <main class="flex-grow py-12 px-4">
-        <div class="max-w-4xl mx-auto">
+    <main class="flex-grow py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto space-y-8">
             
-            <div class="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden mb-8">
-                <div class="h-32 bg-gradient-to-r from-blue-700 to-indigo-900"></div>
-                <div class="px-8 pb-8">
-                    <div class="relative flex justify-between items-end -mt-12 mb-6">
-                        <div class="relative">
-                            {% if profile.profile_picture %}
-                                <img src="{{ profile.profile_picture.url }}" alt="Profile Picture"
-                                     class="w-32 h-32 rounded-3xl border-4 border-white object-cover shadow-lg">
-                            {% else %}
-                            <div class="w-32 h-32 rounded-3xl border-4 border-white bg-slate-200 flex items-center justify-center shadow-lg">
-                                <i data-lucide="user" class="w-12 h-12 text-slate-400"></i>
+            <div class="bg-[#FFFFFF] rounded-3xl border border-[#E5E7EB] shadow-xl overflow-hidden relative">
+                <div class="h-44 sm:h-52 bg-[#0F172A] relative overflow-hidden flex items-end p-6 sm:p-8">
+                    <div class="absolute -right-10 -top-10 w-80 h-80 bg-[#D62828]/20 rounded-full blur-3xl pointer-events-none"></div>
+                    <div class="absolute right-1/3 -bottom-20 w-64 h-64 bg-[#F4B400]/10 rounded-full blur-2xl pointer-events-none"></div>
+                    
+                    <div class="absolute top-4 right-4 sm:top-6 sm:right-6">
+                        <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFFFFF]/10 backdrop-blur-md border border-[#FFFFFF]/15 text-xs font-bold text-[#FFFFFF] uppercase tracking-wider">
+                            <i data-lucide="shield" class="w-3.5 h-3.5 text-[#F4B400]"></i>
+                            <span>{{ profile.role }}</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="px-6 sm:px-8 pb-8">
+                    <div class="flex flex-col md:flex-row md:items-end justify-between -mt-16 sm:-mt-20 mb-6 gap-6">
+                        <div class="flex flex-col sm:flex-row sm:items-end gap-5">
+                            <div class="relative shrink-0">
+                                {% if profile.profile_picture %}
+                                    <img src="{{ profile.profile_picture.url }}" alt="Profile Picture" class="w-28 h-28 sm:w-36 sm:h-36 rounded-2xl border-4 border-[#FFFFFF] object-cover shadow-xl bg-[#FFFFFF]">
+                                {% else %}
+                                    <div class="w-28 h-28 sm:w-36 sm:h-36 rounded-2xl border-4 border-[#FFFFFF] bg-[#F8FAFC] flex items-center justify-center shadow-xl text-[#475569]">
+                                        <i data-lucide="user" class="w-14 h-14"></i>
+                                    </div>
+                                {% endif %}
                             </div>
-                            {% endif %}
+
+                            <div class="space-y-1">
+                                <div class="flex flex-wrap items-center gap-3">
+                                    <h1 class="text-2xl sm:text-3xl font-extrabold text-[#111827] tracking-tight">
+                                        {% if profile.first_name and profile.last_name %}
+                                            {{ profile.first_name }} <span class="text-[#D62828]">{{ profile.last_name }}</span>
+                                        {% else %}
+                                            {% if profile.is_staff %}
+                                                Anonymous <span class="text-[#D62828]">Admin</span>
+                                            {% elif profile.role == 'vendor' %}
+                                                Anonymous <span class="text-[#D62828]">Vendor</span>
+                                            {% elif profile.role == 'customer' %}
+                                                Anonymous <span class="text-[#D62828]">User</span>
+                                            {% endif %}
+                                        {% endif %}
+                                    </h1>
+
+                                    {% if profile.vendor_profile.status == 'approved' or profile.role == 'admin' %}
+                                        <span class="inline-flex items-center gap-1.5 bg-[#16A34A]/10 text-[#16A34A] border border-[#16A34A]/20 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+                                            <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
+                                            <span>Official Partner</span>
+                                        </span>
+                                    {% elif profile.role == 'vendor' and profile.vendor_profile.status != 'approved' %}
+                                        <span class="inline-flex items-center gap-1.5 bg-[#F4B400]/10 text-[#F4B400] border border-[#F4B400]/30 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+                                            <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+                                            <span>{{ profile.vendor_profile.status|title }} Approval</span>
+                                        </span>
+                                    {% elif profile.role == 'customer' and profile.is_verified %}
+                                        <span class="inline-flex items-center gap-1.5 bg-[#16A34A]/10 text-[#16A34A] border border-[#16A34A]/20 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+                                            <i data-lucide="badge-check" class="w-3.5 h-3.5"></i>
+                                            <span>Verified Buyer</span>
+                                        </span>
+                                    {% endif %}
+                                </div>
+
+                                <p class="text-xs sm:text-sm text-[#475569] font-medium flex items-center gap-2">
+                                    <i data-lucide="calendar" class="w-4 h-4 text-[#475569]"></i>
+                                    <span>Member since {{ profile.date_joined|date:"F j, Y" }}</span>
+                                </p>
+                            </div>
                         </div>
+
                         {% if user.id == profile.id %}
-                        <div class="flex flex-wrap gap-3">
-                            <a href="/profile/edit/{{ profile.id }}/" class="bg-white text-slate-700 font-black px-6 py-3 rounded-2xl border border-slate-200 hover:bg-slate-50 transition flex items-center gap-2 uppercase text-[10px] tracking-widest shadow-sm">
-                                <i data-lucide="edit-3" class="w-4 h-4 text-blue-600"></i> Edit Profile
+                        <div class="flex flex-wrap items-center gap-3 pt-2 md:pt-0">
+                            <a href="/profile/edit/{{ profile.id }}/" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#FFFFFF] border border-[#E5E7EB] text-[#111827] font-bold text-xs hover:bg-[#F8FAFC] transition shadow-sm uppercase tracking-wider">
+                                <i data-lucide="edit-3" class="w-4 h-4 text-[#D62828]"></i>
+                                <span>Edit Profile</span>
                             </a>
                             
-                            <a {% if user.role == 'admin'%} href="/dashboard/admin/" {% elif user.role == 'vendor' %} href="/dashboard/vendor/" {% elif user.role == 'customer' %} href="/dashboard/customer/" {% endif %} class="bg-blue-600 text-white font-black px-6 py-3 rounded-2xl hover:bg-blue-700 transition flex items-center gap-2 uppercase text-[10px] tracking-widest shadow-lg shadow-blue-200">
-                                <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Access Dashboard
+                            <a {% if user.role == 'admin'%} href="/dashboard/admin/" {% elif user.role == 'vendor' %} href="/dashboard/vendor/" {% elif user.role == 'customer' %} href="/dashboard/customer/" {% endif %} class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#D62828] text-[#FFFFFF] font-bold text-xs hover:bg-[#A61E1E] transition shadow-md shadow-[#D62828]/20 uppercase tracking-wider">
+                                <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                                <span>Dashboard</span>
                             </a>
                         </div>
                         {% endif %}
-                    </div>
-
-                    <div class="flex items-center gap-3">
-                        <h1 class="text-3xl font-black text-slate-900 tracking-tight italic uppercase">
-                            {{ profile.first_name }} <span class="text-blue-600">{{ profile.last_name }}</span>
-                        </h1>
-                        {% if profile.vendor_profile.status == 'approved' or profile.role == 'admin' %}
-                        <div class="flex items-center bg-blue-600 text-white px-3 py-1 rounded-full shadow-md shadow-blue-100">
-                            <i data-lucide="check-circle" class="w-4 h-4 fill-white text-blue-600"></i>
-                            <span class="text-[9px] font-black ml-1.5 uppercase tracking-wider">Trusted</span>
-                        </div>
-                        {% elif profile.role == 'vendor' and profile.vendor_profile.status != 'approved' %}
-                        <div class="flex items-center bg-yellow-500 text-white px-3 py-1 rounded-full shadow-md shadow-yellow-100">
-                            <i data-lucide="alert-triangle" class="w-4 h-4 fill-white text-yellow-500"></i>
-                            <span class="text-[9px] font-black ml-1.5 uppercase tracking-wider">{{ profile.vendor_profile.status|title }} Approval</span>
-                        </div>
-                        {% elif profile.role == 'customer' and profile.is_verified %}
-                        <div class="flex items-center bg-green-500 text-white px-3 py-1 rounded-full shadow-md shadow-green-100">
-                            <i data-lucide="check-circle" class="w-4 h-4 fill-white text-green-500"></i>
-                            <span class="text-[9px] font-black ml-1.5 uppercase tracking-wider">Verified</span>
-                        </div>
-                        {% endif %}
-                    </div>
-
-                    <div class="mt-4 flex items-center gap-4">
-                        <span class="bg-slate-900 text-white text-[10px] font-black px-4 py-1.5 rounded-xl uppercase tracking-widest italic">
-                            {{ profile.role }}
-                        </span>
-                        <p class="text-slate-500 text-sm font-bold italic">Member since {{ profile.date_joined|date:"F j, Y" }}</p>
                     </div>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
                 <div class="space-y-6">
+                    
+                    <div class="bg-[#FFFFFF] p-6 rounded-3xl border border-[#E5E7EB] shadow-sm space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-xs font-bold text-[#475569] uppercase tracking-wider flex items-center gap-2">
+                                <i data-lucide="shield-check" class="w-4 h-4 text-[#D62828]"></i>
+                                <span>Account Status</span>
+                            </h3>
+                        </div>
 
-                    <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
-                        <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 italic">Email Verification Status</h3>
-                        
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 flex items-center justify-between">
-                            <div class="flex flex-col gap-1">
+                        <div class="bg-[#F8FAFC] p-4 rounded-2xl border border-[#E5E7EB] flex items-center justify-between">
+                            <div class="space-y-1">
+                                <p class="text-xs font-bold text-[#111827] uppercase tracking-wide">Email Verification</p>
                                 {% if profile.is_verified %}
-                                    <span class="text-xs font-black text-slate-900 uppercase italic">Verified</span>
+                                    <span class="text-xs font-bold text-[#16A34A]">Verified Account</span>
                                 {% else %}
-                                    <span class="text-xs font-black text-slate-900 uppercase italic">Not Verified</span>
-                                    <a href="/profile/resend_verification/{{ profile.id }}/" 
-                                    class="text-[9px] font-bold text-blue-600 uppercase tracking-tighter hover:text-blue-800 transition-colors w-max italic">
-                                    Click to Resend Link →
+                                    <span class="text-xs font-bold text-[#DC2626]">Pending Verification</span>
+                                    <a href="/profile/resend_verification/{{ profile.id }}/" class="block text-xs font-bold text-[#D62828] hover:text-[#A61E1E] transition mt-1 underline">
+                                        Resend verification link
                                     </a>
                                 {% endif %}
                             </div>
 
-                            <div class="relative flex h-3 w-3">
+                            <div class="relative flex h-3 w-3 shrink-0">
                                 {% if profile.is_verified %}
-                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                                    <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#16A34A] opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-3 w-3 bg-[#16A34A]"></span>
                                 {% else %}
-                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                                    <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#DC2626] opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-3 w-3 bg-[#DC2626]"></span>
                                 {% endif %}
                             </div>
                         </div>
                     </div>
 
-                    {% if user.id == profile.id %}
-                    <div class="space-y-3">
-                        <a href="/logout/" class="w-full flex items-center justify-center gap-3 p-4 rounded-2xl bg-white border border-slate-200 text-slate-700 font-black text-[10px] uppercase tracking-widest hover:bg-slate-50 transition shadow-sm">
-                            <i data-lucide="log-out" class="w-4 h-4 text-slate-400"></i> Logout Account
-                        </a>
-                        {% if not user.is_superuser %}
-                        <form method="POST" action="/profile/delete/{{ profile.id }}/" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
-                            {% csrf_token %}
-                            <button type="submit" class="w-full flex items-center justify-center gap-3 p-4 rounded-2xl bg-red-50 border border-red-100 text-red-600 font-black text-[10px] uppercase tracking-widest hover:bg-red-100 transition">
-                                <i data-lucide="trash-2" class="w-4 h-4"></i> Delete Identity
-                            </button>
-                        </form>
-                        {% endif %}
-                    </div>
-                    {% else %}
-                    <div class="space-y-3">
-                        <a href="/contact/" class="w-full flex items-center justify-center gap-3 p-4 rounded-2xl bg-white border border-slate-200 text-slate-700 font-black text-[10px] uppercase tracking-widest hover:bg-slate-50 transition shadow-sm">
-                            <i data-lucide="mail" class="w-4 h-4 text-slate-400"></i> Contact User
-                        </a>
-                        {% if not user.is_superuser %}
-                        <a href="/report/add/{{ profile.id }}/" class="w-full flex items-center justify-center gap-3 p-4 rounded-2xl bg-red-50 border border-red-100 text-red-600 font-black text-[10px] uppercase tracking-widest hover:bg-red-100 transition">
-                            <i data-lucide="alert-triangle" class="w-4 h-4"></i> Report Profile
-                        </a>
+                    <div class="bg-[#FFFFFF] p-6 rounded-3xl border border-[#E5E7EB] shadow-sm space-y-3">
+                        <h3 class="text-xs font-bold text-[#475569] uppercase tracking-wider mb-2">Quick Actions</h3>
+                        
+                        {% if user.id == profile.id %}
+                            <a href="/logout/" class="w-full inline-flex items-center justify-center gap-2 p-3.5 rounded-xl bg-[#F8FAFC] border border-[#E5E7EB] text-[#111827] font-bold text-xs uppercase tracking-wider hover:bg-[#E5E7EB]/50 transition">
+                                <i data-lucide="log-out" class="w-4 h-4 text-[#475569]"></i>
+                                <span>Log Out</span>
+                            </a>
+
+                            {% if not user.is_superuser %}
+                                <form method="POST" action="/profile/delete/{{ profile.id }}/" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
+                                    {% csrf_token %}
+                                    <button type="submit" class="w-full inline-flex items-center justify-center gap-2 p-3.5 rounded-xl bg-[#DC2626]/10 border border-[#DC2626]/20 text-[#DC2626] font-bold text-xs uppercase tracking-wider hover:bg-[#DC2626]/20 transition cursor-pointer">
+                                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                        <span>Delete Account</span>
+                                    </button>
+                                </form>
+                            {% endif %}
                         {% else %}
-                        <form method="POST" action="/profile/delete/{{ profile.id }}/" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
-                            {% csrf_token %}
-                            <button type="submit" class="w-full flex items-center justify-center gap-3 p-4 rounded-2xl bg-red-50 border border-red-100 text-red-600 font-black text-[10px] uppercase tracking-widest hover:bg-red-100 transition">
-                                <i data-lucide="trash-2" class="w-4 h-4"></i> Delete Identity
-                            </button>
-                        </form>
+                            <a href="/contact/" class="w-full inline-flex items-center justify-center gap-2 p-3.5 rounded-xl bg-[#F8FAFC] border border-[#E5E7EB] text-[#111827] font-bold text-xs uppercase tracking-wider hover:bg-[#E5E7EB]/50 transition">
+                                <i data-lucide="mail" class="w-4 h-4 text-[#475569]"></i>
+                                <span>Contact User</span>
+                            </a>
+
+                            {% if not user.is_superuser %}
+                                <a href="/report/add/{{ profile.id }}/" class="w-full inline-flex items-center justify-center gap-2 p-3.5 rounded-xl bg-[#DC2626]/10 border border-[#DC2626]/20 text-[#DC2626] font-bold text-xs uppercase tracking-wider hover:bg-[#DC2626]/20 transition">
+                                    <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+                                    <span>Report Profile</span>
+                                </a>
+                            {% else %}
+                                <form method="POST" action="/profile/delete/{{ profile.id }}/" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
+                                    {% csrf_token %}
+                                    <button type="submit" class="w-full inline-flex items-center justify-center gap-2 p-3.5 rounded-xl bg-[#DC2626]/10 border border-[#DC2626]/20 text-[#DC2626] font-bold text-xs uppercase tracking-wider hover:bg-[#DC2626]/20 transition cursor-pointer">
+                                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                        <span>Delete Account</span>
+                                    </button>
+                                </form>
+                            {% endif %}
                         {% endif %}
                     </div>
-                    {% endif %}
                 </div>
 
-                <div class="md:col-span-2 space-y-8">
+                <div class="lg:col-span-2 space-y-6">
 
                     {% if profile.role == 'vendor' %}
-                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
-                        <div class="flex items-center justify-between mb-8">
-                            <h3 class="text-xl font-black text-slate-900 flex items-center gap-3 italic uppercase">
-                                <i data-lucide="store" class="w-5 h-5 text-blue-600"></i> Vendor Identity
-                            </h3>
-                            <span class="text-[9px] font-black bg-blue-50 text-blue-600 px-3 py-1 rounded-full uppercase tracking-tighter">Business Info</span>
+                    <div class="bg-[#FFFFFF] p-6 sm:p-8 rounded-3xl border border-[#E5E7EB] shadow-sm space-y-6">
+                        <div class="flex items-center justify-between pb-4 border-b border-[#E5E7EB]">
+                            <h2 class="text-lg font-extrabold text-[#111827] flex items-center gap-2.5">
+                                <i data-lucide="store" class="w-5 h-5 text-[#D62828]"></i>
+                                <span>Vendor Details</span>
+                            </h2>
+                            <span class="text-xs font-bold bg-[#0F172A] text-[#FFFFFF] px-3 py-1 rounded-full uppercase tracking-wider">Business</span>
                         </div>
-                        
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-10">
-                            <div class="space-y-6">
-                                <div>
-                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">Registered Shop Name</label>
-                                    <p class="text-slate-700 font-bold italic text-lg uppercase">{{ profile.vendor_profile.shop_name }}</p>
-                                </div>
-                                <div>
-                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1 text-blue-600">PAN Number</label>
-                                    <p class="text-slate-700 font-bold italic tracking-widest uppercase">{{ profile.vendor_profile.pan_number }}</p>
-                                </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold text-[#475569] uppercase tracking-wider">Shop Name</label>
+                                <p class="text-base font-extrabold text-[#111827]">{{ profile.vendor_profile.shop_name | default:"Not Assigned" }}</p>
                             </div>
-                            <div class="space-y-6">
-                                <div>
-                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">Official Contact</label>
-                                    <p class="text-slate-700 font-bold italic">{{ profile.phone }}</p>
-                                </div>
-                                <div>
-                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">Email Address</label>
-                                    <p class="text-slate-700 font-bold italic">{{ profile.email }}</p>
-                                </div>
+
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold text-[#475569] uppercase tracking-wider">PAN Number</label>
+                                <p class="text-base font-extrabold text-[#111827] tracking-widest">{{ profile.vendor_profile.pan_number }}</p>
+                            </div>
+
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold text-[#475569] uppercase tracking-wider">Phone Number</label>
+                                <p class="text-sm font-bold text-[#111827]">{{ profile.phone | default:"Not Provided" }}</p>
+                            </div>
+
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold text-[#475569] uppercase tracking-wider">Email Address</label>
+                                <p class="text-sm font-bold text-[#111827]">{{ profile.email }}</p>
                             </div>
                         </div>
 
-                        <hr class="my-10 border-slate-100">
-
-                        <div>
-                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-3">Official Business Address</label>
-                            <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100 flex items-center gap-4">
-                                <div class="bg-blue-600 p-2.5 rounded-xl shadow-lg shadow-blue-100">
-                                    <i data-lucide="map-pin" class="w-5 h-5 text-white"></i>
-                                </div>
-                                <div class="flex-1">
-                                    <p class="text-slate-700 font-bold text-sm italic leading-relaxed">
-                                        {{ profile.address }}
-                                    </p>
-                                </div>
+                        <div class="pt-4 border-t border-[#E5E7EB]">
+                            <label class="text-xs font-bold text-[#475569] uppercase tracking-wider block mb-2">Business Address</label>
+                            <div class="bg-[#F8FAFC] p-4 rounded-2xl border border-[#E5E7EB] flex items-start gap-3">
+                                <i data-lucide="map-pin" class="w-5 h-5 text-[#D62828] shrink-0 mt-0.5"></i>
+                                <p class="text-sm font-bold text-[#111827] leading-relaxed">{{ profile.address | default:"Not Provided" }}</p>
                             </div>
                         </div>
                     </div>
 
                     {% elif profile.role == 'customer' %}
-                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
-                        <div class="flex items-center justify-between mb-8">
-                            <h3 class="text-xl font-black text-slate-900 flex items-center gap-3 italic uppercase">
-                                <i data-lucide="user" class="w-5 h-5 text-indigo-600"></i> Shopper Profile
-                            </h3>
-                            <span class="text-[9px] font-black bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full uppercase tracking-tighter">Personal Info</span>
+                    <div class="bg-[#FFFFFF] p-6 sm:p-8 rounded-3xl border border-[#E5E7EB] shadow-sm space-y-6">
+                        <div class="flex items-center justify-between pb-4 border-b border-[#E5E7EB]">
+                            <h2 class="text-lg font-extrabold text-[#111827] flex items-center gap-2.5">
+                                <i data-lucide="user" class="w-5 h-5 text-[#D62828]"></i>
+                                <span>Customer Profile</span>
+                            </h2>
+                            <span class="text-xs font-bold bg-[#0F172A] text-[#FFFFFF] px-3 py-1 rounded-full uppercase tracking-wider">Personal</span>
                         </div>
-                        
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-10">
-                            <div class="space-y-6">
-                                <div>
-                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">Email Address</label>
-                                    <p class="text-slate-700 font-bold italic">{{ profile.email }}</p>
-                                </div>
-                                <div>
-                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">Preferred Position</label>
-                                    <p class="text-slate-700 font-bold italic uppercase">{{ profile.customer_profile.position|default:"Not Specified" }}</p>
-                                </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold text-[#475569] uppercase tracking-wider">Email Address</label>
+                                <p class="text-sm font-bold text-[#111827]">{{ profile.email }}</p>
                             </div>
-                            <div class="space-y-6">
-                                <div>
-                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">Personal Contact</label>
-                                    <p class="text-slate-700 font-bold italic">{{ profile.phone }}</p>
-                                </div>
+
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold text-[#475569] uppercase tracking-wider">Phone Number</label>
+                                <p class="text-sm font-bold text-[#111827]">{{ profile.phone | default:"Not Provided" }}</p>
+                            </div>
+
+                            <div class="space-y-1 sm:col-span-2">
+                                <label class="text-xs font-bold text-[#475569] uppercase tracking-wider">Preferred Position</label>
+                                <p class="text-sm font-bold text-[#111827]">{{ profile.customer_profile.get_position_display | default:"Not Provided" }}</p>
                             </div>
                         </div>
 
-                        <hr class="my-10 border-slate-100">
-
-                        <div>
-                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-3">Physical Address</label>
-                            <div class="bg-indigo-50 p-5 rounded-2xl border border-indigo-100 flex items-center gap-4">
-                                <div class="bg-indigo-600 p-2.5 rounded-xl shadow-lg shadow-indigo-100">
-                                    <i data-lucide="map-pin" class="w-5 h-5 text-white"></i>
-                                </div>
-                                <div class="flex-1">
-                                    <p class="text-indigo-900 font-bold text-sm italic leading-relaxed">
-                                        {{ profile.address }}
-                                    </p>
-                                </div>
+                        <div class="pt-4 border-t border-[#E5E7EB]">
+                            <label class="text-xs font-bold text-[#475569] uppercase tracking-wider block mb-2">Address</label>
+                            <div class="bg-[#F8FAFC] p-4 rounded-2xl border border-[#E5E7EB] flex items-start gap-3">
+                                <i data-lucide="map-pin" class="w-5 h-5 text-[#D62828] shrink-0 mt-0.5"></i>
+                                <p class="text-sm font-bold text-[#111827] leading-relaxed">{{ profile.address | default:"Not Provided" }}</p>
                             </div>
                         </div>
                     </div>
 
                     {% else %}
-                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
-                        <div class="flex items-center justify-between mb-8">
-                            <h3 class="text-xl font-black text-slate-900 flex items-center gap-3 italic uppercase">
-                                <i data-lucide="shield-check" class="w-5 h-5 text-rose-600"></i> Platform Authority
-                            </h3>
-                            <span class="text-[9px] font-black bg-rose-50 text-rose-600 px-3 py-1 rounded-full uppercase tracking-tighter">Superuser Access</span>
+                    <div class="bg-[#FFFFFF] p-6 sm:p-8 rounded-3xl border border-[#E5E7EB] shadow-sm space-y-6">
+                        <div class="flex items-center justify-between pb-4 border-b border-[#E5E7EB]">
+                            <h2 class="text-lg font-extrabold text-[#111827] flex items-center gap-2.5">
+                                <i data-lucide="shield-check" class="w-5 h-5 text-[#D62828]"></i>
+                                <span>Administrator Profile</span>
+                            </h2>
+                            <span class="text-xs font-bold bg-[#D62828] text-[#FFFFFF] px-3 py-1 rounded-full uppercase tracking-wider">Full Access</span>
                         </div>
-                        
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-10">
-                            <div class="space-y-6">
-                                <div>
-                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">Admin Identity</label>
-                                    <p class="text-slate-700 font-bold italic text-lg uppercase">{{ profile.first_name }} {{ profile.last_name }}</p>
-                                </div>
-                                <div>
-                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1 text-rose-600">Access Level</label>
-                                    <p class="text-slate-700 font-black italic tracking-widest uppercase">Full Root Control</p>
-                                </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold text-[#475569] uppercase tracking-wider">Full Name</label>
+                                <p class="text-base font-extrabold text-[#111827]">{{ profile.first_name }} {{ profile.last_name }}</p>
                             </div>
-                            <div class="space-y-6">
-                                <div>
-                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">Secure Email</label>
-                                    <p class="text-slate-700 font-bold italic">{{ profile.email }}</p>
-                                </div>
-                                <div>
-                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">Phone</label>
-                                    <p class="text-slate-700 font-bold italic uppercase">{{ profile.phone }}</p>
-                                </div>
+
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold text-[#475569] uppercase tracking-wider">Access Rights</label>
+                                <p class="text-sm font-bold text-[#16A34A]">Full Administrative Control</p>
+                            </div>
+
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold text-[#475569] uppercase tracking-wider">Email Address</label>
+                                <p class="text-sm font-bold text-[#111827]">{{ profile.email }}</p>
+                            </div>
+
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold text-[#475569] uppercase tracking-wider">Phone Number</label>
+                                <p class="text-sm font-bold text-[#111827]">{{ profile.phone | default:"Not Provided" }}</p>
                             </div>
                         </div>
 
-                        <hr class="my-10 border-slate-100">
-
-                        <div>
-                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-3">Primary Admin Residence</label>
-                            <div class="bg-rose-50 p-5 rounded-2xl border border-rose-100 flex items-center gap-4">
-                                <div class="bg-rose-600 p-2.5 rounded-xl shadow-lg shadow-rose-100">
-                                    <i data-lucide="map-pin" class="w-5 h-5 text-white"></i>
-                                </div>
-                                <div class="flex-1">
-                                    <p class="text-rose-900 font-bold text-sm italic leading-relaxed">
-                                        {{ profile.address }}
-                                    </p>
-                                </div>
+                        <div class="pt-4 border-t border-[#E5E7EB]">
+                            <label class="text-xs font-bold text-[#475569] uppercase tracking-wider block mb-2">Registered Address</label>
+                            <div class="bg-[#F8FAFC] p-4 rounded-2xl border border-[#E5E7EB] flex items-start gap-3">
+                                <i data-lucide="map-pin" class="w-5 h-5 text-[#D62828] shrink-0 mt-0.5"></i>
+                                <p class="text-sm font-bold text-[#111827] leading-relaxed">{{ profile.address | default:"Not Provided" }}</p>
                             </div>
                         </div>
                     </div>
