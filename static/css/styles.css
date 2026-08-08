@@ -1784,6 +1784,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-right-width: 1px;
 }
 
+.border-solid {
+  border-style: solid;
+}
+
 .border-dashed {
   border-style: dashed;
 }
@@ -2022,6 +2026,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .border-amber-200 {
   --tw-border-opacity: 1;
   border-color: rgb(253 230 138 / var(--tw-border-opacity));
+}
+
+.border-\[\#D62828\] {
+  --tw-border-opacity: 1;
+  border-color: rgb(214 40 40 / var(--tw-border-opacity));
 }
 
 .border-t-transparent {
