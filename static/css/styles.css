@@ -416,7 +416,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   display: none;
 }
 
-.-translate-y-1\/2, .translate-x-\[120\%\], .translate-x-1\/2, .translate-y-\[-10px\], .-translate-x-full, .translate-x-5, .translate-x-0, .translate-x-20, .translate-x-32, .rotate-3, .skew-x-12, .transform, .hover\:translate-x-1, .hover\:-translate-y-0\.5, .hover\:-translate-y-0, .hover\:scale-105, .active\:scale-\[0\.99\], .active\:scale-95, .active\:scale-90, .active\:scale-\[0\.98\], .group-hover\:-translate-x-1, .group-hover\:translate-x-1, .group-hover\:translate-y-0, .group-hover\:translate-x-full, .group-hover\:translate-x-0\.5, .group-hover\:-translate-y-0\.5, .group-hover\:translate-x-0, .group-hover\:-translate-y-0, .group-hover\:-translate-y-1, .group-hover\:rotate-90, .group-hover\:rotate-180, .group-hover\:-rotate-90, .group-hover\:scale-110, .group-hover\:scale-105, .group-hover\:scale-125 {
+.-translate-y-1\/2, .translate-x-\[120\%\], .translate-x-1\/2, .translate-y-\[-10px\], .-translate-x-full, .translate-x-5, .translate-x-0, .translate-x-20, .translate-x-32, .rotate-3, .skew-x-12, .transform, .hover\:translate-x-1, .hover\:-translate-y-0\.5, .hover\:-translate-y-0, .hover\:scale-105, .active\:scale-\[0\.99\], .active\:scale-95, .active\:scale-90, .active\:scale-\[0\.98\], .group-hover\:-translate-x-1, .group-hover\:translate-x-1, .group-hover\:translate-y-0, .group-hover\:translate-x-full, .group-hover\:translate-x-0\.5, .group-hover\:-translate-y-0\.5, .group-hover\:translate-x-0, .group-hover\:-translate-y-0, .group-hover\:-translate-y-1, .group-hover\:rotate-90, .group-hover\:rotate-180, .group-hover\:-rotate-90, .group-hover\:rotate-12, .group-hover\:scale-110, .group-hover\:scale-105, .group-hover\:scale-125 {
   --tw-translate-x: 0;
   --tw-translate-y: 0;
   --tw-rotate: 0;
@@ -827,6 +827,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .my-8 {
   margin-top: 2rem;
   margin-bottom: 2rem;
+}
+
+.mx-1 {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
 }
 
 .mb-8 {
@@ -1528,6 +1533,22 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .animate-ping {
   animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8,0,1,1);
+  }
+
+  50% {
+    transform: none;
+    animation-timing-function: cubic-bezier(0,0,0.2,1);
+  }
+}
+
+.animate-bounce {
+  animation: bounce 1s infinite;
 }
 
 .cursor-pointer {
@@ -2493,6 +2514,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .bg-slate-900\/90 {
   background-color: rgb(15 23 42 / 0.9);
+}
+
+.bg-\[\#E5E7EB\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
 }
 
 .bg-gradient-to-br {
@@ -4503,6 +4529,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .group:hover .group-hover\:-rotate-90 {
   --tw-rotate: -90deg;
+  transform: var(--tw-transform);
+}
+
+.group:hover .group-hover\:rotate-12 {
+  --tw-rotate: 12deg;
   transform: var(--tw-transform);
 }
 
