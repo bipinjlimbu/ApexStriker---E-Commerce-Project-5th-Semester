@@ -223,7 +223,7 @@ def vendor_dashboard_view(request):
         elif sort == 'price_high':
             order_items = order_items.order_by('-order__total_amount')
             
-        context['order_items'] = order_items
+        context['order_items'] = order_items.exclude(order__status='cancelled').exclude(order__status='completed')
         
     if section == 'completed-order-items':            
         context['completed_orders'] = OrderItem.objects.filter(vendor=request.user.vendor_profile, order__status='completed').order_by('-order__created_at')
