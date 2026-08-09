@@ -38,23 +38,23 @@ def add_to_cart_view(request, product_id):
     
     if Cart.objects.filter(customer=customer, product=product).exists():
         messages.info(request, "This product is already in your cart.")
-        return redirect('/marketplace/')
+        return redirect(f'/products/{product_id}/')
     
-    cart_item, created = Cart.objects.get_or_create(customer=customer, product_id=product_id)
-    
+    cart_item, created = Cart.objects.get_or_create(customer=customer, product_id=product_id) 
     
     if not created:
         cart_item.quantity += 1
         cart_item.save()
     
     messages.success(request, "Item added to cart successfully.")
-    return redirect('/cart/')
+    return redirect(f'/products/{product_id}/')
 
 @login_required
 def cart_view(request):
     cart = Cart.objects.filter(customer=request.user.customer_profile)
     return render(request, 'main/cart_page.html', {'cart_count': cart_count(request), 'cart': cart})
 
+@login_required
 def update_cart_quantity(request):
     if request.method == 'POST':
         import json
