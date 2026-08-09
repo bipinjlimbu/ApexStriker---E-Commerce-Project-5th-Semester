@@ -12,6 +12,41 @@ import uuid
 def initiate_esewa_payment(request):
     if request.method == "POST":
         total_amount = request.POST.get('total_amount')
+        shipping_address = request.POST.get('shipping_address')
+        payment_method = request.POST.get('payment_method', 'esewa')
+        
+        if payment_method != 'esewa':
+            customer = request.user.customer_profile
+            cart_items = Cart.objects.filter(customer=customer)
+            
+            # 1. Create Main Order
+            order = Order.objects.create(
+                customer=customer,
+                total_amount=float(total_amount.replace(',', '')),
+                transaction_id=str(uuid.uuid4()),
+                status=Order.Status.PAID,
+                payment_method=Order.PaymentMethod.COD,
+                shipping_address=shipping_address
+            )
+            
+            # 2. Move items from Cart to OrderItem
+            for item in cart_items:
+                OrderItem.objects.create(
+                    order=order,
+                    product=item.product,
+                    vendor=item.product.vendor,
+                    price_at_purchase=item.product.price,
+                    quantity=item.quantity
+                )
+                
+                product = item.product
+                product.stock -= item.quantity
+                product.save()
+            
+            # 3. Clear Cart
+            cart_items.delete()
+            
+            return render(request, 'main/payment_confirmed_page.html', {'order': order})
         
         # eSewa v2 is extremely strict: '100.0' and '100' create different hashes.
         # We ensure it matches the exact string that will be in the HTML form.
@@ -30,6 +65,13 @@ def initiate_esewa_payment(request):
         # CORRECT SANDBOX SECRET KEY
         secret_key = "8gBm/:&EnhH.1/q" 
         
+        # PERSIST ORDER METADATA IN DJANGO SESSION
+        # eSewa ignores custom form fields, so we save them locally tied to transaction_uuid
+        request.session[f'pending_order_{transaction_uuid}'] = {
+            'shipping_address': shipping_address
+        }
+        request.session.modified = True
+        
         # THE SIGNATURE FORMULA (No spaces after commas)
         # Sequence must be: total_amount,transaction_uuid,product_code
         data_to_sign = f"total_amount={total_amount},transaction_uuid={transaction_uuid},product_code={product_code}"
@@ -44,6 +86,7 @@ def initiate_esewa_payment(request):
         
         context = {
             'amount': total_amount,
+            'shipping_address': shipping_address,
             'transaction_uuid': transaction_uuid,
             'product_code': product_code,
             'signature': signature,
@@ -68,11 +111,25 @@ def payment_success(request):
     transaction_uuid = decoded_data['transaction_uuid']
     total_amount = decoded_data['total_amount']
     
+    if not transaction_uuid or not total_amount:
+        messages.error(request, "Missing essential payment verification keys.")
+        return redirect('payment_failed')
+
+    # RETRIEVE SAVED METADATA FROM SESSION
+    session_key = f'pending_order_{transaction_uuid}'
+    order_data = request.session.pop(session_key, None)
+    
+    if not order_data:
+        messages.error(request, "Transaction session expired or invalid. Please check your orders.")
+        return redirect('payment_failed')
+
+    shipping_address = order_data.get('shipping_address', '')
     # FIXED URL: uat.esewa.com.np is dead. Use rc-epay.
     verify_url = "https://rc-epay.esewa.com.np/api/epay/transaction/status/"
     params = {
         'product_code': product_code,
         'total_amount': total_amount,
+        'shipping_address': shipping_address,
         'transaction_uuid': transaction_uuid
     }
     
@@ -99,7 +156,8 @@ def payment_success(request):
             total_amount=float(total_amount.replace(',', '')),
             transaction_id=transaction_uuid,
             status=Order.Status.PAID,
-            shipping_address=customer.user.address
+            payment_method=Order.PaymentMethod.ESEWA,
+            shipping_address=shipping_address
         )
         
         # 2. Move items from Cart to OrderItem
