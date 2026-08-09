@@ -416,7 +416,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   display: none;
 }
 
-.-translate-y-1\/2, .translate-x-\[120\%\], .translate-x-1\/2, .translate-y-\[-10px\], .-translate-x-full, .translate-x-5, .translate-x-0, .translate-x-20, .translate-x-32, .rotate-3, .skew-x-12, .transform, .hover\:translate-x-1, .hover\:-translate-y-0\.5, .hover\:-translate-y-0, .hover\:scale-105, .active\:scale-\[0\.99\], .active\:scale-95, .active\:scale-90, .active\:scale-\[0\.98\], .group-hover\:-translate-x-1, .group-hover\:translate-x-1, .group-hover\:translate-y-0, .group-hover\:translate-x-full, .group-hover\:translate-x-0\.5, .group-hover\:-translate-y-0\.5, .group-hover\:translate-x-0, .group-hover\:-translate-y-0, .group-hover\:-translate-y-1, .group-hover\:rotate-90, .group-hover\:rotate-180, .group-hover\:scale-110, .group-hover\:scale-105, .group-hover\:scale-125 {
+.-translate-y-1\/2, .translate-x-\[120\%\], .translate-x-1\/2, .translate-y-\[-10px\], .-translate-x-full, .translate-x-5, .translate-x-0, .translate-x-20, .translate-x-32, .rotate-3, .skew-x-12, .transform, .hover\:translate-x-1, .hover\:-translate-y-0\.5, .hover\:-translate-y-0, .hover\:scale-105, .active\:scale-\[0\.99\], .active\:scale-95, .active\:scale-90, .active\:scale-\[0\.98\], .group-hover\:-translate-x-1, .group-hover\:translate-x-1, .group-hover\:translate-y-0, .group-hover\:translate-x-full, .group-hover\:translate-x-0\.5, .group-hover\:-translate-y-0\.5, .group-hover\:translate-x-0, .group-hover\:-translate-y-0, .group-hover\:-translate-y-1, .group-hover\:rotate-90, .group-hover\:rotate-180, .group-hover\:-rotate-90, .group-hover\:scale-110, .group-hover\:scale-105, .group-hover\:scale-125 {
   --tw-translate-x: 0;
   --tw-translate-y: 0;
   --tw-rotate: 0;
@@ -427,7 +427,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-transform: translateX(var(--tw-translate-x)) translateY(var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-.divide-y > *, .border, .border-2, .border-4, .border-y, .border-t, .border-b, .border-r, .border-b-2, .border-b-\[10px\], .file\:border-0::file-selector-button, .sm\:border-t-0 {
+.divide-y > *, .border, .border-2, .border-4, .border-y, .border-t, .border-b, .border-r, .border-b-2, .border-b-\[10px\], .file\:border-0::file-selector-button, .sm\:border-t-0, .lg\:border-b-0, .lg\:border-r {
   --tw-border-opacity: 1;
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
 }
@@ -450,7 +450,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-shadow-colored: 0 0 #0000;
 }
 
-.blur-3xl, .blur-2xl, .blur, .blur-lg, .drop-shadow-\[0_1px_2px_rgba\(245\2c 158\2c 11\2c 0\.2\)\], .drop-shadow-2xl, .grayscale, .filter, .group-hover\:grayscale-0 {
+.blur-3xl, .blur-2xl, .blur, .blur-lg, .drop-shadow-\[0_1px_2px_rgba\(245\2c 158\2c 11\2c 0\.2\)\], .drop-shadow-2xl, .drop-shadow-md, .grayscale, .filter, .group-hover\:grayscale-0 {
   --tw-blur: var(--tw-empty,/*!*/ /*!*/);
   --tw-brightness: var(--tw-empty,/*!*/ /*!*/);
   --tw-contrast: var(--tw-empty,/*!*/ /*!*/);
@@ -769,6 +769,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   top: -5rem;
 }
 
+.right-3\.5 {
+  right: 0.875rem;
+}
+
 .z-10 {
   z-index: 10;
 }
@@ -818,6 +822,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .my-6 {
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
+}
+
+.my-8 {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .mb-8 {
@@ -1143,6 +1152,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .h-2\.5 {
   height: 0.625rem;
+}
+
+.h-\[46px\] {
+  height: 46px;
 }
 
 .max-h-full {
@@ -1770,6 +1783,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   overflow-y: auto;
 }
 
+.overflow-x-hidden {
+  overflow-x: hidden;
+}
+
 .truncate {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -2102,6 +2119,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .border-\[\#DC2626\]\/30 {
   border-color: rgb(220 38 38 / 0.3);
+}
+
+.border-\[\#E5E7EB\]\/10 {
+  border-color: rgb(229 231 235 / 0.1);
 }
 
 .border-t-transparent {
@@ -2494,6 +2515,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-image: radial-gradient(#E5E7EB 1px,transparent 1px);
 }
 
+.bg-gradient-to-l {
+  background-image: linear-gradient(to left, var(--tw-gradient-stops));
+}
+
 .from-\[\#D62828\] {
   --tw-gradient-from: #D62828;
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(214 40 40 / 0));
@@ -2524,12 +2549,21 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(214 40 40 / 0));
 }
 
+.from-\[\#D62828\]\/25 {
+  --tw-gradient-from: rgb(214 40 40 / 0.25);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(214 40 40 / 0));
+}
+
 .via-white\/5 {
   --tw-gradient-stops: var(--tw-gradient-from), rgb(255 255 255 / 0.05), var(--tw-gradient-to, rgb(255 255 255 / 0));
 }
 
 .via-\[\#0F172A\] {
   --tw-gradient-stops: var(--tw-gradient-from), #0F172A, var(--tw-gradient-to, rgb(15 23 42 / 0));
+}
+
+.via-\[\#D62828\]\/5 {
+  --tw-gradient-stops: var(--tw-gradient-from), rgb(214 40 40 / 0.05), var(--tw-gradient-to, rgb(214 40 40 / 0));
 }
 
 .to-\[\#A61E1E\] {
@@ -2934,6 +2968,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .pt-3\.5 {
   padding-top: 0.875rem;
+}
+
+.pl-4 {
+  padding-left: 1rem;
+}
+
+.pr-9 {
+  padding-right: 2.25rem;
 }
 
 .text-left {
@@ -3624,6 +3666,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   filter: var(--tw-filter);
 }
 
+.drop-shadow-md {
+  --tw-drop-shadow: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
+  filter: var(--tw-filter);
+}
+
 .grayscale {
   --tw-grayscale: grayscale(100%);
   filter: var(--tw-filter);
@@ -4238,6 +4285,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   color: rgb(220 38 38 / var(--tw-text-opacity));
 }
 
+.hover\:text-\[\#111827\]:hover {
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity));
+}
+
 .hover\:underline:hover {
   text-decoration: underline;
 }
@@ -4444,6 +4496,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   transform: var(--tw-transform);
 }
 
+.group:hover .group-hover\:-rotate-90 {
+  --tw-rotate: -90deg;
+  transform: var(--tw-transform);
+}
+
 .group:hover .group-hover\:scale-110 {
   --tw-scale-x: 1.1;
   --tw-scale-y: 1.1;
@@ -4624,6 +4681,10 @@ Ensure the default browser behavior of the `hidden` attribute.
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
+  .sm\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
   .sm\:flex-row {
     flex-direction: row;
   }
@@ -4670,6 +4731,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
   .sm\:self-auto {
     align-self: auto;
+  }
+
+  .sm\:rounded-3xl {
+    border-radius: 1.5rem;
   }
 
   .sm\:border-t-0 {
@@ -4747,6 +4812,10 @@ Ensure the default browser behavior of the `hidden` attribute.
     text-align: left;
   }
 
+  .sm\:text-right {
+    text-align: right;
+  }
+
   .sm\:text-3xl {
     font-size: 1.875rem;
     line-height: 2.25rem;
@@ -4786,6 +4855,11 @@ Ensure the default browser behavior of the `hidden` attribute.
     font-size: 1.125rem;
     line-height: 1.75rem;
   }
+
+  .sm\:text-2xl {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
 }
 
 @media (min-width: 768px) {
@@ -4823,6 +4897,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
   .md\:items-center {
     align-items: center;
+  }
+
+  .md\:justify-between {
+    justify-content: space-between;
   }
 
   .md\:self-auto {
@@ -4913,6 +4991,10 @@ Ensure the default browser behavior of the `hidden` attribute.
     width: 12rem;
   }
 
+  .lg\:w-56 {
+    width: 14rem;
+  }
+
   .lg\:flex-grow {
     flex-grow: 1;
   }
@@ -4949,8 +5031,20 @@ Ensure the default browser behavior of the `hidden` attribute.
     align-items: center;
   }
 
+  .lg\:justify-between {
+    justify-content: space-between;
+  }
+
   .lg\:gap-12 {
     gap: 3rem;
+  }
+
+  .lg\:border-b-0 {
+    border-bottom-width: 0px;
+  }
+
+  .lg\:border-r {
+    border-right-width: 1px;
   }
 
   .lg\:p-12 {

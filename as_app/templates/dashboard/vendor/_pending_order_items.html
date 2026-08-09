@@ -1,155 +1,191 @@
-<div class="flex-grow flex flex-col h-screen bg-slate-50 overflow-hidden">
+<div class="flex-grow flex flex-col min-h-screen bg-[#F8FAFC] overflow-x-hidden font-sans text-[#475569] selection:bg-[#D62828] selection:text-white p-4 sm:p-6 lg:p-8">
     
-    <div class="shrink-0 bg-slate-900 p-12 relative overflow-hidden z-50 shadow-2xl">
-        <div class="absolute top-0 right-0 w-1/4 h-full bg-blue-600 skew-x-12 translate-x-20 opacity-10"></div>
-        <div class="relative z-10 flex justify-between items-end">
-            <div>
-                <span class="inline-block bg-blue-600 text-white text-[10px] font-black px-3 py-1 rounded-full mb-4 uppercase tracking-widest italic">Order Logistics</span>
-                <h2 class="text-5xl font-black text-white italic uppercase tracking-tighter">Order <span class="text-blue-500">Manifest</span></h2>
-            </div>
-            <div class="flex flex-col items-end">
-                <p class="text-[9px] font-black text-slate-500 uppercase italic tracking-widest mb-1">Live Queue</p>
-                <p class="text-3xl font-black text-white italic uppercase tracking-tighter">Active <span class="text-blue-500">Registry</span></p>
+    <div class="max-w-7xl mx-auto w-full space-y-6">
+        
+        <div class="bg-[#0F172A] rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 relative overflow-hidden shadow-xl border border-[#E5E7EB]/10">
+            <div class="absolute top-0 right-0 w-96 h-full bg-gradient-to-l from-[#D62828]/25 via-[#D62828]/5 to-transparent pointer-events-none"></div>
+            
+            <div class="relative z-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+                <div>
+                    <div class="inline-flex items-center gap-2 bg-[#F4B400]/10 border border-[#F4B400]/20 px-3 py-1 rounded-full mb-3">
+                        <i data-lucide="package-search" class="w-3.5 h-3.5 text-[#F4B400]"></i>
+                        <span class="text-[#F4B400] text-[11px] font-black uppercase tracking-widest">ORDER MANAGEMENT</span>
+                    </div>
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight uppercase">
+                        ORDER <span class="text-[#D62828]">MANIFEST</span>
+                    </h1>
+                    <p class="text-xs sm:text-sm text-slate-400 font-medium mt-2 max-w-xl">
+                        Manage vendor order queue, update shipment status, and monitor fulfillment progress.
+                    </p>
+                </div>
+                
+                <div class="flex flex-wrap items-center gap-3">
+                    <div class="bg-white/5 backdrop-blur-md px-4 py-2.5 rounded-xl border border-white/10 flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-lg bg-[#F4B400] flex items-center justify-center text-[#0F172A] font-black shadow-md">
+                            <i data-lucide="boxes" class="w-5 h-5 text-[#0F172A]"></i>
+                        </div>
+                        <div>
+                            <span class="text-[9px] font-extrabold text-slate-400 uppercase tracking-wider block">TOTAL ITEMS</span>
+                            <span class="text-base font-black text-white leading-none">{{ order_items|length }}</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="shrink-0 bg-white border-b border-slate-200 px-12 py-8 z-40 shadow-sm">
-        <form id="filter-form" action="." method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-6">
-            
-            <input type="hidden" name="section" value="pending-order-items">
-            
-            <div>
-                <p class="text-[9px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Search</p>
-                <div class="relative">
-                    <i data-lucide="search" class="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                    <input type="text" name="q" value="{{ request.GET.q }}" onchange="this.form.submit()" placeholder="ORDER ID / CUSTOMER..." class="w-full pl-12 pr-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all">
+        <div class="bg-white border border-[#E5E7EB] rounded-2xl p-5 sm:p-6 shadow-sm">
+            <form id="filter-form" action="." method="GET" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
+                <input type="hidden" name="section" value="pending-order-items">
+                
+                <div>
+                    <label class="block text-[11px] font-bold text-[#475569] uppercase tracking-wider mb-2">SEARCH ORDERS</label>
+                    <div class="relative">
+                        <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                        <input type="text" name="q" value="{{ request.GET.q }}" onchange="this.form.submit()" placeholder="Search product or customer..." class="w-full pl-10 pr-4 py-2.5 bg-[#F8FAFC] border border-[#E5E7EB] rounded-xl text-xs font-bold text-[#111827] focus:outline-none focus:border-[#D62828] transition-all">
+                    </div>
                 </div>
-            </div>
 
-            <div>
-                <p class="text-[9px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Fulfillment Status</p>
-                <div class="relative">
-                    <select name="status" onchange="this.form.submit()" class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic appearance-none cursor-pointer focus:outline-none">
-                        <option value="all" {% if request.GET.status == 'all' %}selected{% endif %}>All Records</option>
-                        <option value="pending" {% if request.GET.status == 'pending' %}selected{% endif %}>Pending Dispatch</option>
-                        <option value="dispatched" {% if request.GET.status == 'dispatched' %}selected{% endif %}>Dispatched but Not Received by Admin</option>
-                        <option value="received" {% if request.GET.status == 'received' %}selected{% endif %}>Dispatched and Received by Admin</option>
-                        <option value="shipping" {% if request.GET.status == 'shipping' %}selected{% endif %}>Shipping Items</option>
-                        <option value="shipped" {% if request.GET.status == 'shipped' %}selected{% endif %}>Shipped Items</option>
-                    </select>
-                    <i data-lucide="activity" class="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
+                <div>
+                    <label class="block text-[11px] font-bold text-[#475569] uppercase tracking-wider mb-2">FULFILLMENT STATUS</label>
+                    <div class="relative">
+                        <select name="status" onchange="this.form.submit()" class="w-full pl-4 pr-9 py-2.5 bg-[#F8FAFC] border border-[#E5E7EB] rounded-xl text-xs font-bold text-[#111827] appearance-none cursor-pointer focus:outline-none focus:border-[#D62828] transition-all">
+                            <option value="all" {% if request.GET.status == 'all' %}selected{% endif %}>All Statuses</option>
+                            <option value="pending" {% if request.GET.status == 'pending' %}selected{% endif %}>Pending Dispatch</option>
+                            <option value="dispatched" {% if request.GET.status == 'dispatched' %}selected{% endif %}>Dispatched (In Transit)</option>
+                            <option value="received" {% if request.GET.status == 'received' %}selected{% endif %}>Received by Admin</option>
+                            <option value="shipping" {% if request.GET.status == 'shipping' %}selected{% endif %}>Shipping Items</option>
+                            <option value="shipped" {% if request.GET.status == 'shipped' %}selected{% endif %}>Shipped Items</option>
+                        </select>
+                        <i data-lucide="chevron-down" class="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
+                    </div>
                 </div>
-            </div>
 
-            <div>
-                <p class="text-[9px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Sort By</p>
-                <div class="relative">
-                    <select name="sort" onchange="this.form.submit()" class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-black uppercase italic appearance-none cursor-pointer focus:outline-none">
-                        <option value="latest" {% if request.GET.sort == 'latest' %}selected{% endif %}>Latest</option>
-                        <option value="oldest" {% if request.GET.sort == 'oldest' %}selected{% endif %}>Oldest</option>
-                        <option value="price_low" {% if request.GET.sort == 'price_low' %}selected{% endif %}>Price: Low to High</option>
-                        <option value="price_high" {% if request.GET.sort == 'price_high' %}selected{% endif %}>Price: High to Low</option>
-                    </select>
-                    <i data-lucide="arrow-up-down" class="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
+                <div>
+                    <label class="block text-[11px] font-bold text-[#475569] uppercase tracking-wider mb-2">SORT ORDER</label>
+                    <div class="relative">
+                        <select name="sort" onchange="this.form.submit()" class="w-full pl-4 pr-9 py-2.5 bg-[#F8FAFC] border border-[#E5E7EB] rounded-xl text-xs font-bold text-[#111827] appearance-none cursor-pointer focus:outline-none focus:border-[#D62828] transition-all">
+                            <option value="latest" {% if request.GET.sort == 'latest' %}selected{% endif %}>Newest First</option>
+                            <option value="oldest" {% if request.GET.sort == 'oldest' %}selected{% endif %}>Oldest First</option>
+                            <option value="price_low" {% if request.GET.sort == 'price_low' %}selected{% endif %}>Price: Low to High</option>
+                            <option value="price_high" {% if request.GET.sort == 'price_high' %}selected{% endif %}>Price: High to Low</option>
+                        </select>
+                        <i data-lucide="arrow-up-down" class="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
+                    </div>
                 </div>
-            </div>
 
-            <div class="flex items-end">
-                <a href="?section=pending-order-items" class="w-full h-[52px] flex items-center justify-center gap-2 bg-slate-100 text-slate-500 rounded-xl font-black italic uppercase text-[10px] hover:bg-red-50 hover:text-red-600 transition-all shadow-sm group">
-                    <i data-lucide="refresh-ccw" class="w-3 h-3 group-hover:rotate-180 transition-transform duration-500"></i>
-                    Clear All Filters
-                </a>
-            </div>
-        </form>
-    </div>
+                <div>
+                    <label class="block text-[11px] font-bold text-[#475569] uppercase tracking-wider mb-2">ORDER TYPE</label>
+                    <div class="relative">
+                        <select class="w-full pl-4 pr-9 py-2.5 bg-[#F8FAFC] border border-[#E5E7EB] rounded-xl text-xs font-bold text-[#111827] appearance-none cursor-pointer focus:outline-none focus:border-[#D62828] transition-all">
+                            <option value="all">All Orders</option>
+                        </select>
+                        <i data-lucide="chevron-down" class="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
+                    </div>
+                </div>
 
-    <div class="flex-grow overflow-y-auto custom-scrollbar p-12">
-        <div class="space-y-8 pb-12">
+                <div>
+                    <a href="?section=pending-order-items" class="w-full h-[42px] flex items-center justify-center gap-2 bg-[#F8FAFC] hover:bg-slate-100 border border-[#E5E7EB] text-[#475569] hover:text-[#111827] rounded-xl font-bold text-xs transition-all shadow-2xs group">
+                        <i data-lucide="rotate-ccw" class="w-4 h-4 text-slate-400 group-hover:-rotate-90 transition-transform duration-300"></i>
+                        Reset Filters
+                    </a>
+                </div>
+            </form>
+        </div>
 
+        <div class="space-y-6 pt-2 pb-12">
             {% for item in order_items %}
-            <div class="bg-white rounded-[3rem] border border-slate-200 shadow-xl overflow-hidden group hover:border-blue-500 transition-all duration-500 mb-6">
+            <div class="bg-white rounded-2xl border border-[#E5E7EB] shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group">
                 <div class="flex flex-col lg:flex-row items-stretch">
                     
-                    <div class="lg:w-64 shrink-0 relative flex flex-col justify-center items-center bg-slate-100 border-r border-slate-100 overflow-hidden">
-                        {% if item.product.get_primary %}
-                            <img src="{{ item.product.get_primary.image.url }}" class="absolute inset-0 w-full h-full object-cover opacity-20 grayscale group-hover:grayscale-0 transition-all duration-700">
-                            <img src="{{ item.product.get_primary.image.url }}" class="relative z-10 w-40 h-40 object-contain drop-shadow-2xl transition-transform duration-500 group-hover:scale-110">
-                        {% else %}
-                            <i data-lucide="package" class="w-16 h-16 text-slate-300"></i>
-                        {% endif %}
-                        
-                        <div class="absolute top-6 right-6 z-20 bg-slate-900 text-white text-[10px] font-black px-3 py-1 rounded-full italic">
+                    <div class="lg:w-56 shrink-0 relative flex items-center justify-center bg-[#F8FAFC] p-6 border-b lg:border-b-0 lg:border-r border-[#E5E7EB]">
+                        <div class="relative w-32 h-32 flex items-center justify-center">
+                            {% if item.product.get_primary %}
+                                <img src="{{ item.product.get_primary.image.url }}" alt="{{ item.product.name }}" class="max-w-full max-h-full object-contain drop-shadow-md group-hover:scale-105 transition-transform duration-300">
+                            {% else %}
+                                <i data-lucide="package" class="w-12 h-12 text-slate-300"></i>
+                            {% endif %}
+                        </div>
+                        <div class="absolute top-3 left-3 bg-[#0F172A] text-white text-[11px] font-black px-2.5 py-1 rounded-lg shadow-xs">
                             QTY: {{ item.quantity }}
                         </div>
                     </div>
 
-                    <div class="flex-grow p-10 flex flex-col">
-                        <div class="flex justify-between items-start mb-6">
-                            <div>
-                                <div class="flex items-center gap-3 mb-2">
-                                    <span class="text-[10px] font-black text-blue-600 uppercase italic tracking-widest">Task ID: #{{ item.id }}</span>
-                                    <span class="h-1 w-1 rounded-full bg-slate-300"></span>
-                                    <span class="text-[10px] font-black text-slate-400 uppercase italic tracking-widest">Ref: Order #{{ item.order.id }}</span>
+                    <div class="flex-grow p-6 sm:p-8 flex flex-col justify-between">
+                        <div>
+                            <div class="flex flex-wrap justify-between items-start gap-4 mb-4">
+                                <div>
+                                    <div class="flex items-center gap-2 mb-1.5 flex-wrap">
+                                        <span class="text-xs font-bold text-[#D62828] bg-[#D62828]/10 px-2.5 py-0.5 rounded-md">Item #{{ item.id }}</span>
+                                        <span class="text-xs font-bold text-[#475569] bg-[#F8FAFC] border border-[#E5E7EB] px-2.5 py-0.5 rounded-md">Order #{{ item.order.id }}</span>
+                                    </div>
+                                    <h3 class="text-xl sm:text-2xl font-black text-[#111827] tracking-tight">{{ item.product.name }}</h3>
+                                    <p class="text-xs font-semibold text-[#475569] mt-1 flex items-center gap-1.5">
+                                        <i data-lucide="store" class="w-3.5 h-3.5 text-[#F4B400]"></i>
+                                        Vendor: <span class="text-[#111827] font-bold">{{ item.product.vendor.name|default:"Internal Warehouse" }}</span>
+                                    </p>
                                 </div>
-                                <h3 class="text-3xl font-black text-slate-900 uppercase italic tracking-tighter leading-none mb-1">{{ item.product.name }}</h3>
-                                <p class="text-xs font-black text-slate-500 uppercase italic tracking-widest">Vendor: {{ item.product.vendor.name|default:"Internal Warehouse" }}</p>
+                                <div class="text-left sm:text-right">
+                                    <span class="text-xs font-bold text-[#475569] block">Total Amount</span>
+                                    <span class="text-2xl font-black text-[#D62828]">Rs. {{ item.total_price }}</span>
+                                </div>
                             </div>
-                            <div class="text-right">
-                                <p class="text-3xl font-black text-blue-600 italic tracking-tighter leading-none">
-                                Rs. {{ item.total_price }}
-                                </p>
-                            </div>
-                        </div>
 
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 py-6 border-y border-slate-100 mb-8">
-                            <div>
-                                <p class="text-[9px] font-black text-slate-400 uppercase italic mb-1">Recipient</p>
-                                <p class="text-xs font-black text-slate-800 uppercase italic">{{ item.order.customer.user.get_full_name|truncatechars:20 }}</p>
-                            </div>
-                            <div>
-                                <p class="text-[9px] font-black text-slate-400 uppercase italic mb-1">Destination</p>
-                                <p class="text-xs font-black text-slate-800 uppercase italic">{{ item.order.shipping_address|truncatechars:25 }}</p>
-                            </div>
-                            <div>
-                                <p class="text-[9px] font-black text-slate-400 uppercase italic mb-1">Payment</p>
-                                <p class="text-xs font-black text-green-600 uppercase italic">{{ item.order.status|upper }}</p>
-                            </div>
-                            <div>
-                                <p class="text-[9px] font-black text-slate-400 uppercase italic mb-1">Price Per Unit</p>
-                                <p class="text-xs font-black text-slate-800 uppercase italic">Rs. {{ item.price_at_purchase }}</p>
-                            </div>
-                        </div>
-
-                        <div class="mt-auto flex items-center justify-between">
-                            <div class="flex items-center gap-4">
-                                <div class="inline-flex items-center gap-2 bg-slate-50 px-3 py-1.5 rounded-full border border-slate-200">
-                                    <div class="h-1.5 w-1.5 rounded-full bg-blue-500 animate-pulse"></div>
-                                    {% if item.dispatched %}
-                                        <span class="text-[9px] font-black text-slate-600 uppercase italic">Dispatched</span>
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 py-4 px-4 bg-[#F8FAFC] rounded-xl border border-[#E5E7EB] mb-6 text-xs">
+                                <div>
+                                    <span class="text-[10px] font-extrabold text-[#475569] uppercase tracking-wider block mb-0.5">Customer</span>
+                                    <span class="font-bold text-[#111827] block truncate">{{ item.order.customer.user.get_full_name|truncatechars:20 }}</span>
+                                </div>
+                                <div>
+                                    <span class="text-[10px] font-extrabold text-[#475569] uppercase tracking-wider block mb-0.5">Shipping Address</span>
+                                    <span class="font-bold text-[#111827] block truncate">{{ item.order.shipping_address|truncatechars:25 }}</span>
+                                </div>
+                                <div>
+                                    <span class="text-[10px] font-extrabold text-[#475569] uppercase tracking-wider block mb-0.5">Payment Status</span>
+                                    {% if item.order.payment_method == 'esewa' %}
+                                        <span class="font-black text-[#16A34A] block uppercase">Paid via eSewa</span>
                                     {% else %}
-                                        <span class="text-[9px] font-black text-slate-600 uppercase italic">Pending Dispatch</span>
+                                        <span class="font-black text-[#16A34A] block uppercase">Cash on Delivery</span>
                                     {% endif %}
                                 </div>
-                                <span class="text-[10px] font-black text-slate-300 uppercase italic tracking-widest">{{ item.order.created_at|timesince }} ago</span>
+                                <div>
+                                    <span class="text-[10px] font-extrabold text-[#475569] uppercase tracking-wider block mb-0.5">Unit Price</span>
+                                    <span class="font-bold text-[#111827] block">Rs. {{ item.price_at_purchase }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-wrap items-center justify-between gap-4 pt-2 border-t border-[#E5E7EB]">
+                            <div class="flex items-center gap-3">
+                                <div class="inline-flex items-center gap-1.5 bg-[#F8FAFC] px-3 py-1.5 rounded-lg border border-[#E5E7EB] text-xs font-bold text-[#475569]">
+                                    <div class="w-2 h-2 rounded-full bg-[#F4B400]"></div>
+                                    {% if item.dispatched %}
+                                        <span>Dispatched</span>
+                                    {% else %}
+                                        <span>Pending Dispatch</span>
+                                    {% endif %}
+                                </div>
+                                <span class="text-xs font-medium text-[#475569] flex items-center gap-1">
+                                    <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+                                    Ordered {{ item.order.created_at|timesince }} ago
+                                </span>
                             </div>
 
-                            <div class="flex items-center gap-3">
+                            <div>
                                 {% if item.dispatched and not item.received %}
-                                    <div class="flex items-center gap-3 bg-green-600 text-white px-8 py-4 rounded-xl font-black italic uppercase text-[10px]">
-                                        <i data-lucide="truck" class="w-4 h-4 text-green-300"></i> 
-                                        Dispatched But Not Received by Admin
+                                    <div class="inline-flex items-center gap-2 bg-[#16A34A]/10 text-[#16A34A] border border-[#16A34A]/30 px-5 py-2.5 rounded-xl text-xs font-extrabold uppercase tracking-wide">
+                                        <i data-lucide="truck" class="w-4 h-4"></i> 
+                                        Dispatched (In Transit to Admin)
                                     </div>
                                 {% elif item.dispatched and item.received %}
-                                    <div class="flex items-center gap-3 bg-green-600 text-white px-8 py-4 rounded-xl font-black italic uppercase text-[10px]">
-                                        <i data-lucide="check" class="w-4 h-4 text-green-300"></i> 
-                                        Successfully Received by Admin
+                                    <div class="inline-flex items-center gap-2 bg-[#16A34A] text-white px-5 py-2.5 rounded-xl text-xs font-extrabold uppercase tracking-wide shadow-xs">
+                                        <i data-lucide="check-circle-2" class="w-4 h-4"></i> 
+                                        Received by Admin
                                     </div>
                                 {% else %}
-                                <a href="/orders/dispatch/{{ item.id }}/" class="flex items-center gap-3 bg-slate-900 text-white px-8 py-4 rounded-xl font-black italic uppercase text-[10px] hover:bg-blue-600 transition-all shadow-lg active:scale-95 group">
-                                    <i data-lucide="package-check" class="w-4 h-4 text-blue-400 group-hover:text-white transition-colors"></i> 
-                                    Dispatch Item
-                                </a>
+                                    <a href="/orders/dispatch/{{ item.id }}/" class="inline-flex items-center gap-2 bg-[#D62828] hover:bg-[#A61E1E] text-white px-6 py-2.5 rounded-xl text-xs font-extrabold uppercase tracking-wide transition-all duration-200 shadow-md shadow-[#D62828]/20 active:scale-95 group">
+                                        <i data-lucide="send" class="w-4 h-4 group-hover:translate-x-0.5 transition-transform"></i> 
+                                        Dispatch Item
+                                    </a>
                                 {% endif %}
                             </div>
                         </div>
@@ -157,12 +193,15 @@
                 </div>
             </div>
             {% empty %}
-                <div class="p-12 text-center">
-                    <i data-lucide="inbox" class="w-12 h-12 text-slate-300 mx-auto mb-4"></i>
-                    <p class="text-sm font-bold text-slate-400 italic uppercase tracking-wide">No pending order items available.</p>
+                <div class="bg-white rounded-3xl border border-[#E5E7EB] p-12 text-center shadow-xs my-8">
+                    <div class="w-16 h-16 bg-[#F8FAFC] border border-[#E5E7EB] rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="inbox" class="w-8 h-8 text-[#475569]"></i>
+                    </div>
+                    <h3 class="text-lg font-black text-[#111827] mb-1">No Orders Found</h3>
+                    <p class="text-xs font-medium text-[#475569]">There are currently no pending order items matching your filters.</p>
                 </div>
             {% endfor %}
-
         </div>
+
     </div>
 </div>
