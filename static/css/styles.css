@@ -4230,6 +4230,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(17 24 39 / var(--tw-bg-opacity));
 }
 
+.hover\:bg-\[\#d99f00\]:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(217 159 0 / var(--tw-bg-opacity));
+}
+
 .hover\:text-\[\#A61E1E\]:hover {
   --tw-text-opacity: 1;
   color: rgb(166 30 30 / var(--tw-text-opacity));
