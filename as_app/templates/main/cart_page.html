@@ -19,23 +19,18 @@
 
     <main class="flex-grow py-8 sm:py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
         
-        <!-- Dark Banner Header Styled After the Reference Banner -->
         <div class="mb-8 sm:mb-10 rounded-3xl bg-[#0F172A] p-6 sm:p-10 text-white shadow-xl relative overflow-hidden border border-white/10">
-            <!-- Subtle Radial Gradient Effect -->
             <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-gradient-to-br from-[#D62828]/20 to-transparent rounded-full blur-3xl pointer-events-none"></div>
             
             <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div>
-                    <!-- Yellow Ribbon Badge -->
                     <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#F4B400]/40 bg-[#F4B400]/10 text-[#F4B400] text-xs font-black tracking-wider uppercase mb-3">
                         <i data-lucide="award" class="w-3.5 h-3.5"></i>
                         <span>YOUR SELECTION</span>
                     </div>
-                    <!-- Main Dark Banner Title -->
                     <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight mb-2">
                         Shopping Cart
                     </h1>
-                    <!-- Subtitle -->
                     <p class="text-slate-400 text-sm sm:text-base font-normal max-w-2xl">
                         Review your items, adjust quantities, and proceed to secure checkout when you're ready.
                     </p>
@@ -50,7 +45,6 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
             
-            <!-- Cart Items List -->
             <div class="lg:col-span-7 xl:col-span-8 space-y-4">
                 
                 {% for item in cart %}
@@ -77,7 +71,6 @@
                     </div>
 
                     <div class="flex items-center justify-between sm:justify-end gap-5 w-full sm:w-auto border-t sm:border-t-0 pt-4 sm:pt-0 border-[#F8FAFC]">
-                        <!-- Quantity Controls -->
                         <div class="flex items-center bg-[#F8FAFC] border border-[#E5E7EB] rounded-2xl p-1 shadow-inner">
                             <button type="button" onclick="updateQty(this, -1, {{ item.id }})" class="w-8 h-8 flex items-center justify-center bg-white text-[#111827] hover:bg-[#D62828] hover:text-white rounded-xl transition-all shadow-sm active:scale-95">
                                 <i data-lucide="minus" class="w-3.5 h-3.5"></i>
@@ -88,11 +81,7 @@
                             </button>
                         </div>
 
-                        <!-- Item Total Price & Trash Icon Button -->
                         <div class="flex items-center gap-4">
-                            <p class="text-lg font-black text-[#111827] item-total">Rs. {{ item.total_price|floatformat:2 }}</p>
-                            
-                            <!-- Remove Item Icon Button -->
                             <a href="/cart/remove/{{ item.id }}/" 
                                title="Remove item" 
                                aria-label="Remove item"
@@ -118,9 +107,8 @@
 
             </div>
 
-            <!-- Order Summary Sidebar -->
             <div class="lg:col-span-5 xl:col-span-4 lg:sticky lg:top-24">
-                <form action="/payment/initiate/" method="POST">
+                <form action="/payment/initiate/" method="POST" id="checkout-form">
                     {% csrf_token %}
                     <div class="bg-[#0F172A] p-6 sm:p-8 rounded-3xl text-white shadow-xl border border-white/10 relative overflow-hidden">
                         <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-[#D62828]/10 rounded-full blur-2xl pointer-events-none"></div>
@@ -132,7 +120,7 @@
                             </span>
                         </h2>
                         
-                        <div class="space-y-4 mb-8">
+                        <div class="space-y-4 mb-6">
                             <div class="flex justify-between text-slate-300 text-sm font-semibold">
                                 <span>Subtotal</span>
                                 <span class="font-bold text-white" id="summary-subtotal">Rs. 0</span>
@@ -152,19 +140,51 @@
                             </div>
                         </div>
 
-                        <div class="space-y-3">
-                            {% if cart %}
-                            <button type="submit" class="w-full bg-[#D62828] hover:bg-[#A61E1E] text-white font-black py-4 px-6 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2.5 shadow-lg shadow-[#D62828]/30 active:scale-[0.98] text-sm tracking-wide uppercase">
+                        {% if cart %}
+                        <div id="step-1-btn-container" class="space-y-3">
+                            <button type="button" onclick="showCheckoutSection()" class="w-full bg-[#D62828] hover:bg-[#A61E1E] text-white font-black py-4 px-6 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2.5 shadow-lg shadow-[#D62828]/30 active:scale-[0.98] text-sm tracking-wide uppercase">
                                 <i data-lucide="credit-card" class="w-4 h-4"></i>
                                 Proceed to Checkout
                             </button>
-                            {% endif %}
-                            
-                            <a href="/marketplace/" class="w-full flex items-center justify-center py-3 text-xs font-bold text-slate-400 hover:text-white transition-colors gap-2">
+                            <a href="/marketplace/" class="w-full flex items-center justify-center py-2 text-xs font-bold text-slate-400 hover:text-white transition-colors gap-2">
                                 <i data-lucide="plus-circle" class="w-4 h-4"></i>
                                 Add More Items
                             </a>
                         </div>
+                        {% endif %}
+
+                        <div id="checkout-details-section" class="hidden space-y-4 pt-4 border-t border-white/10">
+                            
+                            <div>
+                                <label for="shipping_address" class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2 flex items-center gap-1.5">
+                                    <i data-lucide="map-pin" class="w-4 h-4 text-[#F4B400]"></i>
+                                    Shipping Address
+                                </label>
+                                <textarea name="shipping_address" id="shipping_address" rows="2" required placeholder="Street address, City, Region..." class="w-full bg-slate-900/90 border border-slate-700 rounded-xl p-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-[#D62828] transition-colors resize-none"></textarea>
+                            </div>
+
+                            <div>
+                                <label for="payment_method" class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2 flex items-center gap-1.5">
+                                    <i data-lucide="wallet" class="w-4 h-4 text-[#F4B400]"></i>
+                                    Payment Method
+                                </label>
+                                <div class="relative">
+                                    <select name="payment_method" id="payment_method" required class="w-full bg-slate-900/90 border border-slate-700 rounded-xl p-3 text-sm text-white appearance-none focus:outline-none focus:border-[#D62828] transition-colors cursor-pointer pr-10">
+                                        <option value="esewa">eSewa Digital Wallet</option>
+                                        <option value="cod">Cash on Delivery (COD)</option>
+                                    </select>
+                                    <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-slate-400">
+                                        <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="w-full bg-[#16A34A] hover:bg-[#12823B] text-white font-black py-4 px-6 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2.5 shadow-lg shadow-[#16A34A]/20 active:scale-[0.98] text-sm tracking-wide uppercase mt-2">
+                                <i data-lucide="check-circle" class="w-4 h-4"></i>
+                                Confirm & Pay Now
+                            </button>
+                        </div>
+
                     </div>
                 </form>
 
@@ -199,6 +219,18 @@
     <script>
         if (window.lucide && typeof window.lucide.createIcons === 'function') {
             window.lucide.createIcons();
+        }
+
+        function showCheckoutSection() {
+            const step1Btn = document.getElementById('step-1-btn-container');
+            const checkoutSection = document.getElementById('checkout-details-section');
+
+            step1Btn.classList.add('hidden');
+            checkoutSection.classList.remove('hidden');
+
+            if (window.lucide && typeof window.lucide.createIcons === 'function') {
+                window.lucide.createIcons();
+            }
         }
 
         async function updateQty(btn, change, itemId) {

@@ -2456,6 +2456,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(15 23 42 / 0.1);
 }
 
+.bg-slate-900\/90 {
+  background-color: rgb(15 23 42 / 0.9);
+}
+
 .bg-gradient-to-br {
   background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
 }
@@ -3338,6 +3342,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   color: rgb(148 163 184 / var(--tw-placeholder-opacity));
 }
 
+.placeholder-slate-500::-moz-placeholder {
+  --tw-placeholder-opacity: 1;
+  color: rgb(100 116 139 / var(--tw-placeholder-opacity));
+}
+
+.placeholder-slate-500::placeholder {
+  --tw-placeholder-opacity: 1;
+  color: rgb(100 116 139 / var(--tw-placeholder-opacity));
+}
+
 .opacity-0 {
   opacity: 0;
 }
@@ -3499,6 +3513,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 
 .shadow-green-600\/20 {
+  --tw-shadow-color: rgb(22 163 74 / 0.2);
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
+.shadow-\[\#16A34A\]\/20 {
   --tw-shadow-color: rgb(22 163 74 / 0.2);
   --tw-shadow: var(--tw-shadow-colored);
 }
@@ -4129,6 +4148,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .hover\:bg-\[\#16A34A\]:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(22 163 74 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-\[\#12823B\]:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(18 130 59 / var(--tw-bg-opacity));
 }
 
 .hover\:text-\[\#A61E1E\]:hover {
