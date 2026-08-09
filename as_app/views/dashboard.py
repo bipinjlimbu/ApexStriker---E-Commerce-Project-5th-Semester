@@ -35,7 +35,7 @@ def admin_dashboard_view(request):
     }
     
     if section == 'member-list':
-        context['members'] = User.objects.all().order_by('-date_joined')
+        context['members'] = User.objects.exclude(is_superuser=True).order_by('-date_joined')
         
     elif section == 'pending-vendors':
         context['vendors'] = Vendor.objects.filter(status=Vendor.Status.PENDING).order_by('-requested_on')
