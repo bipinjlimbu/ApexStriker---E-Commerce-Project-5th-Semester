@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
-from ..models import Cart, Order, OrderItem, Disbursement
+from ..models import Product, Cart, Order, OrderItem, Disbursement
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.db import models
@@ -30,7 +30,18 @@ def add_to_cart_view(request, product_id):
         return redirect('/products/')
     
     customer = request.user.customer_profile
+    product = get_object_or_404(Product, id=product_id)
+    
+    if product.stock <= 0:
+        messages.error(request, "This product is out of stock.")
+        return redirect('/marketplace/')
+    
+    if Cart.objects.filter(customer=customer, product=product).exists():
+        messages.info(request, "This product is already in your cart.")
+        return redirect('/marketplace/')
+    
     cart_item, created = Cart.objects.get_or_create(customer=customer, product_id=product_id)
+    
     
     if not created:
         cart_item.quantity += 1
