@@ -199,31 +199,31 @@ def vendor_dashboard_view(request):
         status = request.GET.get('status', 'all')
         sort = request.GET.get('sort', 'latest')
         
-        orders = Order.objects.filter(items__vendor=request.user.vendor_profile, status='paid').distinct()
+        order_items = OrderItem.objects.filter(vendor=request.user.vendor_profile).order_by('-order__created_at')
         
         if q:
-            query = Q(id__icontains=q) | Q(customer__user__first_name__icontains=q) | Q(customer__user__last_name__icontains=q) | Q(items__product__name__icontains=q) | Q(items__product__brand__name__icontains=q) | Q(items__product__category__icontains=q)
-            orders = orders.filter(query).distinct()
+            query = Q(order__id__icontains=q) | Q(product__name__icontains=q) | Q(product__brand__name__icontains=q) | Q(product__category__icontains=q)
+            order_items = order_items.filter(query).distinct()
             
         if status != 'all' and status == 'pending':
-            orders = orders.filter(items__dispatched=False).distinct()
+            order_items = order_items.filter(dispatched=False).distinct()   
         elif status != 'all' and status == 'dispatched':
-            orders = orders.filter(items__dispatched=True).distinct()
+            order_items = order_items.filter(dispatched=True, received=False).distinct()
         elif status != 'all' and status == 'received':
-            orders = orders.filter(items__dispatched=True, items__received=True).distinct()
+            order_items = order_items.filter(dispatched=True, received=True).distinct()
         elif status != 'all':
-            orders = orders.filter(status=status)
+            order_items = order_items.filter(status=status)
             
         if sort == 'latest':
-            orders = orders.order_by('-created_at')
+            order_items = order_items.order_by('-order__created_at')
         if sort == 'oldest':
-            orders = orders.order_by('created_at')
+            order_items = order_items.order_by('order__created_at')
         elif sort == 'price_low':
-            orders = orders.order_by('total_amount')
+            order_items = order_items.order_by('order__total_amount')
         elif sort == 'price_high':
-            orders = orders.order_by('-total_amount')
+            order_items = order_items.order_by('-order__total_amount')
             
-        context['orders'] = orders
+        context['order_items'] = order_items
         
     if section == 'completed-order-items':            
         context['completed_orders'] = OrderItem.objects.filter(vendor=request.user.vendor_profile, order__status='completed').order_by('-order__created_at')
