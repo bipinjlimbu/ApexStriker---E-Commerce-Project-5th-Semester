@@ -4,7 +4,7 @@ from .views.main_view import home_view, verify_email_view, password_reset_view, 
 from .views.profile_view import profile_view, edit_profile_view, resend_verification_email, delete_profile_view
 from .views.brand_view import brands_view, add_brand_view, approve_brand_view, edit_brand_view, delete_brand_view
 from .views.product_view import add_product_view, marketplace_view, edit_product_view, delete_product_view, single_product_view, wishlist_toggle_view
-from .views.order_view import cart_view, update_cart_quantity, dispatch_item_view, receive_item_view, mark_order_as_pickup, mark_order_as_shipped, confirm_delivery_view
+from .views.order_view import add_to_cart_view, cart_view, update_cart_quantity, dispatch_item_view, receive_item_view, mark_order_as_pickup, mark_order_as_shipped, confirm_delivery_view
 from .views.payment_view import initiate_esewa_payment, payment_success, payment_failed, payment_payout
 from .views.review_view import add_review_view, edit_review_view, delete_review_view
 from .views.report_view import add_report_view, resolve_report_view, delete_report_view
@@ -42,6 +42,7 @@ urlpatterns = [
     path('products/review/add/<int:product_id>/', add_review_view, name='add_review'),
     path('products/review/edit/<int:review_id>/', edit_review_view, name='edit_review'),
     path('products/review/delete/<int:review_id>/', delete_review_view, name='delete_review'),
+    path('cart/add/<int:product_id>/', add_to_cart_view, name='add_to_cart'),
     path('cart/', cart_view, name='cart_page'),
     path('cart/update-quantity/', update_cart_quantity, name='update_cart_quantity'),
     path('payment/initiate/', initiate_esewa_payment, name='initiate_esewa_payment'),

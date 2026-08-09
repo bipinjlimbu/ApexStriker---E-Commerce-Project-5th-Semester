@@ -24,6 +24,22 @@ def send_email_async(subject, message, recipient):
             print(f"Error sending email: {e}")
             
 @login_required
+def add_to_cart_view(request, product_id):
+    if request.user.role != 'customer':
+        messages.error(request, "Only customers can add items to the cart.")
+        return redirect('/products/')
+    
+    customer = request.user.customer_profile
+    cart_item, created = Cart.objects.get_or_create(customer=customer, product_id=product_id)
+    
+    if not created:
+        cart_item.quantity += 1
+        cart_item.save()
+    
+    messages.success(request, "Item added to cart successfully.")
+    return redirect('/cart/')
+
+@login_required
 def cart_view(request):
     cart = Cart.objects.filter(customer=request.user.customer_profile)
     return render(request, 'main/cart_page.html', {'cart_count': cart_count(request), 'cart': cart})
