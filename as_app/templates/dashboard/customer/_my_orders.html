@@ -1,197 +1,212 @@
-<div class="flex-grow flex flex-col h-screen bg-slate-50 overflow-hidden">
+<div class="flex-grow flex flex-col h-screen bg-[#F8FAFC] overflow-hidden">
     
-    <div class="shrink-0 bg-slate-900 p-12 relative overflow-hidden z-50 shadow-2xl">
-        <div class="absolute top-0 right-0 w-1/4 h-full bg-blue-600 skew-x-12 translate-x-20 opacity-10"></div>
-        
-        <div class="relative z-10">
-            <div class="flex items-center gap-3 mb-6">
-                <span class="inline-block bg-blue-600 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest italic">Elite Member</span>
-                <span class="text-slate-500 text-[10px] font-black uppercase tracking-widest italic">Joined: Oct 2025</span>
-            </div>
-
-            <div class="flex flex-col md:flex-row md:items-end justify-between gap-8">
-                <div class="flex-shrink-0">
-                    <h2 class="text-5xl md:text-7xl font-black text-white italic uppercase tracking-tighter leading-none">
-                        Player <span class="text-blue-500">Hub</span>
-                    </h2>
-                </div>
-
-                <div class="flex gap-4">
-                    <div class="bg-white/5 border border-white/10 p-5 rounded-[1.5rem] backdrop-blur-md min-w-[150px]">
-                        <p class="text-[9px] font-black text-slate-500 uppercase italic tracking-widest mb-1">Total Deployments</p>
-                        <p class="text-3xl font-black text-white italic">{{ completed_orders_count }}</p>
-                    </div>
-                    <div class="bg-white/5 border border-white/10 p-5 rounded-[1.5rem] backdrop-blur-md min-w-[150px]">
-                        <p class="text-[9px] font-black text-slate-500 uppercase italic tracking-widest mb-1">Pending Delivery</p>
-                        <p class="text-3xl font-black text-blue-500 italic">{{ pending_orders_count }}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="shrink-0 px-12 py-6 bg-white border-b border-slate-200 z-40">
-        <form method="GET" class="flex flex-col lg:flex-row gap-6 items-end">
-            <input type="hidden" name="section" value="my-orders">
-
-            <div class="w-full lg:flex-grow">
-                <p class="text-[10px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Search Order / Gear</p>
-                <div class="relative">
-                    <i data-lucide="search" class="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                    <input type="text" name="q" value="{{ request.GET.q }}" placeholder="ORDER ID OR PRODUCT NAME..." 
-                           class="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-[11px] font-black uppercase italic focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all">
-                </div>
-            </div>
-
-            <div class="w-full lg:w-48">
-                <p class="text-[10px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Status</p>
-                <select name="status" onchange="this.form.submit()" 
-                        class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-[11px] font-black uppercase italic focus:outline-none appearance-none cursor-pointer">
-                    <option value="all">All Status</option>
-                    <option value="paid" {% if request.GET.status == 'paid' %}selected{% endif %}>Paid</option>
-                    <option value="shipping" {% if request.GET.status == 'shipping' %}selected{% endif %}>Shipping</option>
-                    <option value="shipped" {% if request.GET.status == 'shipped' %}selected{% endif %}>Shipped</option>
-                    <option value="completed" {% if request.GET.status == 'completed' %}selected{% endif %}>Completed</option>
-                    <option value="cancelled" {% if request.GET.status == 'cancelled' %}selected{% endif %}>Cancelled</option>
-                </select>
-            </div>
-
-            <div class="w-full lg:w-48">
-                <p class="text-[10px] font-black text-slate-400 uppercase italic mb-2 tracking-widest">Sort</p>
-                <select name="sort" onchange="this.form.submit()" 
-                        class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-[11px] font-black uppercase italic focus:outline-none appearance-none cursor-pointer">
-                    <option value="latest" {% if request.GET.sort == 'latest' %}selected{% endif %}>Latest</option>
-                    <option value="oldest" {% if request.GET.sort == 'oldest' %}selected{% endif %}>Oldest</option>
-                    <option value="amount_desc" {% if request.GET.sort == 'amount_desc' %}selected{% endif %}>Amount: High to Low</option>
-                    <option value="amount_asc" {% if request.GET.sort == 'amount_asc' %}selected{% endif %}>Amount: Low to High</option>
-                </select>
-            </div>
-        </form>
-    </div>
-
-    <div class="flex-grow overflow-y-auto custom-scrollbar p-12 space-y-8">
-        {% for order in orders %}
-        <div class="bg-white rounded-[3rem] border border-slate-200 shadow-xl overflow-hidden group hover:border-blue-500 transition-all duration-500">
-            <div class="flex flex-col lg:flex-row items-stretch">
+    <div class="flex-grow overflow-y-auto p-4 md:p-6 space-y-6">
+        <div class="w-full space-y-6">
+            
+            <div class="bg-gradient-to-r from-[#0B0F19] via-[#0F172A] to-[#1E1118] text-white p-6 md:p-8 rounded-3xl shadow-2xl relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-6 border border-slate-800">
+                <div class="absolute -right-16 -bottom-16 w-80 h-80 bg-[#D62828]/20 rounded-full blur-3xl pointer-events-none"></div>
                 
-                <div class="lg:w-72 shrink-0 relative flex flex-col justify-between p-10 bg-slate-900 overflow-hidden">
-                    <div class="absolute top-0 right-0 w-full h-full bg-blue-600 skew-x-12 translate-x-32 opacity-10 pointer-events-none"></div>
+                <div class="relative z-10">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#D62828]/50 bg-[#D62828]/10 text-[#D62828] text-[10px] font-black uppercase tracking-widest mb-4">
+                        <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
+                        <span>CUSTOMER DASHBOARD</span>
+                    </div>
                     
-                    <div class="relative z-10">
-                        <div class="flex items-center gap-2 mb-4">
-                            <span class="h-2 w-2 rounded-full bg-blue-500 animate-pulse"></span>
-                            <p class="text-[10px] font-black text-blue-400 uppercase italic tracking-widest">Order #{{ order.id }}</p>
-                        </div>
-                        <h3 class="text-4xl font-black text-white italic uppercase tracking-tighter leading-tight mb-2">
-                            Rs. {{ order.total_amount|floatformat:0 }}
-                        </h3>
-                        <p class="text-[9px] font-black text-slate-500 uppercase italic tracking-[0.2em]">{{ order.created_at|date:"d M Y" }}</p>
-                    </div>
-
-                    <div class="relative z-10 mt-8">
-                        {% if order.status == 'paid' %}
-                            <div class="inline-flex items-center gap-2 bg-green-500/10 text-green-500 px-4 py-2 rounded-xl border border-green-500/20">
-                                <i data-lucide="shield-check" class="w-4 h-4"></i>
-                                <span class="text-[10px] font-black uppercase italic">Secured</span>
-                            </div>
-                        {% elif order.status == 'shipping' %}
-                            <div class="inline-flex items-center gap-2 bg-blue-500/10 text-blue-500 px-4 py-2 rounded-xl border border-blue-500/20">
-                                <i data-lucide="truck" class="w-4 h-4"></i>
-                                <span class="text-[10px] font-black uppercase italic">In Transit</span>
-                            </div>
-                        {% elif order.status == 'shipped' %}
-                            <div class="inline-flex items-center gap-2 bg-slate-800 text-slate-400 px-4 py-2 rounded-xl">
-                                <i data-lucide="package" class="w-4 h-4"></i>
-                                <span class="text-[10px] font-black uppercase italic">Shipped</span>
-                            </div>
-                        {% elif order.status == 'completed' %}
-                            <div class="inline-flex items-center gap-2 bg-green-500/10 text-green-500 px-4 py-2 rounded-xl border border-green-500/20">
-                                <i data-lucide="check" class="w-4 h-4"></i>
-                                <span class="text-[10px] font-black uppercase italic">Completed</span>
-                            </div>
-                        {% elif order.status == 'cancelled' %}
-                            <div class="inline-flex items-center gap-2 bg-red-500/10 text-red-500 px-4 py-2 rounded-xl border border-red-500/20">
-                                <i data-lucide="x" class="w-4 h-4"></i>
-                                <span class="text-[10px] font-black uppercase italic">Cancelled</span>
-                            </div>
-                        {% endif %}
-                    </div>
+                    <h1 class="text-3xl md:text-5xl font-black tracking-tight uppercase leading-none mb-3 text-white">
+                        MY <span class="text-[#D62828]">ORDERS</span>
+                    </h1>
+                    
+                    <p class="text-slate-400 text-xs md:text-sm max-w-xl font-medium leading-relaxed">
+                        Track, manage, and view all your football gear purchases and order history in one place.
+                    </p>
                 </div>
 
-                <div class="flex-grow p-10 flex flex-col justify-between bg-white">
-                    <div>
-                        <p class="text-[10px] font-black text-slate-400 uppercase italic mb-6 tracking-widest">Operational Gear ({{ order.items.count }})</p>
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="relative z-10 shrink-0">
+                    <div class="flex items-center gap-4 bg-white/5 border border-white/10 backdrop-blur-md px-5 py-4 rounded-2xl shadow-inner min-w-[210px]">
+                        <div class="w-10 h-10 bg-[#D62828] rounded-xl flex items-center justify-center text-white shrink-0 shadow-lg shadow-red-900/40">
+                            <i data-lucide="package" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-tight">ACTIVE ORDERS</p>
+                            <p class="text-2xl font-black text-white leading-none mt-1">{{ pending_orders_count }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-5 md:p-6 border border-[#E5E7EB] shadow-sm">
+                <form method="GET" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-4 items-end">
+                    <input type="hidden" name="section" value="my-orders">
+
+                    <div class="lg:col-span-4">
+                        <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-2">SEARCH ORDERS</label>
+                        <div class="relative">
+                            <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                            <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Search Order ID or Product..." 
+                                   class="w-full pl-10 pr-4 py-3 bg-[#F8FAFC] border border-[#E5E7EB] rounded-xl text-xs font-semibold text-[#111827] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#D62828]/20 focus:border-[#D62828] transition-all">
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-3">
+                        <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-2">ORDER STATUS</label>
+                        <div class="relative">
+                            <select name="status" onchange="this.form.submit()" 
+                                    class="w-full pl-4 pr-10 py-3 bg-[#F8FAFC] border border-[#E5E7EB] rounded-xl text-xs font-bold text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#D62828]/20 focus:border-[#D62828] appearance-none cursor-pointer transition-all">
+                                <option value="all">All Orders</option>
+                                <option value="paid" {% if request.GET.status == 'paid' %}selected{% endif %}>Paid</option>
+                                <option value="shipping" {% if request.GET.status == 'shipping' %}selected{% endif %}>Shipping</option>
+                                <option value="shipped" {% if request.GET.status == 'shipped' %}selected{% endif %}>Shipped</option>
+                                <option value="completed" {% if request.GET.status == 'completed' %}selected{% endif %}>Completed</option>
+                                <option value="cancelled" {% if request.GET.status == 'cancelled' %}selected{% endif %}>Cancelled</option>
+                            </select>
+                            <i data-lucide="chevron-down" class="w-4 h-4 absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-3">
+                        <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-2">SORT BY</label>
+                        <div class="relative">
+                            <select name="sort" onchange="this.form.submit()" 
+                                    class="w-full pl-4 pr-10 py-3 bg-white border-2 border-[#D62828] rounded-xl text-xs font-bold text-[#111827] focus:outline-none appearance-none cursor-pointer transition-all">
+                                <option value="latest" {% if request.GET.sort == 'latest' %}selected{% endif %}>Newest First</option>
+                                <option value="oldest" {% if request.GET.sort == 'oldest' %}selected{% endif %}>Oldest First</option>
+                                <option value="amount_desc" {% if request.GET.sort == 'amount_desc' %}selected{% endif %}>Amount: High to Low</option>
+                                <option value="amount_asc" {% if request.GET.sort == 'amount_asc' %}selected{% endif %}>Amount: Low to High</option>
+                            </select>
+                            <i data-lucide="arrow-up-down" class="w-4 h-4 absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-2">
+                        <button type="submit" class="w-full py-3 bg-[#0B1120] hover:bg-[#1E293B] text-white rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-md active:scale-[0.98]">
+                            <i data-lucide="sliders-horizontal" class="w-4 h-4"></i>
+                            <span>Apply Filters</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="space-y-6 pt-2 pb-6">
+                {% for order in orders %}
+                <div class="bg-white rounded-2xl border border-[#E5E7EB] shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
+                    <div class="bg-[#0F172A] text-white px-6 py-4 flex flex-wrap items-center justify-between gap-4 border-b border-slate-800">
+                        <div class="flex flex-wrap items-center gap-6">
+                            <div>
+                                <span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider block">Order ID</span>
+                                <span class="text-sm font-extrabold text-white">#{{ order.id }}</span>
+                            </div>
+                            <div class="h-8 w-px bg-slate-800 hidden sm:block"></div>
+                            <div>
+                                <span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider block">Date Placed</span>
+                                <span class="text-xs font-semibold text-slate-200">{{ order.created_at|date:"d M Y" }}</span>
+                            </div>
+                            <div class="h-8 w-px bg-slate-800 hidden sm:block"></div>
+                            <div>
+                                <span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider block">Total Amount</span>
+                                <span class="text-sm font-black text-[#F4B400]">Rs. {{ order.total_amount|floatformat:0 }}</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            {% if order.status == 'paid' %}
+                                <span class="inline-flex items-center gap-1.5 bg-[#F4B400]/10 text-[#F4B400] px-3 py-1 rounded-full border border-[#F4B400]/20 text-xs font-bold">
+                                    <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Confirmed
+                                </span>
+                            {% elif order.status == 'shipping' %}
+                                <span class="inline-flex items-center gap-1.5 bg-blue-500/10 text-blue-400 px-3 py-1 rounded-full border border-blue-500/20 text-xs font-bold">
+                                    <i data-lucide="truck" class="w-3.5 h-3.5"></i> Shipping
+                                </span>
+                            {% elif order.status == 'shipped' %}
+                                <span class="inline-flex items-center gap-1.5 bg-indigo-500/10 text-indigo-400 px-3 py-1 rounded-full border border-indigo-500/20 text-xs font-bold">
+                                    <i data-lucide="package" class="w-3.5 h-3.5"></i> Shipped
+                                </span>
+                            {% elif order.status == 'completed' %}
+                                <span class="inline-flex items-center gap-1.5 bg-[#16A34A]/10 text-[#16A34A] px-3 py-1 rounded-full border border-[#16A34A]/20 text-xs font-bold">
+                                    <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Completed
+                                </span>
+                            {% elif order.status == 'cancelled' %}
+                                <span class="inline-flex items-center gap-1.5 bg-[#DC2626]/10 text-[#DC2626] px-3 py-1 rounded-full border border-[#DC2626]/20 text-xs font-bold">
+                                    <i data-lucide="x-circle" class="w-3.5 h-3.5"></i> Cancelled
+                                </span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="p-6">
+                        <p class="text-xs font-bold text-[#475569] uppercase tracking-wider mb-4">
+                            Items Included ({{ order.items.count }})
+                        </p>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                             {% for item in order.items.all %}
-                            <div class="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:bg-white hover:shadow-md transition-all">
-                                <div class="h-12 w-12 rounded-xl bg-white border border-slate-200 flex items-center justify-center shrink-0 overflow-hidden">
+                            <div class="flex items-center gap-3.5 p-3.5 rounded-xl bg-[#F8FAFC] border border-[#E5E7EB] hover:bg-white hover:border-slate-300 transition-all">
+                                <div class="h-14 w-14 rounded-lg bg-white border border-[#E5E7EB] flex items-center justify-center shrink-0 overflow-hidden p-1">
                                     {% if item.product.get_primary %}
-                                        <img src="{{ item.product.get_primary.image.url }}" class="h-10 w-10 object-contain">
+                                        <img src="{{ item.product.get_primary.image.url }}" class="h-full w-full object-contain">
                                     {% else %}
-                                        <i data-lucide="package" class="w-5 h-5 text-slate-300"></i>
+                                        <i data-lucide="package" class="w-6 h-6 text-slate-300"></i>
                                     {% endif %}
                                 </div>
                                 <div class="overflow-hidden">
-                                    <p class="font-black text-slate-900 italic uppercase leading-none text-xs truncate">{{ item.product.name }}</p>
-                                    <p class="text-[9px] font-bold text-blue-600 mt-1 uppercase italic">Qty: {{ item.quantity }}</p>
+                                    <p class="font-bold text-[#111827] text-xs truncate leading-snug">{{ item.product.name }}</p>
+                                    <p class="text-[11px] font-semibold text-[#D62828] mt-1">Qty: {{ item.quantity }}</p>
                                 </div>
                             </div>
                             {% endfor %}
                         </div>
-                    </div>
 
-                    <div class="mt-10 pt-8 border-t border-slate-100 flex flex-wrap items-center justify-between gap-6">
-                        <div class="flex items-center gap-8">
-                            <div>
-                                <p class="text-[9px] font-black text-slate-400 uppercase italic mb-1">Status Update</p>
-                                <p class="text-xs font-black text-slate-800 uppercase italic">{{ order.created_at|timesince }} ago</p>
+                        <div class="mt-6 pt-5 border-t border-[#E5E7EB] flex flex-wrap items-center justify-between gap-4">
+                            <div class="text-xs text-[#475569] font-medium flex items-center gap-1.5">
+                                <i data-lucide="clock" class="w-4 h-4 text-slate-400"></i>
+                                <span>Updated {{ order.created_at|timesince }} ago</span>
                             </div>
-                        </div>
 
-                        <div class="flex items-center gap-3">
-                            {% if order.status == 'shipped' %}
-                                <form action="/orders/confirm/{{ order.id }}/" method="POST">
-                                    {% csrf_token %}
-                                    <button type="submit" class="bg-blue-600 text-white px-8 py-4 rounded-xl font-black italic uppercase text-[10px] hover:bg-slate-900 transition-all shadow-lg active:scale-95 flex items-center gap-2">
-                                        <i data-lucide="package-check" class="w-4 h-4"></i> Confirm Receipt
-                                    </button>
-                                </form>
-                            {% elif order.status == 'paid' %}
-                                <div class="bg-slate-100 text-slate-400 px-8 py-4 rounded-xl font-black italic uppercase text-[10px] cursor-not-allowed flex items-center gap-2">
-                                    <i data-lucide="clock" class="w-4 h-4"></i> Paid - Awaiting Shipment
-                                </div>
-                            {% elif order.status == 'shipping' %}
-                                <div class="bg-slate-100 text-slate-400 px-8 py-4 rounded-xl font-black italic uppercase text-[10px] cursor-not-allowed flex items-center gap-2">
-                                    <i data-lucide="truck" class="w-4 h-4"></i> Shipping in Progress
-                                </div>
-                            {% elif order.status == 'shipped' %}
-                                <div class="bg-slate-100 text-slate-400 px-8 py-4 rounded-xl font-black italic uppercase text-[10px] cursor-not-allowed flex items-center gap-2">
-                                    <i data-lucide="package" class="w-4 h-4"></i> Delivered - Awaiting Confirmation
-                                </div>
-                            {% elif order.status == 'completed' %}
-                                <div class="inline-flex items-center gap-2 bg-green-500/10 text-green-500 px-4 py-2 rounded-xl border border-green-500/20">
-                                    <i data-lucide="check" class="w-4 h-4"></i>
-                                    <span class="text-[10px] font-black uppercase italic">Completed</span>
-                                </div>
-                            {% elif order.status == 'cancelled' %}
-                                <form action="/orders/remove/{{ order.id }}/" method="POST">
-                                    {% csrf_token %}
-                                    <button type="submit" class="bg-red-50 text-red-600 border border-red-100 px-8 py-4 rounded-xl font-black italic uppercase text-[10px] hover:bg-red-600 hover:text-white transition-all flex items-center gap-2">
-                                        <i data-lucide="trash-2" class="w-4 h-4"></i> Remove Order
-                                    </button>
-                                </form>
-                            {% endif %}
+                            <div class="flex items-center gap-3">
+                                {% if order.status == 'shipped' %}
+                                    <form action="/orders/confirm/{{ order.id }}/" method="POST">
+                                        {% csrf_token %}
+                                        <button type="submit" class="bg-[#D62828] hover:bg-[#A61E1E] text-white px-5 py-2.5 rounded-xl font-bold text-xs transition-all shadow-sm active:scale-95 flex items-center gap-2">
+                                            <i data-lucide="package-check" class="w-4 h-4"></i> Confirm Receipt
+                                        </button>
+                                    </form>
+                                {% elif order.status == 'paid' %}
+                                    <div class="bg-slate-100 text-[#475569] px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 border border-[#E5E7EB]">
+                                        <i data-lucide="clock" class="w-4 h-4 text-[#F4B400]"></i> Preparing for Shipping
+                                    </div>
+                                {% elif order.status == 'shipping' %}
+                                    <div class="bg-slate-100 text-[#475569] px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 border border-[#E5E7EB]">
+                                        <i data-lucide="truck" class="w-4 h-4 text-blue-500"></i> On the Way
+                                    </div>
+                                {% elif order.status == 'completed' %}
+                                    <div class="bg-emerald-50 text-[#16A34A] px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 border border-emerald-200">
+                                        <i data-lucide="check-circle" class="w-4 h-4"></i> Order Delivered
+                                    </div>
+                                {% elif order.status == 'cancelled' %}
+                                    <form action="/orders/remove/{{ order.id }}/" method="POST">
+                                        {% csrf_token %}
+                                        <button type="submit" class="bg-[#DC2626]/10 text-[#DC2626] border border-[#DC2626]/20 px-4 py-2 rounded-xl font-bold text-xs hover:bg-[#DC2626] hover:text-white transition-all flex items-center gap-2">
+                                            <i data-lucide="trash-2" class="w-4 h-4"></i> Remove Order
+                                        </button>
+                                    </form>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                 </div>
+                {% empty %}
+                <div class="flex flex-col items-center justify-center py-16 px-4 bg-white rounded-2xl border border-dashed border-[#E5E7EB] text-center">
+                    <div class="w-16 h-16 bg-[#F8FAFC] rounded-full flex items-center justify-center mb-4 border border-[#E5E7EB]">
+                        <i data-lucide="shopping-bag" class="w-8 h-8 text-slate-400"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-[#111827] mb-1">No Orders Found</h3>
+                    <p class="text-xs text-[#475569] max-w-sm mb-5">You haven't placed any orders matching your criteria yet. Explore our latest football gear to get started.</p>
+                    <a href="/" class="inline-flex items-center gap-2 bg-[#D62828] hover:bg-[#A61E1E] text-white px-5 py-2.5 rounded-xl font-bold text-xs transition-all shadow-sm">
+                        <i data-lucide="arrow-left" class="w-4 h-4"></i> Start Shopping
+                    </a>
+                </div>
+                {% endfor %}
             </div>
+
         </div>
-        {% empty %}
-        <div class="flex flex-col items-center justify-center py-20 bg-white rounded-[3rem] border border-dashed border-slate-300">
-            <i data-lucide="inbox" class="w-16 h-16 text-slate-200 mb-4"></i>
-            <p class="text-xs font-black text-slate-400 uppercase italic tracking-[0.3em]">No Active Deployments</p>
-        </div>
-        {% endfor %}
     </div>
 </div>
