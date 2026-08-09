@@ -3,58 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Terminal | ApexStriker</title>
+    <title>My Account | ApexStriker</title>
     {% load static %}
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 5px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #D62828;
+        }
+    </style>
 </head>
 
-<body class="bg-slate-50 flex min-h-screen overflow-hidden">
-
+<body class="bg-[#F8FAFC] text-[#111827] flex min-h-screen overflow-hidden font-sans">
+    
     {% include 'components/_messages.html' %}
 
-    <aside class="w-80 bg-slate-900 text-white flex flex-col shadow-2xl relative z-30">
-        <div class="p-8 border-b border-white/5">
-            <div class="flex items-center gap-3">
-                <div class="h-10 w-10 bg-blue-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/20">
-                    <i data-lucide="user-check" class="w-6 h-6 text-white"></i>
+    <aside class="w-72 bg-[#0F172A] text-white flex flex-col shadow-2xl relative z-30 shrink-0 border-r border-slate-800">
+        <div class="p-6 border-b border-slate-800/80">
+            <div class="flex items-center gap-3.5">
+                <div class="h-11 w-11 bg-gradient-to-br from-[#D62828] to-[#A61E1E] rounded-2xl flex items-center justify-center shadow-lg shadow-red-900/30 ring-1 ring-white/20">
+                    <i data-lucide="user" class="w-6 h-6 text-white"></i>
                 </div>
-                <h1 class="text-2xl font-black italic tracking-tighter uppercase">
-                    Apex<span class="text-blue-500">Striker</span>
-                </h1>
+                <div>
+                    <a href="/" class="text-xl font-black italic tracking-tight uppercase leading-none text-white block hover:text-[#D62828] transition-colors">
+                        Apex<span class="text-[#D62828]">Striker</span>
+                    </a>
+                    <span class="inline-block mt-1 text-[10px] font-bold uppercase tracking-widest text-[#F4B400] bg-[#F4B400]/10 px-2 py-0.5 rounded-full border border-[#F4B400]/20">
+                        Player Account
+                    </span>
+                </div>
             </div>
-            <p class="text-[10px] text-slate-500 font-black uppercase tracking-[0.3em] mt-4 italic">Player Command Center</p>
         </div>
 
-        <nav class="flex-grow p-6 space-y-2 overflow-y-auto">
-            <div class="pb-6">
-                <h3 class="px-4 text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4 italic">My Activity</h3>
-                <a href="?section=my-orders" class="flex items-center gap-4 px-4 py-4 rounded-2xl {% if section == 'my-orders' or not section %}bg-blue-600 text-white shadow-lg{% else %}text-slate-400 hover:bg-blue-600 hover:text-white{% endif %} font-black italic uppercase text-xs tracking-widest transition-all group">
-                    <i data-lucide="package" class="w-4 h-4"></i>
-                    My Orders
+        <nav class="flex-grow p-4 space-y-6 overflow-y-auto custom-scrollbar">
+            <div class="space-y-1.5">
+                <h2 class="px-3 text-[11px] font-extrabold text-slate-400 uppercase tracking-wider mb-3">
+                    My Activity
+                </h2>
+                
+                <a href="?section=my-orders" class="flex items-center justify-between px-3.5 py-3 rounded-xl transition-all font-bold text-xs uppercase tracking-wider group {% if section == 'my-orders' or not section %}bg-[#D62828] text-white shadow-md shadow-red-900/20 ring-1 ring-white/10{% else %}text-slate-300 hover:bg-slate-800/80 hover:text-white{% endif %}">
+                    <div class="flex items-center gap-3.5">
+                        <i data-lucide="package" class="w-4 h-4 transition-transform group-hover:scale-110"></i>
+                        <span>My Orders</span>
+                    </div>
                     {% if pending_orders_count > 0 %}
-                        <span class="ml-auto bg-white/20 text-white px-2 py-0.5 rounded-lg text-[10px]"> {{ pending_orders_count }}</span>
+                        <span class="bg-[#F4B400] text-[#0F172A] font-extrabold px-2 py-0.5 rounded-full text-[10px] shadow-sm">
+                            {{ pending_orders_count }}
+                        </span>
                     {% endif %}
                 </a>
-                <a href="?section=wishlist" class="flex items-center gap-4 px-4 py-4 rounded-2xl {% if section == 'wishlist' %}bg-blue-600 text-white shadow-lg{% else %}text-slate-400 hover:bg-blue-600 hover:text-white{% endif %} font-black italic uppercase text-xs tracking-widest transition-all mt-1">
-                    <i data-lucide="heart" class="w-4 h-4"></i>
-                    Wishlist
+
+                <a href="?section=wishlist" class="flex items-center gap-3.5 px-3.5 py-3 rounded-xl transition-all font-bold text-xs uppercase tracking-wider group {% if section == 'wishlist' %}bg-[#D62828] text-white shadow-md shadow-red-900/20 ring-1 ring-white/10{% else %}text-slate-300 hover:bg-slate-800/80 hover:text-white{% endif %}">
+                    <i data-lucide="heart" class="w-4 h-4 transition-transform group-hover:scale-110"></i>
+                    <span>Wishlist</span>
                 </a>
             </div>
         </nav>
 
-        <div class="p-6 border-t border-white/5 bg-slate-950/50 space-y-3">
-            <a href="/profile/{{ user.id }}/" class="flex items-center justify-center gap-3 w-full bg-white text-slate-900 px-6 py-4 rounded-2xl font-black italic uppercase text-[11px] tracking-widest hover:bg-blue-600 hover:text-white transition-all shadow-xl">
-                <i data-lucide="settings" class="w-4 h-4"></i>
-                Account Settings
+        <div class="p-4 border-t border-slate-800 bg-[#0F172A]/90 space-y-2">
+            <a href="/profile/{{ user.id }}/" class="flex items-center justify-center gap-2.5 w-full bg-slate-800 hover:bg-slate-700 text-white px-4 py-3 rounded-xl font-bold uppercase text-[11px] tracking-wider transition-all border border-slate-700">
+                <i data-lucide="settings" class="w-4 h-4 text-[#F4B400]"></i>
+                <span>Account Settings</span>
             </a>
-            <a href="/" class="flex items-center justify-center gap-3 w-full bg-white/5 border border-white/10 text-slate-400 px-6 py-4 rounded-2xl font-black italic uppercase text-[11px] tracking-widest hover:bg-white/10 hover:text-white transition-all">
+
+            <a href="/" class="flex items-center justify-center gap-2.5 w-full bg-[#D62828] hover:bg-[#A61E1E] text-white px-4 py-3 rounded-xl font-bold uppercase text-[11px] tracking-wider transition-all shadow-md shadow-red-900/20">
                 <i data-lucide="shopping-bag" class="w-4 h-4"></i>
-                Back to Market
+                <span>Back to Shop</span>
             </a>
         </div>
     </aside>
 
-    <main class="flex-grow flex flex-col h-screen overflow-y-auto">
+    <main class="flex-grow flex flex-col h-screen overflow-y-auto bg-[#F8FAFC]">
         {% if section == 'my-orders' or not section %}
             {% include 'dashboard/customer/_my_orders.html' %}
         {% elif section == 'wishlist' %}
@@ -63,6 +91,8 @@
     </main>
 
     <script src="{% static 'js/lucide.min.js' %}"></script>
-    <script>lucide.createIcons();</script>
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>
