@@ -18,72 +18,80 @@
         .removal-overlay:hover { opacity: 1; }
         
         .primary-badge {
-            position: absolute; top: 10px; right: 10px; z-index: 30;
-            background: #FFFFFF; border-radius: 9999px; padding: 6px;
+            position: absolute; top: 12px; right: 12px; z-index: 30;
+            background: #FFFFFF; border-radius: 9999px; padding: 8px;
             cursor: pointer; border: 2px solid #E5E7EB; transition: all 0.2s ease;
             display: flex; align-items: center; justify-content: center;
             color: #475569;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
         .primary-badge:hover { transform: scale(1.1); }
-        .image-card.is-primary { border: 3px solid #D62828; ring: 4px rgba(214, 40, 40, 0.15); }
+        .image-card.is-primary { border: 3px solid #D62828; box-shadow: 0 0 0 4px rgba(214, 40, 40, 0.15); }
         .image-card.is-primary .primary-badge { background: #D62828; color: #FFFFFF; border-color: #D62828; }
     </style>
 </head>
 
-<body class="bg-[#F8FAFC] flex flex-col min-h-screen font-sans text-[#475569] antialiased">
+<body class="bg-[#F8FAFC] flex flex-col min-h-screen font-sans text-[#475569] antialiased selection:bg-[#D62828] selection:text-white">
     {% include 'components/_navbar.html' %}
 
     {% include 'components/_messages.html' %}
 
-    <main class="flex-grow flex items-center justify-center py-10 px-4 sm:px-6 lg:px-8 relative">
-        <div class="max-w-4xl w-full bg-[#FFFFFF] rounded-3xl shadow-xl border border-[#E5E7EB] overflow-hidden">
+    <main class="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative">
+        <div class="absolute inset-0 overflow-hidden pointer-events-none -z-10 flex justify-center">
+            <div class="w-[800px] h-[400px] bg-gradient-to-tr from-[#D62828]/5 to-[#F4B400]/5 rounded-full blur-3xl -top-20"></div>
+        </div>
+
+        <div class="max-w-4xl w-full bg-[#FFFFFF] rounded-3xl shadow-2xl border border-[#E5E7EB] overflow-hidden">
             
-            <div class="bg-[#0F172A] p-8 sm:p-10 text-[#FFFFFF] relative overflow-hidden border-b border-slate-800">
+            <div class="bg-[#0F172A] p-8 sm:p-12 text-[#FFFFFF] relative overflow-hidden border-b border-slate-800">
                 <div class="absolute -top-24 -right-24 w-80 h-80 bg-[#D62828]/20 rounded-full blur-3xl pointer-events-none"></div>
                 <div class="absolute -bottom-24 -left-24 w-80 h-80 bg-[#F4B400]/10 rounded-full blur-3xl pointer-events-none"></div>
 
-                <div class="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div>
-                        <div class="inline-flex items-center gap-2 bg-[#D62828]/10 border border-[#D62828]/30 px-3 py-1 rounded-full text-[#F4B400] text-xs font-bold uppercase tracking-wider mb-3">
-                            <i data-lucide="package-plus" class="w-3.5 h-3.5"></i>
-                            <span>Vendor Center</span>
+                <div class="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+                    <div class="space-y-2">
+                        <div class="inline-flex items-center gap-2 bg-[#D62828]/15 border border-[#D62828]/30 px-3.5 py-1.5 rounded-full text-[#F4B400] text-xs font-bold uppercase tracking-wider">
+                            <i data-lucide="shield-check" class="w-3.5 h-3.5 text-[#F4B400]"></i>
+                            <span>Vendor Hub</span>
                         </div>
-                        <h1 class="text-2xl sm:text-3xl font-extrabold text-[#FFFFFF] tracking-tight">
+                        <h1 class="text-3xl sm:text-4xl font-black text-[#FFFFFF] tracking-tight">
                             Add New <span class="text-[#D62828]">Product</span>
                         </h1>
-                        <p class="text-slate-400 text-xs sm:text-sm mt-1">
-                            List your football gear on the ApexStriker marketplace.
+                        <p class="text-slate-400 text-sm max-w-lg leading-relaxed">
+                            List your professional football gear on the ApexStriker marketplace and reach enthusiastic players worldwide.
                         </p>
                     </div>
 
-                    <a href="javascript:history.back()" class="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-800/80 hover:bg-slate-700 border border-slate-700/80 text-slate-200 rounded-xl text-xs font-bold transition-all shadow-sm self-start sm:self-auto">
+                    <a href="javascript:history.back()" class="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-800/90 hover:bg-slate-700 border border-slate-700 text-slate-200 rounded-xl text-xs font-bold transition-all shadow-md self-start sm:self-auto hover:text-white">
                         <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                        <span>Back</span>
+                        <span>Go Back</span>
                     </a>
                 </div>
             </div>
 
-            <form id="productForm" method="POST" enctype="multipart/form-data" class="p-6 sm:p-10 space-y-8" onsubmit="syncQueueToInput(event)">
+            <form id="productForm" method="POST" enctype="multipart/form-data" class="p-8 sm:p-12 space-y-10" onsubmit="syncQueueToInput(event)">
                 {% csrf_token %}
 
                 <input type="hidden" name="primary_image_name" id="primary-image-name-input">
 
                 <div class="space-y-4">
                     <div class="flex items-center justify-between">
-                        <label class="text-xs font-bold text-[#111827] uppercase tracking-wider flex items-center gap-2">
-                            <i data-lucide="images" class="w-4 h-4 text-[#D62828]"></i> Product Photos
+                        <label class="text-xs font-extrabold text-[#111827] uppercase tracking-wider flex items-center gap-2">
+                            <span class="w-7 h-7 rounded-lg bg-[#D62828]/10 text-[#D62828] flex items-center justify-center">
+                                <i data-lucide="image" class="w-4 h-4"></i>
+                            </span>
+                            Product Photos
                         </label>
-                        <span class="text-xs text-[#475569]">Select star icon to set main image</span>
+                        <span class="text-xs font-medium text-[#475569] bg-slate-100 px-3 py-1 rounded-full border border-[#E5E7EB]">Click the star icon to choose the main image</span>
                     </div>
 
                     <div class="space-y-4">
-                        <label class="relative group flex flex-col items-center justify-center w-full h-36 border-2 border-[#E5E7EB] border-dashed rounded-2xl cursor-pointer bg-[#F8FAFC] hover:bg-slate-100/80 hover:border-[#D62828]/50 transition-all shadow-inner">
-                            <div class="flex flex-col items-center justify-center text-center p-4">
-                                <div class="w-10 h-10 rounded-full bg-[#FFFFFF] border border-[#E5E7EB] flex items-center justify-center text-[#D62828] mb-2 shadow-sm group-hover:scale-110 transition-transform">
-                                    <i data-lucide="plus" class="w-5 h-5"></i>
+                        <label class="relative group flex flex-col items-center justify-center w-full h-44 border-2 border-[#E5E7EB] border-dashed rounded-2xl cursor-pointer bg-[#F8FAFC] hover:bg-slate-50 hover:border-[#D62828] transition-all shadow-sm">
+                            <div class="flex flex-col items-center justify-center text-center p-6">
+                                <div class="w-12 h-12 rounded-2xl bg-[#FFFFFF] border border-[#E5E7EB] flex items-center justify-center text-[#D62828] mb-3 shadow-sm group-hover:scale-110 group-hover:shadow-md transition-all">
+                                    <i data-lucide="upload-cloud" class="w-6 h-6"></i>
                                 </div>
-                                <p class="text-xs font-bold text-[#111827]">Upload Product Images</p>
-                                <p class="text-[11px] text-[#475569] mt-0.5">PNG, JPG, or WEBP files supported</p>
+                                <p class="text-sm font-bold text-[#111827]">Click to upload product images</p>
+                                <p class="text-xs text-[#475569] mt-1">PNG, JPG, or WEBP high-resolution files supported</p>
                             </div>
                             <input type="file" id="selection-input" accept="image/*" multiple class="hidden" onchange="handleQueueSelection(this)" />
                             <input type="file" name="images" id="real-images-input" multiple class="hidden" />
@@ -92,20 +100,20 @@
                         <div id="image-gallery-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"></div>
                         
                         {% if errors.images %}
-                            <p class="text-[#DC2626] text-xs font-semibold flex items-center gap-1.5 mt-1">
-                                <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i>
-                                {{ errors.images }}
+                            <p class="text-[#DC2626] text-xs font-semibold flex items-center gap-1.5 mt-2 bg-red-50 p-3 rounded-xl border border-red-100">
+                                <i data-lucide="alert-circle" class="w-4 h-4 flex-shrink-0"></i>
+                                <span>{{ errors.images }}</span>
                             </p>
                         {% endif %}
                     </div>
                 </div>
 
-                <div class="pt-6 border-t border-[#E5E7EB] grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="pt-8 border-t border-[#E5E7EB] grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="space-y-2">
-                        <label class="text-xs font-bold text-[#111827] uppercase tracking-wider flex items-center gap-2">
+                        <label class="text-xs font-extrabold text-[#111827] uppercase tracking-wider flex items-center gap-2">
                             <i data-lucide="tag" class="w-3.5 h-3.5 text-[#D62828]"></i> Product Name
                         </label>
-                        <input type="text" name="name" placeholder="e.g. SpeedPro Football Boots" value="{{ data.name|default:'' }}" class="w-full px-4 py-3 bg-[#F8FAFC] border border-[#E5E7EB] rounded-xl text-xs font-semibold text-[#111827] focus:outline-none focus:border-[#D62828] focus:ring-1 focus:ring-[#D62828] transition-all">
+                        <input type="text" name="name" placeholder="e.g. SpeedPro Football Boots" value="{{ data.name|default:'' }}" class="w-full px-4 py-3.5 bg-[#F8FAFC] border border-[#E5E7EB] rounded-xl text-xs font-semibold text-[#111827] focus:outline-none focus:border-[#D62828] focus:ring-2 focus:ring-[#D62828]/20 transition-all">
                         {% if errors.name %}
                             <p class="text-[#DC2626] text-xs font-semibold flex items-center gap-1.5 mt-1">
                                 <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i>
@@ -115,10 +123,10 @@
                     </div>
 
                     <div class="space-y-2">
-                        <label class="text-xs font-bold text-[#111827] uppercase tracking-wider flex items-center gap-2">
+                        <label class="text-xs font-extrabold text-[#111827] uppercase tracking-wider flex items-center gap-2">
                             <i data-lucide="banknote" class="w-3.5 h-3.5 text-[#D62828]"></i> Price (Rs.)
                         </label>
-                        <input type="number" name="price" placeholder="e.g. 4500" value="{{ data.price|default:'' }}" class="w-full px-4 py-3 bg-[#F8FAFC] border border-[#E5E7EB] rounded-xl text-xs font-semibold text-[#111827] focus:outline-none focus:border-[#D62828] focus:ring-1 focus:ring-[#D62828] transition-all">
+                        <input type="number" name="price" placeholder="e.g. 4500" value="{{ data.price|default:'' }}" class="w-full px-4 py-3.5 bg-[#F8FAFC] border border-[#E5E7EB] rounded-xl text-xs font-semibold text-[#111827] focus:outline-none focus:border-[#D62828] focus:ring-2 focus:ring-[#D62828]/20 transition-all">
                         {% if errors.price %}
                             <p class="text-[#DC2626] text-xs font-semibold flex items-center gap-1.5 mt-1">
                                 <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i>
@@ -128,11 +136,11 @@
                     </div>
 
                     <div class="space-y-2">
-                        <label class="text-xs font-bold text-[#111827] uppercase tracking-wider flex items-center gap-2">
+                        <label class="text-xs font-extrabold text-[#111827] uppercase tracking-wider flex items-center gap-2">
                             <i data-lucide="layers" class="w-3.5 h-3.5 text-[#D62828]"></i> Category
                         </label>
                         <div class="relative">
-                            <select name="category" id="categorySelect" onchange="toggleSizeFields()" class="w-full px-4 py-3 bg-[#F8FAFC] border border-[#E5E7EB] rounded-xl text-xs font-semibold text-[#111827] appearance-none cursor-pointer focus:outline-none focus:border-[#D62828] focus:ring-1 focus:ring-[#D62828] transition-all pr-10">
+                            <select name="category" id="categorySelect" onchange="toggleSizeFields()" class="w-full px-4 py-3.5 bg-[#F8FAFC] border border-[#E5E7EB] rounded-xl text-xs font-semibold text-[#111827] appearance-none cursor-pointer focus:outline-none focus:border-[#D62828] focus:ring-2 focus:ring-[#D62828]/20 transition-all pr-10">
                                 <option value="" hidden>Select Category</option>
                                 <option value="kits" {% if data.category == "kits" %}selected{% endif %}>Jersey & Kits</option>
                                 <option value="boots" {% if data.category == "boots" %}selected{% endif %}>Football Boots</option>
@@ -140,7 +148,7 @@
                                 <option value="equipment" {% if data.category == "equipment" %}selected{% endif %}>Training Equipment</option>
                                 <option value="supplements" {% if data.category == "supplements" %}selected{% endif %}>Health & Supplements</option>
                             </select>
-                            <i data-lucide="chevron-down" class="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
+                            <i data-lucide="chevron-down" class="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
                         </div>
                         {% if errors.category %}
                             <p class="text-[#DC2626] text-xs font-semibold flex items-center gap-1.5 mt-1">
@@ -151,11 +159,11 @@
                     </div>
 
                     <div id="kitSizeField" class="hidden space-y-2">
-                        <label class="text-xs font-bold text-[#111827] uppercase tracking-wider flex items-center gap-2">
+                        <label class="text-xs font-extrabold text-[#111827] uppercase tracking-wider flex items-center gap-2">
                             <i data-lucide="maximize" class="w-3.5 h-3.5 text-[#D62828]"></i> Kit Size
                         </label>
                         <div class="relative">
-                            <select name="kit_size" class="w-full px-4 py-3 bg-[#F8FAFC] border border-[#E5E7EB] rounded-xl text-xs font-semibold text-[#111827] appearance-none cursor-pointer focus:outline-none focus:border-[#D62828] focus:ring-1 focus:ring-[#D62828] transition-all pr-10">
+                            <select name="kit_size" class="w-full px-4 py-3.5 bg-[#F8FAFC] border border-[#E5E7EB] rounded-xl text-xs font-semibold text-[#111827] appearance-none cursor-pointer focus:outline-none focus:border-[#D62828] focus:ring-2 focus:ring-[#D62828]/20 transition-all pr-10">
                                 <option value="" hidden>Select Kit Size</option>
                                 <option value="S" {% if data.kit_size == "S" %}selected{% endif %}>Small (S)</option>
                                 <option value="M" {% if data.kit_size == "M" %}selected{% endif %}>Medium (M)</option>
@@ -163,7 +171,7 @@
                                 <option value="XL" {% if data.kit_size == "XL" %}selected{% endif %}>Extra Large (XL)</option>
                                 <option value="XXL" {% if data.kit_size == "XXL" %}selected{% endif %}>Double XL (XXL)</option>
                             </select>
-                            <i data-lucide="chevron-down" class="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
+                            <i data-lucide="chevron-down" class="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
                         </div>
                         {% if errors.kit_size %}
                             <p class="text-[#DC2626] text-xs font-semibold flex items-center gap-1.5 mt-1">
@@ -174,10 +182,10 @@
                     </div>
 
                     <div id="bootSizeField" class="hidden space-y-2">
-                        <label class="text-xs font-bold text-[#111827] uppercase tracking-wider flex items-center gap-2">
+                        <label class="text-xs font-extrabold text-[#111827] uppercase tracking-wider flex items-center gap-2">
                             <i data-lucide="ruler" class="w-3.5 h-3.5 text-[#D62828]"></i> Boot Size (UK/EU)
                         </label>
-                        <input type="number" step="0.5" name="boot_size" value="{{ data.boot_size | default:'' }}" placeholder="e.g. 9.5" class="w-full px-4 py-3 bg-[#F8FAFC] border border-[#E5E7EB] rounded-xl text-xs font-semibold text-[#111827] focus:outline-none focus:border-[#D62828] focus:ring-1 focus:ring-[#D62828] transition-all">
+                        <input type="number" step="0.5" name="boot_size" value="{{ data.boot_size | default:'' }}" placeholder="e.g. 9.5" class="w-full px-4 py-3.5 bg-[#F8FAFC] border border-[#E5E7EB] rounded-xl text-xs font-semibold text-[#111827] focus:outline-none focus:border-[#D62828] focus:ring-2 focus:ring-[#D62828]/20 transition-all">
                         {% if errors.boot_size %}
                             <p class="text-[#DC2626] text-xs font-semibold flex items-center gap-1.5 mt-1">
                                 <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i>
@@ -187,17 +195,17 @@
                     </div>
 
                     <div class="space-y-2">
-                        <label class="text-xs font-bold text-[#111827] uppercase tracking-wider flex items-center gap-2">
+                        <label class="text-xs font-extrabold text-[#111827] uppercase tracking-wider flex items-center gap-2">
                             <i data-lucide="award" class="w-3.5 h-3.5 text-[#D62828]"></i> Brand
                         </label>
                         <div class="relative">
-                            <select name="brand" class="w-full px-4 py-3 bg-[#F8FAFC] border border-[#E5E7EB] rounded-xl text-xs font-semibold text-[#111827] appearance-none cursor-pointer focus:outline-none focus:border-[#D62828] focus:ring-1 focus:ring-[#D62828] transition-all pr-10">
+                            <select name="brand" class="w-full px-4 py-3.5 bg-[#F8FAFC] border border-[#E5E7EB] rounded-xl text-xs font-semibold text-[#111827] appearance-none cursor-pointer focus:outline-none focus:border-[#D62828] focus:ring-2 focus:ring-[#D62828]/20 transition-all pr-10">
                                 <option value="" hidden>Select Brand</option>
                                 {% for brand in brands %}
                                     <option value="{{ brand.id }}" {% if data.brand == brand.id|stringformat:"i" %}selected{% endif %}>{{ brand.name }}</option>
                                 {% endfor %}
                             </select>
-                            <i data-lucide="chevron-down" class="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
+                            <i data-lucide="chevron-down" class="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
                         </div>
                         {% if errors.brand %}
                             <p class="text-[#DC2626] text-xs font-semibold flex items-center gap-1.5 mt-1">
@@ -210,26 +218,26 @@
                     </div>
 
                     <div class="space-y-2">
-                        <label class="text-xs font-bold text-[#111827] uppercase tracking-wider flex items-center gap-2">
+                        <label class="text-xs font-extrabold text-[#111827] uppercase tracking-wider flex items-center gap-2">
                             <i data-lucide="crosshair" class="w-3.5 h-3.5 text-[#D62828]"></i> Position (Optional)
                         </label>
                         <div class="relative">
-                            <select name="position" class="w-full px-4 py-3 bg-[#F8FAFC] border border-[#E5E7EB] rounded-xl text-xs font-semibold text-[#111827] appearance-none cursor-pointer focus:outline-none focus:border-[#D62828] focus:ring-1 focus:ring-[#D62828] transition-all pr-10">
+                            <select name="position" class="w-full px-4 py-3.5 bg-[#F8FAFC] border border-[#E5E7EB] rounded-xl text-xs font-semibold text-[#111827] appearance-none cursor-pointer focus:outline-none focus:border-[#D62828] focus:ring-2 focus:ring-[#D62828]/20 transition-all pr-10">
                                 <option value="">All Positions</option>
                                 <option value="attacker" {% if data.position == "attacker" %}selected{% endif %}>Attacker</option>
                                 <option value="midfielder" {% if data.position == "midfielder" %}selected{% endif %}>Midfielder</option>
                                 <option value="defender" {% if data.position == "defender" %}selected{% endif %}>Defender</option>
                                 <option value="goalkeeper" {% if data.position == "goalkeeper" %}selected{% endif %}>Goalkeeper</option>
                             </select>
-                            <i data-lucide="chevron-down" class="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
+                            <i data-lucide="chevron-down" class="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
                         </div>
                     </div>
 
                     <div class="space-y-2">
-                        <label class="text-xs font-bold text-[#111827] uppercase tracking-wider flex items-center gap-2">
+                        <label class="text-xs font-extrabold text-[#111827] uppercase tracking-wider flex items-center gap-2">
                             <i data-lucide="box" class="w-3.5 h-3.5 text-[#D62828]"></i> Stock Quantity
                         </label>
-                        <input type="number" name="stock" placeholder="e.g. 25" value="{{ data.stock|default:'' }}" class="w-full px-4 py-3 bg-[#F8FAFC] border border-[#E5E7EB] rounded-xl text-xs font-semibold text-[#111827] focus:outline-none focus:border-[#D62828] focus:ring-1 focus:ring-[#D62828] transition-all">
+                        <input type="number" name="stock" placeholder="e.g. 25" value="{{ data.stock|default:'' }}" class="w-full px-4 py-3.5 bg-[#F8FAFC] border border-[#E5E7EB] rounded-xl text-xs font-semibold text-[#111827] focus:outline-none focus:border-[#D62828] focus:ring-2 focus:ring-[#D62828]/20 transition-all">
                         {% if errors.stock %}
                             <p class="text-[#DC2626] text-xs font-semibold flex items-center gap-1.5 mt-1">
                                 <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i>
@@ -239,10 +247,10 @@
                     </div>
 
                     <div class="space-y-2 md:col-span-2">
-                        <label class="text-xs font-bold text-[#111827] uppercase tracking-wider flex items-center gap-2">
+                        <label class="text-xs font-extrabold text-[#111827] uppercase tracking-wider flex items-center gap-2">
                             <i data-lucide="align-left" class="w-3.5 h-3.5 text-[#D62828]"></i> Product Description
                         </label>
-                        <textarea name="description" rows="4" placeholder="Describe the item specifications, materials, fit, and key features..." class="w-full p-4 bg-[#F8FAFC] border border-[#E5E7EB] rounded-xl text-xs font-semibold text-[#111827] focus:outline-none focus:border-[#D62828] focus:ring-1 focus:ring-[#D62828] transition-all">{{ data.description|default:'' }}</textarea>
+                        <textarea name="description" rows="4" placeholder="Describe the item specifications, materials, fit, and key features..." class="w-full p-4 bg-[#F8FAFC] border border-[#E5E7EB] rounded-xl text-xs font-semibold text-[#111827] focus:outline-none focus:border-[#D62828] focus:ring-2 focus:ring-[#D62828]/20 transition-all leading-relaxed">{{ data.description|default:'' }}</textarea>
                         {% if errors.description %}
                             <p class="text-[#DC2626] text-xs font-semibold flex items-center gap-1.5 mt-1">
                                 <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i>
@@ -252,11 +260,11 @@
                     </div>
                 </div>
 
-                <div class="pt-6 border-t border-[#E5E7EB] flex flex-col sm:flex-row items-center gap-3">
-                    <button type="submit" class="w-full sm:w-auto flex-1 bg-[#D62828] hover:bg-[#A61E1E] text-[#FFFFFF] font-bold py-3.5 px-6 rounded-xl transition-all shadow-md shadow-[#D62828]/20 flex items-center justify-center gap-2 text-xs uppercase tracking-wider">
+                <div class="pt-8 border-t border-[#E5E7EB] flex flex-col sm:flex-row items-center gap-4">
+                    <button type="submit" class="w-full sm:w-auto flex-1 bg-[#D62828] hover:bg-[#A61E1E] text-[#FFFFFF] font-bold py-4 px-8 rounded-xl transition-all shadow-lg shadow-[#D62828]/25 flex items-center justify-center gap-2.5 text-xs uppercase tracking-wider">
                         <i data-lucide="check-circle-2" class="w-4 h-4"></i> Save Product
                     </button>
-                    <a href="javascript:history.back()" class="w-full sm:w-auto bg-[#F8FAFC] border border-[#E5E7EB] text-[#475569] hover:bg-slate-200/60 font-bold py-3.5 px-6 rounded-xl transition-all flex items-center justify-center gap-2 text-xs uppercase tracking-wider">
+                    <a href="javascript:history.back()" class="w-full sm:w-auto bg-[#F8FAFC] border border-[#E5E7EB] text-[#475569] hover:bg-slate-100 font-bold py-4 px-8 rounded-xl transition-all flex items-center justify-center gap-2 text-xs uppercase tracking-wider">
                         Cancel
                     </a>
                 </div>
@@ -316,15 +324,15 @@
 
                 div.innerHTML = `
                     <img src="${e.target.result}" class="w-full h-full object-cover">
-                    <div class="primary-badge shadow-sm" onclick="setPrimary('${uniqueId}')" title="Set as Primary">
-                        <i data-lucide="star" class="w-3.5 h-3.5"></i>
+                    <div class="primary-badge" onclick="setPrimary('${uniqueId}')" title="Set as Primary">
+                        <i data-lucide="star" class="w-4 h-4"></i>
                     </div>
                     <div class="removal-overlay" onclick="removeImage('${uniqueId}', this)">
-                        <div class="bg-[#FFFFFF] p-2 rounded-full border border-[#DC2626] shadow-md">
+                        <div class="bg-[#FFFFFF] p-2.5 rounded-full border border-[#DC2626] shadow-lg">
                             <i data-lucide="trash-2" class="text-[#DC2626] w-4 h-4"></i>
                         </div>
                     </div>`;
-                
+            
                 grid.appendChild(div);
                 lucide.createIcons();
             }
