@@ -75,6 +75,13 @@ def update_cart_quantity(request):
         return JsonResponse({'status': 'success', 'message': 'Quantity updated'})
     return JsonResponse({'status': 'error'}, status=400)
 
+@login_required
+def remove_from_cart_view(request, item_id):
+    cart_item = get_object_or_404(Cart, id=item_id, customer=request.user.customer_profile)
+    cart_item.delete()
+    messages.success(request, "Item removed from cart successfully.")
+    return redirect('/cart/')
+
 def dispatch_item_view(request, item_id):
     if request.user.role != 'vendor':
         messages.error(request, "You are not authorized to perform this action.")
