@@ -2090,6 +2090,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-color: rgb(214 40 40 / 0.2);
 }
 
+.border-\[\#DC2626\]\/30 {
+  border-color: rgb(220 38 38 / 0.3);
+}
+
 .border-t-transparent {
   border-top-color: transparent;
 }
@@ -4155,6 +4159,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(18 130 59 / var(--tw-bg-opacity));
 }
 
+.hover\:bg-\[\#111827\]:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(17 24 39 / var(--tw-bg-opacity));
+}
+
 .hover\:text-\[\#A61E1E\]:hover {
   --tw-text-opacity: 1;
   color: rgb(166 30 30 / var(--tw-text-opacity));
@@ -4552,6 +4561,14 @@ Ensure the default browser behavior of the `hidden` attribute.
     height: 8rem;
   }
 
+  .sm\:h-24 {
+    height: 6rem;
+  }
+
+  .sm\:h-12 {
+    height: 3rem;
+  }
+
   .sm\:w-auto {
     width: auto;
   }
@@ -4562,6 +4579,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 
   .sm\:w-32 {
     width: 8rem;
+  }
+
+  .sm\:w-24 {
+    width: 6rem;
+  }
+
+  .sm\:w-12 {
+    width: 3rem;
   }
 
   .sm\:max-w-xs {
