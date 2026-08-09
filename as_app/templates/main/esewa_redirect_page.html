@@ -3,26 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Gateway | ApexStriker</title>
+    <title>Connecting to Payment | ApexStriker</title>
     {% load static %}
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
 </head>
-<body class="bg-slate-950 flex items-center justify-center min-h-screen">
-    <div class="text-center px-6">
-        <div class="relative w-24 h-24 mx-auto mb-8">
-            <div class="absolute inset-0 border-4 border-slate-800 rounded-full"></div>
-            <div class="absolute inset-0 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-            <div class="absolute inset-4 bg-blue-600/20 rounded-full flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-500 animate-pulse"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            </div>
-        </div>
+<body class="bg-[#F8FAFC] text-[#475569] flex items-center justify-center min-h-screen font-sans antialiased selection:bg-[#D62828] selection:text-white p-4">
+    
+    <div class="max-w-md w-full bg-white rounded-3xl border border-[#E5E7EB] shadow-2xl p-8 sm:p-10 text-center relative overflow-hidden">
+        
+        <div class="absolute -top-12 -right-12 w-36 h-36 bg-[#D62828]/10 rounded-full blur-2xl pointer-events-none"></div>
+        <div class="absolute -bottom-12 -left-12 w-36 h-36 bg-[#F4B400]/10 rounded-full blur-2xl pointer-events-none"></div>
 
-        <h2 class="text-white font-black uppercase italic tracking-[0.3em] text-2xl mb-2">Initiating <span class="text-blue-500">Gateway</span></h2>
-        <p class="text-slate-500 text-[10px] font-bold uppercase tracking-widest italic opacity-50">Syncing Secure Protocol...</p>
+        <div class="relative z-10 flex flex-col items-center">
+            
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-[#F4B400]/40 bg-[#F4B400]/10 text-[#F4B400] text-xs font-black tracking-widest uppercase mb-8 shadow-sm">
+                <i data-lucide="shield-check" class="w-4 h-4 text-[#F4B400]"></i>
+                <span>SECURE PAYMENT GATEWAY</span>
+            </div>
+
+            <div class="relative w-28 h-28 mb-8 flex items-center justify-center">
+                <div class="absolute inset-0 border-4 border-[#E5E7EB] rounded-full"></div>
+                <div class="absolute inset-0 border-4 border-[#D62828] border-t-transparent rounded-full animate-spin"></div>
+                <div class="w-20 h-20 bg-[#0F172A] rounded-full flex items-center justify-center shadow-lg border border-white/10">
+                    <i data-lucide="lock" class="w-8 h-8 text-[#F4B400] animate-pulse"></i>
+                </div>
+            </div>
+
+            <h1 class="text-2xl sm:text-3xl font-black text-[#111827] tracking-tight mb-3">
+                Connecting to eSewa
+            </h1>
+            
+            <p class="text-sm text-[#475569] font-medium max-w-xs leading-relaxed mb-6">
+                Please wait a moment while we transfer you securely to complete your payment.
+            </p>
+
+            <div class="w-full bg-[#0F172A] p-4 rounded-2xl border border-white/10 text-white flex items-center justify-between mb-6 shadow-inner">
+                <div class="text-left">
+                    <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">Total Amount</span>
+                    <span class="text-lg font-black text-[#F4B400]">Rs. {{ amount }}</span>
+                </div>
+                <div class="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center">
+                    <i data-lucide="credit-card" class="w-5 h-5 text-white"></i>
+                </div>
+            </div>
+
+            <p class="text-xs text-slate-400 font-semibold mb-2">
+                Taking too long?
+            </p>
+
+            <button type="submit" form="esewa_form" class="inline-flex items-center justify-center gap-2 text-xs font-black uppercase tracking-wider text-[#D62828] hover:text-[#A61E1E] transition-colors py-2 px-4 rounded-xl hover:bg-[#D62828]/5">
+                <span>Click here to proceed</span>
+                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+            </button>
+
+        </div>
 
         <form id="esewa_form" action="{{ esewa_url }}" method="POST">
             <input type="hidden" name="amount" value="{{ amount }}">
             <input type="hidden" name="tax_amount" value="0">
+            <input type="hidden" name="shipping_address" value="{{ shipping_address }}">
             <input type="hidden" name="total_amount" value="{{ amount }}">
             <input type="hidden" name="transaction_uuid" value="{{ transaction_uuid }}">
             <input type="hidden" name="product_code" value="{{ product_code }}">
@@ -33,9 +72,14 @@
             <input type="hidden" name="signed_field_names" value="total_amount,transaction_uuid,product_code">
             <input type="hidden" name="signature" value="{{ signature }}">
         </form>
+
     </div>
 
+    <script src="{% static 'js/lucide.min.js' %}"></script>
     <script>
+        if (window.lucide && typeof window.lucide.createIcons === 'function') {
+            window.lucide.createIcons();
+        }
         window.onload = function() {
             setTimeout(function() {
                 document.getElementById('esewa_form').submit();
