@@ -3,7 +3,7 @@ from .views.auth_view import register_view, login_view, logout_view
 from .views.main_view import home_view, verify_email_view, password_reset_view, password_reset_confirm_view
 from .views.profile_view import profile_view, edit_profile_view, resend_verification_email, delete_profile_view, profile_status_toggle_view
 from .views.brand_view import brands_view, add_brand_view, approve_brand_view, edit_brand_view, delete_brand_view
-from .views.product_view import add_product_view, marketplace_view, edit_product_view, delete_product_view, single_product_view
+from .views.product_view import add_product_view, marketplace_view, edit_product_view, delete_product_view, single_product_view, product_status_toggle_view
 from .views.order_view import add_to_cart_view, cart_view, update_cart_quantity, remove_from_cart_view, dispatch_item_view, receive_item_view, mark_order_as_pickup, mark_order_as_shipped, confirm_delivery_view
 from .views.payment_view import initiate_esewa_payment, payment_success, payment_failed, payment_payout
 from .views.review_view import add_review_view, edit_review_view, delete_review_view
@@ -39,6 +39,7 @@ urlpatterns = [
     path('products/edit/<int:product_id>/', edit_product_view, name='edit_product'),
     path('products/delete/<int:product_id>/', delete_product_view, name='delete_product'),
     path('products/<int:product_id>/', single_product_view, name='single_product_page'),
+    path('product/status/toggle/<int:product_id>/', product_status_toggle_view, name='product_status_toggle'),
     path('wishlist/', wishlist_view, name='wishlist_page'),
     path('wishlist/toggle/<int:product_id>/', wishlist_toggle_view, name='wishlist_toggle'),
     path('wishlist/remove/<int:item_id>/', wishlist_remove_view, name='wishlist_remove'),
