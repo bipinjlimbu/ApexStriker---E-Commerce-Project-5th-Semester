@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.conf import settings
 from django.shortcuts import get_object_or_404
-from django.db.models import Q, F
+from django.db.models import Q, F, Avg
 from django.contrib import messages
 from ..models import User, Vendor, Brand, Product, Order, OrderItem, Disbursement, Review, Report
 import threading
@@ -27,11 +27,11 @@ def admin_dashboard_view(request):
         'total_pending_vendors': Vendor.objects.filter(status=Vendor.Status.PENDING).count(),
         'total_pending_brands': Brand.objects.filter(is_active=False).count(),
         'total_pending_payouts': Disbursement.objects.filter(is_transferred=False).count(),
-        'total_products_reviews': 350,
         'total_admin_revenue': sum(disbursement.admin_commission for disbursement in Disbursement.objects.filter(is_transferred=True)),
         'total_vendor_revenue': sum(disbursement.payout_amount for disbursement in Disbursement.objects.filter(is_transferred=True)),
         'total_revenue': sum(disbursement.total_amount for disbursement in Disbursement.objects.filter(is_transferred=True)),
         'total_reported_users': Report.objects.filter(is_resolved=False).count(),
+        'average_rating': Review.objects.aggregate(average_rating=Avg('rating'))['average_rating'] if Review.objects.exists() else 0,
     }
     
     if section == 'member-list':
