@@ -32,6 +32,9 @@
 
             <div class="flex items-center gap-3">
                 {% if request.user.is_authenticated and request.user.role == 'customer' %}
+                <a href="/wishlist/" class="relative p-2.5 text-[#0F172A] hover:bg-[#F8FAFC] rounded-xl border border-[#E5E7EB] hover:border-[#D62828]/30 transition-all flex items-center justify-center group" title="Wishlist">
+                    <i data-lucide="heart" class="w-5 h-5 group-hover:text-[#D62828] transition-colors"></i>
+                </a>
                 <a href="/cart/" class="relative p-2.5 text-[#0F172A] hover:bg-[#F8FAFC] rounded-xl border border-[#E5E7EB] hover:border-[#D62828]/30 transition-all flex items-center justify-center group" title="Cart">
                     <i data-lucide="shopping-cart" class="w-5 h-5 group-hover:text-[#D62828] transition-colors"></i>
                     {% if cart_count > 0 %}
