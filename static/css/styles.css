@@ -1425,6 +1425,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   cursor: pointer;
 }
 
+.cursor-not-allowed {
+  cursor: not-allowed;
+}
+
 .select-none {
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -3808,6 +3812,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(248 250 252 / 0.6);
 }
 
+.hover\:bg-\[\#E5E7EB\]:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
+}
+
 .hover\:text-\[\#A61E1E\]:hover {
   --tw-text-opacity: 1;
   color: rgb(166 30 30 / var(--tw-text-opacity));
@@ -4543,5 +4552,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 
   .xl\:inline {
     display: inline;
+  }
+
+  .xl\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }

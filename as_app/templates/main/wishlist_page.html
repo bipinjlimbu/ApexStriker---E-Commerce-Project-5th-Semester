@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Wishlist | ApexStriker</title>
+    {% load static %}
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+    <style>
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+
+<body class="bg-[#F8FAFC] text-[#475569] flex flex-col min-h-screen font-sans antialiased selection:bg-[#D62828] selection:text-white">
+    {% include 'components/_navbar.html' %}
+    {% include 'components/_messages.html' %}
+
+    <main class="flex-grow py-8 sm:py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+        
+        <div class="mb-8 sm:mb-10 rounded-3xl bg-[#0F172A] p-6 sm:p-10 text-white shadow-xl relative overflow-hidden border border-white/10">
+            <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-gradient-to-br from-[#D62828]/20 to-transparent rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div>
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#F4B400]/40 bg-[#F4B400]/10 text-[#F4B400] text-xs font-black tracking-wider uppercase mb-3">
+                        <i data-lucide="heart" class="w-3.5 h-3.5 fill-[#F4B400]"></i>
+                        <span>SAVED GEAR</span>
+                    </div>
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight mb-2">
+                        My Wishlist
+                    </h1>
+                    <p class="text-slate-400 text-sm sm:text-base font-normal max-w-2xl">
+                        Keep track of your favorite football boots, jerseys, and gear. Move items to your cart whenever you are ready to play.
+                    </p>
+                </div>
+
+                <a href="/marketplace/" class="inline-flex items-center gap-2 text-xs font-bold text-white hover:text-[#D62828] transition-colors py-2.5 px-5 bg-white/10 hover:bg-white/20 rounded-xl border border-white/10 backdrop-blur-sm self-start md:self-auto shrink-0">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                    Explore Gear
+                </a>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {% for item in wishlist %}
+            <div class="bg-white rounded-3xl border border-[#E5E7EB] shadow-sm hover:shadow-xl hover:border-[#D62828]/30 transition-all duration-300 flex flex-col overflow-hidden group">
+                
+                <div class="relative aspect-square bg-[#F8FAFC] overflow-hidden border-b border-[#E5E7EB]">
+                    {% if item.product.get_primary %}
+                    <img src="{{ item.product.get_primary.image.url }}" alt="{{ item.product.name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    {% else %}
+                    <div class="w-full h-full flex items-center justify-center text-slate-300">
+                        <i data-lucide="image" class="w-12 h-12"></i>
+                    </div>
+                    {% endif %}
+
+                    {% if item.product.is_new %}
+                    <span class="absolute top-3 left-3 bg-[#D62828] text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-lg shadow-md">
+                        NEW
+                    </span>
+                    {% endif %}
+
+                    <a href="/wishlist/remove/{{ item.id }}/" 
+                       title="Remove from wishlist" 
+                       aria-label="Remove from wishlist"
+                       class="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 backdrop-blur-md text-[#DC2626] hover:bg-[#DC2626] hover:text-white flex items-center justify-center transition-all duration-200 shadow-md">
+                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                    </a>
+                </div>
+
+                <div class="p-5 flex flex-col flex-grow justify-between space-y-4">
+                    <div>
+                        <div class="flex items-center justify-between mb-1.5">
+                            {% if item.product.brand %}
+                            <span class="text-[11px] font-black text-[#D62828] uppercase tracking-wider">
+                                {{ item.product.brand.name }}
+                            </span>
+                            {% else %}
+                            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+                                {{ item.product.get_category_display }}
+                            </span>
+                            {% endif %}
+
+                            {% if item.product.stock > 0 %}
+                            <span class="inline-flex items-center gap-1 text-[10px] font-bold text-[#16A34A] bg-[#16A34A]/10 px-2 py-0.5 rounded-md">
+                                In Stock
+                            </span>
+                            {% else %}
+                            <span class="inline-flex items-center gap-1 text-[10px] font-bold text-[#DC2626] bg-[#DC2626]/10 px-2 py-0.5 rounded-md">
+                                Out of Stock
+                            </span>
+                            {% endif %}
+                        </div>
+
+                        <h3 class="text-base font-black text-[#111827] leading-snug line-clamp-2 group-hover:text-[#D62828] transition-colors">
+                            <a href="/product/{{ item.product.id }}/">
+                                {{ item.product.name }}
+                            </a>
+                        </h3>
+
+                        <div class="mt-2 flex items-center gap-1 text-[#F4B400] text-xs font-bold">
+                            <i data-lucide="star" class="w-3.5 h-3.5 fill-[#F4B400]"></i>
+                            <span>{{ item.product.average_rating|floatformat:1 }}</span>
+                        </div>
+                    </div>
+
+                    <div class="pt-2 border-t border-[#F8FAFC]">
+                        <p class="text-xs text-[#475569] font-semibold mb-3">
+                            Price: <span class="text-lg font-black text-[#111827] ml-1">Rs. {{ item.product.price|floatformat:2 }}</span>
+                        </p>
+
+                        <div class="grid grid-cols-2 gap-2">
+                            <a href="/product/{{ item.product.id }}/" class="w-full flex items-center justify-center gap-1.5 bg-[#F8FAFC] hover:bg-[#E5E7EB] text-[#111827] font-bold py-2.5 px-3 rounded-xl text-xs transition-colors border border-[#E5E7EB]">
+                                <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                                View
+                            </a>
+
+                            {% if item.product.stock > 0 %}
+                            <a href="/cart/add/{{ item.product.id }}/" class="w-full flex items-center justify-center gap-1.5 bg-[#D62828] hover:bg-[#A61E1E] text-white font-bold py-2.5 px-3 rounded-xl text-xs transition-colors shadow-md shadow-[#D62828]/20">
+                                <i data-lucide="shopping-cart" class="w-3.5 h-3.5"></i>
+                                Add to Cart
+                            </a>
+                            {% else %}
+                            <button disabled class="w-full flex items-center justify-center gap-1.5 bg-slate-100 text-slate-400 font-bold py-2.5 px-3 rounded-xl text-xs cursor-not-allowed">
+                                Unavailable
+                            </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            {% empty %}
+            <div class="col-span-full bg-white p-12 sm:p-16 rounded-3xl border border-dashed border-[#E5E7EB] shadow-sm text-center">
+                <div class="w-16 h-16 bg-[#F8FAFC] rounded-2xl border border-[#E5E7EB] flex items-center justify-center mx-auto mb-4 text-[#D62828]">
+                    <i data-lucide="heart-off" class="w-8 h-8"></i>
+                </div>
+                <h3 class="text-xl font-black text-[#111827]">Your Wishlist is Empty</h3>
+                <p class="text-sm text-[#475569] mt-2 mb-6 max-w-sm mx-auto font-medium">
+                    You haven't saved any football items yet. Browse our store to save your favorite gear.
+                </p>
+                <a href="/marketplace/" class="inline-flex items-center gap-2 bg-[#D62828] hover:bg-[#A61E1E] text-white font-black px-6 py-3.5 rounded-2xl text-xs uppercase tracking-wider transition-all duration-300 shadow-md">
+                    <i data-lucide="compass" class="w-4 h-4"></i>
+                    Shop Now
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+
+    </main>
+
+    {% include 'components/_footer.html' %}
+
+    <script src="{% static 'js/lucide.min.js' %}"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
