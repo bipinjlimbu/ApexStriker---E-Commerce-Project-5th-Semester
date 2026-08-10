@@ -1250,6 +1250,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   min-width: 1100px;
 }
 
+.min-w-\[170px\] {
+  min-width: 170px;
+}
+
 .max-w-4xl {
   max-width: 56rem;
 }
@@ -1603,6 +1607,18 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-space-y-reverse: 0;
   margin-top: calc(0.875rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(0.875rem * var(--tw-space-y-reverse));
+}
+
+.space-y-0\.5 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.125rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.125rem * var(--tw-space-y-reverse));
+}
+
+.space-y-0 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0px * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0px * var(--tw-space-y-reverse));
 }
 
 .divide-y > :not([hidden]) ~ :not([hidden]) {
@@ -2283,6 +2299,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .bg-rose-500\/20 {
   background-color: rgb(244 63 94 / 0.2);
+}
+
+.bg-\[\#16A34A\]\/5 {
+  background-color: rgb(22 163 74 / 0.05);
 }
 
 .bg-gradient-to-br {
