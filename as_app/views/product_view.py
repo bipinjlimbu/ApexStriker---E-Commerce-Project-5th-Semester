@@ -310,4 +310,5 @@ def product_status_toggle_view(request, product_id):
     
     status = "activated" if product.is_active else "deactivated"
     messages.success(request, f"Product '{product.name}' has been {status}.")
+    
     return redirect('/dashboard/vendor/?section=product-management')
