@@ -151,3 +151,17 @@ def delete_profile_view(request, user_id):
     user.delete()
     messages.success(request, "Profile deleted successfully.")
     return redirect('/')
+
+@login_required
+def profile_status_toggle_view(request, user_id):
+    if not request.user.is_superuser:
+        messages.error(request, "You are not authorized to perform this action.")
+        return redirect(f'/profile/{user_id}/')
+    
+    user = User.objects.get(id=user_id)
+    user.is_active = not user.is_active
+    user.save()
+    
+    status = "activated" if user.is_active else "deactivated"
+    messages.success(request, f"Profile has been {status} successfully.")
+    return redirect('/dashboard/admin/?section=member-list')
