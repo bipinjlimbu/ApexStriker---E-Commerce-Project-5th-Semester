@@ -8,6 +8,7 @@ from .views.order_view import add_to_cart_view, cart_view, update_cart_quantity,
 from .views.payment_view import initiate_esewa_payment, payment_success, payment_failed, payment_payout
 from .views.review_view import add_review_view, edit_review_view, delete_review_view
 from .views.report_view import add_report_view, resolve_report_view, delete_report_view
+from .views.wishlist_view import wishlist_view
 from .views.dashboard import admin_dashboard_view, approve_vendor_view, reject_vendor_view, vendor_dashboard_view, customer_dashboard_view, wishlist_remove_view, cancel_order_view, remove_order_view
 
 urlpatterns = [
@@ -37,6 +38,7 @@ urlpatterns = [
     path('products/edit/<int:product_id>/', edit_product_view, name='edit_product'),
     path('products/delete/<int:product_id>/', delete_product_view, name='delete_product'),
     path('products/<int:product_id>/', single_product_view, name='single_product_page'),
+    path('wishlist/', wishlist_view, name='wishlist_page'),
     path('wishlist/toggle/<int:product_id>/', wishlist_toggle_view, name='wishlist_toggle'),
     path('wishlist/remove/<int:item_id>/', wishlist_remove_view, name='wishlist_remove'),
     path('products/review/add/<int:product_id>/', add_review_view, name='add_review'),
