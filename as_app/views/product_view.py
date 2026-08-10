@@ -297,3 +297,17 @@ def single_product_view(request, product_id):
         return redirect('/cart/')
         
     return render(request, 'main/single_product_page.html', {'product': product, 'cart_count': cart_count(request)})
+
+@login_required
+def product_status_toggle_view(request, product_id):
+    if request.user.role != 'vendor' and not Vendor.objects.filter(user=request.user, is_active=True).exists():
+        messages.error(request, "You are not authorized to change product status.")
+        return redirect('/')
+    
+    product = Product.objects.get(id=product_id)
+    product.is_active = not product.is_active
+    product.save()
+    
+    status = "activated" if product.is_active else "deactivated"
+    messages.success(request, f"Product '{product.name}' has been {status}.")
+    return redirect('/dashboard/vendor/?section=product-management')
