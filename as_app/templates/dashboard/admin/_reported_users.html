@@ -1,112 +1,127 @@
-<div class="h-[calc(100vh-20px)] overflow-y-auto custom-scrollbar">
+<div class="h-[calc(100vh-20px)] overflow-y-auto custom-scrollbar bg-[#F8FAFC]">
     
-    <div class="bg-slate-900 p-12 relative overflow-hidden shrink-0">
-        <div class="absolute top-0 right-0 w-1/4 h-full bg-blue-600 skew-x-12 translate-x-20 opacity-10"></div>
-        
-        <div class="relative z-10 flex justify-between items-end">
-            <div>
-                <span class="inline-block bg-red-600 text-white text-[10px] font-black px-3 py-1 rounded-full mb-4 uppercase tracking-widest italic">Security Operations</span>
-                <h2 class="text-5xl font-black text-white italic uppercase tracking-tighter">Reported <span class="text-blue-500">Users</span></h2>
-                <p class="text-slate-400 text-xs font-bold mt-2 uppercase tracking-wider italic">Audit fraud telemetry, identify malicious actors, and enforce safety guidelines</p>
-            </div>
+    <div class="p-4 sm:p-6 lg:p-8">
+        <div class="bg-[#0B0F19] rounded-2xl p-6 sm:p-8 lg:p-10 relative overflow-hidden shadow-2xl border border-slate-800 text-white mb-8">
+            <div class="absolute right-0 top-0 w-1/3 h-full bg-gradient-to-l from-[#D62828]/20 via-[#D62828]/5 to-transparent pointer-events-none"></div>
             
-            <div class="flex gap-4">
-                <div class="bg-white/5 border border-white/10 p-4 rounded-3xl backdrop-blur-md flex items-center gap-4 text-white">
-                    <div class="h-12 w-12 bg-red-600/20 rounded-2xl flex items-center justify-center text-red-500">
-                        <i data-lucide="shield-alert" class="w-6 h-6"></i>
+            <div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                <div>
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#F4B400]/40 bg-[#F4B400]/10 text-[#F4B400] text-[10px] font-black tracking-widest uppercase mb-3">
+                        <i data-lucide="shield-alert" class="w-3.5 h-3.5"></i>
+                        Security Operations
                     </div>
-                    <div class="pr-4">
-                        <p class="text-[9px] font-black text-slate-500 uppercase italic tracking-widest leading-none mb-1">Pending Incidents</p>
-                        <p class="text-2xl font-black italic tracking-tighter text-red-500">{{ reported_users|length }} Logged</p>
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white uppercase italic">
+                        Reported <span class="text-[#D62828]">Users</span>
+                    </h1>
+                    <p class="text-xs sm:text-sm text-slate-400 font-medium mt-2 max-w-xl">
+                        Audit fraud telemetry, identify malicious actors, and enforce safety guidelines across the marketplace.
+                    </p>
+                </div>
+                
+                <div class="flex items-center gap-3 self-stretch md:self-auto shrink-0">
+                    <div class="bg-white/5 border border-white/10 p-3 px-4 rounded-xl backdrop-blur-md flex items-center gap-3 text-white min-w-[170px]">
+                        <div class="h-10 w-10 bg-[#F4B400] rounded-lg flex items-center justify-center text-[#0B0F19] shadow-md shrink-0 font-black">
+                            <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <p class="text-[9px] font-black text-slate-400 uppercase tracking-wider leading-none mb-1">Total Reports</p>
+                            <p class="text-xl font-black text-white leading-none">{{ reported_users|length }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="p-12 -mt-8 relative z-20 pb-24">
-        <div class="bg-white rounded-[2.5rem] border border-slate-200 shadow-2xl shadow-slate-200/50 overflow-hidden">
-            <table class="w-full text-left">
-                <thead>
-                    {% if reported_users %}
-                    <tr class="bg-slate-50 border-b border-slate-100">
-                        <th class="px-10 py-6 text-[11px] font-black text-slate-400 uppercase italic tracking-widest">Reported Target</th>
-                        <th class="px-10 py-6 text-[11px] font-black text-slate-400 uppercase italic tracking-widest">Classification</th>
-                        <th class="px-10 py-6 text-[11px] font-black text-slate-400 uppercase italic tracking-widest">Incident Description</th>
-                        <th class="px-10 py-6 text-[11px] font-black text-slate-400 uppercase italic tracking-widest text-center">Status</th>
-                        <th class="px-10 py-6 text-[11px] font-black text-slate-400 uppercase italic tracking-widest text-right">Resolution</th>
-                    </tr>
-                    {% endif %}
-                </thead>
-                <tbody class="divide-y divide-slate-50">
+        <div class="bg-white rounded-2xl border border-[#E5E7EB] shadow-sm overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        {% if reported_users %}
+                        <tr class="bg-[#F8FAFC] border-b border-[#E5E7EB]">
+                            <th class="px-6 py-4 text-xs font-black text-[#111827] uppercase tracking-wider">Reported User</th>
+                            <th class="px-6 py-4 text-xs font-black text-[#111827] uppercase tracking-wider">Reason</th>
+                            <th class="px-6 py-4 text-xs font-black text-[#111827] uppercase tracking-wider">Description</th>
+                            <th class="px-6 py-4 text-xs font-black text-[#111827] uppercase tracking-wider text-center">Status</th>
+                            <th class="px-6 py-4 text-xs font-black text-[#111827] uppercase tracking-wider text-right">Actions</th>
+                        </tr>
+                        {% endif %}
+                    </thead>
+                    <tbody class="divide-y divide-[#E5E7EB]">
 
-                    {% for report in reported_users %}
-                    <tr class="hover:bg-red-50/10 transition-colors group">
-                        <td class="px-10 py-6">
-                            <div class="flex items-center gap-4">
-                                <div class="h-12 w-12 bg-slate-900 rounded-2xl flex items-center justify-center text-red-500 font-black italic shadow-inner">
-                                    RU
+                        {% for report in reported_users %}
+                        <tr class="hover:bg-slate-50 transition-colors">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center gap-3">
+                                    <div class="h-10 w-10 bg-[#0F172A] rounded-xl flex items-center justify-center text-[#F4B400] font-black text-xs shrink-0">
+                                        <i data-lucide="user" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-bold text-[#111827] text-sm">{{ report.reported_user.get_full_name }}</p>
+                                        <p class="text-xs text-[#475569]">Reported by: {{ report.reporter.get_full_name }}</p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <p class="font-black text-slate-900 italic uppercase leading-none mb-1">{{ report.reported_user.get_full_name }}</p>
-                                    <p class="text-[10px] text-slate-400 font-bold italic uppercase">By: {{ report.reporter.get_full_name }}</p>
-                                </div>
-                            </div>
-                        </td>
-                        
-                        <td class="px-10 py-6">
-                            <span class="inline-block bg-red-100 text-red-600 text-[9px] font-black px-2.5 py-1 rounded-md uppercase tracking-wider italic border border-red-200/40">
-                                {% if report.reason == "fraud" %}
-                                    Fraudulent Activity
-                                {% elif report.reason == "quality" %}
-                                    Poor Item Quality
-                                {% elif report.reason == "fake_id" %}
-                                    Fake Identity/Shop
-                                {% else %}
-                                    Other
-                                {% endif %}
-                            </span>
-                        </td>
-                        
-                        <td class="px-10 py-6 max-w-xs">
-                            <p class="text-xs text-slate-600 font-bold italic line-clamp-2">
-                                "{{ report.description }}"
-                            </p>
-                        </td>
-
-                        <td class="px-10 py-6">
-                            <div class="flex items-center justify-center">
-                                <span class="text-[10px] font-black text-amber-600 bg-amber-50 px-3 py-1.5 rounded-lg uppercase italic border border-amber-100 flex items-center gap-1.5">
-                                    <div class="h-1.5 w-1.5 rounded-full bg-amber-500 animate-pulse"></div>
-                                    Open Case
+                            </td>
+                            
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="inline-flex items-center gap-1 px-3 py-1 rounded-lg text-xs font-bold bg-red-50 text-[#D62828] border border-red-200/60 uppercase">
+                                    {% if report.reason == "fraud" %}
+                                        Fraudulent Activity
+                                    {% elif report.reason == "quality" %}
+                                        Poor Quality Item
+                                    {% elif report.reason == "fake_id" %}
+                                        Fake Store / Profile
+                                    {% else %}
+                                        Other Reason
+                                    {% endif %}
                                 </span>
-                            </div>
-                        </td>
+                            </td>
+                            
+                            <td class="px-6 py-4 max-w-xs">
+                                <p class="text-xs text-[#475569] font-medium line-clamp-2" title="{{ report.description }}">
+                                    "{{ report.description }}"
+                                </p>
+                            </td>
 
-                        <td class="px-10 py-6">
-                            <div class="flex items-center justify-end gap-2">
+                            <td class="px-6 py-4 whitespace-nowrap text-center">
+                                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-700 border border-amber-200">
+                                    <span class="h-2 w-2 rounded-full bg-[#F4B400] animate-pulse"></span>
+                                    {% if report.is_resolved %}
+                                        Resolved
+                                    {% else %}
+                                        Pending Review
+                                    {% endif %}
+                                </span>
+                            </td>
 
-                                {% if not report.is_resolved %}
-                                    <a href="/report/resolve/{{ report.id }}" class="p-3 bg-slate-100 rounded-xl text-slate-400 hover:bg-blue-600 hover:text-white transition-all border border-slate-200 active:scale-90" title="Resolve Incident File">
-                                        <i data-lucide="shield-check" class="w-4 h-4"></i>
+                            <td class="px-6 py-4 whitespace-nowrap text-right">
+                                <div class="flex items-center justify-end gap-2">
+                                    {% if not report.is_resolved %}
+                                        <a href="/report/resolve/{{ report.id }}" class="p-2 bg-[#F8FAFC] hover:bg-[#16A34A] text-[#475569] hover:text-white rounded-lg transition-all border border-[#E5E7EB] hover:border-[#16A34A]" title="Mark as Resolved">
+                                            <i data-lucide="check-circle" class="w-4 h-4"></i>
+                                        </a>
+                                    {% endif %}
+
+                                    <a href="/report/delete/{{ report.id }}" class="p-2 bg-[#F8FAFC] hover:bg-[#DC2626] text-[#475569] hover:text-white rounded-lg transition-all border border-[#E5E7EB] hover:border-[#DC2626]" title="Delete Report">
+                                        <i data-lucide="trash-2" class="w-4 h-4"></i>
                                     </a>
-                                {% endif %}
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="p-16 text-center">
+                                <div class="inline-flex h-14 w-14 bg-green-50 text-[#16A34A] rounded-2xl items-center justify-center mb-3">
+                                    <i data-lucide="shield-check" class="w-7 h-7"></i>
+                                </div>
+                                <h3 class="text-base font-bold text-[#111827]">No Pending Reports</h3>
+                                <p class="text-xs text-[#475569] mt-1">There are currently no reported users to review.</p>
+                            </td>
+                        </tr>
+                        {% endfor %}
 
-                                <a href="/report/delete/{{ report.id }}" class="p-3 bg-slate-100 rounded-xl text-slate-400 hover:bg-red-600 hover:text-white transition-all border border-slate-200 active:scale-90" title="Purge Offending Node Record">
-                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                    {% empty %}
-                    <div class="p-12 text-center">
-                        <i data-lucide="shield-check" class="w-12 h-12 text-emerald-500 mx-auto mb-4"></i>
-                        <p class="text-sm font-black italic uppercase tracking-wider text-slate-400">No active reports at the moment. All clear!</p>
-                    </div>
-                    {% endfor %}
-
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
