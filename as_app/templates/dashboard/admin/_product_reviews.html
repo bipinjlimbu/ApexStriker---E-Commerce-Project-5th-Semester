@@ -50,11 +50,11 @@
                     <tr class="hover:bg-[#F8FAFC] transition-colors duration-150">
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="flex items-center gap-3">
-                                <div class="h-10 w-10 bg-[#0F172A] rounded-xl flex items-center justify-center text-[#F4B400] font-black text-xs shrink-0 shadow-sm border border-slate-800">
+                                <div class="h-10 w-10 rounded-xl flex items-center justify-center bg-slate-100 text-[#0F172A] font-bold text-xs shrink-0 overflow-hidden">
                                     {% if review.customer.user.profile_picture %}
-                                        <img src="{{ review.customer.user.profile_picture.url }}" alt="Profile Image" class="h-full w-full rounded-xl object-cover">
+                                        <img src="{{ review.customer.user.profile_picture.url }}" alt="{{ review.customer.user.get_full_name }}" class="h-full w-full object-cover">
                                     {% else %}
-                                        {{ review.customer.user.get_full_name|slice:":1"|upper }}
+                                        <span>{{ review.customer.user.get_full_name|slice:":1"|upper }}</span>
                                     {% endif %}
                                 </div>
                                 <p class="font-bold text-[#111827] text-sm">{{ review.customer.user.get_full_name }}</p>
