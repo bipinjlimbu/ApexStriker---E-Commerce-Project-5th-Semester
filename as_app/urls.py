@@ -1,7 +1,7 @@
 from django.urls import path
 from .views.auth_view import register_view, login_view, logout_view
 from .views.main_view import home_view, verify_email_view, password_reset_view, password_reset_confirm_view
-from .views.profile_view import profile_view, edit_profile_view, resend_verification_email, delete_profile_view
+from .views.profile_view import profile_view, edit_profile_view, resend_verification_email, delete_profile_view, profile_status_toggle_view
 from .views.brand_view import brands_view, add_brand_view, approve_brand_view, edit_brand_view, delete_brand_view
 from .views.product_view import add_product_view, marketplace_view, edit_product_view, delete_product_view, single_product_view
 from .views.order_view import add_to_cart_view, cart_view, update_cart_quantity, remove_from_cart_view, dispatch_item_view, receive_item_view, mark_order_as_pickup, mark_order_as_shipped, confirm_delivery_view
@@ -24,6 +24,7 @@ urlpatterns = [
     path('profile/edit/<int:user_id>/', edit_profile_view, name='edit_profile_page'),
     path('profile/resend_verification/<int:user_id>/', resend_verification_email, name='resend_verification_email'),
     path('profile/delete/<int:user_id>/', delete_profile_view, name='delete_profile_page'),
+    path('profile/status/toggle/<int:user_id>/', profile_status_toggle_view, name='profile_status_toggle'),
     path('dashboard/admin/', admin_dashboard_view, name='admin_dashboard'),
     path('approve_vendor/<int:vendor_id>/', approve_vendor_view, name='approve_vendor'),
     path('reject_vendor/<int:vendor_id>/', reject_vendor_view, name='reject_vendor'),
