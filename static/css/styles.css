@@ -3549,6 +3549,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 0px;
 }
 
+.after\:w-full::after {
+  content: var(--tw-content);
+  width: 100%;
+}
+
 .after\:bg-\[\#D62828\]::after {
   content: var(--tw-content);
   --tw-bg-opacity: 1;

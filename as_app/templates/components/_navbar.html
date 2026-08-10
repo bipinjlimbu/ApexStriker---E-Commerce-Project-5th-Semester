@@ -13,10 +13,13 @@
                 </a>
 
                 <div class="hidden lg:flex items-center gap-7">
-                    <a href="/" class="text-xs font-extrabold uppercase tracking-wider text-[#111827] hover:text-[#D62828] transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#D62828] hover:after:w-full after:transition-all">Home</a>
-                    <a href="/marketplace/" class="text-xs font-extrabold uppercase tracking-wider text-[#475569] hover:text-[#D62828] transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#D62828] hover:after:w-full after:transition-all">Marketplace</a>
-                    <a href="/marketplace/?sort=latest" class="text-xs font-extrabold uppercase tracking-wider text-[#475569] hover:text-[#D62828] transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#D62828] hover:after:w-full after:transition-all">New Arrivals</a>
-                    <a href="/brands/" class="text-xs font-extrabold uppercase tracking-wider text-[#475569] hover:text-[#D62828] transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#D62828] hover:after:w-full after:transition-all">Brands</a>
+                    <a href="/" class="text-xs font-extrabold uppercase tracking-wider hover:text-[#D62828] transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-[#D62828] hover:after:w-full after:transition-all {% if request.path == '/' %}text-[#111827] after:w-full{% else %}text-[#475569] after:w-0{% endif %}">Home</a>
+                    
+                    <a href="/marketplace/" class="text-xs font-extrabold uppercase tracking-wider hover:text-[#D62828] transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-[#D62828] hover:after:w-full after:transition-all {% if request.path == '/marketplace/' and not request.GET.sort == 'latest' %}text-[#111827] after:w-full{% else %}text-[#475569] after:w-0{% endif %}">Marketplace</a>
+                    
+                    <a href="/marketplace/?sort=latest" class="text-xs font-extrabold uppercase tracking-wider hover:text-[#D62828] transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-[#D62828] hover:after:w-full after:transition-all {% if request.GET.sort == 'latest' %}text-[#111827] after:w-full{% else %}text-[#475569] after:w-0{% endif %}">New Arrivals</a>
+                    
+                    <a href="/brands/" class="text-xs font-extrabold uppercase tracking-wider hover:text-[#D62828] transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-[#D62828] hover:after:w-full after:transition-all {% if request.path == '/brands/' %}text-[#111827] after:w-full{% else %}text-[#475569] after:w-0{% endif %}">Brands</a>
                 </div>
             </div>
 
