@@ -38,4 +38,4 @@ def wishlist_remove_view(request, item_id):
     else:
         messages.error(request, "Wishlist item not found.")
 
-    return redirect('/dashboard/customer/?section=wishlist')
+    return redirect('/wishlist/')
