@@ -5,7 +5,13 @@ from ..models import Wishlist, Product
 
 @login_required
 def wishlist_view(request):
-    return render(request, 'main/wishlist_page.html')
+    if not request.user.is_authenticated or request.user.role != 'customer':
+        messages.error(request, "You must be logged in as a customer to view your wishlist.")
+        return redirect('/login/')
+    
+    wishlist = Wishlist.objects.filter(customer=request.user.customer_profile).order_by("added_at")
+    
+    return render(request, 'main/wishlist_page.html',{'wishlist':wishlist})
 
 @login_required
 def wishlist_toggle_view(request, product_id):
