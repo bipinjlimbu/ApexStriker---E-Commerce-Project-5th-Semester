@@ -3092,6 +3092,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   color: rgb(244 63 94 / 0.8);
 }
 
+.text-\[\#F59E0B\] {
+  --tw-text-opacity: 1;
+  color: rgb(245 158 11 / var(--tw-text-opacity));
+}
+
 .underline {
   text-decoration: underline;
 }
@@ -3820,6 +3825,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .hover\:bg-\[\#E5E7EB\]:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-black:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
 }
 
 .hover\:text-\[\#A61E1E\]:hover {

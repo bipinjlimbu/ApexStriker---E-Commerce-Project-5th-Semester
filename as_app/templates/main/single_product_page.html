@@ -154,6 +154,19 @@
                                 <p class="text-xs text-[#475569] mt-1">Vendor and staff accounts cannot purchase products.</p>
                             </div>
 
+                        {% elif product.stock <= 0 %}
+                            <div class="py-4 px-6 text-center bg-[#F8FAFC] border border-dashed border-[#E5E7EB] rounded-2xl">
+                                <i data-lucide="alert-triangle" class="w-6 h-6 text-[#F59E0B] mx-auto mb-2"></i>
+                                <p class="text-xs font-black text-[#111827] uppercase tracking-wider">Out of Stock</p>
+                                <p class="text-xs text-[#475569] mt-1">This product is currently unavailable.</p>
+                            </div>
+
+                        {% elif not user.is_authenticated %}
+                            <a href="/login/" class="w-full bg-[#0F172A] hover:bg-black text-white font-black py-4 px-6 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-[#0F172A]/20 active:scale-[0.98] text-base tracking-wide">
+                                <i data-lucide="log-in" class="w-5 h-5"></i>
+                                <span>Log in to Purchase</span>
+                            </a>
+
                         {% else %}
                             <div class="flex items-center gap-3">
                                 <a href="/cart/add/{{ product.id }}/" class="flex-grow bg-[#D62828] hover:bg-[#A61E1E] text-white font-black py-4 px-6 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-[#D62828]/25 active:scale-[0.98] text-base tracking-wide">
@@ -227,14 +240,20 @@
                     <p class="text-sm text-[#475569] mt-1 font-medium">Read verified player feedback for this gear.</p>
                 </div>
                 
-                <div class="flex items-center gap-4 bg-white px-5 py-3.5 rounded-2xl border border-[#E5E7EB] shadow-sm self-start md:self-auto">
-                    <div class="text-center pr-4 border-r border-[#E5E7EB]">
-                        <p class="text-3xl font-black text-[#111827] leading-none">
+                <div class="flex flex-wrap items-center gap-3 self-start md:self-auto">
+                    {% if user.is_authenticated and user.role == 'customer' %}
+                    <a href="/products/review/add/{{ product.id }}" class="inline-flex items-center gap-2 bg-[#D62828] hover:bg-[#A61E1E] text-white font-extrabold px-5 py-3.5 rounded-2xl transition-all duration-300 shadow-md shadow-[#D62828]/20 text-xs uppercase tracking-wider">
+                        <i data-lucide="square-pen" class="w-4 h-4"></i>
+                        <span>Write a Review</span>
+                    </a>
+                    {% endif %}
+
+                    <div class="inline-flex items-center gap-3 bg-white px-5 py-3.5 rounded-2xl border border-[#E5E7EB] shadow-sm">
+                        <span class="text-base font-black text-[#111827] leading-none pr-3 border-r border-[#E5E7EB]">
                             {{ product.average_rating|floatformat:"1"|default:"0.0" }}
-                        </p>
-                        <p class="text-[10px] font-black text-[#475569] uppercase tracking-widest mt-1">Out of 5</p>
-                    </div>
-                    <div class="flex gap-1 text-[#F4B400]" id="avg-stars-container" data-rating="{{ product.average_rating|floatformat:"1"|default:'0' }}">
+                        </span>
+                        <div class="flex gap-1 text-[#F4B400]" id="avg-stars-container" data-rating="{{ product.average_rating|floatformat:"1"|default:'0' }}">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -293,19 +312,6 @@
                     <p class="text-xs text-[#475569] mt-1 max-w-sm mx-auto font-medium">Be the first player to review this gear and share your thoughts with the community.</p>
                 </div>
                 {% endfor %}
-
-                {% if user.is_authenticated and user.role == 'customer' %}
-                <div class="bg-[#0F172A] p-6 rounded-3xl text-white flex flex-col justify-center items-center text-center shadow-lg relative overflow-hidden border border-white/10">
-                    <div class="w-12 h-12 bg-[#D62828] rounded-2xl flex items-center justify-center mb-4 shadow-md">
-                        <i data-lucide="plus" class="w-6 h-6 text-white"></i>
-                    </div>
-                    <h4 class="text-lg font-black mb-1 tracking-tight">Write a Review</h4>
-                    <p class="text-slate-400 text-xs mb-5 max-w-xs font-normal">Have you used this gear on the pitch? Help other players make the right choice.</p>
-                    <a href="/products/review/add/{{ product.id }}" class="bg-[#F4B400] hover:bg-white text-[#111827] font-black px-6 py-3 rounded-xl text-xs transition-all duration-300 shadow-md uppercase tracking-wider">
-                        Write a Review
-                    </a>
-                </div>
-                {% endif %}
             </div>
         </section>
 
@@ -335,7 +341,7 @@
             const avgBox = document.getElementById('avg-stars-container');
             if (avgBox) {
                 const rawScore = parseFloat(avgBox.getAttribute('data-rating')) || 0;
-                renderComplexStars(avgBox, rawScore, 4);
+                renderComplexStars(avgBox, rawScore, 3.5);
             }
 
             document.querySelectorAll('.dynamic-star-row').forEach(row => {
@@ -350,7 +356,7 @@
 
                 for (let i = 1; i <= 5; i++) {
                     const node = document.createElement('i');
-                    node.className = `w-${sizeUnit} h-${sizeUnit}`;
+                    node.className = `w-4 h-4`;
 
                     if (i <= floorStars) {
                         node.setAttribute('data-lucide', 'star');
