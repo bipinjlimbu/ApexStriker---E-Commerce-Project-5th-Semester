@@ -1258,6 +1258,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   min-width: 160px;
 }
 
+.min-w-0 {
+  min-width: 0px;
+}
+
 .max-w-4xl {
   max-width: 56rem;
 }
@@ -3126,6 +3130,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   color: rgb(100 116 139 / var(--tw-placeholder-opacity));
 }
 
+.placeholder-\[\#475569\]\/60::-moz-placeholder {
+  color: rgb(71 85 105 / 0.6);
+}
+
+.placeholder-\[\#475569\]\/60::placeholder {
+  color: rgb(71 85 105 / 0.6);
+}
+
 .opacity-0 {
   opacity: 0;
 }
@@ -3875,6 +3887,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .hover\:text-red-500:hover {
   --tw-text-opacity: 1;
   color: rgb(239 68 68 / var(--tw-text-opacity));
+}
+
+.hover\:text-\[\#F4B400\]:hover {
+  --tw-text-opacity: 1;
+  color: rgb(244 180 0 / var(--tw-text-opacity));
 }
 
 .hover\:underline:hover {
