@@ -5,7 +5,7 @@ from django.conf import settings
 from django.shortcuts import get_object_or_404
 from django.db.models import Q, F
 from django.contrib import messages
-from ..models import User, Vendor, Brand, Product, Order, Wishlist, OrderItem, Disbursement, Review, Report
+from ..models import User, Vendor, Brand, Product, Order, OrderItem, Disbursement, Review, Report
 import threading
     
 def send_email_async(subject, message, recipient):
@@ -241,8 +241,6 @@ def customer_dashboard_view(request):
     context = {
         'completed_orders_count': Order.objects.filter(customer=request.user.customer_profile, status='completed').count(),
         'pending_orders_count': Order.objects.filter(customer=request.user.customer_profile, status='paid').count(),
-        'wishlist_count': Wishlist.objects.filter(customer=request.user.customer_profile).count(),
-        'wishlist_total_amount': sum(item.product.price for item in Wishlist.objects.filter(customer=request.user.customer_profile)),
         'section': section,
     }
     
@@ -268,9 +266,6 @@ def customer_dashboard_view(request):
             orders = orders.order_by('total_amount')
             
         context['orders'] = orders
-
-    elif section == 'wishlist':
-        context['wishlist'] = Wishlist.objects.filter(customer=request.user.customer_profile).order_by('-added_at')
     
     return render(request, 'dashboard/customer_dashboard.html', context)
 
