@@ -1,106 +1,128 @@
-<div class="shrink-0 bg-slate-900 p-12 relative overflow-hidden">
-    <div class="absolute top-0 right-0 w-1/4 h-full bg-emerald-500 skew-x-12 translate-x-20 opacity-10"></div>
-    
-    <div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
-        <div>
-            <span class="inline-block bg-emerald-500 text-slate-900 text-[10px] font-black px-3 py-1 rounded-full mb-4 uppercase tracking-widest italic">Financial Audit</span>
-            <h2 class="text-5xl font-black text-white italic uppercase tracking-tighter">Revenue <span class="text-emerald-500">Logs</span></h2>
-        </div>
-        
-        <div class="flex flex-wrap items-center gap-4 w-full md:w-auto">
-            <div class="bg-white/5 border border-white/10 p-4 rounded-3xl backdrop-blur-md flex items-center gap-4 min-w-[200px]">
-                <div class="h-12 w-12 bg-blue-500/20 rounded-2xl flex items-center justify-center text-blue-400">
-                    <i data-lucide="trending-up" class="w-6 h-6"></i>
+<div class="flex-grow flex flex-col h-screen bg-[#F8FAFC] overflow-hidden">
+    <div class="flex-grow overflow-y-auto px-3 sm:px-5 lg:px-6 py-6 space-y-6">
+        <div class="w-full space-y-6">
+            
+            <div class="bg-[#0F172A] text-white p-6 sm:p-8 rounded-2xl shadow-xl relative overflow-hidden flex flex-col lg:flex-row lg:items-center justify-between gap-6 border border-slate-800">
+                <div class="absolute -right-12 -bottom-12 w-64 h-64 bg-[#D62828]/15 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="relative z-10">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-[#F4B400]/30 bg-[#F4B400]/10 text-[#F4B400] text-[10px] font-bold uppercase tracking-wider mb-3 shadow-inner">
+                        <i data-lucide="line-chart" class="w-3.5 h-3.5"></i>
+                        <span>Platform Financials</span>
+                    </div>
+                    <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight uppercase leading-none mb-2 text-white">
+                        Revenue <span class="text-[#D62828]">Reports</span>
+                    </h1>
+                    <p class="text-slate-400 text-xs sm:text-sm max-w-xl font-medium leading-relaxed">
+                        Track overall marketplace sales, platform commissions, and payments distributed to vendors.
+                    </p>
                 </div>
-                <div>
-                    <p class="text-[9px] font-black text-slate-500 uppercase italic tracking-widest">Gross Volume (GMV)</p>
-                    <p class="text-2xl font-black text-white italic">Rs. {{ total_revenue|floatformat:2 }}</p>
+                <div class="relative z-10 shrink-0 flex flex-wrap items-center gap-3">
+                    <div class="bg-white/5 border border-white/10 px-4 py-3 rounded-2xl flex items-center gap-3.5 backdrop-blur-md shadow-inner min-w-[160px]">
+                        <div class="w-10 h-10 bg-blue-500/20 text-blue-400 rounded-xl flex items-center justify-center shrink-0 shadow-md">
+                            <i data-lucide="trending-up" class="w-5 h-5 font-bold"></i>
+                        </div>
+                        <div>
+                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-wider leading-none">Total Sales</p>
+                            <p class="text-lg font-extrabold text-white leading-tight mt-0.5">Rs. {{ total_revenue|floatformat:2 }}</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white/5 border border-[#16A34A]/30 px-4 py-3 rounded-2xl flex items-center gap-3.5 backdrop-blur-md shadow-inner min-w-[160px]">
+                        <div class="w-10 h-10 bg-[#16A34A]/20 text-[#16A34A] rounded-xl flex items-center justify-center shrink-0 shadow-md">
+                            <i data-lucide="percent" class="w-5 h-5 font-bold"></i>
+                        </div>
+                        <div>
+                            <p class="text-[9px] font-bold text-[#16A34A] uppercase tracking-wider leading-none">Platform Revenue</p>
+                            <p class="text-lg font-extrabold text-[#16A34A] leading-tight mt-0.5">Rs. {{ total_admin_revenue|floatformat:2 }}</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white/5 border border-white/10 px-4 py-3 rounded-2xl flex items-center gap-3.5 backdrop-blur-md shadow-inner min-w-[160px]">
+                        <div class="w-10 h-10 bg-purple-500/20 text-purple-400 rounded-xl flex items-center justify-center shrink-0 shadow-md">
+                            <i data-lucide="wallet" class="w-5 h-5 font-bold"></i>
+                        </div>
+                        <div>
+                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-wider leading-none">Vendor Payouts</p>
+                            <p class="text-lg font-extrabold text-slate-300 leading-tight mt-0.5">Rs. {{ total_vendor_revenue|floatformat:2 }}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="bg-white/5 border border-white/10 p-4 rounded-3xl backdrop-blur-md flex items-center gap-4 min-w-[200px]">
-                <div class="h-12 w-12 bg-emerald-500/20 rounded-2xl flex items-center justify-center text-emerald-500">
-                    <i data-lucide="percent" class="w-6 h-6"></i>
+            <div class="bg-white rounded-2xl border border-[#E5E7EB] shadow-sm overflow-hidden">
+                <div class="px-6 py-4 border-b border-[#E5E7EB] bg-[#F8FAFC]">
+                    <h3 class="font-bold text-[#111827] uppercase tracking-wider text-xs flex items-center gap-2">
+                        <i data-lucide="receipt" class="w-4 h-4 text-[#D62828]"></i> Payment History Log
+                    </h3>
                 </div>
-                <div>
-                    <p class="text-[9px] font-black text-slate-500 uppercase italic tracking-widest">Platform Earnings</p>
-                    <p class="text-2xl font-black text-emerald-400 italic">Rs. {{ total_admin_revenue|floatformat:2 }}</p>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left min-w-[1000px]">
+                        <thead>
+                            <tr class="bg-[#F8FAFC] border-b border-[#E5E7EB]">
+                                <th class="px-6 py-4 text-[10px] font-bold text-[#475569] uppercase tracking-wider">Order Details</th>
+                                <th class="px-6 py-4 text-[10px] font-bold text-[#475569] uppercase tracking-wider">Store Name</th>
+                                <th class="px-6 py-4 text-[10px] font-bold text-[#475569] uppercase tracking-wider text-right">Total Amount</th>
+                                <th class="px-6 py-4 text-[10px] font-bold text-[#DC2626] uppercase tracking-wider text-right">Platform Fee</th>
+                                <th class="px-6 py-4 text-[10px] font-bold text-[#16A34A] uppercase tracking-wider text-right">Vendor Payout</th>
+                                <th class="px-6 py-4 text-[10px] font-bold text-[#475569] uppercase tracking-wider">Reference Number</th>
+                                <th class="px-6 py-4 text-[10px] font-bold text-[#475569] uppercase tracking-wider text-center">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-[#E5E7EB]">
+                            {% for disbursement in revenue_logs %}
+                            <tr class="hover:bg-[#F8FAFC]/60 transition-colors group">
+                                <td class="px-6 py-4">
+                                    <p class="text-xs font-bold text-[#111827] uppercase tracking-tight">#{{ disbursement.order.id }}</p>
+                                    <p class="text-[10px] text-[#475569] font-medium">{{ disbursement.order.created_at|date:"M d, Y" }} • {{ disbursement.order.created_at|time:"h:i A" }}</p>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center gap-2.5">
+                                        <div class="h-8 w-8 bg-[#F8FAFC] rounded-lg flex items-center justify-center text-[#16A34A] shrink-0 border border-[#E5E7EB]">
+                                            <i data-lucide="store" class="w-4 h-4"></i>
+                                        </div>
+                                        <p class="text-xs font-bold text-[#111827] uppercase truncate max-w-[180px]">{{ disbursement.vendor.shop_name }}</p>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <p class="font-bold text-[#111827] text-xs">Rs. {{ disbursement.total_amount|floatformat:2 }}</p>
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <p class="font-bold text-[#DC2626] text-xs">- Rs. {{ disbursement.admin_commission|floatformat:2 }}</p>
+                                </td>
+                                <td class="px-6 py-4 text-right bg-[#16A34A]/5">
+                                    <p class="font-bold text-[#16A34A] text-sm">Rs. {{ disbursement.payout_amount|floatformat:2 }}</p>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center gap-1.5">
+                                        <i data-lucide="hash" class="w-3.5 h-3.5 text-[#475569]"></i>
+                                        <span class="text-xs font-mono font-bold uppercase text-[#111827] tracking-tight">{{ disbursement.bank_ref_no }}</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-center">
+                                    <span class="inline-flex items-center gap-1.5 bg-[#16A34A]/10 text-[#16A34A] border border-[#16A34A]/20 px-3 py-1.5 rounded-xl text-[10px] font-bold uppercase tracking-wider">
+                                        <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Transferred
+                                    </span>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="7" class="px-6 py-12 text-center">
+                                    <div class="flex flex-col items-center justify-center">
+                                        <div class="w-12 h-12 bg-[#F8FAFC] rounded-2xl flex items-center justify-center text-slate-400 border border-[#E5E7EB] mb-3">
+                                            <i data-lucide="inbox" class="w-6 h-6"></i>
+                                        </div>
+                                        <p class="text-xs font-bold text-[#111827] uppercase tracking-wide">No Revenue Logs Found</p>
+                                        <p class="text-[11px] text-[#475569] font-medium mt-1">Platform payout records and financial summaries will appear here.</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
-            <div class="bg-white/5 border border-white/10 p-4 rounded-3xl backdrop-blur-md flex items-center gap-4 min-w-[200px]">
-                <div class="h-12 w-12 bg-purple-500/20 rounded-2xl flex items-center justify-center text-purple-400">
-                    <i data-lucide="wallet" class="w-6 h-6"></i>
-                </div>
-                <div>
-                    <p class="text-[9px] font-black text-slate-500 uppercase italic tracking-widest">Vendor Payables</p>
-                    <p class="text-2xl font-black text-slate-300 italic">Rs. {{ total_vendor_revenue|floatformat:2 }}</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="p-12 -mt-8 relative z-20">
-    <div class="bg-white rounded-[2.5rem] border border-slate-200 shadow-2xl shadow-slate-200/50 overflow-hidden">
-        <div class="px-10 py-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
-            <h3 class="font-black text-slate-900 italic uppercase tracking-tight text-sm">Disbursement History Ledger</h3>
-        </div>
-        
-        <div class="overflow-x-auto">
-            <table class="w-full text-left min-w-[1000px]">
-                <thead>
-                    <tr class="bg-slate-50 border-b border-slate-100">
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase italic tracking-widest">Registry Meta</th>
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase italic tracking-widest">Target Vendor</th>
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase italic tracking-widest text-right">Total Amount (@property)</th>
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase italic tracking-widest text-right text-rose-500">Admin Commission</th>
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase italic tracking-widest text-right text-emerald-600">Net Payout Amount</th>
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase italic tracking-widest">Settlement Reference</th>
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase italic tracking-widest text-center">Status</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-50">
-                    
-                    {% for disbursement in revenue_logs %}
-                    <tr class="hover:bg-emerald-50/10 transition-colors group">
-                        <td class="px-8 py-6">
-                            <p class="text-xs font-black text-slate-900 italic uppercase tracking-tighter">ORD-#{{ disbursement.order.id }}</p>
-                            <p class="text-[9px] text-slate-400 font-bold italic uppercase">{{ disbursement.order.created_at|date:"M d, Y" }} • {{ disbursement.order.created_at|time:"h:i A" }}</p>
-                        </td>
-                        <td class="px-8 py-6">
-                            <div class="flex items-center gap-3">
-                                <div class="h-8 w-8 bg-slate-100 rounded-lg flex items-center justify-center text-emerald-600 shrink-0">
-                                    <i data-lucide="shopping-bag" class="w-4 h-4"></i>
-                                </div>
-                                <p class="text-sm font-black text-slate-700 italic uppercase truncate max-w-[180px]">{{ disbursement.vendor.shop_name }}</p>
-                            </div>
-                        </td>
-                        <td class="px-8 py-6 text-right">
-                            <p class="font-black text-slate-900 italic text-sm">Rs. {{ disbursement.total_amount|floatformat:2 }}</p>
-                        </td>
-                        <td class="px-8 py-6 text-right">
-                            <p class="font-black text-rose-500 italic text-sm">- Rs. {{ disbursement.admin_commission|floatformat:2 }}</p>
-                        </td>
-                        <td class="px-8 py-6 text-right bg-emerald-50/20">
-                            <p class="font-black text-emerald-600 italic text-base">Rs. {{ disbursement.payout_amount|floatformat:2 }}</p>
-                        </td>
-                        <td class="px-8 py-6">
-                            <div class="flex items-center gap-2">
-                                <i data-lucide="hash" class="w-3.5 h-3.5 text-slate-400"></i>
-                                <span class="text-xs font-mono font-bold uppercase text-slate-700 tracking-tight">{{ disbursement.bank_ref_no }}</span>
-                            </div>
-                        </td>
-                        <td class="px-8 py-6">
-                            <span class="mx-auto text-[9px] font-black text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-lg uppercase italic border border-emerald-100 flex items-center gap-1.5 w-fit shadow-sm">
-                                <i data-lucide="check-circle" class="w-3 h-3"></i> Transferred
-                            </span>
-                        </td>
-                    </tr>
-                    {% endfor %}
-
-                </tbody>
-            </table>
         </div>
     </div>
 </div>
