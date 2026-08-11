@@ -140,7 +140,13 @@ def login_view(request):
             errors['password'] = "Password is required."
         
         if not errors:
+            check_user = User.objects.filter(username=username).first()
+            if check_user and not check_user.is_active:
+                messages.error(request, "Your account is inactive. Please contact support.")
+                return render(request, 'auth/login_page.html', {'errors': errors,'data': request.POST})
+            
             user = authenticate(request, username=username, password=password)
+            
             if user is not None:
                 login(request, user)
                 if remember:
