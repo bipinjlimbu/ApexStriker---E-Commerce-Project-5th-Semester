@@ -151,6 +151,7 @@ def vendor_dashboard_view(request):
         'Admin_commission': sum(item.admin_commission for item in Disbursement.objects.filter(vendor=request.user.vendor_profile, is_transferred=True)),
         'completed_order_items_count': OrderItem.objects.filter(vendor=request.user.vendor_profile, order__status='completed').count(),
         'completed_orders_count': Order.objects.filter(items__vendor=request.user.vendor_profile, status='completed').distinct().count(),
+        'average_rating': Review.objects.filter(product__vendor=request.user.vendor_profile).aggregate(average_rating=Avg('rating'))['average_rating'] if Review.objects.filter(product__vendor=request.user.vendor_profile).exists() else 0,
         'section': section,
         'brands': brands,
     }
