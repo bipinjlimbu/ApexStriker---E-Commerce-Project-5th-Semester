@@ -195,7 +195,7 @@ def vendor_dashboard_view(request):
         context['sales_overview'] = Disbursement.objects.filter(vendor=request.user.vendor_profile, is_transferred=True).order_by('-created_at')
         
     if section == 'received-reviews':
-        context['received_reviews'] = None
+        context['received_reviews'] = Review.objects.filter(product__vendor=request.user.vendor_profile).order_by('-created_at')
     
     if section == 'pending-order-items':
         q = request.GET.get('q', '')
