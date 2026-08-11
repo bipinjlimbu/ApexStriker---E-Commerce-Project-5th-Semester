@@ -57,26 +57,26 @@
                 </div>
                 
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left min-w-[1000px]">
+                    <table class="w-full text-left border-collapse min-w-[1000px]">
                         <thead>
                             <tr class="bg-[#F8FAFC] border-b border-[#E5E7EB]">
-                                <th class="px-6 py-4 text-[10px] font-bold text-[#475569] uppercase tracking-wider">Order Details</th>
-                                <th class="px-6 py-4 text-[10px] font-bold text-[#475569] uppercase tracking-wider">Store Name</th>
+                                <th class="px-6 py-4 text-[10px] font-bold text-[#475569] uppercase tracking-wider text-left">Order Details</th>
+                                <th class="px-6 py-4 text-[10px] font-bold text-[#475569] uppercase tracking-wider text-left">Store Name</th>
                                 <th class="px-6 py-4 text-[10px] font-bold text-[#475569] uppercase tracking-wider text-right">Total Amount</th>
                                 <th class="px-6 py-4 text-[10px] font-bold text-[#DC2626] uppercase tracking-wider text-right">Platform Fee</th>
                                 <th class="px-6 py-4 text-[10px] font-bold text-[#16A34A] uppercase tracking-wider text-right">Vendor Payout</th>
-                                <th class="px-6 py-4 text-[10px] font-bold text-[#475569] uppercase tracking-wider">Reference Number</th>
+                                <th class="px-6 py-4 text-[10px] font-bold text-[#475569] uppercase tracking-wider text-left">Reference Number</th>
                                 <th class="px-6 py-4 text-[10px] font-bold text-[#475569] uppercase tracking-wider text-center">Status</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-[#E5E7EB]">
                             {% for disbursement in revenue_logs %}
                             <tr class="hover:bg-[#F8FAFC]/60 transition-colors group">
-                                <td class="px-6 py-4">
+                                <td class="px-6 py-4 text-left">
                                     <p class="text-xs font-bold text-[#111827] uppercase tracking-tight">#{{ disbursement.order.id }}</p>
                                     <p class="text-[10px] text-[#475569] font-medium">{{ disbursement.order.created_at|date:"M d, Y" }} • {{ disbursement.order.created_at|time:"h:i A" }}</p>
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-6 py-4 text-left">
                                     <div class="flex items-center gap-2.5">
                                         <div class="h-8 w-8 bg-[#F8FAFC] rounded-lg flex items-center justify-center text-[#16A34A] shrink-0 border border-[#E5E7EB]">
                                             <i data-lucide="store" class="w-4 h-4"></i>
@@ -90,10 +90,10 @@
                                 <td class="px-6 py-4 text-right">
                                     <p class="font-bold text-[#DC2626] text-xs">- Rs. {{ disbursement.admin_commission|floatformat:2 }}</p>
                                 </td>
-                                <td class="px-6 py-4 text-right bg-[#16A34A]/5">
+                                <td class="px-6 py-4 text-right">
                                     <p class="font-bold text-[#16A34A] text-sm">Rs. {{ disbursement.payout_amount|floatformat:2 }}</p>
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-6 py-4 text-left">
                                     <div class="flex items-center gap-1.5">
                                         <i data-lucide="hash" class="w-3.5 h-3.5 text-[#475569]"></i>
                                         <span class="text-xs font-mono font-bold uppercase text-[#111827] tracking-tight">{{ disbursement.bank_ref_no }}</span>
