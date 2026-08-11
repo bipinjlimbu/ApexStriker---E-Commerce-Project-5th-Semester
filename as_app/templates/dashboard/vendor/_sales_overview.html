@@ -60,13 +60,12 @@
                 {% endif %}
                 
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left min-w-[1100px]">
+                    <table class="w-full text-left border-collapse min-w-[1100px]">
                         {% if sales_overview %}
                             <thead>
                                 <tr class="bg-[#F8FAFC] border-b border-[#E5E7EB]">
-                                    <th class="px-6 py-4 text-[10px] font-bold text-[#475569] uppercase tracking-wider">Order Number</th>
-                                    <th class="px-6 py-4 text-[10px] font-bold text-[#475569] uppercase tracking-wider">Items Purchased</th>
-                                    <th class="px-6 py-4 text-[10px] font-bold text-[#475569] uppercase tracking-wider text-center">Quantity</th>
+                                    <th class="px-6 py-4 text-[10px] font-bold text-[#475569] uppercase tracking-wider text-left">Order Number</th>
+                                    <th class="px-6 py-4 text-[10px] font-bold text-[#475569] uppercase tracking-wider text-left">Items Purchased</th>
                                     <th class="px-6 py-4 text-[10px] font-bold text-[#475569] uppercase tracking-wider text-right">Total Price</th>
                                     <th class="px-6 py-4 text-[10px] font-bold text-[#DC2626] uppercase tracking-wider text-right">Platform Fee</th>
                                     <th class="px-6 py-4 text-[10px] font-bold text-[#16A34A] uppercase tracking-wider text-right">My Earnings</th>
@@ -78,11 +77,11 @@
                         <tbody class="divide-y divide-[#E5E7EB]">
                             {% for disbursement in sales_overview %}
                             <tr class="hover:bg-[#F8FAFC]/60 transition-colors group">
-                                <td class="px-6 py-4">
+                                <td class="px-6 py-4 text-left">
                                     <p class="text-xs font-bold text-[#111827] uppercase tracking-tight">#{{ disbursement.order.id }}</p>
                                     <p class="text-[10px] text-[#475569] font-medium">{{ disbursement.order.created_at|date:"M d, Y • g:i A" }}</p>
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-6 py-4 text-left">
                                     <div class="flex items-center gap-3">
                                         <div class="h-9 w-9 bg-[#F8FAFC] rounded-xl flex items-center justify-center text-[#475569] shrink-0 border border-[#E5E7EB]">
                                             <i data-lucide="layers" class="w-4 h-4 text-[#475569]"></i>
@@ -96,16 +95,13 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="px-6 py-4 text-center">
-                                    <span class="text-xs font-bold text-[#111827] bg-[#F8FAFC] border border-[#E5E7EB] px-2.5 py-1 rounded-lg">{{ disbursement.order.item_count }}</span>
-                                </td>
                                 <td class="px-6 py-4 text-right">
-                                    <p class="font-bold text-[#111827] text-xs">Rs. {{ disbursement.order.total_amount|floatformat:2 }}</p>
+                                    <p class="font-bold text-[#111827] text-xs">Rs. {{ disbursement.total_amount|floatformat:2 }}</p>
                                 </td>
                                 <td class="px-6 py-4 text-right">
                                     <p class="font-bold text-[#DC2626] text-xs">- Rs. {{ disbursement.admin_commission|floatformat:2 }}</p>
                                 </td>
-                                <td class="px-6 py-4 text-right bg-[#16A34A]/5">
+                                <td class="px-6 py-4 text-right">
                                     <p class="font-bold text-[#16A34A] text-sm">Rs. {{ disbursement.payout_amount|floatformat:2 }}</p>
                                 </td>
                                 <td class="px-6 py-4 text-center">
@@ -116,7 +112,7 @@
                             </tr>
                             {% empty %}
                             <tr>
-                                <td colspan="7" class="px-6 py-12 text-center">
+                                <td colspan="6" class="px-6 py-12 text-center">
                                     <div class="flex flex-col items-center justify-center">
                                         <div class="w-12 h-12 bg-[#F8FAFC] rounded-2xl flex items-center justify-center text-slate-400 border border-[#E5E7EB] mb-3">
                                             <i data-lucide="inbox" class="w-6 h-6"></i>
