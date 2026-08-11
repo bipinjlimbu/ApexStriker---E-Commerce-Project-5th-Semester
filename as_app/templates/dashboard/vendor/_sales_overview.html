@@ -89,7 +89,9 @@
                                         </div>
                                         <div class="space-y-0.5">
                                             {% for item in disbursement.order.items.all %}
-                                                <p class="text-xs font-bold text-[#111827] uppercase tracking-tight">{{ item.product.name }}</p>
+                                                {% if item.product.vendor == request.user.vendor_profile %}
+                                                    <p class="text-xs font-bold text-[#111827] uppercase tracking-tight">{{ item.product.name }}</p>
+                                                {% endif %}
                                             {% endfor %}
                                         </div>
                                     </div>
