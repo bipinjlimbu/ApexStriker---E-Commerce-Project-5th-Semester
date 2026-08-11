@@ -50,25 +50,31 @@
             </div>
 
             <div class="bg-white rounded-2xl border border-[#E5E7EB] shadow-sm overflow-hidden">
-                <div class="px-6 py-4 border-b border-[#E5E7EB] bg-[#F8FAFC]">
-                    <h3 class="font-bold text-[#111827] uppercase tracking-wider text-xs flex items-center gap-2">
-                        <i data-lucide="receipt" class="w-4 h-4 text-[#D62828]"></i> Sales & Payout Details
-                    </h3>
-                </div>
+
+                {% if sales_overview %}
+                    <div class="px-6 py-4 border-b border-[#E5E7EB] bg-[#F8FAFC]">
+                        <h3 class="font-bold text-[#111827] uppercase tracking-wider text-xs flex items-center gap-2">
+                            <i data-lucide="receipt" class="w-4 h-4 text-[#D62828]"></i> Sales & Payout Details
+                        </h3>
+                    </div>
+                {% endif %}
                 
                 <div class="overflow-x-auto">
                     <table class="w-full text-left min-w-[1100px]">
-                        <thead>
-                            <tr class="bg-[#F8FAFC] border-b border-[#E5E7EB]">
-                                <th class="px-6 py-4 text-[10px] font-bold text-[#475569] uppercase tracking-wider">Order Number</th>
-                                <th class="px-6 py-4 text-[10px] font-bold text-[#475569] uppercase tracking-wider">Items Purchased</th>
-                                <th class="px-6 py-4 text-[10px] font-bold text-[#475569] uppercase tracking-wider text-center">Quantity</th>
-                                <th class="px-6 py-4 text-[10px] font-bold text-[#475569] uppercase tracking-wider text-right">Total Price</th>
-                                <th class="px-6 py-4 text-[10px] font-bold text-[#DC2626] uppercase tracking-wider text-right">Platform Fee</th>
-                                <th class="px-6 py-4 text-[10px] font-bold text-[#16A34A] uppercase tracking-wider text-right">My Earnings</th>
-                                <th class="px-6 py-4 text-[10px] font-bold text-[#475569] uppercase tracking-wider text-center">Status</th>
-                            </tr>
-                        </thead>
+                        {% if sales_overview %}
+                            <thead>
+                                <tr class="bg-[#F8FAFC] border-b border-[#E5E7EB]">
+                                    <th class="px-6 py-4 text-[10px] font-bold text-[#475569] uppercase tracking-wider">Order Number</th>
+                                    <th class="px-6 py-4 text-[10px] font-bold text-[#475569] uppercase tracking-wider">Items Purchased</th>
+                                    <th class="px-6 py-4 text-[10px] font-bold text-[#475569] uppercase tracking-wider text-center">Quantity</th>
+                                    <th class="px-6 py-4 text-[10px] font-bold text-[#475569] uppercase tracking-wider text-right">Total Price</th>
+                                    <th class="px-6 py-4 text-[10px] font-bold text-[#DC2626] uppercase tracking-wider text-right">Platform Fee</th>
+                                    <th class="px-6 py-4 text-[10px] font-bold text-[#16A34A] uppercase tracking-wider text-right">My Earnings</th>
+                                    <th class="px-6 py-4 text-[10px] font-bold text-[#475569] uppercase tracking-wider text-center">Status</th>
+                                </tr>
+                            </thead>
+                        {% endif %}
+                        
                         <tbody class="divide-y divide-[#E5E7EB]">
                             {% for disbursement in sales_overview %}
                             <tr class="hover:bg-[#F8FAFC]/60 transition-colors group">
