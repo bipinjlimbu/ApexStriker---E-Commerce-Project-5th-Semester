@@ -60,6 +60,11 @@
                     <i data-lucide="bar-chart-3" class="w-4 h-4 transition-transform group-hover:scale-110"></i>
                     <span>Sales & Earnings</span>
                 </a>
+
+                <a href="?section=received-reviews" class="flex items-center gap-3.5 px-3.5 py-3 rounded-xl transition-all font-bold text-xs uppercase tracking-wider group {% if section == 'received-reviews' %}bg-[#D62828] text-white shadow-md shadow-red-900/20 ring-1 ring-white/10{% else %}text-slate-300 hover:bg-slate-800/80 hover:text-white{% endif %}">
+                    <i data-lucide="star" class="w-4 h-4 transition-transform group-hover:scale-110"></i>
+                    <span>Received Reviews</span>
+                </a>
             </div>
 
             <div class="space-y-1.5">
@@ -110,6 +115,10 @@
         {% elif section == 'sales-overview' %}
 
         {% include 'dashboard/vendor/_sales_overview.html' %}
+
+        {% elif section == 'received-reviews' %}
+
+        {% include 'dashboard/vendor/_received_reviews.html' %}
 
         {% elif section == 'pending-order-items' %}
 
