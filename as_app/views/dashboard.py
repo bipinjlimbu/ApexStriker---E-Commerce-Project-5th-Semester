@@ -270,6 +270,9 @@ def customer_dashboard_view(request):
             orders = orders.order_by('total_amount')
             
         context['orders'] = orders
+        
+    if section == 'total-spent':
+        context['total_spent'] = None
     
     return render(request, 'dashboard/customer_dashboard.html', context)
 
