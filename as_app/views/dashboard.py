@@ -277,7 +277,7 @@ def customer_dashboard_view(request):
         context['spent_orders'] = Order.objects.filter(customer=request.user.customer_profile, status='completed').order_by('-created_at')
         
     if section == 'my-reviews':
-        context['my_reviews'] = None
+        context['my_reviews'] = Review.objects.filter(customer=request.user.customer_profile).order_by('-created_at')
     
     return render(request, 'dashboard/customer_dashboard.html', context)
 
