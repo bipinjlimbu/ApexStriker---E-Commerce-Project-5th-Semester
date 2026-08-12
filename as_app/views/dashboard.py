@@ -272,7 +272,7 @@ def customer_dashboard_view(request):
         context['orders'] = orders
         
     if section == 'total-spent':
-        context['total_spent'] = None
+        context['spent_orders'] = Order.objects.filter(customer=request.user.customer_profile, status='completed').order_by('-created_at')
     
     return render(request, 'dashboard/customer_dashboard.html', context)
 
