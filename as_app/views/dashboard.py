@@ -245,6 +245,7 @@ def customer_dashboard_view(request):
     context = {
         'completed_orders_count': Order.objects.filter(customer=request.user.customer_profile, status='completed').count(),
         'pending_orders_count': Order.objects.filter(customer=request.user.customer_profile, status='paid').count(),
+        'total_spent': sum(order.total_amount for order in Order.objects.filter(customer=request.user.customer_profile, status='completed')),
         'section': section,
     }
     
