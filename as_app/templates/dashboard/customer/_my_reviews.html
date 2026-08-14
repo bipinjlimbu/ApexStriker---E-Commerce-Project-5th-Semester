@@ -81,11 +81,18 @@
                             </span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-right">
-                            <a href="/products/review/delete/{{ review.id }}/" 
-                               class="inline-flex items-center justify-center h-9 w-9 rounded-xl bg-red-50 text-[#DC2626] hover:bg-[#DC2626] hover:text-white transition-all duration-200 border border-red-100 shadow-sm" 
-                               title="Delete Review">
-                                <i data-lucide="trash-2" class="w-4 h-4"></i>
-                            </a>
+                            <div class="flex items-center justify-end gap-2">
+                                <a href="/products/review/edit/{{ review.id }}/" 
+                                   class="inline-flex items-center justify-center h-9 w-9 rounded-xl bg-slate-100 text-slate-700 hover:bg-[#0F172A] hover:text-white transition-all duration-200 border border-slate-200 shadow-sm" 
+                                   title="Edit Review">
+                                    <i data-lucide="pencil" class="w-4 h-4"></i>
+                                </a>
+                                <a href="/products/review/delete/{{ review.id }}/" 
+                                   class="inline-flex items-center justify-center h-9 w-9 rounded-xl bg-red-50 text-[#DC2626] hover:bg-[#DC2626] hover:text-white transition-all duration-200 border border-red-100 shadow-sm" 
+                                   title="Delete Review">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                </a>
+                            </div>
                         </td>
                     </tr>
                     {% empty %}
