@@ -81,6 +81,11 @@
                         <i data-lucide="flag" class="w-4 h-4 transition-transform group-hover:scale-110"></i>
                         <span>Reported Users</span>
                     </div>
+                    {% if pending_reports_count > 0 %}
+                        <span class="bg-[#F4B400] text-[#0F172A] font-extrabold px-2 py-0.5 rounded-full text-[10px] shadow-sm">
+                            {{ pending_reports_count }}
+                        </span>
+                    {% endif %}
                 </a>
             </div>
         </nav>
