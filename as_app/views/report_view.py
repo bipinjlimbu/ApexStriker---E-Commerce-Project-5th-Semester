@@ -66,8 +66,8 @@ def resolve_report_view(request, report_id):
 def delete_report_view(request, report_id):
     report = Report.objects.get(id=report_id)
     
-    if request.user.role != 'admin':
-        messages.error(request, "Only admins can delete reports.")
+    if request.user.role != 'admin' or report.reporter != request.user:
+        messages.error(request, "Only the reporter or an admin can delete reports.")
         return redirect(f'/reports/{report.id}/')
     
     report.delete()
