@@ -278,6 +278,9 @@ def customer_dashboard_view(request):
         
     if section == 'my-reviews':
         context['my_reviews'] = Review.objects.filter(customer=request.user.customer_profile).order_by('-created_at')
+        
+    if section == 'reported-users':
+        context['reported_users'] = None
     
     return render(request, 'dashboard/customer_dashboard.html', context)
 
