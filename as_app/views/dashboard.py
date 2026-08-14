@@ -247,6 +247,7 @@ def customer_dashboard_view(request):
         'pending_orders_count': Order.objects.filter(customer=request.user.customer_profile, status='paid').count(),
         'total_spent': sum(order.total_amount for order in Order.objects.filter(customer=request.user.customer_profile, status='completed')),
         'avg_order_value': Order.objects.filter(customer=request.user.customer_profile, status='completed').aggregate(avg_value=Avg('total_amount'))['avg_value'] if Order.objects.filter(customer=request.user.customer_profile, status='completed').exists() else 0,
+        'pending_reports_count': Report.objects.filter(reporter=request.user, is_resolved=False).count(),
         'section': section,
     }
     
