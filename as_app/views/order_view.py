@@ -82,6 +82,7 @@ def remove_from_cart_view(request, item_id):
     messages.success(request, "Item removed from cart successfully.")
     return redirect('/cart/')
 
+@login_required
 def dispatch_item_view(request, item_id):
     if request.user.role != 'vendor':
         messages.error(request, "You are not authorized to perform this action.")
@@ -99,6 +100,7 @@ def dispatch_item_view(request, item_id):
     messages.success(request, f"Order item '{order_item.product.name}' marked as dispatched and customer notified.")
     return redirect('/dashboard/vendor/?section=pending-order-items')
 
+@login_required
 def receive_item_view(request, item_id):
     if request.user.role != 'admin':
         messages.error(request, "You are not authorized to perform this action.")
@@ -111,6 +113,7 @@ def receive_item_view(request, item_id):
     messages.success(request, f"Order item '{order_item.product.name}' marked as received by admin.")
     return redirect('/dashboard/admin/?section=order-items-tracking')
 
+@login_required
 def mark_order_as_pickup(request, order_id):
     if request.user.role != 'admin':
         messages.error(request, "You are not authorized to perform this action.")
@@ -138,6 +141,7 @@ def mark_order_as_pickup(request, order_id):
     messages.success(request, f"Order #{order.id} marked as picked up and in transit.")
     return redirect('/dashboard/admin/?section=shipping-control')
 
+@login_required
 def mark_order_as_shipped(request, order_id):
     if request.user.role != 'admin':
         messages.error(request, "You are not authorized to perform this action.")
@@ -161,6 +165,7 @@ def mark_order_as_shipped(request, order_id):
     messages.success(request, f"Order #{order.id} marked as shipped and customer notified.")
     return redirect('/dashboard/admin/?section=shipping-control')
 
+@login_required
 def confirm_delivery_view(request, order_id):
     if request.user.role != 'customer':
         messages.error(request, "You are not authorized to perform this action.")
@@ -200,6 +205,7 @@ def confirm_delivery_view(request, order_id):
     messages.success(request, f"Thank you for confirming delivery of order #{order.id}.")
     return redirect('/dashboard/customer/?section=my-orders')
 
+@login_required
 def cancel_order_view(request, order_id):
     if not request.user.is_authenticated or request.user.role != 'customer':
         messages.error(request, "You are not authorized to perform this action.")
@@ -226,6 +232,7 @@ def cancel_order_view(request, order_id):
     messages.success(request, f"Order #{order.id} has been cancelled successfully.")
     return redirect('/dashboard/customer/?section=my-orders')
 
+@login_required
 def remove_order_view(request, order_id):
     if not request.user.is_authenticated or request.user.role != 'customer':
         messages.error(request, "You are not authorized to perform this action.")
