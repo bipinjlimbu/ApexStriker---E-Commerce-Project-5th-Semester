@@ -256,7 +256,7 @@ def edit_product_view(request, product_id):
 
 @login_required
 def delete_product_view(request, product_id):
-    if request.user.role != 'vendor' and not Vendor.objects.filter(user=request.user, is_active=True).exists():
+    if not request.user.is_staff and not (request.user.role == 'vendor' and Vendor.objects.filter(user=request.user, user__is_active=True).exists()):
         messages.error(request, "You are not authorized to delete products.")
         return redirect('/')
     
@@ -265,7 +265,11 @@ def delete_product_view(request, product_id):
     product.delete()
     
     messages.success(request, f"Product '{product_name}' has been deleted successfully.")
-    return redirect('/dashboard/vendor/')
+    
+    if request.user.is_staff:
+        return redirect('/dashboard/admin/?section=product-management')
+    else:   
+        return redirect('/dashboard/vendor/?section=product-management')
 
 def single_product_view(request, product_id):
     product = Product.objects.get(id=product_id)
