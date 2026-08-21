@@ -127,48 +127,6 @@ def admin_dashboard_view(request):
     return render(request, 'dashboard/admin_dashboard.html', context)
 
 @login_required
-def approve_vendor_view(request, vendor_id):
-    if request.user.role != 'admin':
-        messages.error(request, "You are not authorized to perform this action.")
-        return redirect('/')
-    
-    try:
-        vendor = Vendor.objects.get(id=vendor_id)
-        vendor.status = Vendor.Status.APPROVED
-        vendor.save()
-        
-        subject = "ApexStriker - Vendor Application Approved"
-        message = f"Hi {vendor.user.first_name},\n\nCongratulations! Your vendor application for '{vendor.shop_name}' has been approved. You can now log in to your vendor dashboard and start listing your products.\n\nThank you for being a part of ApexStriker!"
-        threading.Thread(target=send_email_async, args=(subject, message, vendor.user.email)).start()
-        
-        messages.success(request, f"Vendor '{vendor.shop_name}' has been approved successfully.")
-    except Vendor.DoesNotExist:
-        messages.error(request, "Vendor not found.")
-    
-    return redirect('/dashboard/admin/?section=pending-vendors')
-
-@login_required
-def reject_vendor_view(request, vendor_id):
-    if request.user.role != 'admin':
-        messages.error(request, "You are not authorized to perform this action.")
-        return redirect('/')
-    
-    try:
-        vendor = Vendor.objects.get(id=vendor_id)
-        vendor.status = Vendor.Status.REJECTED
-        vendor.save()
-        
-        subject = "ApexStriker - Vendor Application Rejected"
-        message = f"Hi {vendor.user.first_name},\n\nWe regret to inform you that your vendor application for '{vendor.shop_name}' has been rejected. If you have any questions or would like to reapply, please contact our support team.\n\nThank you for your interest in ApexStriker."
-        threading.Thread(target=send_email_async, args=(subject, message, vendor.user.email)).start()
-        
-        messages.success(request, f"Vendor '{vendor.shop_name}' has been rejected.")
-    except Vendor.DoesNotExist:
-        messages.error(request, "Vendor not found.")
-    
-    return redirect('/dashboard/admin/?section=pending-vendors')
-
-@login_required
 def vendor_dashboard_view(request):
     if request.user.role != 'vendor':
         messages.error(request, "You are not authorized to access the vendor dashboard.")
