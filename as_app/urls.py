@@ -4,12 +4,12 @@ from .views.main_view import home_view, verify_email_view, password_reset_view, 
 from .views.profile_view import profile_view, edit_profile_view, resend_verification_email, delete_profile_view, profile_status_toggle_view
 from .views.brand_view import brands_view, add_brand_view, approve_brand_view, edit_brand_view, delete_brand_view
 from .views.product_view import add_product_view, marketplace_view, edit_product_view, delete_product_view, single_product_view, product_status_toggle_view
-from .views.order_view import add_to_cart_view, cart_view, update_cart_quantity, remove_from_cart_view, dispatch_item_view, receive_item_view, mark_order_as_pickup, mark_order_as_shipped, confirm_delivery_view
+from .views.order_view import add_to_cart_view, cart_view, update_cart_quantity, remove_from_cart_view, dispatch_item_view, receive_item_view, mark_order_as_pickup, mark_order_as_shipped, confirm_delivery_view,  cancel_order_view, remove_order_view
 from .views.payment_view import initiate_esewa_payment, payment_success, payment_failed, payment_payout
 from .views.review_view import add_review_view, edit_review_view, delete_review_view
 from .views.report_view import add_report_view, resolve_report_view, delete_report_view
 from .views.wishlist_view import wishlist_view, wishlist_toggle_view, wishlist_remove_view
-from .views.dashboard import admin_dashboard_view, approve_vendor_view, reject_vendor_view, vendor_dashboard_view, customer_dashboard_view, cancel_order_view, remove_order_view
+from .views.dashboard import admin_dashboard_view, approve_vendor_view, reject_vendor_view, vendor_dashboard_view, customer_dashboard_view
 
 urlpatterns = [
     path('', home_view, name='home_page'),
