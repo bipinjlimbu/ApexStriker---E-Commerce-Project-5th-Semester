@@ -44,7 +44,7 @@ def admin_dashboard_view(request):
         context['brands'] = Brand.objects.all()
         
     elif section == 'product-management':
-        context['products'] = None
+        context['products'] = Product.objects.all().order_by('-created_at')
         
     elif section == 'order-items-tracking':
         q = request.GET.get('q', '')
