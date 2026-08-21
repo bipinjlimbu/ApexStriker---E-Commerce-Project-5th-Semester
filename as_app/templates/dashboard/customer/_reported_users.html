@@ -55,8 +55,14 @@
                         <tr class="hover:bg-[#F8FAFC] transition-colors duration-150">
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center gap-3">
-                                    <div class="h-10 w-10 bg-[#0F172A] rounded-xl flex items-center justify-center text-[#F4B400] font-black text-xs shrink-0">
-                                        <i data-lucide="user" class="w-5 h-5"></i>
+                                    <div class="h-10 w-10 rounded-xl flex items-center justify-center shrink-0 overflow-hidden">
+                                        {% if report.reported_user.profile_picture %}
+                                            <img src="{{ report.reported_user.profile_picture.url }}" alt="Profile Picture" class="h-full w-full object-cover rounded-xl">
+                                        {% else %}
+                                            <div class="h-full w-full bg-[#0F172A] text-[#F4B400] flex items-center justify-center rounded-xl">
+                                                <i data-lucide="user" class="w-5 h-5"></i>
+                                            </div>
+                                        {% endif %}
                                     </div>
                                     <div>
                                         <p class="font-bold text-[#111827] text-sm">{{ report.reported_user.get_full_name|default:report.reported_user.username }}</p>
