@@ -137,7 +137,7 @@
                                         {% endif %}
                                     </div>
                                     <div class="space-y-0.5">
-                                        <div class="flex items-center gap-1.5">
+                                        <div class="flex items-center gap-1.5 flex-wrap">
                                             <span class="bg-[#0F172A] text-white text-[9px] font-bold px-1.5 py-0.5 rounded tracking-wide uppercase">
                                                 {{ product.brand.name }}
                                             </span>
@@ -148,6 +148,12 @@
                                         <p class="font-bold text-slate-900 text-xs leading-snug">
                                             {{ product.name }}
                                         </p>
+                                        {% if product.vendor.shop_name %}
+                                            <p class="text-[10px] font-semibold text-slate-500 flex items-center gap-1 pt-0.5">
+                                                <i data-lucide="store" class="w-3 h-3 text-[#D62828]"></i>
+                                                <span>{{ product.vendor.shop_name }}</span>
+                                            </p>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </td>
