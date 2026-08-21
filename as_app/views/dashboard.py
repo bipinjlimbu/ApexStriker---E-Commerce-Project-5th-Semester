@@ -21,9 +21,11 @@ def admin_dashboard_view(request):
         return redirect('/')
     
     section = request.GET.get('section', 'member-list')
+    brands = Brand.objects.filter(is_active=True).order_by('name')
     
     context = {
         'section' : section,
+        'brands': brands,
         'total_pending_vendors': Vendor.objects.filter(status=Vendor.Status.PENDING).count(),
         'total_pending_brands': Brand.objects.filter(is_active=False).count(),
         'total_pending_payouts': Disbursement.objects.filter(is_transferred=False).count(),
@@ -44,7 +46,39 @@ def admin_dashboard_view(request):
         context['brands'] = Brand.objects.all()
         
     elif section == 'product-management':
-        context['products'] = Product.objects.all().order_by('-created_at')
+        q = request.GET.get('q', '')
+        category = request.GET.get('category', 'all')
+        position = request.GET.get('position', 'all')
+        brand = request.GET.get('brand', 'all')
+        sort = request.GET.get('sort', 'latest')
+        
+        products = Product.objects.all().order_by('-created_at')
+        
+        if q:
+            query = Q(name__icontains=q) | Q(description__icontains=q) | Q(category__icontains=q) | Q(position__icontains=q) | Q(brand__name__icontains=q)
+            products = products.filter(query)
+            
+        if category != 'all':
+            products = products.filter(category=category)
+            
+        if brand != 'all':
+            products = products.filter(brand__id=brand)
+            
+        if position != 'all':
+            products = products.filter(position=position)
+            
+        if sort == 'oldest':
+            products = products.order_by('created_at')
+        elif sort == 'price-low-high':
+            products = products.order_by('price')
+        elif sort == 'price-high-low':
+            products = products.order_by('-price')
+        elif sort == 'stock-low-high':
+            products = products.order_by('stock')
+        elif sort == 'stock-high-low':
+            products = products.order_by('-stock')
+        
+        context['products'] = products
         
     elif section == 'order-items-tracking':
         q = request.GET.get('q', '')
