@@ -43,6 +43,9 @@ def admin_dashboard_view(request):
     elif section == 'brand-management':
         context['brands'] = Brand.objects.all()
         
+    elif section == 'product-management':
+        context['products'] = None
+        
     elif section == 'order-items-tracking':
         q = request.GET.get('q', '')
         status = request.GET.get('status', 'all')
