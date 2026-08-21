@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from ..models import Cart, Order, OrderItem, Disbursement
 from django.contrib import messages
 import requests
@@ -9,6 +10,7 @@ import hashlib
 import base64
 import uuid
 
+@login_required
 def initiate_esewa_payment(request):
     if request.method == "POST":
         total_amount = request.POST.get('total_amount')
@@ -183,10 +185,12 @@ def payment_success(request):
         messages.error(request, "Verification Failed. Protocol Aborted.")
         return redirect('payment_failed')
     
+@login_required
 def payment_failed(request):
     messages.error(request, "Payment Failed or Cancelled. Please try again.")
     return render(request, 'main/payment_failed_page.html')
 
+@login_required
 def payment_payout(request, payout_id):
     if request.method == "POST":
         bank_ref_no = request.POST.get('bank_ref_no')
