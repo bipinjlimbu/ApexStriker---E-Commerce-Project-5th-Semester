@@ -60,12 +60,13 @@
                     </span>
                     {% endif %}
 
-                    <a href="/wishlist/remove/{{ item.id }}/" 
-                       title="Remove from wishlist" 
-                       aria-label="Remove from wishlist"
-                       class="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 backdrop-blur-md text-[#DC2626] hover:bg-[#DC2626] hover:text-white flex items-center justify-center transition-all duration-200 shadow-md">
+                    <button type="button" 
+                            onclick="openDeleteModal('/wishlist/remove/{{ item.id }}/', 'Are you sure you want to remove {{ item.product.name|escapejs }} from your wishlist?')"
+                            title="Remove from wishlist" 
+                            aria-label="Remove from wishlist"
+                            class="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 backdrop-blur-md text-[#DC2626] hover:bg-[#DC2626] hover:text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer">
                         <i data-lucide="trash-2" class="w-4 h-4"></i>
-                    </a>
+                    </button>
                 </div>
 
                 <div class="p-5 flex flex-col flex-grow justify-between space-y-4">
@@ -149,11 +150,83 @@
 
     </main>
 
+    <div id="deleteModal" class="fixed inset-0 z-50 flex items-center justify-center bg-[#0F172A]/60 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300 px-4">
+        <div id="deleteModalCard" class="bg-white border border-[#E5E7EB] rounded-3xl max-w-sm w-full p-6 sm:p-8 shadow-2xl transform scale-95 transition-all duration-300 space-y-6 text-center">
+            
+            <div class="w-16 h-16 bg-[#D62828]/10 border border-[#D62828]/20 rounded-2xl flex items-center justify-center mx-auto text-[#D62828]">
+                <i data-lucide="heart-off" class="w-8 h-8"></i>
+            </div>
+            <div class="space-y-2">
+                <h3 class="text-xl font-extrabold text-[#111827] uppercase tracking-tight">Remove Wishlist Item</h3>
+                <p id="deleteModalMessage" class="text-xs text-[#475569] leading-relaxed">
+                    Are you sure you want to remove this item from your wishlist?
+                </p>
+            </div>
+            <div class="grid grid-cols-2 gap-3 pt-2">
+                <button type="button" onclick="closeDeleteModal()" class="bg-[#F8FAFC] hover:bg-[#E5E7EB] text-[#111827] font-extrabold py-3 px-4 rounded-xl border border-[#E5E7EB] transition-all text-xs uppercase tracking-wider cursor-pointer">
+                    Cancel
+                </button>
+                <a id="deleteModalConfirmBtn" href="#" class="bg-[#D62828] hover:bg-[#A61E1E] text-white font-extrabold py-3 px-4 rounded-xl shadow-md shadow-[#D62828]/20 transition-all text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 cursor-pointer">
+                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                    <span>Remove</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
     {% include 'components/_footer.html' %}
 
     <script src="{% static 'js/lucide.min.js' %}"></script>
     <script>
-        lucide.createIcons();
+        if (window.lucide && typeof window.lucide.createIcons === 'function') {
+            window.lucide.createIcons();
+        }
+
+        const deleteModal = document.getElementById('deleteModal');
+        const deleteModalCard = document.getElementById('deleteModalCard');
+        const deleteModalMessage = document.getElementById('deleteModalMessage');
+        const deleteModalConfirmBtn = document.getElementById('deleteModalConfirmBtn');
+
+        function openDeleteModal(url, message = 'Are you sure you want to remove this item from your wishlist?') {
+            if (!deleteModal || !deleteModalCard) return;
+            if (deleteModalMessage) deleteModalMessage.innerText = message;
+            if (deleteModalConfirmBtn) deleteModalConfirmBtn.setAttribute('href', url);
+
+            deleteModal.classList.remove('opacity-0', 'pointer-events-none');
+            deleteModal.classList.add('opacity-100');
+            
+            deleteModalCard.classList.remove('scale-95');
+            deleteModalCard.classList.add('scale-100');
+            document.body.style.overflow = 'hidden';
+
+            if (window.lucide && typeof window.lucide.createIcons === 'function') {
+                window.lucide.createIcons();
+            }
+        }
+
+        function closeDeleteModal() {
+            if (!deleteModal || !deleteModalCard) return;
+            deleteModal.classList.remove('opacity-100');
+            deleteModal.classList.add('opacity-0', 'pointer-events-none');
+            
+            deleteModalCard.classList.remove('scale-100');
+            deleteModalCard.classList.add('scale-95');
+            document.body.style.overflow = '';
+        }
+
+        if (deleteModal) {
+            deleteModal.addEventListener('click', function(event) {
+                if (event.target === deleteModal) {
+                    closeDeleteModal();
+                }
+            });
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && deleteModal && !deleteModal.classList.contains('pointer-events-none')) {
+                closeDeleteModal();
+            }
+        });
     </script>
 </body>
 </html>
