@@ -1,82 +1,146 @@
-<nav class="bg-white/95 backdrop-blur-md border-b border-[#E5E7EB] sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex h-20 items-center justify-between gap-6">
-            
-            <div class="flex items-center gap-8">
-                <a href="/" class="flex items-center gap-2.5 group">
-                    <div class="bg-[#D62828] text-white p-2 rounded-xl group-hover:bg-[#A61E1E] transition-all duration-300 shadow-md shadow-[#D62828]/20 group-hover:scale-105">
-                        <i data-lucide="zap" class="w-5 h-5 fill-current"></i>
-                    </div>
-                    <span class="text-2xl font-black tracking-tight text-[#111827] uppercase">
-                        APEX<span class="text-[#D62828]">STRIKER</span>
-                    </span>
-                </a>
-
-                <div class="hidden lg:flex items-center gap-7">
-                    <a href="/" class="text-xs font-extrabold uppercase tracking-wider hover:text-[#D62828] transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-[#D62828] hover:after:w-full after:transition-all {% if request.path == '/' %}text-[#111827] after:w-full{% else %}text-[#475569] after:w-0{% endif %}">Home</a>
-                    
-                    <a href="/marketplace/" class="text-xs font-extrabold uppercase tracking-wider hover:text-[#D62828] transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-[#D62828] hover:after:w-full after:transition-all {% if request.path == '/marketplace/' and not request.GET.sort == 'latest' %}text-[#111827] after:w-full{% else %}text-[#475569] after:w-0{% endif %}">Marketplace</a>
-                    
-                    <a href="/marketplace/?sort=latest" class="text-xs font-extrabold uppercase tracking-wider hover:text-[#D62828] transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-[#D62828] hover:after:w-full after:transition-all {% if request.GET.sort == 'latest' %}text-[#111827] after:w-full{% else %}text-[#475569] after:w-0{% endif %}">New Arrivals</a>
-                    
-                    <a href="/brands/" class="text-xs font-extrabold uppercase tracking-wider hover:text-[#D62828] transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-[#D62828] hover:after:w-full after:transition-all {% if request.path == '/brands/' %}text-[#111827] after:w-full{% else %}text-[#475569] after:w-0{% endif %}">Brands</a>
-                </div>
-            </div>
-
-            <div class="flex-1 max-w-md hidden sm:block">
-                <form action="/marketplace/" method="GET" class="relative w-full m-0">
-                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#475569]">
-                        <i data-lucide="search" class="w-4 h-4"></i>
-                    </div>
-                    <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Search boots, jerseys, equipment..." 
-                           class="w-full pl-10 pr-4 py-2.5 bg-[#F8FAFC] border border-[#E5E7EB] rounded-xl text-xs font-semibold text-[#111827] placeholder:text-[#475569] focus:bg-white focus:border-[#D62828] focus:ring-2 focus:ring-[#D62828]/20 outline-none transition-all">
-                </form>
-            </div>
-
-            <div class="flex items-center gap-3">
-                {% if request.user.is_authenticated and request.user.role == 'customer' %}
-                <a href="/wishlist/" class="relative p-2.5 text-[#0F172A] hover:bg-[#F8FAFC] rounded-xl border border-[#E5E7EB] hover:border-[#D62828]/30 transition-all flex items-center justify-center group" title="Wishlist">
-                    <i data-lucide="heart" class="w-5 h-5 group-hover:text-[#D62828] transition-colors"></i>
-                </a>
-                <a href="/cart/" class="relative p-2.5 text-[#0F172A] hover:bg-[#F8FAFC] rounded-xl border border-[#E5E7EB] hover:border-[#D62828]/30 transition-all flex items-center justify-center group" title="Cart">
-                    <i data-lucide="shopping-cart" class="w-5 h-5 group-hover:text-[#D62828] transition-colors"></i>
-                    {% if cart_count > 0 %}
-                        <span class="absolute -top-1.5 -right-1.5 bg-[#D62828] text-white text-[10px] font-black px-1.5 py-0.5 rounded-full border-2 border-white shadow-sm min-w-[20px] text-center">
-                            {{ cart_count }}
-                        </span>
-                    {% endif %}
-                </a>
-                {% endif %}
-
-                {% if user.is_authenticated %}
-                <div class="flex items-center gap-2">
-                    <a href="/profile/{{ user.id }}" class="flex items-center gap-3 p-1.5 pl-2 pr-3 bg-[#F8FAFC] hover:bg-white border border-[#E5E7EB] hover:border-[#D62828]/30 rounded-xl transition-all group">
-                        <div class="w-8 h-8 rounded-lg overflow-hidden bg-[#0F172A] text-white flex items-center justify-center shrink-0 border border-[#E5E7EB]">
-                            {% if user.profile_picture %}
-                                <img src="{{ user.profile_picture.url }}" alt="Profile Picture" class="w-full h-full object-cover">
-                            {% else %}
-                                <i data-lucide="user" class="w-4 h-4 text-[#F4B400]"></i>
-                            {% endif %}
-                        </div>
-                        <span class="text-xs font-bold text-[#111827] group-hover:text-[#D62828] transition-colors hidden xl:inline">{{ user.username }}</span>
-                    </a>
-
-                    <a href="/logout/" class="p-2.5 text-[#475569] hover:text-[#DC2626] hover:bg-[#DC2626]/10 rounded-xl border border-[#E5E7EB] hover:border-[#DC2626]/30 transition-all flex items-center justify-center group" title="Logout">
-                        <i data-lucide="log-out" class="w-5 h-5"></i>
-                    </a>
-                </div>
-                {% else %}
-                <div class="flex items-center gap-2">
-                    <a href="/login/" class="text-xs font-extrabold uppercase tracking-wider text-[#111827] hover:text-[#D62828] px-3 py-2.5 rounded-xl transition-colors">
-                        Login
-                    </a>
-                    <a href="/register/" class="bg-[#D62828] hover:bg-[#A61E1E] text-white text-xs font-extrabold uppercase tracking-wider px-4 py-2.5 rounded-xl transition-all shadow-md shadow-[#D62828]/20 hover:shadow-lg hover:shadow-[#D62828]/30 hover:-translate-y-0.5">
-                        Register
-                    </a>
-                </div>
-                {% endif %}
-            </div>
-
-        </div>
-    </div>
+<nav class="bg-white/95 backdrop-blur-md border-b border-[#E5E7EB] sticky top-0 z-50"> 
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"> 
+        <div class="flex h-20 items-center justify-between gap-6"> 
+             
+            <div class="flex items-center gap-8"> 
+                <a href="/" class="flex items-center gap-2.5 group"> 
+                    <div class="bg-[#D62828] text-white p-2 rounded-xl group-hover:bg-[#A61E1E] transition-all duration-300 shadow-md shadow-[#D62828]/20 group-hover:scale-105"> 
+                        <i data-lucide="zap" class="w-5 h-5 fill-current"></i> 
+                    </div> 
+                    <span class="text-2xl font-black tracking-tight text-[#111827] uppercase"> 
+                        APEX<span class="text-[#D62828]">STRIKER</span> 
+                    </span> 
+                </a> 
+ 
+                <div class="hidden lg:flex items-center gap-7"> 
+                    <a href="/" class="text-xs font-extrabold uppercase tracking-wider hover:text-[#D62828] transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-[#D62828] hover:after:w-full after:transition-all {% if request.path == '/' %}text-[#111827] after:w-full{% else %}text-[#475569] after:w-0{% endif %}">Home</a> 
+                     
+                    <a href="/marketplace/" class="text-xs font-extrabold uppercase tracking-wider hover:text-[#D62828] transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-[#D62828] hover:after:w-full after:transition-all {% if request.path == '/marketplace/' and not request.GET.sort == 'latest' %}text-[#111827] after:w-full{% else %}text-[#475569] after:w-0{% endif %}">Marketplace</a> 
+                     
+                    <a href="/marketplace/?sort=latest" class="text-xs font-extrabold uppercase tracking-wider hover:text-[#D62828] transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-[#D62828] hover:after:w-full after:transition-all {% if request.GET.sort == 'latest' %}text-[#111827] after:w-full{% else %}text-[#475569] after:w-0{% endif %}">New Arrivals</a> 
+                     
+                    <a href="/brands/" class="text-xs font-extrabold uppercase tracking-wider hover:text-[#D62828] transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-[#D62828] hover:after:w-full after:transition-all {% if request.path == '/brands/' %}text-[#111827] after:w-full{% else %}text-[#475569] after:w-0{% endif %}">Brands</a> 
+                </div> 
+            </div> 
+ 
+            <div class="flex-1 max-w-md hidden sm:block"> 
+                <form action="/marketplace/" method="GET" class="relative w-full m-0"> 
+                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#475569]"> 
+                        <i data-lucide="search" class="w-4 h-4"></i> 
+                    </div> 
+                    <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Search boots, jerseys, equipment..."  
+                           class="w-full pl-10 pr-4 py-2.5 bg-[#F8FAFC] border border-[#E5E7EB] rounded-xl text-xs font-semibold text-[#111827] placeholder:text-[#475569] focus:bg-white focus:border-[#D62828] focus:ring-2 focus:ring-[#D62828]/20 outline-none transition-all"> 
+                </form> 
+            </div> 
+ 
+            <div class="flex items-center gap-3"> 
+                {% if request.user.is_authenticated and request.user.role == 'customer' %} 
+                <a href="/wishlist/" class="relative p-2.5 text-[#0F172A] hover:bg-[#F8FAFC] rounded-xl border border-[#E5E7EB] hover:border-[#D62828]/30 transition-all flex items-center justify-center group" title="Wishlist"> 
+                    <i data-lucide="heart" class="w-5 h-5 group-hover:text-[#D62828] transition-colors"></i> 
+                </a> 
+                <a href="/cart/" class="relative p-2.5 text-[#0F172A] hover:bg-[#F8FAFC] rounded-xl border border-[#E5E7EB] hover:border-[#D62828]/30 transition-all flex items-center justify-center group" title="Cart"> 
+                    <i data-lucide="shopping-cart" class="w-5 h-5 group-hover:text-[#D62828] transition-colors"></i> 
+                    {% if cart_count > 0 %} 
+                        <span class="absolute -top-1.5 -right-1.5 bg-[#D62828] text-white text-[10px] font-black px-1.5 py-0.5 rounded-full border-2 border-white shadow-sm min-w-[20px] text-center"> 
+                            {{ cart_count }} 
+                        </span> 
+                    {% endif %} 
+                </a> 
+                {% endif %} 
+ 
+                {% if user.is_authenticated %} 
+                <div class="flex items-center gap-2"> 
+                    <a href="/profile/{{ user.id }}" class="flex items-center gap-3 p-1.5 pl-2 pr-3 bg-[#F8FAFC] hover:bg-white border border-[#E5E7EB] hover:border-[#D62828]/30 rounded-xl transition-all group"> 
+                        <div class="w-8 h-8 rounded-lg overflow-hidden bg-[#0F172A] text-white flex items-center justify-center shrink-0 border border-[#E5E7EB]"> 
+                            {% if user.profile_picture %} 
+                                <img src="{{ user.profile_picture.url }}" alt="Profile Picture" class="w-full h-full object-cover"> 
+                            {% else %} 
+                                <i data-lucide="user" class="w-4 h-4 text-[#F4B400]"></i> 
+                            {% endif %} 
+                        </div> 
+                        <span class="text-xs font-bold text-[#111827] group-hover:text-[#D62828] transition-colors hidden xl:inline">{{ user.username }}</span> 
+                    </a> 
+ 
+                    <button type="button" onclick="openLogoutModal()" class="p-2.5 text-[#475569] hover:text-[#D62828] hover:bg-[#D62828]/10 rounded-xl border border-[#E5E7EB] hover:border-[#D62828]/30 transition-all flex items-center justify-center group cursor-pointer" title="Logout"> 
+                        <i data-lucide="log-out" class="w-5 h-5"></i> 
+                    </button> 
+                </div> 
+                {% else %} 
+                <div class="flex items-center gap-2"> 
+                    <a href="/login/" class="text-xs font-extrabold uppercase tracking-wider text-[#111827] hover:text-[#D62828] px-3 py-2.5 rounded-xl transition-colors"> 
+                        Login 
+                    </a> 
+                    <a href="/register/" class="bg-[#D62828] hover:bg-[#A61E1E] text-white text-xs font-extrabold uppercase tracking-wider px-4 py-2.5 rounded-xl transition-all shadow-md shadow-[#D62828]/20 hover:shadow-lg hover:shadow-[#D62828]/30 hover:-translate-y-0.5"> 
+                        Register 
+                    </a> 
+                </div> 
+                {% endif %} 
+            </div> 
+ 
+        </div> 
+    </div> 
 </nav>
+
+<div id="logoutModal" class="fixed inset-0 z-50 flex items-center justify-center bg-[#0F172A]/60 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300 px-4">
+    <div id="logoutModalCard" class="bg-white border border-[#E5E7EB] rounded-3xl max-w-sm w-full p-6 sm:p-8 shadow-2xl transform scale-95 transition-all duration-300 space-y-6 text-center">
+        
+        <div class="w-16 h-16 bg-[#D62828]/10 border border-[#D62828]/20 rounded-2xl flex items-center justify-center mx-auto text-[#D62828]">
+            <i data-lucide="log-out" class="w-8 h-8"></i>
+        </div>
+        <div class="space-y-2">
+            <h3 class="text-xl font-extrabold text-[#111827] uppercase tracking-tight">Log Out</h3>
+            <p class="text-xs text-[#475569] leading-relaxed">
+                Are you sure you want to log out of ApexStriker? You will need to sign back in to access your saved items and account settings.
+            </p>
+        </div>
+        <form action="/logout/" method="POST" class="grid grid-cols-2 gap-3 pt-2">
+            {% csrf_token %}
+            <button type="button" onclick="closeLogoutModal()" class="bg-[#F8FAFC] hover:bg-[#E5E7EB] text-[#111827] font-extrabold py-3 px-4 rounded-xl border border-[#E5E7EB] transition-all text-xs uppercase tracking-wider cursor-pointer">
+                Cancel
+            </button>
+            <button type="submit" class="bg-[#D62828] hover:bg-[#A61E1E] text-white font-extrabold py-3 px-4 rounded-xl shadow-md shadow-[#D62828]/20 transition-all text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 cursor-pointer">
+                <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
+                <span>Log Out</span>
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+    const logoutModal = document.getElementById('logoutModal');
+    const logoutModalCard = document.getElementById('logoutModalCard');
+
+    function openLogoutModal() {
+        if (!logoutModal || !logoutModalCard) return;
+        logoutModal.classList.remove('opacity-0', 'pointer-events-none');
+        logoutModal.classList.add('opacity-100');
+        
+        logoutModalCard.classList.remove('scale-95');
+        logoutModalCard.classList.add('scale-100');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLogoutModal() {
+        if (!logoutModal || !logoutModalCard) return;
+        logoutModal.classList.remove('opacity-100');
+        logoutModal.classList.add('opacity-0', 'pointer-events-none');
+        
+        logoutModalCard.classList.remove('scale-100');
+        logoutModalCard.classList.add('scale-95');
+        document.body.style.overflow = '';
+    }
+
+    if (logoutModal) {
+        logoutModal.addEventListener('click', function(event) {
+            if (event.target === logoutModal) {
+                closeLogoutModal();
+            }
+        });
+    }
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' && logoutModal && !logoutModal.classList.contains('pointer-events-none')) {
+            closeLogoutModal();
+        }
+    });
+</script>
