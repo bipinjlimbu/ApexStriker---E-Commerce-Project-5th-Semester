@@ -2259,6 +2259,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(225 29 72 / var(--tw-bg-opacity));
 }
 
+.bg-slate-900\/60 {
+  background-color: rgb(15 23 42 / 0.6);
+}
+
 .bg-gradient-to-br {
   background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
 }
