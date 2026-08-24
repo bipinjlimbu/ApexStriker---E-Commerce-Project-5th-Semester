@@ -140,18 +140,25 @@
 
                 <div>
                     <div class="bg-white p-4 sm:p-5 rounded-3xl border border-[#E5E7EB] shadow-sm mb-6">
-                        {% if user.is_authenticated and user.id == product.vendor.user.id %}
+                        {% if user.is_authenticated and user.is_staff or user.is_superuser %}
+                            <div class="space-y-3">
+                                <a href="/dashboard/admin/?section=product-management" class="w-full flex items-center justify-center gap-2 bg-[#0F172A] hover:bg-[#D62828] text-white font-extrabold py-4 px-6 rounded-2xl transition-all duration-300 shadow-md text-sm tracking-wide">
+                                    <i data-lucide="layout-dashboard" class="w-5 h-5"></i> Manage Gear
+                                </a>
+                            </div>
+
+                        {% elif user.is_authenticated and user.id == product.vendor.user.id %}
                             <div class="space-y-3">
                                 <a href="/dashboard/vendor/?section=product-management" class="w-full flex items-center justify-center gap-2 bg-[#0F172A] hover:bg-[#D62828] text-white font-extrabold py-4 px-6 rounded-2xl transition-all duration-300 shadow-md text-sm tracking-wide">
                                     <i data-lucide="layout-dashboard" class="w-5 h-5"></i> Manage Gear
                                 </a>
                             </div>
 
-                        {% elif user.role == 'vendor' or user.is_staff %}
+                        {% elif user.role == 'vendor' %}
                             <div class="py-4 px-6 text-center bg-[#F8FAFC] border border-dashed border-[#E5E7EB] rounded-2xl">
                                 <i data-lucide="shield-alert" class="w-6 h-6 text-[#475569] mx-auto mb-2"></i>
                                 <p class="text-xs font-black text-[#111827] uppercase tracking-wider">Vendor Mode Active</p>
-                                <p class="text-xs text-[#475569] mt-1">Vendor and staff accounts cannot purchase products.</p>
+                                <p class="text-xs text-[#475569] mt-1">Vendor accounts cannot purchase products.</p>
                             </div>
 
                         {% elif product.stock <= 0 %}
