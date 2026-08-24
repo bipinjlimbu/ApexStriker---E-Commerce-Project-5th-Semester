@@ -269,11 +269,14 @@
                 {% for review in product.reviews.all %}
                 <div class="group relative bg-white p-6 rounded-3xl border border-[#E5E7EB] shadow-sm flex flex-col justify-between hover:border-[#D62828]/30 transition-all duration-300">
                     
-                    {% if user.is_authenticated and user.id == review.customer.user.id %}
+                    {% if user.is_authenticated and user.role != 'vendor' %}
                     <div class="absolute top-5 right-5 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                        <a href="/products/review/edit/{{ review.id }}/" class="w-8 h-8 rounded-xl bg-[#F8FAFC] border border-[#E5E7EB] text-[#475569] flex items-center justify-center hover:bg-[#0F172A] hover:text-white transition-colors">
-                            <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
-                        </a>
+
+                        {% if user.id == review.customer.user.id %}
+                            <a href="/products/review/edit/{{ review.id }}/" class="w-8 h-8 rounded-xl bg-[#F8FAFC] border border-[#E5E7EB] text-[#475569] flex items-center justify-center hover:bg-[#0F172A] hover:text-white transition-colors">
+                                <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
+                            </a>
+                        {% endif %}
                         
                         <button type="button" onclick="openDeleteModal('/products/review/delete/{{ review.id }}/')" class="w-8 h-8 rounded-xl bg-[#DC2626]/10 border border-[#DC2626]/20 text-[#DC2626] flex items-center justify-center hover:bg-[#DC2626] hover:text-white transition-colors cursor-pointer">
                             <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
