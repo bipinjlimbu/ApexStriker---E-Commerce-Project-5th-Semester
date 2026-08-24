@@ -179,10 +179,15 @@
                                 </div>
                             </div>
 
-                            <button type="submit" class="w-full bg-[#16A34A] hover:bg-[#12823B] text-white font-black py-4 px-6 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2.5 shadow-lg shadow-[#16A34A]/20 active:scale-[0.98] text-sm tracking-wide uppercase mt-2">
-                                <i data-lucide="check-circle" class="w-4 h-4"></i>
-                                Confirm & Pay Now
-                            </button>
+                            <div class="flex flex-col gap-3 mt-2">
+                                <button type="submit" class="w-full bg-[#16A34A] hover:bg-[#12823B] text-white font-black py-4 px-4 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2.5 shadow-lg shadow-[#16A34A]/20 active:scale-[0.98] text-sm tracking-wide uppercase cursor-pointer">
+                                    <i data-lucide="check-circle" class="w-4 h-4"></i>
+                                    <span>Confirm & Pay Now</span>
+                                </button>
+                                <button type="button" onclick="hideCheckoutSection()" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 font-black py-3.5 px-4 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2 active:scale-[0.98] text-sm tracking-wide uppercase cursor-pointer">
+                                    Cancel
+                                </button>
+                            </div>
                         </div>
 
                     </div>
@@ -233,6 +238,18 @@
             }
         }
 
+        function hideCheckoutSection() {
+            const step1Btn = document.getElementById('step-1-btn-container');
+            const checkoutSection = document.getElementById('checkout-details-section');
+
+            checkoutSection.classList.add('hidden');
+            step1Btn.classList.remove('hidden');
+
+            if (window.lucide && typeof window.lucide.createIcons === 'function') {
+                window.lucide.createIcons();
+            }
+        }
+
         async function updateQty(btn, change, itemId) {
             const itemContainer = btn.closest('.cart-item');
             const input = itemContainer.querySelector('.qty-input');
@@ -265,7 +282,7 @@
                 if (response.ok) {
                     input.value = newQty;
                     const newItemTotal = newQty * pricePerItem;
-                    itemTotalDisplay.innerText = `Rs. ${newItemTotal.toFixed(2)}`;
+                    if (itemTotalDisplay) itemTotalDisplay.innerText = `Rs. ${newItemTotal.toFixed(2)}`;
                     calculateGlobalTotal();
                 } else {
                     alert(data.message || "Failed to update quantity.");
