@@ -267,12 +267,10 @@
                         <a href="/products/review/edit/{{ review.id }}/" class="w-8 h-8 rounded-xl bg-[#F8FAFC] border border-[#E5E7EB] text-[#475569] flex items-center justify-center hover:bg-[#0F172A] hover:text-white transition-colors">
                             <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
                         </a>
-                        <form method="POST" action="/products/review/delete/{{ review.id }}/" onsubmit="return confirm('Delete this review?');" class="inline">
-                            {% csrf_token %}
-                            <button type="submit" class="w-8 h-8 rounded-xl bg-[#DC2626]/10 border border-[#DC2626]/20 text-[#DC2626] flex items-center justify-center hover:bg-[#DC2626] hover:text-white transition-colors">
-                                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                            </button>
-                        </form>
+                        
+                        <button type="button" onclick="openDeleteModal('/products/review/delete/{{ review.id }}/')" class="w-8 h-8 rounded-xl bg-[#DC2626]/10 border border-[#DC2626]/20 text-[#DC2626] flex items-center justify-center hover:bg-[#DC2626] hover:text-white transition-colors cursor-pointer">
+                            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                        </button>
                     </div>
                     {% endif %}
 
@@ -317,6 +315,31 @@
 
     </main>
 
+    <div id="deleteReviewModal" class="fixed inset-0 z-50 flex items-center justify-center bg-[#0F172A]/60 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300 px-4">
+        <div id="deleteReviewModalCard" class="bg-white border border-[#E5E7EB] rounded-3xl max-w-sm w-full p-6 sm:p-8 shadow-2xl transform scale-95 transition-all duration-300 space-y-6 text-center">
+            
+            <div class="w-16 h-16 bg-[#DC2626]/10 border border-[#DC2626]/20 rounded-2xl flex items-center justify-center mx-auto text-[#DC2626]">
+                <i data-lucide="trash-2" class="w-8 h-8"></i>
+            </div>
+            <div class="space-y-2">
+                <h3 class="text-xl font-extrabold text-[#111827] uppercase tracking-tight">Delete Review</h3>
+                <p class="text-xs text-[#475569] leading-relaxed">
+                    Are you sure you want to delete this review? This action cannot be undone and will permanently remove your feedback from ApexStriker.
+                </p>
+            </div>
+            <form id="deleteReviewForm" method="POST" action="" class="grid grid-cols-2 gap-3 pt-2">
+                {% csrf_token %}
+                <button type="button" onclick="closeDeleteModal()" class="bg-[#F8FAFC] hover:bg-[#E5E7EB] text-[#111827] font-extrabold py-3 px-4 rounded-xl border border-[#E5E7EB] transition-all text-xs uppercase tracking-wider cursor-pointer">
+                    Cancel
+                </button>
+                <button type="submit" class="bg-[#DC2626] hover:bg-[#B91C1C] text-white font-extrabold py-3 px-4 rounded-xl shadow-md shadow-[#DC2626]/20 transition-all text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 cursor-pointer">
+                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                    <span>Delete</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
     {% include 'components/_footer.html' %}
 
     <script src="{% static 'js/lucide.min.js' %}"></script>
@@ -336,6 +359,46 @@
             event.currentTarget.classList.add('border-[#D62828]', 'ring-4', 'ring-[#D62828]/10');
             event.currentTarget.classList.remove('border-[#E5E7EB]');
         }
+
+        const deleteModal = document.getElementById('deleteReviewModal');
+        const deleteModalCard = document.getElementById('deleteReviewModalCard');
+        const deleteForm = document.getElementById('deleteReviewForm');
+
+        function openDeleteModal(deleteUrl) {
+            if (!deleteModal || !deleteModalCard || !deleteForm) return;
+            deleteForm.action = deleteUrl;
+
+            deleteModal.classList.remove('opacity-0', 'pointer-events-none');
+            deleteModal.classList.add('opacity-100');
+            
+            deleteModalCard.classList.remove('scale-95');
+            deleteModalCard.classList.add('scale-100');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDeleteModal() {
+            if (!deleteModal || !deleteModalCard) return;
+            deleteModal.classList.remove('opacity-100');
+            deleteModal.classList.add('opacity-0', 'pointer-events-none');
+            
+            deleteModalCard.classList.remove('scale-100');
+            deleteModalCard.classList.add('scale-95');
+            document.body.style.overflow = '';
+        }
+
+        if (deleteModal) {
+            deleteModal.addEventListener('click', function(event) {
+                if (event.target === deleteModal) {
+                    closeDeleteModal();
+                }
+            });
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && deleteModal && !deleteModal.classList.contains('pointer-events-none')) {
+                closeDeleteModal();
+            }
+        });
 
         document.addEventListener('DOMContentLoaded', () => {
             const avgBox = document.getElementById('avg-stars-container');
