@@ -39,7 +39,7 @@
                             <th class="px-6 py-4 text-xs font-bold text-[#475569] uppercase tracking-wider">Contact Info</th>
                             <th class="px-6 py-4 text-xs font-bold text-[#475569] uppercase tracking-wider">Account Type</th>
                             <th class="px-6 py-4 text-xs font-bold text-[#475569] uppercase tracking-wider">Status</th>
-                            <th class="px-6 py-4 text-xs font-bold text-[#475569] uppercase tracking-wider"></th>
+                            <th class="px-6 py-4 text-xs font-bold text-[#475569] uppercase tracking-wider">Toggle</th>
                             <th class="px-6 py-4 text-xs font-bold text-[#475569] uppercase tracking-wider text-right">Actions</th>
                         </tr>
                     </thead>
@@ -121,12 +121,12 @@
                         </td>
 
                         <td class="px-6 py-4 align-middle">
-                            <form method="POST" action="/profile/status/toggle/{{ member.id }}/" class="inline-block">
-                                {% csrf_token %}
-                                <button type="submit" class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none {% if member.is_active %}bg-[#16A34A]{% else %}bg-slate-300{% endif %}" title="Toggle active status">
-                                    <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out {% if member.is_active %}translate-x-5{% else %}translate-x-0{% endif %}"></span>
-                                </button>
-                            </form>
+                            <button type="button" 
+                                    onclick="openToggleModal('{{ member.id }}', '{{ member.first_name|escapejs }} {{ member.last_name|escapejs }}', {% if member.is_active %}true{% else %}false{% endif %})" 
+                                    class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none {% if member.is_active %}bg-[#16A34A]{% else %}bg-slate-300{% endif %}" 
+                                    title="Toggle active status">
+                                <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out {% if member.is_active %}translate-x-5{% else %}translate-x-0{% endif %}"></span>
+                            </button>
                         </td>
 
                         <td class="px-6 py-4 align-middle text-right">
@@ -165,6 +165,30 @@
     </div>
 </div>
 
+<div id="toggleModal" class="fixed inset-0 z-50 flex items-center justify-center bg-[#0F172A]/60 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300 px-4">
+    <div id="toggleModalCard" class="bg-white border border-[#E5E7EB] rounded-3xl max-w-sm w-full p-6 sm:p-8 shadow-2xl transform scale-95 transition-all duration-300 space-y-6 text-center">
+        <div class="w-16 h-16 bg-[#F4B400]/10 border border-[#F4B400]/20 rounded-2xl flex items-center justify-center mx-auto text-[#F4B400]">
+            <i data-lucide="power" class="w-8 h-8"></i>
+        </div>
+        <div class="space-y-2">
+            <h3 class="text-xl font-extrabold text-[#111827] uppercase tracking-tight">Toggle Status</h3>
+            <p class="text-xs text-[#475569] leading-relaxed">
+                Are you sure you want to <span id="toggleModalActionText" class="font-bold text-[#111827]">change status for</span> <span id="toggleMemberName" class="font-bold text-[#111827]">this member</span>?
+            </p>
+        </div>
+        <form id="toggleMemberForm" method="POST" action="" class="grid grid-cols-2 gap-3 pt-2">
+            {% csrf_token %}
+            <button type="button" onclick="closeToggleModal()" class="bg-[#F8FAFC] hover:bg-[#E5E7EB] text-[#111827] font-extrabold py-3 px-4 rounded-xl border border-[#E5E7EB] transition-all text-xs uppercase tracking-wider cursor-pointer">
+                Cancel
+            </button>
+            <button type="submit" class="bg-[#0F172A] hover:bg-[#1E293B] text-white font-extrabold py-3 px-4 rounded-xl shadow-md transition-all text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 cursor-pointer">
+                <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                <span>Confirm</span>
+            </button>
+        </form>
+    </div>
+</div>
+
 <div id="deleteModal" class="fixed inset-0 z-50 flex items-center justify-center bg-[#0F172A]/60 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300 px-4">
     <div id="deleteModalCard" class="bg-white border border-[#E5E7EB] rounded-3xl max-w-sm w-full p-6 sm:p-8 shadow-2xl transform scale-95 transition-all duration-300 space-y-6 text-center">
         <div class="w-16 h-16 bg-[#DC2626]/10 border border-[#DC2626]/20 rounded-2xl flex items-center justify-center mx-auto text-[#DC2626]">
@@ -194,6 +218,46 @@
     const deleteModalCard = document.getElementById('deleteModalCard');
     const deleteMemberForm = document.getElementById('deleteMemberForm');
     const deleteMemberName = document.getElementById('deleteMemberName');
+
+    const toggleModal = document.getElementById('toggleModal');
+    const toggleModalCard = document.getElementById('toggleModalCard');
+    const toggleMemberForm = document.getElementById('toggleMemberForm');
+    const toggleMemberName = document.getElementById('toggleMemberName');
+    const toggleModalActionText = document.getElementById('toggleModalActionText');
+
+    function openToggleModal(memberId, memberName, isActive) {
+        if (!toggleModal || !toggleModalCard) return;
+
+        if (toggleMemberForm) {
+            toggleMemberForm.action = `/profile/status/toggle/${memberId}/`;
+        }
+
+        if (toggleMemberName) {
+            toggleMemberName.textContent = memberName.trim() ? memberName : 'this member';
+        }
+
+        if (toggleModalActionText) {
+            toggleModalActionText.textContent = isActive ? 'deactivate' : 'activate';
+        }
+
+        toggleModal.classList.remove('opacity-0', 'pointer-events-none');
+        toggleModal.classList.add('opacity-100');
+        
+        toggleModalCard.classList.remove('scale-95');
+        toggleModalCard.classList.add('scale-100');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeToggleModal() {
+        if (!toggleModal || !toggleModalCard) return;
+        
+        toggleModal.classList.remove('opacity-100');
+        toggleModal.classList.add('opacity-0', 'pointer-events-none');
+        
+        toggleModalCard.classList.remove('scale-100');
+        toggleModalCard.classList.add('scale-95');
+        document.body.style.overflow = '';
+    }
 
     function openDeleteModal(memberId, memberName) {
         if (!deleteModal || !deleteModalCard) return;
@@ -225,6 +289,14 @@
         document.body.style.overflow = '';
     }
 
+    if (toggleModal) {
+        toggleModal.addEventListener('click', function(event) {
+            if (event.target === toggleModal) {
+                closeToggleModal();
+            }
+        });
+    }
+
     if (deleteModal) {
         deleteModal.addEventListener('click', function(event) {
             if (event.target === deleteModal) {
@@ -234,8 +306,13 @@
     }
 
     document.addEventListener('keydown', function(event) {
-        if (event.key === 'Escape' && deleteModal && !deleteModal.classList.contains('pointer-events-none')) {
-            closeDeleteModal();
+        if (event.key === 'Escape') {
+            if (toggleModal && !toggleModal.classList.contains('pointer-events-none')) {
+                closeToggleModal();
+            }
+            if (deleteModal && !deleteModal.classList.contains('pointer-events-none')) {
+                closeDeleteModal();
+            }
         }
     });
 </script>
