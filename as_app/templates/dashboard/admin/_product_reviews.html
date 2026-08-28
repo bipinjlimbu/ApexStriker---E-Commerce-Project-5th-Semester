@@ -84,11 +84,12 @@
                             </p>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-right">
-                            <a href="/products/review/delete/{{ review.id }}/" 
-                               class="inline-flex items-center justify-center h-9 w-9 rounded-xl bg-red-50 text-[#DC2626] hover:bg-[#DC2626] hover:text-white transition-all duration-200 border border-red-100 shadow-sm" 
-                               title="Delete Review">
+                            <button type="button"
+                                    onclick="openDeleteModal('{{ review.id }}', '{{ review.customer.user.get_full_name|escapejs }}', '{{ review.product.name|escapejs }}')"
+                                    class="inline-flex items-center justify-center h-9 w-9 rounded-xl bg-red-50 text-[#DC2626] hover:bg-[#DC2626] hover:text-white transition-all duration-200 border border-red-100 shadow-sm cursor-pointer" 
+                                    title="Delete Review">
                                 <i data-lucide="trash-2" class="w-4 h-4"></i>
-                            </a>
+                            </button>
                         </td>
                     </tr>
                     {% empty %}
@@ -110,3 +111,83 @@
         </div>
     </div>
 </div>
+
+<div id="deleteModal" class="fixed inset-0 z-50 flex items-center justify-center bg-[#0F172A]/60 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300 px-4">
+    <div id="deleteModalCard" class="bg-white border border-[#E5E7EB] rounded-3xl max-w-sm w-full p-6 sm:p-8 shadow-2xl transform scale-95 transition-all duration-300 space-y-6 text-center">
+        <div class="w-16 h-16 bg-[#DC2626]/10 border border-[#DC2626]/20 rounded-2xl flex items-center justify-center mx-auto text-[#DC2626]">
+            <i data-lucide="alert-triangle" class="w-8 h-8"></i>
+        </div>
+        <div class="space-y-2">
+            <h3 class="text-xl font-extrabold text-[#111827] uppercase tracking-tight">Delete Review</h3>
+            <p class="text-xs text-[#475569] leading-relaxed">
+                Are you sure you want to delete the review by <span id="deleteCustomerName" class="font-bold text-[#111827]">this customer</span> for <span id="deleteProductName" class="font-bold text-[#111827]">this product</span>? This action cannot be undone.
+            </p>
+        </div>
+        <form id="deleteReviewForm" method="POST" action="" class="grid grid-cols-2 gap-3 pt-2">
+            {% csrf_token %}
+            <button type="button" onclick="closeDeleteModal()" class="bg-[#F8FAFC] hover:bg-[#E5E7EB] text-[#111827] font-extrabold py-3 px-4 rounded-xl border border-[#E5E7EB] transition-all text-xs uppercase tracking-wider cursor-pointer">
+                Cancel
+            </button>
+            <button type="submit" class="bg-[#DC2626] hover:bg-[#A61E1E] text-white font-extrabold py-3 px-4 rounded-xl shadow-md shadow-[#DC2626]/20 transition-all text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 cursor-pointer">
+                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                <span>Delete</span>
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+    const deleteModal = document.getElementById('deleteModal');
+    const deleteModalCard = document.getElementById('deleteModalCard');
+    const deleteReviewForm = document.getElementById('deleteReviewForm');
+    const deleteCustomerName = document.getElementById('deleteCustomerName');
+    const deleteProductName = document.getElementById('deleteProductName');
+
+    function openDeleteModal(reviewId, customerName, productName) {
+        if (!deleteModal || !deleteModalCard) return;
+
+        if (deleteReviewForm) {
+            deleteReviewForm.action = `/products/review/delete/${reviewId}/`;
+        }
+
+        if (deleteCustomerName) {
+            deleteCustomerName.textContent = customerName.trim() ? customerName : 'this customer';
+        }
+
+        if (deleteProductName) {
+            deleteProductName.textContent = productName.trim() ? `"${productName}"` : 'this product';
+        }
+
+        deleteModal.classList.remove('opacity-0', 'pointer-events-none');
+        deleteModal.classList.add('opacity-100');
+        
+        deleteModalCard.classList.remove('scale-95');
+        deleteModalCard.classList.add('scale-100');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeDeleteModal() {
+        if (!deleteModal || !deleteModalCard) return;
+        
+        deleteModal.classList.remove('opacity-100');
+        deleteModal.classList.add('opacity-0', 'pointer-events-none');
+        
+        deleteModalCard.classList.remove('scale-100');
+        deleteModalCard.classList.add('scale-95');
+        document.body.style.overflow = '';
+    }
+
+    if (deleteModal) {
+        deleteModal.addEventListener('click', function(event) {
+            if (event.target === deleteModal) {
+                closeDeleteModal();
+            }
+        });
+    }
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' && deleteModal && !deleteModal.classList.contains('pointer-events-none')) {
+            closeDeleteModal();
+        }
+    });
+</script>
