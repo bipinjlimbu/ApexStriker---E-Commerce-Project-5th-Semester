@@ -73,4 +73,8 @@ def delete_report_view(request, report_id):
     report.delete()
     
     messages.success(request, "The report has been deleted.")
-    return redirect("/dashboard/admin/?section=reported-users")
+    
+    if request.user.role == 'admin':
+        return redirect("/dashboard/admin/?section=reported-users")
+    else:
+        return redirect(f'/dashboard/customer/?section=reported-users')
