@@ -218,12 +218,15 @@
                             </td>
 
                             <td class="px-6 py-4 align-middle text-center">
-                                <form method="POST" action="/product/status/toggle/{{ product.id }}/" class="inline-flex items-center">
-                                    {% csrf_token %}
-                                    <button type="submit" class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none {% if product.is_active %}bg-emerald-500{% else %}bg-slate-300{% endif %}" title="Toggle Status">
-                                        <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out {% if product.is_active %}translate-x-5{% else %}translate-x-0{% endif %}"></span>
-                                    </button>
-                                </form>
+                                <button type="button" 
+                                        data-product-id="{{ product.id }}" 
+                                        data-product-name="{{ product.name }}" 
+                                        data-product-active="{% if product.is_active %}true{% else %}false{% endif %}" 
+                                        onclick="openStatusModal(this)" 
+                                        class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none {% if product.is_active %}bg-emerald-500{% else %}bg-slate-300{% endif %}" 
+                                        title="Toggle Status">
+                                    <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out {% if product.is_active %}translate-x-5{% else %}translate-x-0{% endif %}"></span>
+                                </button>
                             </td>
 
                             <td class="px-6 py-4 align-middle text-right">
@@ -266,6 +269,30 @@
     </div>
 </div>
 
+<div id="statusModal" class="fixed inset-0 z-50 flex items-center justify-center bg-[#0F172A]/60 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300 px-4">
+    <div id="statusModalCard" class="bg-white border border-[#E5E7EB] rounded-3xl max-w-sm w-full p-6 sm:p-8 shadow-2xl transform scale-95 transition-all duration-300 space-y-6 text-center">
+        <div class="w-16 h-16 bg-amber-50 border border-amber-200 rounded-2xl flex items-center justify-center mx-auto text-[#F4B400]">
+            <i data-lucide="refresh-cw" class="w-8 h-8"></i>
+        </div>
+        <div class="space-y-2">
+            <h3 class="text-xl font-extrabold text-[#111827] uppercase tracking-tight">Change Product Status</h3>
+            <p class="text-xs text-[#475569] leading-relaxed">
+                Are you sure you want to <span id="statusModalActionText" class="font-bold"></span> <span id="statusProductName" class="font-bold text-[#111827]">this product</span>?
+            </p>
+        </div>
+        <form id="statusProductForm" method="POST" action="" class="grid grid-cols-2 gap-3 pt-2">
+            {% csrf_token %}
+            <button type="button" onclick="closeStatusModal()" class="bg-[#F8FAFC] hover:bg-[#E5E7EB] text-[#111827] font-extrabold py-3 px-4 rounded-xl border border-[#E5E7EB] transition-all text-xs uppercase tracking-wider cursor-pointer">
+                Cancel
+            </button>
+            <button type="submit" class="bg-[#0F172A] hover:bg-[#1E293B] text-white font-extrabold py-3 px-4 rounded-xl shadow-md transition-all text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 cursor-pointer">
+                <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
+                <span>Confirm</span>
+            </button>
+        </form>
+    </div>
+</div>
+
 <div id="deleteModal" class="fixed inset-0 z-50 flex items-center justify-center bg-[#0F172A]/60 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300 px-4">
     <div id="deleteModalCard" class="bg-white border border-[#E5E7EB] rounded-3xl max-w-sm w-full p-6 sm:p-8 shadow-2xl transform scale-95 transition-all duration-300 space-y-6 text-center">
         <div class="w-16 h-16 bg-[#DC2626]/10 border border-[#DC2626]/20 rounded-2xl flex items-center justify-center mx-auto text-[#DC2626]">
@@ -291,6 +318,59 @@
 </div>
 
 <script>
+    const statusModal = document.getElementById('statusModal');
+    const statusModalCard = document.getElementById('statusModalCard');
+    const statusProductForm = document.getElementById('statusProductForm');
+    const statusProductName = document.getElementById('statusProductName');
+    const statusModalActionText = document.getElementById('statusModalActionText');
+
+    function openStatusModal(buttonEl) {
+        if (!statusModal || !statusModalCard) return;
+
+        const productId = buttonEl.getAttribute('data-product-id');
+        const productName = buttonEl.getAttribute('data-product-name');
+        const isActive = buttonEl.getAttribute('data-product-active') === 'true';
+
+        if (statusProductForm) {
+            statusProductForm.action = `/product/status/toggle/${productId}/`;
+        }
+
+        if (statusProductName) {
+            statusProductName.textContent = productName && productName.trim() ? productName : 'this product';
+        }
+
+        if (statusModalActionText) {
+            statusModalActionText.textContent = isActive ? 'deactivate' : 'activate';
+            statusModalActionText.className = isActive ? 'font-bold text-rose-600' : 'font-bold text-emerald-600';
+        }
+
+        statusModal.classList.remove('opacity-0', 'pointer-events-none');
+        statusModal.classList.add('opacity-100');
+        
+        statusModalCard.classList.remove('scale-95');
+        statusModalCard.classList.add('scale-100');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeStatusModal() {
+        if (!statusModal || !statusModalCard) return;
+        
+        statusModal.classList.remove('opacity-100');
+        statusModal.classList.add('opacity-0', 'pointer-events-none');
+        
+        statusModalCard.classList.remove('scale-100');
+        statusModalCard.classList.add('scale-95');
+        document.body.style.overflow = '';
+    }
+
+    if (statusModal) {
+        statusModal.addEventListener('click', function(event) {
+            if (event.target === statusModal) {
+                closeStatusModal();
+            }
+        });
+    }
+
     const deleteModal = document.getElementById('deleteModal');
     const deleteModalCard = document.getElementById('deleteModalCard');
     const deleteProductForm = document.getElementById('deleteProductForm');
@@ -338,8 +418,13 @@
     }
 
     document.addEventListener('keydown', function(event) {
-        if (event.key === 'Escape' && deleteModal && !deleteModal.classList.contains('pointer-events-none')) {
-            closeDeleteModal();
+        if (event.key === 'Escape') {
+            if (statusModal && !statusModal.classList.contains('pointer-events-none')) {
+                closeStatusModal();
+            }
+            if (deleteModal && !deleteModal.classList.contains('pointer-events-none')) {
+                closeDeleteModal();
+            }
         }
     });
 </script>
