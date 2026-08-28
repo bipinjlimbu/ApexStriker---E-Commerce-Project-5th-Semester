@@ -106,11 +106,14 @@
                             </td>
 
                             <td class="px-6 py-4 whitespace-nowrap text-right">
-                                <a href="/report/delete/{{ report.id }}/" 
-                                   class="inline-flex items-center justify-center h-9 w-9 rounded-xl bg-red-50 text-[#DC2626] hover:bg-[#DC2626] hover:text-white transition-all duration-200 border border-red-100 shadow-sm" 
-                                   title="Withdraw Report">
+                                <button type="button" 
+                                        data-report-id="{{ report.id }}" 
+                                        data-reported-user="{{ report.reported_user.get_full_name|default:report.reported_user.username }}" 
+                                        onclick="openDeleteReportModal(this)" 
+                                        class="inline-flex items-center justify-center h-9 w-9 rounded-xl bg-red-50 text-[#DC2626] hover:bg-[#DC2626] hover:text-white transition-all duration-200 border border-red-100 shadow-sm cursor-pointer" 
+                                        title="Withdraw Report">
                                     <i data-lucide="trash-2" class="w-4 h-4"></i>
-                                </a>
+                                </button>
                             </td>
                         </tr>
                         {% empty %}
@@ -133,3 +136,81 @@
         </div>
     </div>
 </div>
+
+<div id="deleteReportModal" class="fixed inset-0 z-50 flex items-center justify-center bg-[#0F172A]/60 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300 px-4">
+    <div id="deleteReportModalCard" class="bg-white border border-[#E5E7EB] rounded-3xl max-w-sm w-full p-6 sm:p-8 shadow-2xl transform scale-95 transition-all duration-300 space-y-6 text-center">
+        <div class="w-16 h-16 bg-[#DC2626]/10 border border-[#DC2626]/20 rounded-2xl flex items-center justify-center mx-auto text-[#DC2626]">
+            <i data-lucide="shield-alert" class="w-8 h-8"></i>
+        </div>
+        <div class="space-y-2">
+            <h3 class="text-xl font-extrabold text-[#111827] uppercase tracking-tight">Withdraw Report</h3>
+            <p class="text-xs text-[#475569] leading-relaxed">
+                Are you sure you want to withdraw your report against <span id="deleteReportUsername" class="font-bold text-[#111827]">this user</span>? This action cannot be undone.
+            </p>
+        </div>
+        <form id="deleteReportForm" method="POST" action="" class="grid grid-cols-2 gap-3 pt-2">
+            {% csrf_token %}
+            <button type="button" onclick="closeDeleteReportModal()" class="bg-[#F8FAFC] hover:bg-[#E5E7EB] text-[#111827] font-extrabold py-3 px-4 rounded-xl border border-[#E5E7EB] transition-all text-xs uppercase tracking-wider cursor-pointer">
+                Cancel
+            </button>
+            <button type="submit" class="bg-[#DC2626] hover:bg-[#A61E1E] text-white font-extrabold py-3 px-4 rounded-xl shadow-md shadow-[#DC2626]/20 transition-all text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 cursor-pointer">
+                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                <span>Withdraw</span>
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+    const deleteReportModal = document.getElementById('deleteReportModal');
+    const deleteReportModalCard = document.getElementById('deleteReportModalCard');
+    const deleteReportForm = document.getElementById('deleteReportForm');
+    const deleteReportUsername = document.getElementById('deleteReportUsername');
+
+    function openDeleteReportModal(buttonEl) {
+        if (!deleteReportModal || !deleteReportModalCard) return;
+
+        const reportId = buttonEl.getAttribute('data-report-id');
+        const username = buttonEl.getAttribute('data-reported-user');
+
+        if (deleteReportForm) {
+            deleteReportForm.action = `/report/delete/${reportId}/`;
+        }
+
+        if (deleteReportUsername) {
+            deleteReportUsername.textContent = username && username.trim() ? username : 'this user';
+        }
+
+        deleteReportModal.classList.remove('opacity-0', 'pointer-events-none');
+        deleteReportModal.classList.add('opacity-100');
+        
+        deleteReportModalCard.classList.remove('scale-95');
+        deleteReportModalCard.classList.add('scale-100');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeDeleteReportModal() {
+        if (!deleteReportModal || !deleteReportModalCard) return;
+        
+        deleteReportModal.classList.remove('opacity-100');
+        deleteReportModal.classList.add('opacity-0', 'pointer-events-none');
+        
+        deleteReportModalCard.classList.remove('scale-100');
+        deleteReportModalCard.classList.add('scale-95');
+        document.body.style.overflow = '';
+    }
+
+    if (deleteReportModal) {
+        deleteReportModal.addEventListener('click', function(event) {
+            if (event.target === deleteReportModal) {
+                closeDeleteReportModal();
+            }
+        });
+    }
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' && deleteReportModal && !deleteReportModal.classList.contains('pointer-events-none')) {
+            closeDeleteReportModal();
+        }
+    });
+</script>
