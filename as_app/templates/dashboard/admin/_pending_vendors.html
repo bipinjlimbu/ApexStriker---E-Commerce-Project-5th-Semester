@@ -91,13 +91,13 @@
 
                         <td class="px-6 py-4 align-middle text-right">
                             <div class="flex items-center justify-end gap-2">
-                                <form method="post" action="/approve_vendor/{{ vendor.id }}/" class="inline">
-                                    {% csrf_token %}
-                                    <button type="submit" class="inline-flex items-center gap-1.5 bg-[#16A34A] hover:bg-green-700 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition-all shadow-sm">
-                                        <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
-                                        <span>Approve</span>
-                                    </button>
-                                </form>
+                                <button type="button" 
+                                        onclick="openApproveModal('{{ vendor.id }}', '{{ vendor.shop_name|escapejs }}')" 
+                                        class="inline-flex items-center gap-1.5 bg-[#16A34A] hover:bg-green-700 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition-all shadow-sm cursor-pointer"
+                                        title="Approve Application">
+                                    <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
+                                    <span>Approve</span>
+                                </button>
 
                                 <button type="button" 
                                         onclick="openRejectModal('{{ vendor.id }}', '{{ vendor.shop_name|escapejs }}')" 
@@ -128,7 +128,30 @@
     </div>
 </div>
 
-<!-- Reusable Reject Vendor Confirmation Modal -->
+<div id="approveModal" class="fixed inset-0 z-50 flex items-center justify-center bg-[#0F172A]/60 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300 px-4">
+    <div id="approveModalCard" class="bg-white border border-[#E5E7EB] rounded-3xl max-w-sm w-full p-6 sm:p-8 shadow-2xl transform scale-95 transition-all duration-300 space-y-6 text-center">
+        <div class="w-16 h-16 bg-[#16A34A]/10 border border-[#16A34A]/20 rounded-2xl flex items-center justify-center mx-auto text-[#16A34A]">
+            <i data-lucide="check-circle" class="w-8 h-8"></i>
+        </div>
+        <div class="space-y-2">
+            <h3 class="text-xl font-extrabold text-[#111827] uppercase tracking-tight">Approve Application</h3>
+            <p class="text-xs text-[#475569] leading-relaxed">
+                Are you sure you want to approve <span id="approveShopName" class="font-bold text-[#111827]">this seller</span>? They will gain access to vendor selling privileges.
+            </p>
+        </div>
+        <form id="approveVendorForm" method="POST" action="" class="grid grid-cols-2 gap-3 pt-2">
+            {% csrf_token %}
+            <button type="button" onclick="closeApproveModal()" class="bg-[#F8FAFC] hover:bg-[#E5E7EB] text-[#111827] font-extrabold py-3 px-4 rounded-xl border border-[#E5E7EB] transition-all text-xs uppercase tracking-wider cursor-pointer">
+                Cancel
+            </button>
+            <button type="submit" class="bg-[#16A34A] hover:bg-green-700 text-white font-extrabold py-3 px-4 rounded-xl shadow-md shadow-[#16A34A]/20 transition-all text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 cursor-pointer">
+                <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
+                <span>Approve</span>
+            </button>
+        </form>
+    </div>
+</div>
+
 <div id="rejectModal" class="fixed inset-0 z-50 flex items-center justify-center bg-[#0F172A]/60 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300 px-4">
     <div id="rejectModalCard" class="bg-white border border-[#E5E7EB] rounded-3xl max-w-sm w-full p-6 sm:p-8 shadow-2xl transform scale-95 transition-all duration-300 space-y-6 text-center">
         <div class="w-16 h-16 bg-[#DC2626]/10 border border-[#DC2626]/20 rounded-2xl flex items-center justify-center mx-auto text-[#DC2626]">
@@ -137,7 +160,7 @@
         <div class="space-y-2">
             <h3 class="text-xl font-extrabold text-[#111827] uppercase tracking-tight">Reject Application</h3>
             <p class="text-xs text-[#475569] leading-relaxed">
-                Are you sure you want to reject the application for <span id="rejectShopName" class="font-bold text-[#111827]">this vendor</span>? This action will decline their request to sell on ApexStriker.
+                Are you sure you want to reject <span id="rejectShopName" class="font-bold text-[#111827]">this seller</span>? The application will be declined and the seller will be notified.
             </p>
         </div>
         <form id="rejectVendorForm" method="POST" action="" class="grid grid-cols-2 gap-3 pt-2">
@@ -154,10 +177,45 @@
 </div>
 
 <script>
+    const approveModal = document.getElementById('approveModal');
+    const approveModalCard = document.getElementById('approveModalCard');
+    const approveVendorForm = document.getElementById('approveVendorForm');
+    const approveShopName = document.getElementById('approveShopName');
+
     const rejectModal = document.getElementById('rejectModal');
     const rejectModalCard = document.getElementById('rejectModalCard');
     const rejectVendorForm = document.getElementById('rejectVendorForm');
     const rejectShopName = document.getElementById('rejectShopName');
+
+    function openApproveModal(vendorId, shopName) {
+        if (!approveModal || !approveModalCard) return;
+
+        if (approveVendorForm) {
+            approveVendorForm.action = `/approve_vendor/${vendorId}/`;
+        }
+
+        if (approveShopName) {
+            approveShopName.textContent = shopName.trim() ? shopName : 'this seller';
+        }
+
+        approveModal.classList.remove('opacity-0', 'pointer-events-none');
+        approveModal.classList.add('opacity-100');
+        
+        approveModalCard.classList.remove('scale-95');
+        approveModalCard.classList.add('scale-100');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeApproveModal() {
+        if (!approveModal || !approveModalCard) return;
+        
+        approveModal.classList.remove('opacity-100');
+        approveModal.classList.add('opacity-0', 'pointer-events-none');
+        
+        approveModalCard.classList.remove('scale-100');
+        approveModalCard.classList.add('scale-95');
+        document.body.style.overflow = '';
+    }
 
     function openRejectModal(vendorId, shopName) {
         if (!rejectModal || !rejectModalCard) return;
@@ -167,7 +225,7 @@
         }
 
         if (rejectShopName) {
-            rejectShopName.textContent = shopName.trim() ? shopName : 'this vendor';
+            rejectShopName.textContent = shopName.trim() ? shopName : 'this seller';
         }
 
         rejectModal.classList.remove('opacity-0', 'pointer-events-none');
@@ -189,6 +247,14 @@
         document.body.style.overflow = '';
     }
 
+    if (approveModal) {
+        approveModal.addEventListener('click', function(event) {
+            if (event.target === approveModal) {
+                closeApproveModal();
+            }
+        });
+    }
+
     if (rejectModal) {
         rejectModal.addEventListener('click', function(event) {
             if (event.target === rejectModal) {
@@ -198,8 +264,13 @@
     }
 
     document.addEventListener('keydown', function(event) {
-        if (event.key === 'Escape' && rejectModal && !rejectModal.classList.contains('pointer-events-none')) {
-            closeRejectModal();
+        if (event.key === 'Escape') {
+            if (approveModal && !approveModal.classList.contains('pointer-events-none')) {
+                closeApproveModal();
+            }
+            if (rejectModal && !rejectModal.classList.contains('pointer-events-none')) {
+                closeRejectModal();
+            }
         }
     });
 </script>

@@ -137,7 +137,7 @@ def edit_profile_view(request, user_id):
 
 @login_required
 def delete_profile_view(request, user_id):
-    if request.user.id != user_id or not request.user.is_superuser:
+    if request.user.id != user_id and not request.user.is_superuser:
         messages.error(request, "You are not authorized to delete this profile.")
         return redirect(f'/profile/{user_id}/')
     
@@ -150,7 +150,11 @@ def delete_profile_view(request, user_id):
     
     user.delete()
     messages.success(request, "Profile deleted successfully.")
-    return redirect('/')
+    
+    if request.user.id == user_id:
+        return redirect('/')
+    else:
+        return redirect('/dashboard/admin/?section=member-list')
 
 @login_required
 def profile_status_toggle_view(request, user_id):
