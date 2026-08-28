@@ -89,8 +89,8 @@
                             </td>
 
                             <td class="px-6 py-4 whitespace-nowrap text-center">
-                                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-700 border border-amber-200">
-                                    <span class="h-2 w-2 rounded-full bg-[#F4B400] animate-pulse"></span>
+                                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold {% if report.is_resolved %}bg-green-50 text-[#16A34A] border border-green-200{% else %}bg-amber-50 text-amber-700 border border-amber-200{% endif %}">
+                                    <span class="h-2 w-2 rounded-full {% if report.is_resolved %}bg-[#16A34A]{% else %}bg-[#F4B400] animate-pulse{% endif %}"></span>
                                     {% if report.is_resolved %}
                                         Resolved
                                     {% else %}
@@ -102,14 +102,20 @@
                             <td class="px-6 py-4 whitespace-nowrap text-right">
                                 <div class="flex items-center justify-end gap-2">
                                     {% if not report.is_resolved %}
-                                        <a href="/report/resolve/{{ report.id }}" class="p-2 bg-[#F8FAFC] hover:bg-[#16A34A] text-[#475569] hover:text-white rounded-lg transition-all border border-[#E5E7EB] hover:border-[#16A34A]" title="Mark as Resolved">
+                                        <button type="button" 
+                                                onclick="openResolveModal('{{ report.id }}', '{{ report.reported_user.get_full_name|escapejs }}')" 
+                                                class="p-2 bg-[#F8FAFC] hover:bg-[#16A34A] text-[#475569] hover:text-white rounded-lg transition-all border border-[#E5E7EB] hover:border-[#16A34A] cursor-pointer" 
+                                                title="Mark as Resolved">
                                             <i data-lucide="check-circle" class="w-4 h-4"></i>
-                                        </a>
+                                        </button>
                                     {% endif %}
 
-                                    <a href="/report/delete/{{ report.id }}" class="p-2 bg-[#F8FAFC] hover:bg-[#DC2626] text-[#475569] hover:text-white rounded-lg transition-all border border-[#E5E7EB] hover:border-[#DC2626]" title="Delete Report">
+                                    <button type="button" 
+                                            onclick="openDeleteModal('{{ report.id }}', '{{ report.reported_user.get_full_name|escapejs }}')" 
+                                            class="p-2 bg-[#F8FAFC] hover:bg-[#DC2626] text-[#475569] hover:text-white rounded-lg transition-all border border-[#E5E7EB] hover:border-[#DC2626] cursor-pointer" 
+                                            title="Delete Report">
                                         <i data-lucide="trash-2" class="w-4 h-4"></i>
-                                    </a>
+                                    </button>
                                 </div>
                             </td>
                         </tr>
@@ -131,3 +137,150 @@
         </div>
     </div>
 </div>
+
+<div id="resolveModal" class="fixed inset-0 z-50 flex items-center justify-center bg-[#0F172A]/60 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300 px-4">
+    <div id="resolveModalCard" class="bg-white border border-[#E5E7EB] rounded-3xl max-w-sm w-full p-6 sm:p-8 shadow-2xl transform scale-95 transition-all duration-300 space-y-6 text-center">
+        <div class="w-16 h-16 bg-[#16A34A]/10 border border-[#16A34A]/20 rounded-2xl flex items-center justify-center mx-auto text-[#16A34A]">
+            <i data-lucide="check-circle-2" class="w-8 h-8"></i>
+        </div>
+        <div class="space-y-2">
+            <h3 class="text-xl font-extrabold text-[#111827] uppercase tracking-tight">Resolve Report</h3>
+            <p class="text-xs text-[#475569] leading-relaxed">
+                Are you sure you want to mark the security report regarding <span id="resolveReportedUser" class="font-bold text-[#111827]">this user</span> as resolved?
+            </p>
+        </div>
+        <form id="resolveReportForm" method="POST" action="" class="grid grid-cols-2 gap-3 pt-2">
+            {% csrf_token %}
+            <button type="button" onclick="closeResolveModal()" class="bg-[#F8FAFC] hover:bg-[#E5E7EB] text-[#111827] font-extrabold py-3 px-4 rounded-xl border border-[#E5E7EB] transition-all text-xs uppercase tracking-wider cursor-pointer">
+                Cancel
+            </button>
+            <button type="submit" class="bg-[#16A34A] hover:bg-[#15803D] text-white font-extrabold py-3 px-4 rounded-xl shadow-md shadow-[#16A34A]/20 transition-all text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 cursor-pointer">
+                <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                <span>Resolve</span>
+            </button>
+        </form>
+    </div>
+</div>
+
+<div id="deleteModal" class="fixed inset-0 z-50 flex items-center justify-center bg-[#0F172A]/60 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300 px-4">
+    <div id="deleteModalCard" class="bg-white border border-[#E5E7EB] rounded-3xl max-w-sm w-full p-6 sm:p-8 shadow-2xl transform scale-95 transition-all duration-300 space-y-6 text-center">
+        <div class="w-16 h-16 bg-[#DC2626]/10 border border-[#DC2626]/20 rounded-2xl flex items-center justify-center mx-auto text-[#DC2626]">
+            <i data-lucide="alert-triangle" class="w-8 h-8"></i>
+        </div>
+        <div class="space-y-2">
+            <h3 class="text-xl font-extrabold text-[#111827] uppercase tracking-tight">Delete Report</h3>
+            <p class="text-xs text-[#475569] leading-relaxed">
+                Are you sure you want to delete the security report for <span id="deleteReportedUser" class="font-bold text-[#111827]">this user</span>? This action cannot be undone.
+            </p>
+        </div>
+        <form id="deleteReportForm" method="POST" action="" class="grid grid-cols-2 gap-3 pt-2">
+            {% csrf_token %}
+            <button type="button" onclick="closeDeleteModal()" class="bg-[#F8FAFC] hover:bg-[#E5E7EB] text-[#111827] font-extrabold py-3 px-4 rounded-xl border border-[#E5E7EB] transition-all text-xs uppercase tracking-wider cursor-pointer">
+                Cancel
+            </button>
+            <button type="submit" class="bg-[#DC2626] hover:bg-[#A61E1E] text-white font-extrabold py-3 px-4 rounded-xl shadow-md shadow-[#DC2626]/20 transition-all text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 cursor-pointer">
+                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                <span>Delete</span>
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+    const resolveModal = document.getElementById('resolveModal');
+    const resolveModalCard = document.getElementById('resolveModalCard');
+    const resolveReportForm = document.getElementById('resolveReportForm');
+    const resolveReportedUser = document.getElementById('resolveReportedUser');
+
+    const deleteModal = document.getElementById('deleteModal');
+    const deleteModalCard = document.getElementById('deleteModalCard');
+    const deleteReportForm = document.getElementById('deleteReportForm');
+    const deleteReportedUser = document.getElementById('deleteReportedUser');
+
+    function openResolveModal(reportId, userName) {
+        if (!resolveModal || !resolveModalCard) return;
+
+        if (resolveReportForm) {
+            resolveReportForm.action = `/report/resolve/${reportId}/`;
+        }
+
+        if (resolveReportedUser) {
+            resolveReportedUser.textContent = userName.trim() ? userName : 'this user';
+        }
+
+        resolveModal.classList.remove('opacity-0', 'pointer-events-none');
+        resolveModal.classList.add('opacity-100');
+        
+        resolveModalCard.classList.remove('scale-95');
+        resolveModalCard.classList.add('scale-100');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeResolveModal() {
+        if (!resolveModal || !resolveModalCard) return;
+        
+        resolveModal.classList.remove('opacity-100');
+        resolveModal.classList.add('opacity-0', 'pointer-events-none');
+        
+        resolveModalCard.classList.remove('scale-100');
+        resolveModalCard.classList.add('scale-95');
+        document.body.style.overflow = '';
+    }
+
+    function openDeleteModal(reportId, userName) {
+        if (!deleteModal || !deleteModalCard) return;
+
+        if (deleteReportForm) {
+            deleteReportForm.action = `/report/delete/${reportId}/`;
+        }
+
+        if (deleteReportedUser) {
+            deleteReportedUser.textContent = userName.trim() ? userName : 'this user';
+        }
+
+        deleteModal.classList.remove('opacity-0', 'pointer-events-none');
+        deleteModal.classList.add('opacity-100');
+        
+        deleteModalCard.classList.remove('scale-95');
+        deleteModalCard.classList.add('scale-100');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeDeleteModal() {
+        if (!deleteModal || !deleteModalCard) return;
+        
+        deleteModal.classList.remove('opacity-100');
+        deleteModal.classList.add('opacity-0', 'pointer-events-none');
+        
+        deleteModalCard.classList.remove('scale-100');
+        deleteModalCard.classList.add('scale-95');
+        document.body.style.overflow = '';
+    }
+
+    if (resolveModal) {
+        resolveModal.addEventListener('click', function(event) {
+            if (event.target === resolveModal) {
+                closeResolveModal();
+            }
+        });
+    }
+
+    if (deleteModal) {
+        deleteModal.addEventListener('click', function(event) {
+            if (event.target === deleteModal) {
+                closeDeleteModal();
+            }
+        });
+    }
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            if (resolveModal && !resolveModal.classList.contains('pointer-events-none')) {
+                closeResolveModal();
+            }
+            if (deleteModal && !deleteModal.classList.contains('pointer-events-none')) {
+                closeDeleteModal();
+            }
+        }
+    });
+</script>
